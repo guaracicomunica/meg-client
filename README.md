@@ -1,1 +1,1 @@
-## E-commerce - Web version with Next.js
+## MEG - Web version with Next.js

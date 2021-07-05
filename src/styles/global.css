@@ -8,15 +8,17 @@
 :root {
   --white: #FFF;
   --black: #000;
-  --gray: #CDCDD2;
-  --gray-icon: #D4D4D4;
-  --gray-dark: #757575;
-  --green-primary: #7AE582;
-  --green-secondary: #4AD66D;
-  --blue-dark: #1A2531;
-
-  --background: #FBFBFB;
-  --background-input: #F9F7F7;
+  --gray-text: #676767;
+  --gray-title: #979797;
+  --gray-light: #D5D5D5;
+  --blue-light: #87D2EF;
+  --blue: #2575FC;
+  --blue-dark: #003049;
+  --blue-text: #2B3543;
+  --red: #F94144;
+  --yellow: #F9C74F;
+  --green: #6EDE8A;
+  --background: #FCF9FF;
 }
 
 html, body, #__next {
@@ -44,7 +46,7 @@ body, #__next {
 }
 
 body, input, textarea, button {
-  font-family: 'Montserrat', sans-serif !important;
+  font-family: 'Lato', sans-serif !important;
   color: var(--black);
 }
 

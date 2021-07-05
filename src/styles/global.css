@@ -76,17 +76,12 @@ button {
 
 select {
   font-size: 1rem !important;
-  background-color: var(--background-input) !important;
   border-radius: 10px !important;
   border: none !important;
 }
 
 select:focus {
   box-shadow: none !important;
-}
-
-.background-gray {
-  background-color: var(--background);
 }
 
 .section {
@@ -134,19 +129,4 @@ select:focus {
 
 .text-gray {
   color: var(--gray);
-}
-.mediumTitle {
-  font-size: 1.7rem;
-}
-
-.smallTitle {
-  font-size: 14px;
-}
-
-.smallText {
-  font-size: 11px;
-}
-
-.mediumText {
-  font-size: 14px;
 }

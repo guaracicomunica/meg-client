@@ -51,7 +51,6 @@ body {
 
 body, input, textarea, button {
   font-family: 'Lato', sans-serif !important;
-  color: var(--black);
 }
 
 h1, h2, h3, h4, h5, h6 {

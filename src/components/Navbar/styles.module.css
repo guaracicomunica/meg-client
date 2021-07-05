@@ -1,0 +1,22 @@
+.menu {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 10rem;
+  
+  border-top: 10px solid var(--blue-dark);
+  background-color: var(--white) !important;
+}
+
+.menu-link {
+  padding: 0.5rem 1rem;
+  margin-right: 1.5rem;
+
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--blue-text);
+  transition: color .2s;
+}
+
+.menu-link:hover {
+  color: var(--blue-dark);
+}

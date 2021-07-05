@@ -120,3 +120,7 @@ select:focus {
   font-weight: 400;
   color: var(--gray-light);
 }
+
+.navbar-collapse {
+  flex-grow: unset !important;
+}

@@ -18,7 +18,7 @@ export default function Dashboard() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx);
-  const { ['ecommerce.token']: token } = parseCookies(ctx);
+  const { ['meg.token']: token } = parseCookies(ctx);
 
   if (!token) {
     return {

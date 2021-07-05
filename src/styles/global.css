@@ -89,44 +89,34 @@ select:focus {
   padding: 3rem 5rem;
 }
 
-.icon-section {
-  height: 1.5rem;
-}
-
-.breadcrumb {
-  background-color: transparent !important;
-}
-
-.form-control:focus {
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.custom-control-label::before {
-  border-width: 2px !important;
-}
-
-.custom-control-input:focus ~ .custom-control-label::before {
-  box-shadow: none !important;
-}
-
-.custom-control-input:active ~ .custom-control-label::before,
-.custom-control-input:checked ~ .custom-control-label::before {
-  border-color: var(--gray) !important;
-  background-color: var(--gray) !important;
-}
-
-.custom-control-input:focus ~ .custom-control-label::before {
-  border-color: var(--gray) !important;
-}
-
-.title-section {
-  text-transform: uppercase;
+.title-primary, .title-secondary {
   font-size: 2rem;
+  font-weight: 900;
+}
 
-  color: var(--gray);
+.title-primary {
+  text-transform: uppercase;
+  color: var(--blue-dark);
+}
+
+.title-secondary {
+  color: var(--blue);
+}
+
+.title-card {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.text-section {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--blue-dark);
 }
 
 .text-gray {
-  color: var(--gray);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--gray-light);
 }

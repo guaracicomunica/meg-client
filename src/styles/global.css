@@ -58,14 +58,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: var(--green-primary);
+  color: var(--blue-light);
   text-decoration: none;
 
   transition: filter .3s;
 }
 
 a:hover {
-  color: var(--green-primary);
+  color: var(--blue-light);
   text-decoration: none;
   filter: brightness(0.9);
 }

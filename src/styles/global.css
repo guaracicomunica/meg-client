@@ -45,6 +45,10 @@ body, #__next {
   }
 }
 
+body {
+  background-color: var(--background);
+}
+
 body, input, textarea, button {
   font-family: 'Lato', sans-serif !important;
   color: var(--black);

@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Meg</title>
+        <title>Mundo Encantado da Geografia</title>
       </Head>
 
       <header>

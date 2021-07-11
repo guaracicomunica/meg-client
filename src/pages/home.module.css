@@ -1,97 +1,51 @@
-.products-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+.home-banner {
+  width: 100%;
+  height: 100vh;
+
+  position: absolute;
+  top: 0;
+  z-index: -1;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+
+  background-image: url("../../public/images/bg-home.svg");
+  background-repeat: no-repeat;
+  background-position: right bottom;
 }
 
-.newsletter-section {
-  background-color: #EFEFEF;
+.logo-home {
+  width: 60%;
+  margin-left: 20%;
 }
 
-.newsletter {
-  padding: 3rem 6rem;
-  border-radius: 15px;
-
-  background-color: var(--white);
-}
-
-.newsletter h5 {
-  min-width: fit-content;
-}
-
-.newsletter input {
-  border: 2px solid var(--gray);
-  border-radius: 10px;
-  padding: 1.25rem 0.75rem;
-}
-
-.newsletter input:focus {
-  border: 2px solid var(--gray) !important;
-}
-
-.newsletter-btn {
-  padding: 0.5rem 2.5rem;
-  border: 2px solid var(--blue-dark);
-  width: fit-content;
-
-  font-size: 1rem;
-  color: var(--blue-dark);
-  background-color: var(--white);
-}
-
-.newsletter-btn:hover {
-  color: var(--white);
-  background-color: var(--blue-dark);
-}
-
-.category-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-}
-
-@media (max-width: 1200px) {
-  .products-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.title-home {
+  color: var(--blue-text);
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-align: center;
 }
 
 @media (max-width: 992px) {
-  .products-list {
-    grid-template-columns: repeat(2, 1fr);
+  .logo-home {
+    width: 90%;
+    margin-left: 10%;
   }
 
-  .newsletter {
-    padding: 3rem 4rem;
-  }
-
-  .newsletter input {
-    width: 100%;
+  .title-home {
+    font-size: 2rem;
   }
 }
 
 @media (max-width: 768px) {
-  .category-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .home-section {
-    padding: 3rem;
+  .home-banner div:first-child {
+    margin-top: 7rem;
   }
 
-  .newsletter {
-    padding: 3rem 2rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .products-list {
-    grid-template-columns: 1fr;
-  }
-
-  .category-list {
-    grid-template-columns: 1fr;
+  .logo-home {
+    width: 60%;
+    margin-left: 20%;
   }
 }

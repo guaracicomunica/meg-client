@@ -95,7 +95,6 @@ select:focus {
 }
 
 .title-primary {
-  text-transform: uppercase;
   color: var(--blue-dark);
 }
 
@@ -123,4 +122,11 @@ select:focus {
 
 .navbar-collapse {
   flex-grow: unset !important;
+}
+
+.border-section {
+  width: 10rem;
+  height: 2px;
+  margin: 0.75rem auto 1rem;
+  background-color: var(--blue);
 }

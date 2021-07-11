@@ -20,7 +20,7 @@ export function Navbar() {
 
       <div className="collapse navbar-collapse" id="navbar">
         <ul className="navbar-nav mr-auto my-4 my-md-0">
-          <li className="nav-item active">
+          <li className={`nav-item ${styles["link-active"]}`}>
             <a className={styles["menu-link"]} href="/">Início <span className="sr-only">(Página atual)</span></a>
           </li>
           <li className="nav-item mt-3 mt-md-0">

@@ -15,22 +15,22 @@ export function Navbar() {
         aria-expanded="false"
         aria-label="Alterna navegação"
       >
-        <span className="navbar-toggler-icon" />
+        <img src="/icons/menu.svg" alt="Menu" className={styles["nav-icon"]} />
       </button>
 
       <div className="collapse navbar-collapse" id="navbar">
-        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+        <ul className="navbar-nav mr-auto my-4 my-md-0">
           <li className="nav-item active">
             <a className={styles["menu-link"]} href="/">Início <span className="sr-only">(Página atual)</span></a>
           </li>
-          <li className="nav-item">
+          <li className="nav-item mt-3 mt-md-0">
             <a className={styles["menu-link"]} href="#">Turmas</a>
           </li>
-          <li className="nav-item">
+          <li className="nav-item mt-3 mt-md-0">
             <a className={styles["menu-link"]} href="#">Atividades</a>
           </li>
-          <li className="nav-item">
-            <a className="button button-blue" href="#">Acessar</a>
+          <li className="nav-item mt-3 mt-md-0">
+            <a className={`${styles["menu-button"]} button button-blue`} href="#">Acessar</a>
           </li>
         </ul>
       </div>

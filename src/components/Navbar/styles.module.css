@@ -1,7 +1,7 @@
 .menu {
   display: flex;
   justify-content: space-between;
-  padding: 1rem 10rem;
+  padding: 1rem 15rem;
   
   border-top: 10px solid var(--blue-dark);
   background-color: var(--white) !important;
@@ -19,4 +19,30 @@
 
 .menu-link:hover {
   color: var(--blue-dark);
+}
+
+.menu-button {
+  margin-left: 0.5rem !important;
+}
+
+.nav-icon {
+  height: 1.5rem;
+}
+
+@media (max-width: 1280px) {
+  .menu {
+    padding: 1rem 10rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .menu {
+    padding: 1rem 5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-button {
+    margin-top: 1rem !important;
+  }
 }

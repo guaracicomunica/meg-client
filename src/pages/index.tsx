@@ -149,7 +149,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section row justify-content-around align-items-center ml-0">
+        <section className="section row justify-content-around align-items-center mb-5">
           <div className="col-9 col-md-7 col-lg-4 col-xl-5 mb-5 mb-lg-0">
             <h1 className="text-uppercase title-primary text-center">
               Premiações do MEG
@@ -166,7 +166,7 @@ export default function Home() {
             />
           </div>
 
-          <div className={`col-11 col-lg-6 col-xl-5 mb-5 ${styles["cards-list"]}`}>
+          <div className={`col-11 col-lg-6 col-xl-5 ${styles["cards-list"]}`}>
             <CardHome
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"

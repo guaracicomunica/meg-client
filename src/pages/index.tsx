@@ -81,7 +81,7 @@ export default function Home() {
         </section>
 
         <section className="section row justify-content-around align-items-center">
-          <div className={`col-11 col-lg-6 col-xl-5 order-2 order-lg-1 ${styles["cards-rules-list"]}`}>
+          <div className={`col-11 col-lg-6 col-xl-5 order-2 order-lg-1 ${styles["cards-list"]}`}>
             <CardHome
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
@@ -100,7 +100,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="col-9 col-lg-4 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
+          <div className="col-9 col-md-7 col-lg-4 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
             <h1 className="text-uppercase title-primary text-center">
               Regras gamificadas
             </h1>
@@ -130,6 +130,43 @@ export default function Home() {
           </div>
           
           <div className={`col-11 col-xl-10 mt-5 ${styles["cards-list-not-allowed"]}`}>
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
+            />
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
+            />
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
+            />
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
+            />
+          </div>
+        </section>
+
+        <section className="section row justify-content-around align-items-center ml-0">
+          <div className="col-9 col-md-7 col-lg-4 col-xl-5 mb-5 mb-lg-0">
+            <h1 className="text-uppercase title-primary text-center">
+              Premiações do MEG
+            </h1>
+
+            <div className="d-flex justify-content-center">
+              <hr className="border-red" />
+              <hr className="border-yellow" />
+            </div>
+            
+            <img
+              src="./images/awards-section.svg"
+              className="img-fluid mt-5"
+            />
+          </div>
+
+          <div className={`col-11 col-lg-6 col-xl-5 mb-5 ${styles["cards-list"]}`}>
             <CardHome
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"

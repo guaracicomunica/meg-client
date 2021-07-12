@@ -48,7 +48,7 @@
   transform: translateX(-50%);
 }
 
-.cards-rules-list {
+.cards-list {
   display: grid;
   grid-template-columns: 2fr 2fr;
   gap: 1.5rem;
@@ -95,7 +95,8 @@
 }
 
 @media (max-width: 600px) {
-  .cards-list-not-allowed {
+  .cards-list-not-allowed,
+  .cards-list {
     grid-template-columns: 1fr;
   }
 }

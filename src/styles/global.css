@@ -130,3 +130,19 @@ select:focus {
   
   background-color: var(--blue);
 }
+
+.border-red {
+  width: 6rem;
+  height: 2px;
+  margin: 0.75rem 0 1rem;
+  
+  background-color: var(--red);
+}
+
+.border-yellow {
+  width: 6rem;
+  height: 2px;
+  margin: 0.75rem 0 1rem;
+
+  background-color: var(--yellow);
+}

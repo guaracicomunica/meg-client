@@ -42,7 +42,7 @@ export default function Home() {
             <h1 className="title-primary text-center">
               Conheça o Mundo Encantado da Geografia (MEG)
             </h1>
-            <hr className="border-section" />
+            <hr className="border-blue" />
           </div>
           
           <div className="col-11 col-lg-7">

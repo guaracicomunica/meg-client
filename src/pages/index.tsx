@@ -116,6 +116,38 @@ export default function Home() {
             />
           </div>
         </section>
+
+        <section className={`section ${styles["section-not-allowed"]}`}>
+          <div className="col-10">
+            <h1 className="title-primary text-uppercase text-center">
+              O que você não pode fazer
+            </h1>
+
+            <div className="d-flex justify-content-center">
+              <hr className="border-red" />
+              <hr className="border-yellow" />
+            </div>
+          </div>
+          
+          <div className={`col-11 col-xl-10 mt-5 ${styles["cards-list-not-allowed"]}`}>
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
+            />
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
+            />
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
+            />
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
+            />
+          </div>
+        </section>
       </main>
 
       <Footer />

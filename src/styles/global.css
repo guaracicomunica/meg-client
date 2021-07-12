@@ -123,9 +123,10 @@ select:focus {
   flex-grow: unset !important;
 }
 
-.border-section {
-  width: 10rem;
+.border-blue {
+  width: 12rem;
   height: 2px;
   margin: 0.75rem auto 1rem;
+  
   background-color: var(--blue);
 }

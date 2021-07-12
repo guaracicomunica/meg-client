@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 import { Navbar } from '../components/Navbar';
+import { CardHome } from '../components/CardHome';
 import { Footer } from '../components/Footer';
 
 import styles from "./home.module.css";
@@ -75,6 +76,43 @@ export default function Home() {
             <img
               src="./images/illustration-home-2.svg"
               className="img-fluid"
+            />
+          </div>
+        </section>
+
+        <section className="section row justify-content-around align-items-center">
+          <div className={`col-11 col-lg-6 col-xl-5 order-2 order-lg-1 ${styles["cards-rules-list"]}`}>
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
+            />
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
+            />
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
+            />
+            <CardHome
+              title="Lorem Ipsum is simply dummy text of the printing"
+              description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
+            />
+          </div>
+
+          <div className="col-9 col-lg-4 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
+            <h1 className="text-uppercase title-primary text-center">
+              Regras gamificadas
+            </h1>
+
+            <div className="d-flex justify-content-center">
+              <hr className="border-red" />
+              <hr className="border-yellow" />
+            </div>
+            
+            <img
+              src="./images/rules-section.svg"
+              className="img-fluid mt-5"
             />
           </div>
         </section>

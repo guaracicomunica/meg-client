@@ -1,8 +1,6 @@
 import Head from 'next/head';
 
-import { Navbar } from '../components/Navbar';
 import { CardHome } from '../components/CardHome';
-import { Footer } from '../components/Footer';
 
 import styles from "./home.module.css";
 
@@ -182,8 +180,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </>
   )
 }

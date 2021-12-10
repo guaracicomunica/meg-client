@@ -7,7 +7,7 @@ type CardRule = {
 
 export function CardHome(props: CardRule) {
   return (
-    <div className={`${styles["card-rule"]} p-4`}>
+    <div className="card-style p-4">
       <img
         src="./icons/icon-rules.svg"
         className={styles["icon-rules"]}

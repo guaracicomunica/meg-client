@@ -1,17 +1,15 @@
 .menu {
   display: flex;
   justify-content: space-between;
-  padding: 0.75rem 15rem;
-  
+  padding: 0.75rem 15rem; 
   border-top: 10px solid var(--blue-dark);
   background-color: var(--white) !important;
 }
 
 .menu-link {
   padding: 0.5rem 1rem;
-  margin-right: 1.5rem;
-
-  font-size: 1rem;
+  margin-right: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--blue-text);
   transition: color .2s;
@@ -27,15 +25,12 @@
 
 .link-active::after {
   content: "";
-
-  width: calc(100% - 3.25rem);
+  width: calc(100% - 3rem);
   height: 5px;
-
   position: absolute;
   bottom: -1.3rem;
-  left: 25%;
+  left: 28%;
   transform: translateX(-25%);
-
   border-radius: 10px;
   background: linear-gradient(90deg, var(--red) -21.79%, var(--yellow) 100%);
 }

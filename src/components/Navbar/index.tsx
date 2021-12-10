@@ -21,7 +21,7 @@ export function Navbar() {
 
         <div className="collapse navbar-collapse" id="navbar">
           <ul className="navbar-nav mr-auto my-4 my-md-0">
-            <li className={`nav-item ${styles["link-active"]}`}>
+            <li className={`nav-item mt-3 mt-md-0 ${styles["link-active"]}`}>
               <a className={styles["menu-link"]} href="/">Início <span className="sr-only">(Página atual)</span></a>
             </li>
             <li className="nav-item mt-3 mt-md-0">
@@ -31,7 +31,7 @@ export function Navbar() {
               <a className={styles["menu-link"]} href="#">Atividades</a>
             </li>
             <li className="nav-item mt-3 mt-md-0">
-              <a className={`${styles["menu-button"]} button button-blue`} href="#">Acessar</a>
+              <a className={styles["menu-link"]} href="#">Minha conta</a>
             </li>
           </ul>
         </div>

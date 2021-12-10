@@ -13,10 +13,6 @@ export default function Home() {
         <title>Mundo Encantado da Geografia</title>
       </Head>
 
-      <header>
-        <Navbar />
-      </header>
-
       <main>
         <section className={`${styles["home-banner"]}`}>
           <div className="col-8 col-md-4 flex-column">

@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 import { AuthProvider } from '../contexts/AuthContext';
+import { Navbar } from '../components/Navbar';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/global.css';
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <AuthProvider>
+          <Navbar />
           <Component {...pageProps} />
       </AuthProvider>
     </>

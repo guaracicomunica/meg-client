@@ -12,7 +12,7 @@ export function CardHome(props: CardRule) {
         src="./icons/icon-rules.svg"
         className={styles["icon-rules"]}
       />
-      <h6 className="my-3 title-secondary text-center">
+      <h6 className="my-3 title-card text-center">
         {props.title}
       </h6>
 

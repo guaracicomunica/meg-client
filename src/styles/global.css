@@ -60,7 +60,6 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: var(--blue-light);
   text-decoration: none;
-
   transition: filter .3s;
 }
 
@@ -91,6 +90,7 @@ select:focus {
 
 .title-primary, .title-secondary {
   font-weight: 900;
+  font-size: 2rem;
 }
 
 .title-primary {
@@ -102,7 +102,7 @@ select:focus {
 }
 
 .title-card {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--blue);
 }
@@ -114,7 +114,7 @@ select:focus {
 }
 
 .text-gray {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 400;
   color: var(--gray-light);
 }
@@ -149,4 +149,10 @@ select:focus {
 
 .row {
   margin: 0 !important;
+}
+
+@media (max-width: 992px) {
+  .title-primary, .title-secondary {
+    font-size: 1.75rem;
+  }
 }

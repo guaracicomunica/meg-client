@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 import { AuthProvider } from '../contexts/AuthContext';
+import { PageActiveProvider } from '../contexts/PageActiveContext';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
@@ -16,11 +17,13 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <AuthProvider>
+      <PageActiveProvider>
+        <AuthProvider>
           <Navbar />
           <Component {...pageProps} />
           <Footer />
-      </AuthProvider>
+        </AuthProvider>
+      </PageActiveProvider>
     </>
   )
 }

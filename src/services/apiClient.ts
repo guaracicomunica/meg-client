@@ -6,7 +6,7 @@ import { parseCookies } from "nookies";
 export function getAPIClient(ctx?: Pick<next.NextPageContext, 'req'> | {
   req: next.NextApiRequest;
 } | null | undefined) {
-  const { 'ecommerce.token': token } = parseCookies();
+  const { 'meg.token': token } = parseCookies();
 
   const api = axios.create({
     baseURL: 'http://localhost:8000/api'

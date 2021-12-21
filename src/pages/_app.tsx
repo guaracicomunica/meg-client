@@ -1,9 +1,12 @@
 import Head from 'next/head';
 
 import { AuthProvider } from '../contexts/AuthContext';
+import { Navbar } from '../components/Navbar';
+import { Footer } from '../components/Footer';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/global.css';
+import '../styles/buttons.css';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -13,7 +16,9 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <AuthProvider>
+          <Navbar />
           <Component {...pageProps} />
+          <Footer />
       </AuthProvider>
     </>
   )

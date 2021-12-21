@@ -1,0 +1,65 @@
+.form-label {
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--blue-dark);
+}
+
+.form-input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 15px;
+  border: 3px solid var(--gray-form);
+  color: var(--gray-title);
+  font-weight: 700;
+  font-size: 1rem;
+  transition: 0.3s ease-in-out border-color;
+}
+
+.form-input:focus {
+  color: var(--gray-title);
+  border-color: var(--blue-light);
+  box-shadow: none;
+}
+
+.checkbox label, .radio label {
+  background-color: var(--white);
+  border: 2px solid var(--gray-form);
+  border-radius: 50%;
+  cursor: pointer;
+  height: 24px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 24px;
+}
+
+.radio label {
+  position: relative;
+  margin-right: 0.5rem;
+}
+
+.checkbox label:after, .radio label:after {
+  border: 2px solid var(--white);
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 4px;
+  opacity: 0;
+  position: absolute;
+  top: 6px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
+.checkbox input[type="checkbox"], .radio input[type="radio"] {
+  visibility: hidden;
+}
+
+.checkbox input[type="checkbox"]:checked + label, .radio input[type="radio"]:checked + label {
+  background-color: var(--blue-dark);
+  border-color: var(--blue-dark);
+}
+
+.checkbox input[type="checkbox"]:checked + label:after, .radio input[type="radio"]:checked + label:after {
+  opacity: 1;
+}

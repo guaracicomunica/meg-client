@@ -2,16 +2,46 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { options } from '../../utils/defaultToastOptions';
 
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Login() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({defaultValues: {
+    email: "",
+    password: "",
+  }});
   const { signIn } = useContext(AuthContext);
 
   async function handleSignIn(data) {
-    await signIn(data)
+    try {
+      await signIn(data);
+    } catch (error) {
+      if (!error.response) {
+        // network error
+        return toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
+      }
+      switch (error.response.status) {
+        //erro no (email ou senha) ou (não foi cadastrado)
+        case 401:
+          toast.error(error.response?.data.error.trim() ? error.response?.data.error.trim() 
+          : "Ops! Algo não saiu como o esperado, tente novamente ou entre em contato com o suporte.", options);
+          break;
+    
+        case 500: 
+          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
+          break;
+
+        default:
+          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
+          break;
+      }
+    } 
   }
+
+  const onSubmit = async data => handleSignIn(data);
 
   const [roleUser, setRoleUser] = useState("teacher");
 
@@ -31,7 +61,12 @@ export default function Login() {
 
           <h2 className='mt-4'>Login</h2>
 
-          <form className='mt-3 d-flex flex-column w-100'>
+          <form
+            id="login"
+            className='mt-3 d-flex flex-column w-100'
+            onSubmit={handleSubmit(onSubmit)}
+            method='post'
+          >
             <div className="form-group form-check-inline justify-content-around flex-wrap mr-0 mb-2">
               <div className='d-flex mt-2'>
                 <div className="radio">
@@ -72,6 +107,7 @@ export default function Login() {
                 id="user-email"
                 aria-describedby="email"
                 placeholder="Seu e-mail"
+                {...register('email')}
               />
             </div>
             <div className="form-group">
@@ -83,10 +119,12 @@ export default function Login() {
                 className="form-control form-input"
                 id="user-password"
                 placeholder="Sua senha"
+                {...register('password')}
               />
             </div>
 
             <button
+              form="login"
               type="submit"
               className="button button-blue align-self-end"
             >Entrar</button>
@@ -98,6 +136,7 @@ export default function Login() {
           </div>
         </div>
       </main>
+      <ToastContainer />
     </>
   );
 }

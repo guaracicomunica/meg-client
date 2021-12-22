@@ -18,11 +18,20 @@ type SignInData = {
   password: string;
 }
 
+type SignUpData = {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+  role: number;
+}
+
 type AuthContextType = {
   user: User;
   setUser: (data: User) => void;
   isAuthenticated: boolean;
   signIn: (data: SignInData) => void;
+  signUp: (data: SignUpData) => void;
   logoff: () => void;
 }
 
@@ -52,6 +61,31 @@ export function AuthProvider({ children }) {
       });
     }
   }, []);
+
+  async function signUp(data: SignUpData) {
+    const response = await api.post<DataAuth>('/auth/register', {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      password_confirmation: data.password_confirmation,
+      role: data.role
+    });
+
+    setCookie(undefined, 'meg.token', response.data.access_token, {
+      maxAge: 60 * 60, // 1 hour
+    });
+    const userString = JSON.stringify(response.data.user);
+
+    api.defaults.headers['Authorization'] = `Bearer ${response.data.access_token}`;
+
+    setUser(response.data.user);
+    setCookie(null, 'meg.user', userString, {
+      maxAge: 60 * 60, // 1 hour
+    });
+
+    toast.success('Conta criada com sucesso!', options); 
+    Router.push('/turmas');
+  }
 
   async function signIn({ email, password }: SignInData) {
     const response = await api.post<DataAuth>('auth/login', {
@@ -86,7 +120,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, setUser, isAuthenticated, signIn, logoff }}>
+    <AuthContext.Provider value={{ user, setUser, isAuthenticated, signIn, signUp, logoff }}>
       { children }
     </AuthContext.Provider>
   )

@@ -12,3 +12,9 @@
   background-color: var(--blue-dark);
   color: var(--white) !important;
 }
+
+.button:disabled {
+  cursor: not-allowed;
+  background-color: var(--gray-title) !important;
+  color: var(--black) !important;
+}

@@ -40,7 +40,7 @@ export function Navbar() {
               </Link>
             </li>
             <li className={pageActive === PageActive.turmas ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
-              <Link href="#">
+              <Link href="/turmas">
                 <a className={styles["menu-link"]}>
                   Turmas
                   {pageActive === PageActive.turmas && (<span className="sr-only">(Página atual)</span>)}
@@ -56,7 +56,7 @@ export function Navbar() {
               </Link>
             </li>
             <li className={pageActive === PageActive.minhaConta ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
-              <Link href="#">
+              <Link href="/minha-conta">
                 <a className={styles["menu-link"]}>
                   Minha conta
                   {pageActive === PageActive.minhaConta && (<span className="sr-only">(Página atual)</span>)}

@@ -6,12 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { api } from '../services/api';
 import { options } from '../utils/defaultToastOptions';
-
-type User = {
-  id: number;
-  name: string;
-  email: string;
-}
+import { User } from '../types/User';
 
 type SignInData = {
   email: string;
@@ -58,6 +53,7 @@ export function AuthProvider({ children }) {
         id: userJSON.id,
         name: userJSON.name,
         email: userJSON.email,
+        role: userJSON.role,
       });
     }
   }, []);
@@ -78,7 +74,12 @@ export function AuthProvider({ children }) {
 
     api.defaults.headers['Authorization'] = `Bearer ${response.data.access_token}`;
 
-    setUser(response.data.user);
+    setUser({
+      id: response.data.user.id,
+      name: response.data.user.name,
+      email: response.data.user.email,
+      role: response.data.user.role,
+    });
     setCookie(null, 'meg.user', userString, {
       maxAge: 60 * 60, // 1 hour
     });
@@ -100,7 +101,12 @@ export function AuthProvider({ children }) {
 
     api.defaults.headers['Authorization'] = `Bearer ${response.data.access_token}`;
 
-    setUser(response.data.user);
+    setUser({
+      id: response.data.user.id,
+      name: response.data.user.name,
+      email: response.data.user.email,
+      role: response.data.user.role,
+    });
     setCookie(null, 'meg.user', userString, {
       maxAge: 60 * 60, // 1 hour
     });

@@ -8,8 +8,13 @@
   transition: background-color .2s, color .2s;
 }
 
-.button-blue {
+.button-blue-dark {
   background-color: var(--blue-dark);
+  color: var(--white) !important;
+}
+
+.button-blue {
+  background-color: var(--blue);
   color: var(--white) !important;
 }
 

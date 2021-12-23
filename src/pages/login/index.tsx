@@ -126,7 +126,7 @@ export default function Login() {
             <button
               form="login"
               type="submit"
-              className="button button-blue align-self-end"
+              className="button button-blue-dark align-self-end"
             >Entrar</button>
           </form>
 

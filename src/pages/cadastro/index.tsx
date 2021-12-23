@@ -185,7 +185,7 @@ export default function Cadastro() {
             <button
               form='signup'
               type="submit"
-              className="button button-blue align-self-end"
+              className="button button-blue-dark align-self-end"
               id="button-submit"
               disabled={isButtonDisabled}
             >

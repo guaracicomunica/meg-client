@@ -19,8 +19,10 @@ function MyApp({ Component, pageProps }) {
 
       <PageActiveProvider>
         <AuthProvider>
-          <Navbar />
-          <Component {...pageProps} />
+          <div>
+            <Navbar />
+            <Component {...pageProps} />
+          </div>
           <Footer />
         </AuthProvider>
       </PageActiveProvider>

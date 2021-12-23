@@ -1,0 +1,62 @@
+.card-class {
+  height: 25rem;
+  position: relative;
+}
+
+.banner {
+  position: absolute;
+  top: 0;
+  height: 37%;
+  width: 100%;
+}
+
+.banner img {
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.info-class {
+  position: relative;
+  z-index: 1;
+  color: var(--white);
+}
+
+.info-class h5 {
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.info-class hr {
+  background-color: var(--white);
+}
+
+.link-class {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1;
+  background: linear-gradient(269.87deg, #FFFFFF -88.05%, rgba(255, 255, 255, 0) 124.59%);
+  border-radius: 5px;
+  padding: 0.1rem 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #538199;
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.link-class:hover {
+  filter: brightness(0.95);
+}
+
+.card-class-footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

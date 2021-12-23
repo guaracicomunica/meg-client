@@ -1,11 +1,28 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import { parseCookies } from 'nookies';
+import CardClass from '../../components/CardClass';
 
 import { getAPIClient } from '../../services/apiClient';
 
+import styles from './styles.module.css';
+
 export default function Turmas() {
   return (
-    <div>página de turmas do usuário</div>
+    <>
+      <Head>
+        <title>Turmas</title>
+      </Head>
+
+      <main className={styles["classes-list"]}>
+        <CardClass />
+        <CardClass />
+
+        <div className={styles["add-class"]}>
+          <img src="./icons/plus.svg" alt="Adicionar turma" />
+        </div>
+      </main>
+    </>
   );
 }
 

@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { parseCookies } from 'nookies';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import CardClass from '../../components/CardClass';
 
 import { getAPIClient } from '../../services/apiClient';
@@ -40,7 +41,17 @@ export default function Turmas() {
         />
 
         <div className={styles["add-class"]}>
-          <img src="./icons/plus.svg" alt="Adicionar turma" />
+          <OverlayTrigger
+            key="tooltip-add-class"
+            placement="bottom"
+            overlay={
+              <Tooltip id="tooltip">
+                {role === RoleUser.teacher ? "Criar nova turma" : "Adicionar nova turma"}
+              </Tooltip>
+            }
+          >
+            <img src="./icons/plus.svg" alt="Adicionar turma" />
+          </OverlayTrigger>
         </div>
       </main>
     </>

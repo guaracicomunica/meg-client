@@ -46,8 +46,8 @@ export function AuthProvider({ children }) {
     const { 'meg.token': token } = parseCookies();
 
     if (token) {
-      const { 'meg.user': user } = parseCookies();
-      const userJSON: User = JSON.parse(user);
+      const { 'meg.user': userCookie } = parseCookies();
+      const userJSON: User = JSON.parse(userCookie);
 
       setUser({
         id: userJSON.id,

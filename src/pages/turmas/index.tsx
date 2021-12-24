@@ -1,18 +1,18 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { parseCookies } from 'nookies';
+import { useContext } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import CardClass from '../../components/CardClass';
+import { parseCookies } from 'nookies';
 
+import CardClass from '../../components/CardClass';
+import { AuthContext } from '../../contexts/AuthContext';
 import { getAPIClient } from '../../services/apiClient';
-import { User } from '../../types/User';
 import { RoleUser } from '../../enums/enumRoleUser';
 
 import styles from './styles.module.css';
 
 export default function Turmas() {
-  const { 'meg.user': user } = parseCookies();
-  const { role }: User = JSON.parse(user);
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -28,7 +28,7 @@ export default function Turmas() {
           name="As aventuras dos Jovens Sonhadores"
           teacher="Marjorie Ramos"
           bannerFile="banner-class"
-          roleUser={role}
+          roleUser={user?.role}
         />
         <CardClass
           key={2}
@@ -37,7 +37,7 @@ export default function Turmas() {
           name="As aventuras dos Jovens Sonhadores"
           teacher="Marjorie Ramos"
           bannerFile="banner-class-2"
-          roleUser={role}
+          roleUser={user?.role}
         />
 
         <div className={styles["add-class"]}>
@@ -46,7 +46,7 @@ export default function Turmas() {
             placement="bottom"
             overlay={
               <Tooltip id="tooltip">
-                {role === RoleUser.teacher ? "Criar nova turma" : "Adicionar nova turma"}
+                {user?.role === RoleUser.teacher ? "Criar nova turma" : "Adicionar nova turma"}
               </Tooltip>
             }
           >

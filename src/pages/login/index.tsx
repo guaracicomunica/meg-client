@@ -26,8 +26,7 @@ export default function Login() {
       switch (error.response.status) {
         //erro no (email ou senha) ou (não foi cadastrado)
         case 401:
-          toast.error(error.response?.data.error.trim() ? error.response?.data.error.trim() 
-          : "Ops! Algo não saiu como o esperado, tente novamente ou entre em contato com o suporte.", options);
+          toast.error("O email e a senha estão incorretos.", options);
           break;
     
         case 500: 

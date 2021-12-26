@@ -11,6 +11,7 @@ import { RoleUser } from '../../enums/enumRoleUser';
 
 import styles from './styles.module.css';
 import ModalCreateNewClass from '../../components/ModalCreateNewClass';
+import ModalAddClass from '../../components/ModalAddClass';
 
 export default function Turmas() {
   const { user } = useContext(AuthContext);
@@ -70,6 +71,11 @@ export default function Turmas() {
         <ModalCreateNewClass
           show={showModalTeacher}
           onHide={() => setShowModalTeacher(false)}
+        />
+
+        <ModalAddClass
+          show={showModalStudent}
+          onHide={() => setShowModalStudent(false)}
         />
       </main>
     </>

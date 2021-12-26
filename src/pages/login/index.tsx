@@ -15,23 +15,30 @@ export default function Login() {
   }});
   const { signIn } = useContext(AuthContext);
 
+  const [buttonString, setButtonString] = useState("Entrar");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   async function handleSignIn(data) {
     try {
+      setIsButtonDisabled(true);
+      setButtonString("Aguarde...");
       await signIn(data);
     } catch (error) {
+      setIsButtonDisabled(false);
+      setButtonString("Entrar");
+
       if (!error.response) {
         // network error
         return toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
       }
       switch (error.response.status) {
-
+        
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() 
           : "Ops! Algo não saiu como o esperado, tente novamente ou entre em contato com o suporte.", options);
-          break;
+
         case 401:
-          toast.error(error.response?.data.error.trim() && error.response?.data.error.trim() != "Unauthorized" ? error.response?.data.error.trim() 
-          : "Credenciais incorretas!", options);
+          toast.error("O email ou a senha estão incorretos.", options);
           break;
 
         case 500: 
@@ -130,8 +137,12 @@ export default function Login() {
             <button
               form="login"
               type="submit"
+              id="button-submit"
               className="button button-blue-dark align-self-end"
-            >Entrar</button>
+              disabled={isButtonDisabled}
+            >
+              {buttonString}
+            </button>
           </form>
 
           <hr className='w-100 mt-4' />

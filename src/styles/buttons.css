@@ -13,6 +13,19 @@
   color: var(--white) !important;
 }
 
+.button-blue-dark-outline {
+  border: 1px solid var(--blue-dark);
+  background-color: var(--white);
+  color: var(--blue-dark) !important;
+  transition: 0.2s;
+}
+
+.button-blue-dark-outline:hover {
+  border-color: var(--white);
+  background-color: var(--blue-dark);
+  color: var(--white) !important;
+}
+
 .button-blue {
   background-color: var(--blue);
   color: var(--white) !important;

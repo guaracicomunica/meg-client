@@ -16,76 +16,79 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [levelInputs, setLevelInputs] = useState([]);
 
   useEffect(() => {
-    setSkillInputs([
-      <div className="form-row" key="input-skill-1">
-        <div className="form-group col-md-4">
-          <input
-            type="text"
-            className="form-control form-input"
-            id="name-skill-1"
-            placeholder="Nome da habilidade"
-          />
-        </div>
+    if (!props.show) {
+      setSkillInputs([
+        <div className="form-row" key="input-skill-1">
+          <div className="form-group col-md-4">
+            <input
+              type="text"
+              className="form-control form-input"
+              id="name-skill-1"
+              placeholder="Nome da habilidade"
+            />
+          </div>
 
-        <div className="form-group col-md-4">
-          <input
-            type="number"
-            min={1}
-            className="form-control form-input"
-            id="value-skill-1"
-            placeholder="Valor da habilidade"
-          />
-        </div>
+          <div className="form-group col-md-4">
+            <input
+              type="number"
+              min={1}
+              className="form-control form-input"
+              id="value-skill-1"
+              placeholder="Valor da habilidade"
+            />
+          </div>
 
-        <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
-          <input
-            type="file"
-            id="img-skill-1"
-            accept=".png, .jpg, .jpeg, .svg"
-          />
-          <label htmlFor="img-skill-1" className='ml-1'>
-            <img src="./icons/camera.svg" alt="Adicionar imagem" />
-          </label>
-          <span>Defina uma capa</span>
+          <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+            <input
+              type="file"
+              id="img-skill-1"
+              accept=".png, .jpg, .jpeg, .svg"
+            />
+            <label htmlFor="img-skill-1" className='ml-1'>
+              <img src="./icons/camera.svg" alt="Adicionar imagem" />
+            </label>
+            <span>Defina uma capa</span>
+          </div>
         </div>
-      </div>
-    ]);
+      ]);
 
-    setLevelInputs([
-      <div className="form-row" key="input-level-1">
-        <div className="form-group col-md-4">
-          <input
-            type="text"
-            className="form-control form-input"
-            id="name-level-1"
-            placeholder="Nome do nível"
-          />
-        </div>
+      setLevelInputs([
+        <div className="form-row" key="input-level-1">
+          <div className="form-group col-md-4">
+            <input
+              type="text"
+              className="form-control form-input"
+              id="name-level-1"
+              placeholder="Nome do nível"
+            />
+          </div>
 
-        <div className="form-group col-md-4">
-          <input
-            type="number"
-            min={1}
-            className="form-control form-input"
-            id="value-level-1"
-            placeholder="XP do nível"
-          />
-        </div>
+          <div className="form-group col-md-4">
+            <input
+              type="number"
+              min={1}
+              className="form-control form-input"
+              id="value-level-1"
+              placeholder="XP do nível"
+            />
+          </div>
 
-        <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
-          <input
-            type="file"
-            id="img-level-1"
-            accept=".png, .jpg, .jpeg, .svg"
-          />
-          <label htmlFor="img-level-1" className='ml-1'>
-            <img src="./icons/camera.svg" alt="Adicionar imagem" />
-          </label>
-          <span>Defina uma capa</span>
+          <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+            <input
+              type="file"
+              id="img-level-1"
+              accept=".png, .jpg, .jpeg, .svg"
+            />
+            <label htmlFor="img-level-1" className='ml-1'>
+              <img src="./icons/camera.svg" alt="Adicionar imagem" />
+            </label>
+            <span>Defina uma capa</span>
+          </div>
         </div>
-      </div>
-    ]);
-  }, []);
+      ]);
+    }
+    
+  }, [props.show]);
 
   function enableSkillStore(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.currentTarget.value === "yes") {
@@ -198,6 +201,8 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   function closeModal() {
     props.onHide();
     setIsSkillStoreEnabled(false);
+    setLevelsCounter(1);
+    setSkillsCounter(1);
   }
 
   return (

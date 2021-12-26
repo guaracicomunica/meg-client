@@ -31,7 +31,7 @@ type AuthContextType = {
   setUser: (data: User) => void;
   isAuthenticated: boolean;
   signIn: (data: SignInData) => void;
-  signUp: (data: SignUpData) => void;
+  signUp: (data: SignUpData, makeLogin: boolean) => void;
   logoff: () => void;
 }
 
@@ -62,7 +62,7 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  async function signUp(data: SignUpData) {
+  async function signUp(data: SignUpData, makeLogin: boolean = false) {
     const response = await api.post<DataAuth>('/auth/register', {
       name: data.name,
       email: data.email,
@@ -70,21 +70,32 @@ export function AuthProvider({ children }) {
       password_confirmation: data.password_confirmation,
       role: data.role
     });
+    
+    if(makeLogin == true)
+    {
 
-    setCookie(undefined, 'meg.token', response.data.access_token, {
-      maxAge: 60 * 60, // 1 hour
-    });
-    const userString = JSON.stringify(response.data.user);
+      setCookie(undefined, 'meg.token', response.data.access_token, {
+        maxAge: 60 * 60, // 1 hour
+      });
 
-    api.defaults.headers['Authorization'] = `Bearer ${response.data.access_token}`;
+      const userString = JSON.stringify(response.data.user);
+  
+      api.defaults.headers['Authorization'] = `Bearer ${response.data.access_token}`;
+  
+      setUser(response.data.user);
 
-    setUser(response.data.user);
-    setCookie(null, 'meg.user', userString, {
-      maxAge: 60 * 60, // 1 hour
-    });
+      setCookie(null, 'meg.user', userString, {
+        maxAge: 60 * 60, // 1 hour
+      });
+  
+    }
 
     toast.success('Conta criada com sucesso!', options); 
-    Router.push('/turmas');
+
+    toast.success('Foi enviado um e-mail de confirmação. Acesse sua caixa de entrada e confirme-o para ter acesso.', options); 
+
+    if(makeLogin == true) { Router.push('/turmas'); }
+
   }
 
   async function signIn({ email, password }: SignInData) {

@@ -15,10 +15,18 @@ export default function Login() {
   }});
   const { signIn } = useContext(AuthContext);
 
+  const [buttonString, setButtonString] = useState("Entrar");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
   async function handleSignIn(data) {
     try {
+      setIsButtonDisabled(true);
+      setButtonString("Aguarde...");
       await signIn(data);
     } catch (error) {
+      setIsButtonDisabled(false);
+      setButtonString("Entrar");
+
       if (!error.response) {
         // network error
         return toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
@@ -125,8 +133,12 @@ export default function Login() {
             <button
               form="login"
               type="submit"
+              id="button-submit"
               className="button button-blue-dark align-self-end"
-            >Entrar</button>
+              disabled={isButtonDisabled}
+            >
+              {buttonString}
+            </button>
           </form>
 
           <hr className='w-100 mt-4' />

@@ -11,7 +11,6 @@ export default function ModalAddClass(props: ModalAddClassType) {
       id="modal-add-class-student"
       show={props.show}
       onHide={props.onHide}
-      size="lg"
       aria-labelledby="modal-title"
       centered
       className="modal-style"

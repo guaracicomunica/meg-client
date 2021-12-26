@@ -24,12 +24,16 @@ export default function Login() {
         return toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
       }
       switch (error.response.status) {
-        //erro no (email ou senha) ou (não foi cadastrado)
-        case 401:
-          toast.error(error.response?.data.error.trim() ? error.response?.data.error.trim() 
+
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() 
           : "Ops! Algo não saiu como o esperado, tente novamente ou entre em contato com o suporte.", options);
           break;
-    
+        case 401:
+          toast.error(error.response?.data.error.trim() && error.response?.data.error.trim() != "Unauthorized" ? error.response?.data.error.trim() 
+          : "Credenciais incorretas!", options);
+          break;
+
         case 500: 
           toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
           break;

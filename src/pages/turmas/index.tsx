@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useContext } from 'react';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useContext, useState } from 'react';
+import { OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
 import { parseCookies } from 'nookies';
 
 import CardClass from '../../components/CardClass';
@@ -10,9 +10,22 @@ import { getAPIClient } from '../../services/apiClient';
 import { RoleUser } from '../../enums/enumRoleUser';
 
 import styles from './styles.module.css';
+import ModalCreateNewClass from '../../components/ModalCreateNewClass';
 
 export default function Turmas() {
   const { user } = useContext(AuthContext);
+
+  const [showModalTeacher, setShowModalTeacher] = useState(false);
+  const [showModalStudent, setShowModalStudent] = useState(false);
+
+  function openModal(role: number) {
+    if (role === RoleUser.teacher) {
+      setShowModalTeacher(true);
+    }
+    if (role === RoleUser.student) {
+      setShowModalStudent(true);
+    }
+  }
 
   return (
     <>
@@ -26,7 +39,7 @@ export default function Turmas() {
           id={1}
           class="Turma 01"
           name="As aventuras dos Jovens Sonhadores"
-          teacher="Marjorie Ramos"
+          teacher={user?.name}
           bannerFile="banner-class"
           roleUser={user?.role}
         />
@@ -35,12 +48,12 @@ export default function Turmas() {
           id={2}
           class="Turma 02"
           name="As aventuras dos Jovens Sonhadores"
-          teacher="Marjorie Ramos"
+          teacher={user?.name}
           bannerFile="banner-class-2"
           roleUser={user?.role}
         />
 
-        <div className={styles["add-class"]}>
+        <div className={styles["add-class"]} onClick={() => openModal(user?.role)}>
           <OverlayTrigger
             key="tooltip-add-class"
             placement="bottom"
@@ -53,6 +66,11 @@ export default function Turmas() {
             <img src="./icons/plus.svg" alt="Adicionar turma" />
           </OverlayTrigger>
         </div>
+
+        <ModalCreateNewClass
+          show={showModalTeacher}
+          onHide={() => setShowModalTeacher(false)}
+        />
       </main>
     </>
   );

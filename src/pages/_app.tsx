@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/global.css';
 import '../styles/buttons.css';
 import '../styles/form.css';
+import '../styles/modal.css';
 
 function MyApp({ Component, pageProps }) {
   return (

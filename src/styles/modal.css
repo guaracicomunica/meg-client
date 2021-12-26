@@ -1,0 +1,28 @@
+.modal-style .modal-content {
+  border: none;
+  border-radius: 15px;
+}
+
+.modal-style .modal-title {
+  font-weight: 900;
+  font-size: 1.75rem;
+  color: var(--blue-dark);
+}
+
+.modal-style .modal-body h4 {
+  margin-bottom: 1.5rem;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: var(--blue-dark);
+}
+
+.modal-style .modal-footer .modal-button {
+  color: var(--gray-title);
+  font-weight: 900;
+}
+
+.modal-button {
+  background-color: var(--white);
+  border: none;
+  font-size: 1rem;
+}

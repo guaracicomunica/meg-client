@@ -26,7 +26,13 @@ export default function Cadastro() {
     try {
       setIsButtonDisabled(true);
       setButtonString("Aguarde...");
-      await signUp(data);
+      await signUp(data, false);
+      setButtonString("Pronto!");
+      setTimeout(() => {
+        setIsButtonDisabled(false);
+        setButtonString("Cadastre-se!");  
+      }, 5000);
+      
     } catch (error) {
       setIsButtonDisabled(false);
       setButtonString("Cadastre-se");
@@ -56,7 +62,7 @@ export default function Cadastro() {
             toast.error(item, options);     
           });
           break;
-    
+
         case 500: 
           toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
           break;

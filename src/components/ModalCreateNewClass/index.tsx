@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 
 import styles from './styles.module.css';
@@ -10,6 +10,82 @@ type ModalCreateNewClassType = {
 
 export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [isSkillStoreEnabled, setIsSkillStoreEnabled] = useState(false);
+  const [skillsCounter, setSkillsCounter] = useState(1);
+  const [skillInputs, setSkillInputs] = useState([]);
+  const [levelsCounter, setLevelsCounter] = useState(1);
+  const [levelInputs, setLevelInputs] = useState([]);
+
+  useEffect(() => {
+    setSkillInputs([
+      <div className="form-row" key="input-skill-1">
+        <div className="form-group col-md-4">
+          <input
+            type="text"
+            className="form-control form-input"
+            id="name-skill-1"
+            placeholder="Nome da habilidade"
+          />
+        </div>
+
+        <div className="form-group col-md-4">
+          <input
+            type="number"
+            min={1}
+            className="form-control form-input"
+            id="value-skill-1"
+            placeholder="Valor da habilidade"
+          />
+        </div>
+
+        <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+          <input
+            type="file"
+            id="img-skill-1"
+            accept=".png, .jpg, .jpeg, .svg"
+          />
+          <label htmlFor="img-skill-1" className='ml-1'>
+            <img src="./icons/camera.svg" alt="Adicionar imagem" />
+          </label>
+          <span>Defina uma capa</span>
+        </div>
+      </div>
+    ]);
+
+    setLevelInputs([
+      <div className="form-row" key="input-level-1">
+        <div className="form-group col-md-4">
+          <input
+            type="text"
+            className="form-control form-input"
+            id="name-level-1"
+            placeholder="Nome do nível"
+          />
+        </div>
+
+        <div className="form-group col-md-4">
+          <input
+            type="number"
+            min={1}
+            className="form-control form-input"
+            id="value-level-1"
+            placeholder="XP do nível"
+          />
+        </div>
+
+        <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+          <input
+            type="file"
+            id="img-level-1"
+            accept=".png, .jpg, .jpeg, .svg"
+          />
+          <label htmlFor="img-level-1" className='ml-1'>
+            <img src="./icons/camera.svg" alt="Adicionar imagem" />
+          </label>
+          <span>Defina uma capa</span>
+        </div>
+      </div>
+    ]);
+  }, []);
 
   function enableSkillStore(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.currentTarget.value === "yes") {
@@ -27,6 +103,96 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     else {
       e.currentTarget.querySelector("span").innerText = "Defina uma capa";
     }
+  }
+
+  function addSkill(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setSkillsCounter(skillsCounter+1);
+
+    const input = (
+      <div className="form-row" key={`input-skill-${skillsCounter+1}`}>
+        <div className="form-group col-md-4">
+          <input
+            type="text"
+            className="form-control form-input"
+            id={`name-skill-${skillsCounter+1}`}
+            placeholder="Nome da habilidade"
+          />
+        </div>
+
+        <div className="form-group col-md-4">
+          <input
+            type="number"
+            min={1}
+            className="form-control form-input"
+            id={`value-skill-${skillsCounter+1}`}
+            placeholder="Valor da habilidade"
+          />
+        </div>
+
+        <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+          <input
+            type="file"
+            id={`img-skill-${skillsCounter+1}`}
+            accept=".png, .jpg, .jpeg, .svg"
+          />
+          <label htmlFor={`img-skill-${skillsCounter+1}`} className='ml-1'>
+            <img src="./icons/camera.svg" alt="Adicionar imagem" />
+          </label>
+          <span>Defina uma capa</span>
+        </div>
+      </div>
+    );
+
+    setSkillInputs([
+      ...skillInputs,
+      input
+    ]);
+  }
+
+  function addLevel(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    setLevelsCounter(levelsCounter+1);
+
+    const input = (
+      <div className="form-row" key={`input-level-${levelsCounter+1}`}>
+        <div className="form-group col-md-4">
+          <input
+            type="text"
+            className="form-control form-input"
+            id={`name-level-${levelsCounter+1}`}
+            placeholder="Nome do nível"
+          />
+        </div>
+
+        <div className="form-group col-md-4">
+          <input
+            type="number"
+            min={1}
+            className="form-control form-input"
+            id={`value-level-${levelsCounter+1}`}
+            placeholder="XP do nível"
+          />
+        </div>
+
+        <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+          <input
+            type="file"
+            id={`img-level-${levelsCounter+1}`}
+            accept=".png, .jpg, .jpeg, .svg"
+          />
+          <label htmlFor={`img-level-${levelsCounter+1}`} className='ml-1'>
+            <img src="./icons/camera.svg" alt="Adicionar imagem" />
+          </label>
+          <span>Defina uma capa</span>
+        </div>
+      </div>
+    );
+
+    setLevelInputs([
+      ...levelInputs,
+      input
+    ]);
   }
 
   function closeModal() {
@@ -106,41 +272,10 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               <h4>Loja de habilidades</h4>
 
               <div id="form-skills">
-                <div className="form-row">
-                  <div className="form-group col-md-4">
-                    <input
-                      type="text"
-                      className="form-control form-input"
-                      id="name-skill-1"
-                      placeholder="Nome da habilidade"
-                    />
-                  </div>
-
-                  <div className="form-group col-md-4">
-                    <input
-                      type="number"
-                      min={1}
-                      className="form-control form-input"
-                      id="value-skill-1"
-                      placeholder="Valor da habilidade"
-                    />
-                  </div>
-
-                  <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
-                    <input
-                      type="file"
-                      id="img-skill-1"
-                      accept=".png, .jpg, .jpeg, .svg"
-                    />
-                    <label htmlFor="img-skill-1" className='ml-1'>
-                      <img src="./icons/camera.svg" alt="Adicionar imagem" />
-                    </label>
-                    <span>Defina uma capa</span>
-                  </div>
-                </div>
+                {skillInputs.map(input => input)}
               </div>
 
-              <button className={`${styles["button-add-input"]} modal-button`}>
+              <button onClick={addSkill} className={`${styles["button-add-input"]} modal-button`}>
                 <img src="./icons/plus.svg" alt="Adicionar habilidade" style={{height: "1.2rem"}} />
                 <span className="ml-2">Nova habilidade</span>
               </button>
@@ -152,41 +287,10 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           <h4>Definir níveis da turma</h4>
 
           <div id="form-levels">
-            <div className="form-row">
-              <div className="form-group col-md-4">
-                <input
-                  type="text"
-                  className="form-control form-input"
-                  id="name-level-1"
-                  placeholder="Nome do nível"
-                />
-              </div>
-
-              <div className="form-group col-md-4">
-                <input
-                  type="number"
-                  min={1}
-                  className="form-control form-input"
-                  id="value-level-1"
-                  placeholder="XP do nível"
-                />
-              </div>
-
-              <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
-                <input
-                  type="file"
-                  id="img-level-1"
-                  accept=".png, .jpg, .jpeg, .svg"
-                />
-                <label htmlFor="img-level-1" className='ml-1'>
-                  <img src="./icons/camera.svg" alt="Adicionar imagem" />
-                </label>
-                <span>Defina uma capa</span>
-              </div>
-            </div>
+            {levelInputs.map(input => input)}
           </div>
 
-          <button className={`${styles["button-add-input"]} modal-button`}>
+          <button onClick={addLevel} className={`${styles["button-add-input"]} modal-button`}>
             <img src="./icons/plus.svg" alt="Adicionar nível" style={{height: "1.2rem"}} />
             <span className="ml-2">Novo nível</span>
           </button>

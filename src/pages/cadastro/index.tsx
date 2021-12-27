@@ -8,37 +8,59 @@ import { options } from '../../utils/defaultToastOptions';
 
 import { AuthContext } from '../../contexts/AuthContext';
 
-export default function Login() {
+export default function Cadastro() {
   const { register, handleSubmit } = useForm({defaultValues: {
+    name: "",
     email: "",
     password: "",
+    password_confirmation: "",
+    role: 2
   }});
-  const { signIn } = useContext(AuthContext);
 
-  const [buttonString, setButtonString] = useState("Entrar");
+  const { signUp } = useContext(AuthContext);
+
+  const [buttonString, setButtonString] = useState("Cadastre-se");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-  async function handleSignIn(data) {
+  async function handleSignUp(data) {
     try {
       setIsButtonDisabled(true);
       setButtonString("Aguarde...");
-      await signIn(data);
+      await signUp(data, false);
+      setButtonString("Pronto!");
+      setTimeout(() => {
+        setIsButtonDisabled(false);
+        setButtonString("Cadastre-se!");  
+      }, 5000);
+      
     } catch (error) {
       setIsButtonDisabled(false);
-      setButtonString("Entrar");
+      setButtonString("Cadastre-se");
 
       if (!error.response) {
         // network error
         return toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
       }
       switch (error.response.status) {
-        
+        //erro de validação
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() 
-          : "Ops! Algo não saiu como o esperado, tente novamente ou entre em contato com o suporte.", options);
-
-        case 401:
-          toast.error("O email ou a senha estão incorretos.", options);
+          const obj = JSON.parse(error.response.data.error);
+      
+          obj?.name?.map(item => {
+            toast.error(item, options);
+          });
+          obj?.role?.map(item => {
+            toast.error(item, options);     
+          });
+          obj?.email?.map(item => {
+            toast.error(item, options);     
+          });
+          obj?.password?.map(item => {
+            toast.error(item, options);     
+          });
+          obj?.password_confirmation?.map(item => {
+            toast.error(item, options);     
+          });
           break;
 
         case 500: 
@@ -52,29 +74,29 @@ export default function Login() {
     } 
   }
 
-  const onSubmit = async data => handleSignIn(data);
+  const onSubmit = async data => handleSignUp(data);
 
   const [roleUser, setRoleUser] = useState("teacher");
 
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Cadastro</title>
       </Head>
       
       <main className="section pb-0 d-flex flex-column align-items-center">
-        <div className="card-style col-12 col-md-8 col-lg-7 col-xl-4 p-5">
+        <div className="card-style col-12 col-md-9 col-lg-7 col-xl-5 p-5">
           <img
             src="./images/icon-user.svg"
             alt="Icon do user"
             style={{height: "8rem"}}
           />
 
-          <h2 className='mt-4'>Login</h2>
+          <h2 className='mt-4'>Cadastro</h2>
 
           <form
-            id="login"
             className='mt-3 d-flex flex-column w-100'
+            id='signup'
             onSubmit={handleSubmit(onSubmit)}
             method='post'
           >
@@ -83,13 +105,15 @@ export default function Login() {
                 <div className="radio">
                   <input
                     type="radio"
-                    id="radio-teacher"
-                    name="role-user"
+                    id="role-teacher"
+                    name="role"
+                    value={2}
                     defaultChecked={true}
                     required={true}
                     onChange={() => setRoleUser("teacher")}
+                    {...register('role')}
                   />
-                  <label htmlFor="radio-teacher"> </label>
+                  <label htmlFor="role-teacher"> </label>
                 </div>
                 <span>Sou docente</span>
               </div>
@@ -98,47 +122,77 @@ export default function Login() {
                 <div className="radio">
                   <input
                     type="radio"
-                    id="radio-student"
-                    name="role-user"
+                    id="role-student"
+                    name="role"
+                    value={3}
                     onChange={() => setRoleUser("student")}
+                    {...register('role')}
                   />
-                  <label htmlFor="radio-student"> </label>
+                  <label htmlFor="role-student"> </label>
                 </div>
                 <span>Sou estudante</span>
               </div>
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="user-email">
+              <label className="form-label" htmlFor="name">
+                Digite seu nome completo
+              </label>
+              <input
+                type="text"
+                className="form-control form-input"
+                id="name"
+                aria-describedby="name"
+                placeholder="Seu nome"
+                {...register('name')}
+              />
+            </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="email">
                 {roleUser === "student" ? "Digite seu e-mail escolar" : "Digite seu e-mail acadêmico"}
               </label>
               <input
                 type="email"
                 className="form-control form-input"
-                id="user-email"
+                id="email"
                 aria-describedby="email"
                 placeholder="Seu e-mail"
                 {...register('email')}
               />
             </div>
             <div className="form-group">
-              <label className="form-label"  htmlFor="user-password">
+              <label className="form-label" htmlFor="password">
                 Digite sua senha
               </label>
               <input
                 type="password"
                 className="form-control form-input"
-                id="user-password"
+                id="password"
                 placeholder="Sua senha"
                 {...register('password')}
               />
             </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="password-confirm">
+                Digite sua senha novamente
+              </label>
+              <input
+                type="password"
+                className="form-control form-input"
+                id="password-confirm"
+                placeholder="Confirme sua senha"
+                {...register('password_confirmation')}
+              />
+            </div>
+            <div className="form-group">
+              Ao se cadastrar no MEG, você aceita o contrato de privacidade e todos os termos de segurança. Leia os termos <Link href='#'>aqui</Link>
+            </div>
 
             <button
-              form="login"
+              form='signup'
               type="submit"
-              id="button-submit"
               className="button button-blue-dark align-self-end"
+              id="button-submit"
               disabled={isButtonDisabled}
             >
               {buttonString}
@@ -147,11 +201,11 @@ export default function Login() {
 
           <hr className='w-100 mt-4' />
           <div className='align-self-start'>
-            Não possui uma conta? <Link href="/cadastro">Cadastre-se</Link>
+            Já possui uma conta? <Link href="/login">Faça login</Link>
           </div>
         </div>
       </main>
       <ToastContainer />
     </>
-  );
+  )
 }

@@ -11,6 +11,7 @@
   --gray-text: #676767;
   --gray-title: #979797;
   --gray-light: #D5D5D5;
+  --gray-form: #D8D8D8;
   --blue-light: #87D2EF;
   --blue: #2575FC;
   --blue-dark: #003049;
@@ -164,4 +165,8 @@ select:focus {
   border-radius: 10px;
   background-color: var(--white);
   box-shadow: 0px 2px 10px rgba(216, 216, 216, 0.3);
+}
+
+.w-100{
+  width: 100%;
 }

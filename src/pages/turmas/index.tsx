@@ -48,18 +48,22 @@ export default function Turmas(props: ClassPageType) {
       </Head>
 
       <main className={styles["classes-list"]}>
-        {props.classes.length > 0 && props.classes.map(userClass => {
-          <CardClass
-            key={userClass.id}
-            id={userClass.id}
-            name={userClass.name}
-            nickname={userClass.nickname}
-            teacher={user?.name}
-            code={userClass.code}
-            bannerFile="banner-class"
-            roleUser={user?.role}
-          />
-        })}
+        {props.classes.length > 0 ? (
+          props.classes.map(userClass => {
+            return (
+              <CardClass
+                key={userClass.id}
+                id={userClass.id}
+                name={userClass.name}
+                nickname={userClass.nickname}
+                teacher={user?.name}
+                code={userClass.code}
+                bannerFile="banner-class"
+                roleUser={user?.role}
+              />
+            );
+          })
+        ) : ""}
 
         <div className={styles["add-class"]} onClick={() => openModal(user?.role)}>
           <OverlayTrigger
@@ -105,8 +109,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
   apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-  const { data: classes } = await apiClient.get('classes');
-  
+  const response = await apiClient.get('classes');
+  const classes = response.data.data;
+
   return {
     props: {
       classes

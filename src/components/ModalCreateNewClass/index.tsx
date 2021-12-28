@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+
+import { api } from '../../services/api';
+import { options } from '../../utils/defaultToastOptions';
 
 import styles from './styles.module.css';
 
@@ -8,58 +13,53 @@ type ModalCreateNewClassType = {
   onHide: () => void;
 }
 
+type SkillType = {
+  name: string;
+  coins: number;
+}
+
+type LevelType = {
+  name: string;
+  xp: number;
+}
+
+type DataClassType = {
+  name: string;
+  nickname: string;
+  partners?: string[];
+  skills?: SkillType[];
+  levels: LevelType[];
+}
+
 export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
+  const { register, unregister, handleSubmit, reset } = useForm({defaultValues: {
+    name: "",
+    nickname: "",
+    partners: [],
+    skills: [],
+    levels: [],
+  }});
+
+  const onSubmit = async (data: DataClassType) => handleCreateClass(data);
+
   const [isSkillStoreEnabled, setIsSkillStoreEnabled] = useState(false);
   const [skillsCounter, setSkillsCounter] = useState(1);
   const [skillInputs, setSkillInputs] = useState([]);
   const [levelsCounter, setLevelsCounter] = useState(1);
   const [levelInputs, setLevelInputs] = useState([]);
+  const [isDraft, setIsDraft] = useState(1);
 
   useEffect(() => {
-    if (!props.show) {
-      setSkillInputs([
-        <div className="form-row" key="input-skill-1">
-          <div className="form-group col-md-4">
-            <input
-              type="text"
-              className="form-control form-input"
-              id="name-skill-1"
-              placeholder="Nome da habilidade"
-            />
-          </div>
-
-          <div className="form-group col-md-4">
-            <input
-              type="number"
-              min={1}
-              className="form-control form-input"
-              id="value-skill-1"
-              placeholder="Valor da habilidade"
-            />
-          </div>
-
-          <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
-            <input
-              type="file"
-              id="img-skill-1"
-              accept=".png, .jpg, .jpeg, .svg"
-            />
-            <label htmlFor="img-skill-1" className='ml-1'>
-              <img src="./icons/camera.svg" alt="Adicionar imagem" />
-            </label>
-            <span>Defina uma capa</span>
-          </div>
-        </div>
-      ]);
-
+    if (props.show) {
       setLevelInputs([
         <div className="form-row" key="input-level-1">
           <div className="form-group col-md-4">
             <input
               type="text"
               className="form-control form-input"
-              id="name-level-1"
+              name="levels[0][name]"
               placeholder="Nome do nível"
+              {...register('levels.0.name')}
             />
           </div>
 
@@ -68,15 +68,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               type="number"
               min={1}
               className="form-control form-input"
-              id="value-level-1"
+              name="levels[0][xp]"
               placeholder="XP do nível"
+              {...register('levels.0.xp')}
             />
           </div>
 
           <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
             <input
               type="file"
-              id="img-level-1"
+              name="img-level-1"
               accept=".png, .jpg, .jpeg, .svg"
             />
             <label htmlFor="img-level-1" className='ml-1'>
@@ -87,8 +88,48 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         </div>
       ]);
     }
-    
   }, [props.show]);
+
+  useEffect(() => {
+    if (!isSkillStoreEnabled) {
+      setSkillInputs([
+        <div className="form-row" key="input-skill-1">
+          <div className="form-group col-md-4">
+            <input
+              type="text"
+              className="form-control form-input"
+              name="skills[0][name]"
+              placeholder="Nome da habilidade"
+              {...register('skills.0.name')}
+            />
+          </div>
+
+          <div className="form-group col-md-4">
+            <input
+              type="number"
+              min={1}
+              className="form-control form-input"
+              name="skills[0][coins]"
+              placeholder="Valor da habilidade"
+              {...register('skills.0.coins')}
+            />
+          </div>
+
+          <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+            <input
+              type="file"
+              name="img-skill-1"
+              accept=".png, .jpg, .jpeg, .svg"
+            />
+            <label htmlFor="img-skill-1" className='ml-1'>
+              <img src="./icons/camera.svg" alt="Adicionar imagem" />
+            </label>
+            <span>Defina uma capa</span>
+          </div>
+        </div>
+      ]);
+    }
+  }, [isSkillStoreEnabled]);
 
   function enableSkillStore(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.currentTarget.value === "yes") {
@@ -96,6 +137,9 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     }
     if (e.currentTarget.value === "no") {
       setIsSkillStoreEnabled(false);
+      unregister('skills.0.name');
+      unregister('skills.0.coins');
+      setSkillsCounter(1);
     }
   }
 
@@ -110,7 +154,6 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
   function addSkill(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    setSkillsCounter(skillsCounter+1);
 
     const input = (
       <div className="form-row" key={`input-skill-${skillsCounter+1}`}>
@@ -118,8 +161,9 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           <input
             type="text"
             className="form-control form-input"
-            id={`name-skill-${skillsCounter+1}`}
+            name={`skills[${skillsCounter}][name]`}
             placeholder="Nome da habilidade"
+            {...register(`skills.${skillsCounter}.name`)}
           />
         </div>
 
@@ -128,15 +172,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             type="number"
             min={1}
             className="form-control form-input"
-            id={`value-skill-${skillsCounter+1}`}
+            name={`skills[${skillsCounter}][coins]`}
             placeholder="Valor da habilidade"
+            {...register(`skills.${skillsCounter}.coins`)}
           />
         </div>
 
         <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
           <input
             type="file"
-            id={`img-skill-${skillsCounter+1}`}
+            name={`img-skill-${skillsCounter+1}`}
             accept=".png, .jpg, .jpeg, .svg"
           />
           <label htmlFor={`img-skill-${skillsCounter+1}`} className='ml-1'>
@@ -147,6 +192,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       </div>
     );
 
+    setSkillsCounter(skillsCounter+1);
     setSkillInputs([
       ...skillInputs,
       input
@@ -155,16 +201,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
   function addLevel(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    setLevelsCounter(levelsCounter+1);
-
+    
     const input = (
       <div className="form-row" key={`input-level-${levelsCounter+1}`}>
         <div className="form-group col-md-4">
           <input
             type="text"
             className="form-control form-input"
-            id={`name-level-${levelsCounter+1}`}
+            name={`levels[${levelsCounter}][name]`}
             placeholder="Nome do nível"
+            {...register(`levels.${levelsCounter}.name`)}
           />
         </div>
 
@@ -173,15 +219,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             type="number"
             min={1}
             className="form-control form-input"
-            id={`value-level-${levelsCounter+1}`}
+            name={`levels[${levelsCounter}][xp]`}
             placeholder="XP do nível"
+            {...register(`levels.${levelsCounter}.xp`)}
           />
         </div>
 
         <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
           <input
             type="file"
-            id={`img-level-${levelsCounter+1}`}
+            name={`img-level-${levelsCounter+1}`}
             accept=".png, .jpg, .jpeg, .svg"
           />
           <label htmlFor={`img-level-${levelsCounter+1}`} className='ml-1'>
@@ -192,6 +239,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       </div>
     );
 
+    setLevelsCounter(levelsCounter+1);
     setLevelInputs([
       ...levelInputs,
       input
@@ -203,6 +251,77 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     setIsSkillStoreEnabled(false);
     setLevelsCounter(1);
     setSkillsCounter(1);
+    reset({
+      name: "",
+      nickname: "",
+      partners: [],
+      skills: [],
+      levels: [],
+    });
+  }
+
+  async function handleCreateClass(data: DataClassType) {
+    try {
+      const object = {
+        id: 0,
+        name: data.name,
+        nickname: data.nickname,
+        levels: data.levels,
+        is_draft: isDraft
+      }
+
+      const skills = data.skills.filter(skill => {
+        if (skill.name !== undefined && skill.coins !== undefined) {
+          return skill;
+        }
+      })
+
+      const objectData = Object.assign(object,
+        data.partners[0] && data.partners[0],
+        skills && skills
+      );
+
+      await api.post('classes', objectData).then(function (success) {
+        toast.success("Turma criada com sucesso!", options);
+        setIsSkillStoreEnabled(false);
+        reset({
+          name: "",
+          nickname: "",
+          partners: [],
+          skills: [],
+          levels: [],
+        });
+        setSkillsCounter(1);
+        setLevelsCounter(1);
+        props.onHide();
+      });
+    }
+    catch (error) {
+      const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
+
+      if (!error.response) {
+        // network error
+        return toast.error(string, options);
+      }
+      switch (error.response.status) {
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], options);
+          });
+          
+        case 500: 
+          toast.error(string, options);
+          break;
+        
+        default:
+          toast.error(string, options);
+          break;
+      }
+    }
   }
 
   return (
@@ -222,32 +341,38 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className='px-4'>
-        <form>
+        <form
+          id="create-class"
+          onSubmit={handleSubmit(onSubmit)}
+          method='post'
+        >
           <h4>Informações da turma</h4>
 
           <div className="form-group">
             <input
               type="text"
               className="form-control form-input w-100"
-              id="name"
+              name="name"
               placeholder="Nome da turma"
+              {...register('name')}
             />
           </div>
           <div className="form-group">
             <input
               type="text"
               className="form-control form-input w-100"
-              id="nickname"
+              name="nickname"
               placeholder="Nome da sala"
+              {...register('nickname')}
             />
           </div>
           <div className="input-file" onChange={changeFileSpanText}>
             <input
               type="file"
-              id="class-banner"
+              name="banner"
               accept=".png, .jpg, .jpeg, .svg"
             />
-            <label htmlFor="class-banner">
+            <label htmlFor="banner">
               <img src="./icons/camera.svg" alt="Adicionar imagem" />
             </label>
             <span>Defina uma capa</span>
@@ -307,8 +432,9 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             <input
               type="email"
               className="form-control form-input w-100"
-              id="email-partner"
+              name="partners[0]"
               placeholder="Email do(a) professor(a)"
+              {...register('partners.0')}
             />
           </div>
 
@@ -320,10 +446,27 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         </form>
       </Modal.Body>
       <Modal.Footer className='d-flex justify-content-between p-4 border-top-0'>
-        <button className="modal-button" style={{color: "var(--gray-light)"}}>Salvar para depois</button>
+        <button
+          className="modal-button"
+          style={{color: "var(--gray-light)"}}
+          form="create-class"
+          type="submit"
+          name="save-draft"
+          onClick={() => setIsDraft(1)}
+        >
+          Salvar para depois
+        </button>
         <div>
           <button className="mr-4 modal-button" onClick={closeModal}>Cancelar</button>
-          <button className="modal-button">Criar</button>
+          <button
+            className="modal-button"
+            form="create-class"
+            type='submit'
+            name="save-class"
+            onClick={() => setIsDraft(0)}
+          >
+            Criar
+          </button>
         </div>
       </Modal.Footer>
     </Modal>

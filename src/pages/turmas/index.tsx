@@ -1,19 +1,34 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useContext, useState } from 'react';
-import { OverlayTrigger, Tooltip, Modal } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { parseCookies } from 'nookies';
+import { ToastContainer } from 'react-toastify';
 
+import ModalCreateNewClass from '../../components/ModalCreateNewClass';
+import ModalAddClass from '../../components/ModalAddClass';
 import CardClass from '../../components/CardClass';
 import { AuthContext } from '../../contexts/AuthContext';
 import { getAPIClient } from '../../services/apiClient';
 import { RoleUser } from '../../enums/enumRoleUser';
+import { ClassStatus } from '../../enums/enumClassStatus';
 
 import styles from './styles.module.css';
-import ModalCreateNewClass from '../../components/ModalCreateNewClass';
-import ModalAddClass from '../../components/ModalAddClass';
 
-export default function Turmas() {
+type ClassType = {
+  id: number;
+  name: string;
+  nickname: string;
+  banner: string | null;
+  code: string;
+  status: number;
+}
+
+type ClassPageType = {
+  classes: ClassType[];
+}
+
+export default function Turmas(props: ClassPageType) {
   const { user } = useContext(AuthContext);
 
   const [showModalTeacher, setShowModalTeacher] = useState(false);
@@ -35,24 +50,47 @@ export default function Turmas() {
       </Head>
 
       <main className={styles["classes-list"]}>
-        <CardClass
-          key={1}
-          id={1}
-          class="Turma 01"
-          name="As aventuras dos Jovens Sonhadores"
-          teacher={user?.name}
-          bannerFile="banner-class"
-          roleUser={user?.role}
-        />
-        <CardClass
-          key={2}
-          id={2}
-          class="Turma 02"
-          name="As aventuras dos Jovens Sonhadores"
-          teacher={user?.name}
-          bannerFile="banner-class-2"
-          roleUser={user?.role}
-        />
+        {/* show active classes first */}
+        {props.classes.length > 0 && (
+          props.classes.map(userClass => {
+            if (userClass.status === ClassStatus.active) {
+              return (
+                <CardClass
+                  key={userClass.id}
+                  id={userClass.id}
+                  name={userClass.name}
+                  nickname={userClass.nickname}
+                  teacher={user?.name}
+                  code={userClass.code}
+                  bannerFile={userClass.banner}
+                  roleUser={user?.role}
+                  status={userClass.status}
+                />
+              );
+            }
+          })
+        )}
+
+        {/* show inactive classes */}
+        {props.classes.length > 0 && (
+          props.classes.map(userClass => {
+            if (userClass.status === ClassStatus.inactive) {
+              return (
+                <CardClass
+                  key={userClass.id}
+                  id={userClass.id}
+                  name={userClass.name}
+                  nickname={userClass.nickname}
+                  teacher={user?.name}
+                  code={userClass.code}
+                  bannerFile={userClass.banner}
+                  roleUser={user?.role}
+                  status={userClass.status}
+                />
+              );
+            }
+          })
+        )}
 
         <div className={styles["add-class"]} onClick={() => openModal(user?.role)}>
           <OverlayTrigger
@@ -78,6 +116,7 @@ export default function Turmas() {
           onHide={() => setShowModalStudent(false)}
         />
       </main>
+      <ToastContainer />
     </>
   );
 }
@@ -95,7 +134,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
 
+  apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+  const response = await apiClient.get('classes');
+  const classes = response.data.data;
+
   return {
-    props: {}
+    props: {
+      classes
+    }
   }
 }

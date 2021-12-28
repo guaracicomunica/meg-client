@@ -4,20 +4,26 @@
 }
 
 .banner {
-  position: absolute;
-  top: 0;
+  position: relative;
   height: 37%;
   width: 100%;
 }
 
 .banner img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px 10px 0 0;
 }
 
+.banner img.banner-inactive {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+
 .info-class {
-  position: relative;
+  position: absolute;
+  top: 0;
   z-index: 1;
   color: var(--white);
 }

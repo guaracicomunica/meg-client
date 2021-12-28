@@ -307,10 +307,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
 
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], options);
+          });
+          
         case 500: 
           toast.error(string, options);
           break;
-
+        
         default:
           toast.error(string, options);
           break;

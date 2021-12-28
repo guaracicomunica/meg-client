@@ -263,53 +263,87 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     });
   }
 
-  function map(data: DataClassType)
-  {
-    const object = {
-      id: 0,
-      name: data.name,
-      nickname: data.nickname,
-      levels: data.levels,
-      is_draft: isDraft
-    };
+  function generateFormData(data: DataClassType) {
+    const form = new FormData();
+    form.append('id', '0');
+    form.append('name', data.name);
+    form.append('nickname', data.nickname);
+    form.append('is_draft', isDraft.toString());
 
-    let request = {};
+    for (let i = 0; i < data.levels.length; i++) {
+      form.append(`levels[${i}][name]`, data.levels[i].name);
+      form.append(`levels[${i}][xp]`, data.levels[i].xp.toString());
+    }
 
-    const skills = data.skills.filter(skill => {
-      if (skill.name !== undefined && skill.coins !== undefined) {
-        return skill;
-      }
-    });
-
-    if(data.file && data.file[0] != undefined)
-    {
-      request = {
-        file: data.file[0]
+    if (data.skills[0].name != undefined && data.skills[0].coins) {
+      for (let i = 0; i < data.skills.length; i++) {
+        form.append(`skills[${i}][name]`, data.skills[i].name);
+        form.append(`skills[${i}][coins]`, data.skills[i].coins.toString());
       }
     }
 
-    if(skills.length > 0)
-    {
-      request = {
-       skills
-      }
+    if (data.file && data.file[0] != undefined) {
+      form.append('file', data.file[0]);
     }
 
-    request = {
-      ...request,
-      ...object
+    if (data.partners[0] != "") {
+      form.append('partners[0]', data.partners[0]);
     }
     
-    return request;
+    return form;
   }
 
   async function handleCreateClass(data: DataClassType) {
     try {
-      const request = map(data);
-      console.log(request);
-    } catch(error)
-    {
-      console.log(error);
+      const request = generateFormData(data);
+
+      await api.post('classes', request, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      })
+      .then(function (success) {
+        toast.success("Turma criada com sucesso!", options);
+        setIsSkillStoreEnabled(false);
+        reset({
+          name: "",
+          nickname: "",
+          partners: [],
+          skills: [],
+          levels: [],
+          file: null
+        });
+        setSkillsCounter(1);
+        setLevelsCounter(1);
+        props.onHide();
+      });
+    }
+    catch(error) {
+      console.log(error)
+      const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
+
+      if (!error.response) {
+        // network error
+        return toast.error(string, options);
+      }
+      switch (error.response.status) {
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], options);
+          });
+
+        case 500: 
+          toast.error(string, options);
+          break;
+
+        default:
+          toast.error(string, options);
+          break;
+      }
     }
   }
 
@@ -334,6 +368,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           id="create-class"
           onSubmit={handleSubmit(onSubmit)}
           method='post'
+          encType='multipart/form-data'
         >
           <h4>Informações da turma</h4>
 

@@ -29,6 +29,7 @@ type DataClassType = {
   partners?: string[];
   skills?: SkillType[];
   levels: LevelType[];
+  file?: File;
 }
 
 export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
@@ -38,6 +39,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     partners: [],
     skills: [],
     levels: [],
+    file: null,
   }});
 
   const onSubmit = async (data: DataClassType) => handleCreateClass(data);
@@ -257,70 +259,57 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       partners: [],
       skills: [],
       levels: [],
+      file: null,
     });
+  }
+
+  function map(data: DataClassType)
+  {
+    const object = {
+      id: 0,
+      name: data.name,
+      nickname: data.nickname,
+      levels: data.levels,
+      is_draft: isDraft
+    };
+
+    let request = {};
+
+    const skills = data.skills.filter(skill => {
+      if (skill.name !== undefined && skill.coins !== undefined) {
+        return skill;
+      }
+    });
+
+    if(data.file && data.file[0] != undefined)
+    {
+      request = {
+        file: data.file[0]
+      }
+    }
+
+    if(skills.length > 0)
+    {
+      request = {
+       skills
+      }
+    }
+
+    request = {
+      ...request,
+      ...object
+    }
+    
+    return request;
   }
 
   async function handleCreateClass(data: DataClassType) {
     try {
-      const object = {
-        id: 0,
-        name: data.name,
-        nickname: data.nickname,
-        levels: data.levels,
-        is_draft: isDraft
-      }
-
-      const skills = data.skills.filter(skill => {
-        if (skill.name !== undefined && skill.coins !== undefined) {
-          return skill;
-        }
-      })
-
-      const objectData = Object.assign(object,
-        data.partners[0] && data.partners[0],
-        skills && skills
-      );
-
-      await api.post('classes', objectData).then(function (success) {
-        toast.success("Turma criada com sucesso!", options);
-        setIsSkillStoreEnabled(false);
-        reset({
-          name: "",
-          nickname: "",
-          partners: [],
-          skills: [],
-          levels: [],
-        });
-        setSkillsCounter(1);
-        setLevelsCounter(1);
-        props.onHide();
-      });
-    }
-    catch (error) {
-      const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
-
-      if (!error.response) {
-        // network error
-        return toast.error(string, options);
-      }
-      switch (error.response.status) {
-        case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
-
-        case 422:
-          let errors = error.response?.data.errors;
-          Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
-          });
-          
-        case 500: 
-          toast.error(string, options);
-          break;
-        
-        default:
-          toast.error(string, options);
-          break;
-      }
+      const request = map(data);
+      console.log(request);
+    } catch(error)
+    {
+      console.log(error);
     }
   }
 
@@ -369,10 +358,12 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           <div className="input-file" onChange={changeFileSpanText}>
             <input
               type="file"
-              name="banner"
+              id="file"
+              name="file"
               accept=".png, .jpg, .jpeg, .svg"
+              {...register('file')}
             />
-            <label htmlFor="banner">
+            <label htmlFor="file">
               <img src="./icons/camera.svg" alt="Adicionar imagem" />
             </label>
             <span>Defina uma capa</span>

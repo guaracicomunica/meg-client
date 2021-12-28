@@ -55,7 +55,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     if (props.show) {
       setLevelInputs([
         <div className="form-row" key="input-level-1">
-          <div className="form-group col-md-4">
+          <div className="form-group col-lg-4">
             <input
               type="text"
               className="form-control form-input"
@@ -65,7 +65,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             />
           </div>
 
-          <div className="form-group col-md-4">
+          <div className="form-group col-lg-4">
             <input
               type="number"
               min={1}
@@ -76,7 +76,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             />
           </div>
 
-          <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+          <div className="form-group input-file col-lg-4" onChange={changeFileSpanText}>
             <input
               type="file"
               name="img-level-1"
@@ -96,7 +96,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     if (!isSkillStoreEnabled) {
       setSkillInputs([
         <div className="form-row" key="input-skill-1">
-          <div className="form-group col-md-4">
+          <div className="form-group col-lg-4">
             <input
               type="text"
               className="form-control form-input"
@@ -106,7 +106,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             />
           </div>
 
-          <div className="form-group col-md-4">
+          <div className="form-group col-lg-4">
             <input
               type="number"
               min={1}
@@ -117,7 +117,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             />
           </div>
 
-          <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+          <div className="form-group input-file col-lg-4" onChange={changeFileSpanText}>
             <input
               type="file"
               name="img-skill-1"
@@ -159,7 +159,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
     const input = (
       <div className="form-row" key={`input-skill-${skillsCounter+1}`}>
-        <div className="form-group col-md-4">
+        <div className="form-group col-lg-4">
           <input
             type="text"
             className="form-control form-input"
@@ -169,7 +169,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           />
         </div>
 
-        <div className="form-group col-md-4">
+        <div className="form-group col-lg-4">
           <input
             type="number"
             min={1}
@@ -180,7 +180,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           />
         </div>
 
-        <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+        <div className="form-group input-file col-lg-4" onChange={changeFileSpanText}>
           <input
             type="file"
             name={`img-skill-${skillsCounter+1}`}
@@ -206,7 +206,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     
     const input = (
       <div className="form-row" key={`input-level-${levelsCounter+1}`}>
-        <div className="form-group col-md-4">
+        <div className="form-group col-lg-4">
           <input
             type="text"
             className="form-control form-input"
@@ -216,7 +216,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           />
         </div>
 
-        <div className="form-group col-md-4">
+        <div className="form-group col-lg-4">
           <input
             type="number"
             min={1}
@@ -227,7 +227,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           />
         </div>
 
-        <div className="form-group input-file col-md-4" onChange={changeFileSpanText}>
+        <div className="form-group input-file col-lg-4" onChange={changeFileSpanText}>
           <input
             type="file"
             name={`img-level-${levelsCounter+1}`}
@@ -411,7 +411,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             <select
               onChange={enableSkillStore}
               defaultValue={-1}
-              className="ml-md-4 p-2 select"
+              className="ml-lg-4 mt-2 mt-lg-0 p-2 select"
               name="skill-store"
               id="skill-store"
             >
@@ -438,7 +438,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             </>
           )}
 
-          <hr className="mt-3 mb-4" />
+          <hr className="my-4" />
 
           <h4>Definir níveis da turma</h4>
 

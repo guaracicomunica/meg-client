@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ModalSeeClassCode from '../ModalSeeClassCode';
 import { RoleUser } from '../../enums/enumRoleUser';
@@ -20,12 +20,23 @@ type CardClassType = {
 
 export default function CardClass(props: CardClassType) {
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
+  const [bannerURL, setBannerURL] = useState("");
+
+  useEffect(() => {
+    if (props.bannerFile !== null) {
+      let bannerFileName = props.bannerFile.replace("public", "storage");
+      setBannerURL(`http://localhost:8000/${bannerFileName}`);
+    }
+    else {
+      setBannerURL("./images/banner-class.svg");
+    }
+  }, []);
 
   return (
     <div className={`${styles["card-class"]} card-style`}>
       <div className={styles.banner}>
         <img
-          src={`./images/${props.bannerFile}.svg`}
+          src={bannerURL}
           alt="Banner da turma"
           className={props.status === ClassStatus.inactive ? styles["banner-inactive"] : ""}
         />

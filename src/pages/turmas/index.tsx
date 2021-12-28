@@ -62,7 +62,7 @@ export default function Turmas(props: ClassPageType) {
                   nickname={userClass.nickname}
                   teacher={user?.name}
                   code={userClass.code}
-                  bannerFile="banner-class"
+                  bannerFile={userClass.banner}
                   roleUser={user?.role}
                   status={userClass.status}
                 />
@@ -83,7 +83,7 @@ export default function Turmas(props: ClassPageType) {
                   nickname={userClass.nickname}
                   teacher={user?.name}
                   code={userClass.code}
-                  bannerFile="banner-class"
+                  bannerFile={userClass.banner}
                   roleUser={user?.role}
                   status={userClass.status}
                 />

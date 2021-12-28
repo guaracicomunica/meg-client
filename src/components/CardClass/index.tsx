@@ -6,11 +6,12 @@ import styles from './styles.module.css';
 
 type CardClassType = {
   id: number;
-  class: string;
   name: string;
+  nickname: string;
   teacher: string;
   roleUser: number;
   bannerFile: string;
+  code: string;
 }
 
 export default function CardClass(props: CardClassType) {
@@ -24,14 +25,14 @@ export default function CardClass(props: CardClassType) {
         />
 
         <div className={`${styles["info-class"]} p-4`}>
-          <h4 className='text-uppercase'>{props.class}</h4>
-          <h5>{props.name}</h5>
+          <h4 className='text-uppercase'>{props.name}</h4>
+          <h5>{props.nickname}</h5>
           <hr className='my-2 w-50' />
           <p>Prof. {props.teacher}</p>
         </div>
 
         <div className={styles["link-class"]}>
-          Link da turma
+          Código da turma
         </div>
       </div>
       

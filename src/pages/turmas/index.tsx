@@ -11,6 +11,7 @@ import CardClass from '../../components/CardClass';
 import { AuthContext } from '../../contexts/AuthContext';
 import { getAPIClient } from '../../services/apiClient';
 import { RoleUser } from '../../enums/enumRoleUser';
+import { ClassStatus } from '../../enums/enumClassStatus';
 
 import styles from './styles.module.css';
 
@@ -20,6 +21,7 @@ type ClassType = {
   nickname: string;
   banner: string | null;
   code: string;
+  status: number;
 }
 
 type ClassPageType = {
@@ -48,22 +50,47 @@ export default function Turmas(props: ClassPageType) {
       </Head>
 
       <main className={styles["classes-list"]}>
-        {props.classes.length > 0 ? (
+        {/* show active classes first */}
+        {props.classes.length > 0 && (
           props.classes.map(userClass => {
-            return (
-              <CardClass
-                key={userClass.id}
-                id={userClass.id}
-                name={userClass.name}
-                nickname={userClass.nickname}
-                teacher={user?.name}
-                code={userClass.code}
-                bannerFile="banner-class"
-                roleUser={user?.role}
-              />
-            );
+            if (userClass.status === ClassStatus.active) {
+              return (
+                <CardClass
+                  key={userClass.id}
+                  id={userClass.id}
+                  name={userClass.name}
+                  nickname={userClass.nickname}
+                  teacher={user?.name}
+                  code={userClass.code}
+                  bannerFile="banner-class"
+                  roleUser={user?.role}
+                  status={userClass.status}
+                />
+              );
+            }
           })
-        ) : ""}
+        )}
+
+        {/* show inactive classes */}
+        {props.classes.length > 0 && (
+          props.classes.map(userClass => {
+            if (userClass.status === ClassStatus.inactive) {
+              return (
+                <CardClass
+                  key={userClass.id}
+                  id={userClass.id}
+                  name={userClass.name}
+                  nickname={userClass.nickname}
+                  teacher={user?.name}
+                  code={userClass.code}
+                  bannerFile="banner-class"
+                  roleUser={user?.role}
+                  status={userClass.status}
+                />
+              );
+            }
+          })
+        )}
 
         <div className={styles["add-class"]} onClick={() => openModal(user?.role)}>
           <OverlayTrigger

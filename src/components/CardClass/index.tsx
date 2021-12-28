@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import { useState } from 'react';
 
+import ModalSeeClassCode from '../ModalSeeClassCode';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { ClassStatus } from '../../enums/enumClassStatus';
 
@@ -17,6 +19,8 @@ type CardClassType = {
 }
 
 export default function CardClass(props: CardClassType) {
+  const [showModalSeeCode, setShowModalSeeCode] = useState(false);
+
   return (
     <div className={`${styles["card-class"]} card-style`}>
       <div className={styles.banner}>
@@ -34,7 +38,7 @@ export default function CardClass(props: CardClassType) {
         </div>
 
         {props.status === ClassStatus.active && (
-          <div className={styles["link-class"]}>
+          <div className={styles["link-class"]} onClick={() => setShowModalSeeCode(true)}>
             Código da turma
           </div>
         )}
@@ -66,6 +70,12 @@ export default function CardClass(props: CardClassType) {
             </>
           )}
         </div>
+
+        <ModalSeeClassCode
+          code={props.code}
+          show={showModalSeeCode}
+          onHide={() => setShowModalSeeCode(false)}
+        />
       </div>
     </div>
   );

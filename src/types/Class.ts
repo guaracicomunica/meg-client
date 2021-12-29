@@ -5,6 +5,11 @@ export type ClassCard = {
   banner: string | null;
   code: string;
   status: number;
+  partners: string[];
+  skills: Skill[];
+  levels: Level[];
+  teacher: string;
+  roleUser: number;
 }
 
 export type DraftDataForm = {
@@ -14,7 +19,7 @@ export type DraftDataForm = {
   partners?: string[];
   skills?: Skill[];
   levels: Level[];
-  file?: File;
+  file?: string;
 }
 
 export type DataFormClass = {

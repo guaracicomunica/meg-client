@@ -10,13 +10,14 @@ import { DraftDataForm, DataFormClass } from '../../types/Class';
 import styles from './styles.module.css';
 
 type ModalCreateNewClassType = {
+  type: string;
   formData?: DraftDataForm;
   show: boolean;
   onHide: () => void;
 }
 
 export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
-  const { register, unregister, handleSubmit, reset } = useForm({defaultValues: {
+  const { register, unregister, handleSubmit, reset, setValue } = useForm({defaultValues: {
     name: "",
     nickname: "",
     partners: [],
@@ -33,6 +34,29 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [levelsCounter, setLevelsCounter] = useState(1);
   const [levelInputs, setLevelInputs] = useState([]);
   const [isDraft, setIsDraft] = useState(1);
+  const [idClass, setIdClass] = useState(0);
+
+  useEffect(() => {
+    if (props.formData) {
+      setIdClass(props.formData.id);
+      setValue('name', props.formData.name);
+      setValue('nickname', props.formData.nickname);
+
+      if (props.formData.partners) {
+        setValue('partners.0', props.formData.partners[0]);
+      }
+      if (props.formData.skills) {
+        for (let i = 0; i < props.formData.skills.length; i++) {
+          setValue(`skills.${i}.name`, props.formData.skills[i].name);
+          setValue(`skills.${i}.coins`, props.formData.skills[i].coins);
+        }
+      }
+      for (let i = 0; i < props.formData.levels.length; i++) {
+        setValue(`levels.${i}.name`, props.formData.levels[i].name);
+        setValue(`levels.${i}.xp`, props.formData.levels[i].xp);
+      }
+    }
+  }, [props.show]);
 
   useEffect(() => {
     if (props.show) {
@@ -248,7 +272,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
   function generateFormData(data: DataFormClass) {
     const form = new FormData();
-    form.append('id', '0');
+    form.append('id', idClass.toString());
     form.append('name', data.name);
     form.append('nickname', data.nickname);
     form.append('is_draft', isDraft.toString());
@@ -258,7 +282,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       form.append(`levels[${i}][xp]`, data.levels[i].xp.toString());
     }
 
-    if (data.skills[0].name != undefined && data.skills[0].coins) {
+    if (data.skills[0].name != undefined && data.skills[0].coins != undefined) {
       for (let i = 0; i < data.skills.length; i++) {
         form.append(`skills[${i}][name]`, data.skills[i].name);
         form.append(`skills[${i}][coins]`, data.skills[i].coins.toString());
@@ -302,7 +326,6 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       });
     }
     catch(error) {
-      console.log(error)
       const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
 
       if (!error.response) {
@@ -343,7 +366,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     >
       <Modal.Header className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">
-          Criar nova turma
+          {props.type === "create" ? "Criar nova turma" : "Editar turma"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className='px-4'>
@@ -475,7 +498,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             name="save-class"
             onClick={() => setIsDraft(0)}
           >
-            Criar
+            {props.type === "create" ? "Criar" : "Editar"}
           </button>
         </div>
       </Modal.Footer>

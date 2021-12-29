@@ -44,19 +44,22 @@ export default function Turmas(props: ClassPageType) {
       <main className={styles["classes-list"]}>
         {/* show active classes first */}
         {props.classes.length > 0 && (
-          props.classes.map(userClass => {
-            if (userClass.status === ClassStatus.active) {
+          props.classes.map(classroom => {
+            if (classroom.status === ClassStatus.active) {
               return (
                 <CardClass
-                  key={userClass.id}
-                  id={userClass.id}
-                  name={userClass.name}
-                  nickname={userClass.nickname}
+                  key={classroom.id}
+                  id={classroom.id}
+                  name={classroom.name}
+                  nickname={classroom.nickname}
                   teacher={user?.name}
-                  code={userClass.code}
-                  bannerFile={userClass.banner}
+                  code={classroom.code}
+                  banner={classroom.banner}
                   roleUser={user?.role}
-                  status={userClass.status}
+                  status={classroom.status}
+                  partners={classroom.partners}
+                  levels={classroom.levels}
+                  skills={classroom.skills}
                 />
               );
             }
@@ -65,19 +68,22 @@ export default function Turmas(props: ClassPageType) {
 
         {/* show inactive classes */}
         {props.classes.length > 0 && (
-          props.classes.map(userClass => {
-            if (userClass.status === ClassStatus.inactive) {
+          props.classes.map(classroom => {
+            if (classroom.status === ClassStatus.inactive) {
               return (
                 <CardClass
-                  key={userClass.id}
-                  id={userClass.id}
-                  name={userClass.name}
-                  nickname={userClass.nickname}
+                  key={classroom.id}
+                  id={classroom.id}
+                  name={classroom.name}
+                  nickname={classroom.nickname}
                   teacher={user?.name}
-                  code={userClass.code}
-                  bannerFile={userClass.banner}
+                  code={classroom.code}
+                  banner={classroom.banner}
                   roleUser={user?.role}
-                  status={userClass.status}
+                  status={classroom.status}
+                  partners={classroom.partners}
+                  levels={classroom.levels}
+                  skills={classroom.skills}
                 />
               );
             }
@@ -99,6 +105,7 @@ export default function Turmas(props: ClassPageType) {
         </div>
 
         <ModalCreateNewClass
+          type="create"
           show={showModalTeacher}
           onHide={() => setShowModalTeacher(false)}
         />

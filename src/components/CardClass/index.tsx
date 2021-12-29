@@ -2,29 +2,21 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import ModalSeeClassCode from '../ModalSeeClassCode';
+import ModalCreateNewClass from '../ModalCreateNewClass';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { ClassStatus } from '../../enums/enumClassStatus';
+import { ClassCard } from '../../types/Class';
 
 import styles from './styles.module.css';
 
-type CardClassType = {
-  id: number;
-  name: string;
-  nickname: string;
-  teacher: string;
-  roleUser: number;
-  bannerFile: string;
-  code: string;
-  status: number;
-}
-
-export default function CardClass(props: CardClassType) {
+export default function CardClass(props: ClassCard) {
+  const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
 
   useEffect(() => {
-    if (props.bannerFile !== null) {
-      let bannerFileName = props.bannerFile.replace("public", "storage");
+    if (props.banner !== null) {
+      let bannerFileName = props.banner.replace("public", "storage");
       setBannerURL(`http://localhost:8000/${bannerFileName}`);
     }
     else {
@@ -58,10 +50,13 @@ export default function CardClass(props: CardClassType) {
       <div className={`p-4 ${styles["card-class-footer"]}`}>
         <hr className='mb-2 w-100' />
         <div className='w-100 d-flex justify-content-around flex-wrap'>
-          {props.status === ClassStatus.inactive && (
-            <Link href="#">
-              <a className='text-uppercase button button-blue mt-2 py-3 px-4'>Voltar para edição</a>
-            </Link>
+          {props.status === ClassStatus.inactive && props.roleUser === RoleUser.teacher && (
+            <button
+              onClick={() => setShowModalEdit(true)}
+              className='text-uppercase button button-blue mt-2 py-3 px-4'
+            >
+              Voltar para edição
+            </button>
           )}
           
           {props.status === ClassStatus.active && props.roleUser === RoleUser.student && (
@@ -75,9 +70,12 @@ export default function CardClass(props: CardClassType) {
               <Link href="#">
                 <a className='text-uppercase button button-blue mt-2 py-3 px-4'>Acessar turma</a>
               </Link>
-              <Link href="#">
-                <a className='text-uppercase button button-blue-dark-outline mt-2 py-3 px-4'>Editar turma</a>
-              </Link>
+              <button
+                onClick={() => setShowModalEdit(true)}
+                className='text-uppercase button button-blue-dark-outline mt-2 py-3 px-4'
+              >
+                Editar turma
+              </button>
             </>
           )}
         </div>
@@ -86,6 +84,21 @@ export default function CardClass(props: CardClassType) {
           code={props.code}
           show={showModalSeeCode}
           onHide={() => setShowModalSeeCode(false)}
+        />
+
+        <ModalCreateNewClass
+          type="edit"
+          formData={{
+            id: props.id,
+            name: props.name,
+            nickname: props.nickname,
+            levels: props.levels,
+            skills: props.skills,
+            partners: props.partners,
+            file: props.banner
+          }}
+          show={showModalEdit}
+          onHide={() => setShowModalEdit(false)}
         />
       </div>
     </div>

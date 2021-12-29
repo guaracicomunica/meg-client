@@ -5,13 +5,16 @@
   padding: 4rem 14rem;
 }
 
-.add-class {
+.loading-container, .add-class {
   height: 25rem;
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--background);
+}
+
+.add-class {
+  cursor: pointer;
   border-radius: 10px;
   transition: filter 0.2s;
 }

@@ -9,7 +9,7 @@ import { options } from '../../utils/defaultToastOptions';
 import { AuthContext } from '../../contexts/AuthContext';
 
 export default function Cadastro() {
-  const { register, handleSubmit } = useForm({defaultValues: {
+  const { register, handleSubmit, reset } = useForm({defaultValues: {
     name: "",
     email: "",
     password: "",
@@ -32,7 +32,13 @@ export default function Cadastro() {
         setIsButtonDisabled(false);
         setButtonString("Cadastre-se!");  
       }, 5000);
-      
+      reset({
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: "",
+        role: 2
+      })
     } catch (error) {
       setIsButtonDisabled(false);
       setButtonString("Cadastre-se");

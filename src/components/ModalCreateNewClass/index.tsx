@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import router from 'next/router';
 
 import { api } from '../../services/api';
 import { options } from '../../utils/defaultToastOptions';
@@ -310,7 +311,12 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         }
       })
       .then(function (success) {
+        if (props.type === "create") {
           toast.success("Turma criada com sucesso!", options);
+        }
+        else {
+          toast.success("Turma editada com sucesso!", options);
+        }
         setIsSkillStoreEnabled(false);
         reset({
           name: "",
@@ -323,6 +329,10 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         setSkillsCounter(1);
         setLevelsCounter(1);
         props.onHide();
+
+        setTimeout(() => {
+          router.push("/turmas");
+        }, 2000);
       });
     }
     catch(error) {

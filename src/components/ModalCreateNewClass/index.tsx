@@ -310,7 +310,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         }
       })
       .then(function (success) {
-        toast.success("Turma criada com sucesso!", options);
+          toast.success("Turma criada com sucesso!", options);
         setIsSkillStoreEnabled(false);
         reset({
           name: "",

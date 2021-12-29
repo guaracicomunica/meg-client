@@ -365,6 +365,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       </Modal.Header>
       <Modal.Body className='px-4'>
         <form
+          autoComplete='off'
           id="create-class"
           onSubmit={handleSubmit(onSubmit)}
           method='post'

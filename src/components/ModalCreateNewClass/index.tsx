@@ -5,31 +5,14 @@ import { toast } from 'react-toastify';
 
 import { api } from '../../services/api';
 import { options } from '../../utils/defaultToastOptions';
+import { DraftDataForm, DataFormClass } from '../../types/Class';
 
 import styles from './styles.module.css';
 
 type ModalCreateNewClassType = {
+  formData?: DraftDataForm;
   show: boolean;
   onHide: () => void;
-}
-
-type SkillType = {
-  name: string;
-  coins: number;
-}
-
-type LevelType = {
-  name: string;
-  xp: number;
-}
-
-type DataClassType = {
-  name: string;
-  nickname: string;
-  partners?: string[];
-  skills?: SkillType[];
-  levels: LevelType[];
-  file?: File;
 }
 
 export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
@@ -42,7 +25,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     file: null,
   }});
 
-  const onSubmit = async (data: DataClassType) => handleCreateClass(data);
+  const onSubmit = async (data: DataFormClass) => handleCreateClass(data);
 
   const [isSkillStoreEnabled, setIsSkillStoreEnabled] = useState(false);
   const [skillsCounter, setSkillsCounter] = useState(1);
@@ -263,7 +246,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     });
   }
 
-  function generateFormData(data: DataClassType) {
+  function generateFormData(data: DataFormClass) {
     const form = new FormData();
     form.append('id', '0');
     form.append('name', data.name);
@@ -293,7 +276,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     return form;
   }
 
-  async function handleCreateClass(data: DataClassType) {
+  async function handleCreateClass(data: DataFormClass) {
     try {
       const request = generateFormData(data);
 

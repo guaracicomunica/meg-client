@@ -12,20 +12,12 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { getAPIClient } from '../../services/apiClient';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { ClassStatus } from '../../enums/enumClassStatus';
+import { ClassCard } from '../../types/Class';
 
 import styles from './styles.module.css';
 
-type ClassType = {
-  id: number;
-  name: string;
-  nickname: string;
-  banner: string | null;
-  code: string;
-  status: number;
-}
-
 type ClassPageType = {
-  classes: ClassType[];
+  classes: ClassCard[];
 }
 
 export default function Turmas(props: ClassPageType) {

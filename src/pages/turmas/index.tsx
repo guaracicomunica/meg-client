@@ -132,15 +132,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
+  else {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-  apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    const response = await apiClient.get('classes');
+    const classes = response.data.data;
 
-  const response = await apiClient.get('classes');
-  const classes = response.data.data;
-
-  return {
-    props: {
-      classes
+    return {
+      props: {
+        classes
+      }
     }
-  }
+  }  
 }

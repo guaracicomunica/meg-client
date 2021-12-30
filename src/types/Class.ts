@@ -1,3 +1,5 @@
+import { PostActivityType, PostType } from "./Post"
+
 export type ClassCard = {
   id: number;
   name: string;
@@ -10,6 +12,18 @@ export type ClassCard = {
   levels: Level[];
   teacher: string;
   roleUser: number;
+}
+
+export type ClassPage = {
+  id: number;
+  name: string;
+  nickname: string;
+  banner: string | null;
+  code: string;
+  roleUser: number;
+  teacher: string;
+  posts: PostType[],
+  activities: PostActivityType[]
 }
 
 export type DraftDataForm = {

@@ -8,10 +8,11 @@ import Post from "../../components/Post";
 import PostActivity from "../../components/PostActivity";
 
 import { api } from "../../services/api";
+import { ClassPage } from "../../types/Class";
 
 import styles from './styles-id.module.css';
 
-export default function Turma() {
+export default function Turma(props: ClassPage) {
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   
   return (

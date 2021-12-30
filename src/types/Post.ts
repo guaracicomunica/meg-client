@@ -3,7 +3,7 @@ export type PostType = {
   creatorPost: string;
   date: string;
   postBody: string;
-  comments: CommentType[];
+  comments?: CommentType[];
 }
 
 export type PostActivityType = {

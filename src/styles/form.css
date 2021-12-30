@@ -111,3 +111,12 @@
 .input-file label img {
   height: 1rem;
 }
+
+.textarea {
+  resize: none;
+  border: 2px solid #F1F3F5;
+  border-radius: 10px;
+  color: var(--gray-title);
+  font-weight: 700;
+  font-size: 1rem;
+}

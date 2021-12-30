@@ -26,22 +26,22 @@ export default function CardClass(props: ClassCard) {
 
   return (
     <div className={`${styles["card-class"]} card-style`}>
-      <div className={styles.banner}>
+      <div className="banner">
         <img
           src={bannerURL}
           alt="Banner da turma"
-          className={props.status === ClassStatus.inactive ? styles["banner-inactive"] : ""}
+          className={props.status === ClassStatus.inactive ? "banner-inactive" : ""}
         />
 
-        <div className={`${styles["info-class"]} p-4`}>
-          <h4 className='text-uppercase'>{props.name}</h4>
-          <h5>{props.nickname}</h5>
+        <div className="info-class p-4">
+          <h4 className='text-uppercase title'>{props.name}</h4>
+          <h5 className='nickname'>{props.nickname}</h5>
           <hr className='my-2 w-50' />
           <p>Prof. {props.teacher}</p>
         </div>
 
         {props.status === ClassStatus.active && (
-          <div className={styles["link-class"]} onClick={() => setShowModalSeeCode(true)}>
+          <div className="link-class" onClick={() => setShowModalSeeCode(true)}>
             Código da turma
           </div>
         )}
@@ -60,14 +60,14 @@ export default function CardClass(props: ClassCard) {
           )}
           
           {props.status === ClassStatus.active && props.roleUser === RoleUser.student && (
-            <Link href="#">
+            <Link href={`/turmas/${props.id}`}>
               <a className='text-uppercase button button-blue mt-2 py-3 px-4'>Acessar turma</a>
             </Link>
           )}
 
           {props.status === ClassStatus.active && props.roleUser === RoleUser.teacher && (
             <>
-              <Link href="#">
+              <Link href={`/turmas/${props.id}`}>
                 <a className='text-uppercase button button-blue mt-2 py-3 px-4'>Acessar turma</a>
               </Link>
               <button

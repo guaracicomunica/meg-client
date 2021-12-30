@@ -1,0 +1,35 @@
+.class-section {
+  padding: 2rem 14rem;
+}
+
+.banner-class {
+  height: 15rem !important;
+}
+
+.banner-class img {
+  border-radius: 20px !important;
+}
+
+.posts-section {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 3rem;
+}
+
+.post-comment textarea {
+  min-height: 4.8rem;
+  max-height: 10rem;
+  resize: vertical;
+}
+
+@media (max-width: 1280px) {
+  .menu {
+    padding: 2rem 10rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .menu {
+    padding: 2rem 5rem;
+  }
+}

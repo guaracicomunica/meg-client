@@ -1,0 +1,18 @@
+.post-activity {
+  border-radius: 10px;
+  border: 2px solid #F1F3F5;
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+}
+
+.post-activity img {
+  height: 3.5rem;
+  border-radius: 50%;
+}
+
+.post-activity h5 {
+  margin-bottom: 0;
+  margin-left: 1rem;
+  color: var(--gray-title);
+}

@@ -5,6 +5,7 @@ import { parseCookies } from "nookies";
 import { useState } from "react";
 import ModalSeeClassCode from "../../components/ModalSeeClassCode";
 import Post from "../../components/Post";
+import PostActivity from "../../components/PostActivity";
 
 import { api } from "../../services/api";
 
@@ -94,6 +95,13 @@ export default function Turma() {
                   commentBody: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
                 }
               ]}
+            />
+
+            <PostActivity
+              key={1}
+              id={1}
+              teacher="Marjorie Ramos"
+              activityTitle="Lorem Ipsum is simply dummy text"
             />
           </div>
         </div>

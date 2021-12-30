@@ -6,6 +6,12 @@ export type PostType = {
   comments: CommentType[];
 }
 
+export type PostActivityType = {
+  id: number;
+  teacher: string;
+  activityTitle: string;
+}
+
 export type CommentType = {
   id: number;
   commentCreator: string;

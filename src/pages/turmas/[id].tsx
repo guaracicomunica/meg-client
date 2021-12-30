@@ -40,18 +40,18 @@ export default function Turma(props: ClassPage) {
           </div>
         </div>
 
-        <div className={`${styles["posts-section"]} py-5`}>
+        <div className={`${styles["posts-section"]} py-3 py-md-5`}>
           <div className={styles["posts-aside"]}>
             <Link href="#">
-              <div className="card-style link-card p-4">
-                <img src="/icons/activity.svg" alt="Atividade" style={{height: "3rem"}} />
+              <div className="card-style link-card p-4 mt-4 mt-md-0">
+                <img src="/icons/activity.svg" alt="Atividade" className={styles["img-link-card"]} />
                 <h4 className="mt-3">Ver atividades</h4>
               </div>
             </Link>
 
             <Link href="#">
               <div className="card-style link-card p-4 mt-4">
-                <img src="/icons/students.svg" alt="Alunos" style={{height: "3rem"}} />
+                <img src="/icons/students.svg" alt="Alunos" className={styles["img-link-card"]} />
                 <h4 className="mt-3">Ver alunos</h4>
               </div>
             </Link>
@@ -99,8 +99,8 @@ export default function Turma(props: ClassPage) {
             />
 
             <PostActivity
-              key={1}
-              id={1}
+              key={2}
+              id={2}
               teacher="Marjorie Ramos"
               activityTitle="Lorem Ipsum is simply dummy text"
             />

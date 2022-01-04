@@ -3,4 +3,5 @@ export enum PageActive {
   turmas = 'Turmas',
   atividades = 'Atividades',
   minhaConta = 'Minha Conta',
+  entrar = 'Entrar',
 };

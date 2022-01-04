@@ -12,8 +12,12 @@ export function PageActiveProvider({ children }) {
 
   useEffect(() => {
     const pathname = document.location.pathname;
-    if (pathname.includes("login") || pathname.includes("cadastro") || pathname.includes("minha-conta")) {
+    if (pathname.includes("minha-conta")) {
       setPageActive("Minha Conta")
+    }
+    else if(pathname.includes("login") || pathname.includes("cadastro"))
+    {
+      setPageActive("Entrar"); 
     }
     else if (pathname.includes("turmas")) {
       setPageActive("Turmas");

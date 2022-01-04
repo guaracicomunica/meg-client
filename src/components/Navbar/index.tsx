@@ -1,13 +1,14 @@
 import { useContext } from 'react';
 import Link from 'next/link';
-
 import { PageActiveContext } from '../../contexts/PageActiveContext';
+import { AuthContext } from '../../contexts/AuthContext';
 import { PageActive } from '../../enums/enumPageActive';
 
 import styles from "./styles.module.css";
 
 export function Navbar() {
   const { pageActive } = useContext(PageActiveContext);
+  const { isAuthenticated } = useContext(AuthContext);
 
   let classNameLink = "nav-item mt-3 mt-md-0";
 
@@ -55,14 +56,27 @@ export function Navbar() {
                 </a>
               </Link>
             </li>
-            <li className={pageActive === PageActive.minhaConta ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
-              <Link href="/minha-conta">
-                <a className={styles["menu-link"]}>
-                  Minha conta
-                  {pageActive === PageActive.minhaConta && (<span className="sr-only">(Página atual)</span>)}
-                </a>
-              </Link>
-            </li>
+            {
+              isAuthenticated 
+              ?             
+                <li className={pageActive === PageActive.minhaConta ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
+                  <Link href="/minha-conta">
+                    <a className={styles["menu-link"]}>
+                      Minha conta
+                      {pageActive === PageActive.minhaConta && (<span className="sr-only">(Página atual)</span>)}
+                    </a>
+                  </Link>
+                </li> 
+              : 
+              <li className={pageActive === PageActive.entrar ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
+                <Link href="/login">
+                  <a className={styles["menu-link"]}>
+                    Entrar
+                    {pageActive === PageActive.entrar && (<span className="sr-only">(Página atual)</span>)}
+                  </a>
+                </Link>
+              </li> 
+            }
           </ul>
         </div>
       </nav>

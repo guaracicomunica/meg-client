@@ -25,10 +25,10 @@ export default function Atividades() {
               <Col sm={3} className="p-0">
                 <Nav variant="pills" className="flex-column">
                   <Nav.Item>
-                    <Nav.Link className={styles.topic} eventKey="first">Salão principal</Nav.Link>
+                    <Nav.Link bsPrefix={styles.topic} eventKey="first">Salão principal</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link className={styles.topic} eventKey="second">Eventos do MEG</Nav.Link>
+                    <Nav.Link bsPrefix={styles.topic} eventKey="second">Eventos do MEG</Nav.Link>
                   </Nav.Item>
                 </Nav>
               </Col>

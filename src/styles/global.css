@@ -27,7 +27,6 @@ html, body, #__next {
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  color: red;
 }
 
 body, #__next {

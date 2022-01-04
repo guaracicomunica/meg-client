@@ -89,6 +89,28 @@ select:focus {
   padding: 4rem 5rem;
 }
 
+.page-container {
+  padding: 2rem 14rem;
+}
+
+@media (max-width: 1280px) {
+  .page-container {
+    padding: 2rem 10rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .page-container {
+    padding: 2rem 5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .page-container {
+    padding: 2rem 3rem;
+  }
+}
+
 .title-primary, .title-secondary {
   font-weight: 900;
   font-size: 2rem;
@@ -106,6 +128,12 @@ select:focus {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--blue);
+}
+
+.title-gray {
+  color: var(--gray-title);
+  font-weight: 700;
+  font-size: 1.5rem;
 }
 
 .text-section {

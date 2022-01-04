@@ -1,19 +1,30 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { useState } from "react";
-import ModalSeeClassCode from "../../components/ModalSeeClassCode";
-import Post from "../../components/Post";
-import PostActivity from "../../components/PostActivity";
+import { useContext, useEffect, useState } from "react";
+import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
+import Post from "../../../components/Post";
+import PostActivity from "../../../components/PostActivity";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-import { api } from "../../services/api";
-import { ClassPage } from "../../types/Class";
+import { api } from "../../../services/api";
+import { ClassPage } from "../../../types/Class";
 
-import styles from './styles-id.module.css';
+import styles from './styles.module.css';
 
 export default function Turma(props: ClassPage) {
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const { ['meg.token']: token } = parseCookies();
+
+    if (!token) {
+      router.push("/sessao-expirada");
+    }
+  }, []);
   
   return (
     <>
@@ -21,7 +32,7 @@ export default function Turma(props: ClassPage) {
         <title>Turma 1</title>
       </Head>
 
-      <main className={styles["class-section"]}>
+      <main className="page-container">
         <div className={`banner ${styles["banner-class"]}`}>
           <img
             src="/images/banner-class-2.svg"
@@ -42,7 +53,7 @@ export default function Turma(props: ClassPage) {
 
         <div className={`${styles["posts-section"]} py-3 py-md-5`}>
           <div className={styles["posts-aside"]}>
-            <Link href="#">
+            <Link href={`/turmas/11/atividades`}>
               <div className="card-style link-card p-4 mt-4 mt-md-0">
                 <img src="/icons/activity.svg" alt="Atividade" className={styles["img-link-card"]} />
                 <h4 className="mt-3">Ver atividades</h4>
@@ -58,7 +69,7 @@ export default function Turma(props: ClassPage) {
           </div>
 
           <div className={styles["posts-list"]}>
-            <div className={`${styles["post-comment"]}`}>
+            <div className={`${styles["post-comment"]} mb-3`}>
               <form id="post-comment">
                 <textarea
                   name="post"
@@ -118,6 +129,21 @@ export default function Turma(props: ClassPage) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  /*const { data } = await api.get('classes');
+
+  const paths = data.data.map(classroom => {
+    return {
+      params: {
+        slug: classroom.id
+      }
+    }
+  });
+
+  return {
+    paths,
+    fallback: 'blocking'
+  }*/
+
   return {
     paths: [],
     fallback: 'blocking'
@@ -125,9 +151,31 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
+  /*const { user } = useContext(AuthContext);
+
+  const { slug } = ctx.params;
+  const { data } = await api.get(`classes/${slug}`);
+
+  const classroom: ClassPage = {
+    id: data.data.id,
+    name: data.data.name,
+    nickname: data.data.nickname,
+    banner: data.data.banner,
+    code: data.data.code,
+    roleUser: user.role,
+    teacher: data.data.teacher,
+    posts: data.data.posts,
+    activities: data.data.activities
+  }
+
   return {
     props: {
-      
-    }
+      classroom
+    },
+    revalidate: 60 * 60 // 1 hour
+  }*/
+
+  return {
+    props: {}
   }
 }

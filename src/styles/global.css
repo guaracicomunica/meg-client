@@ -27,6 +27,7 @@ html, body, #__next {
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
+  color: red;
 }
 
 body, #__next {
@@ -145,7 +146,7 @@ select:focus {
 .text-gray {
   font-size: 1rem;
   font-weight: 400;
-  color: var(--gray-light);
+  color: var(--gray-title);
 }
 
 .navbar-collapse {

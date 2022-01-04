@@ -27,7 +27,7 @@
   border: 1px solid var(--gray-light);
   padding: 0.4rem 2rem;
   margin-top: 1rem;
-  color: var(--gray-light);
+  color: var(--gray-title);
   font-weight: 700;
   font-size: 0.9rem;
 }

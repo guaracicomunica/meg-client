@@ -28,7 +28,7 @@
   width: calc(100% - 3rem);
   height: 5px;
   position: absolute;
-  bottom: -1.3rem;
+  bottom: -1.2rem;
   left: 28%;
   transform: translateX(-25%);
   border-radius: 10px;
@@ -62,5 +62,13 @@
 
   .link-active::after {
     display: none;
+  }
+
+  .link-active a {
+    color: var(--red);
+  }
+
+  .link-active a:hover {
+    color: var(--red);
   }
 }

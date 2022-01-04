@@ -1,0 +1,46 @@
+.banner-class {
+  height: 15rem !important;
+}
+
+.banner-class img {
+  border-radius: 20px !important;
+}
+
+.posts-section {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 3rem;
+}
+
+.img-link-card {
+  height: 3rem;
+}
+
+.post-comment textarea {
+  min-height: 4.8rem;
+  max-height: 10rem;
+  resize: vertical;
+}
+
+@media (max-width: 1000px) {
+  .posts-section {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .posts-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .posts-aside {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .posts-aside .img-link-card {
+    height: 2rem;
+  }
+}

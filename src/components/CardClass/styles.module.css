@@ -1,0 +1,13 @@
+.card-class {
+  height: 25rem;
+  position: relative;
+}
+
+.card-class-footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,32 @@
+.list-activities-teacher {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+}
+
+.create-activity {
+  height: fit-content;
+  text-transform: uppercase;
+}
+
+.topic {
+  background-color: var(--white) !important;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--blue-dark) !important;
+  border-radius: 10px !important;
+  padding: 0.75rem 1rem !important;
+  margin-bottom: 1rem;
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--white) !important;
+  color: var(--blue-dark) !important;
+  
+}
+
+.active {
+  border-bottom: 10px solid var(--red) !important;
+}

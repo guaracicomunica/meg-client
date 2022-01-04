@@ -1,0 +1,122 @@
+.form-label {
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--blue-dark);
+}
+
+.form-input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  border: 2px solid var(--gray-form);
+  color: var(--gray-title);
+  font-weight: 700;
+  font-size: 1rem;
+  transition: 0.3s ease-in-out border-color;
+}
+
+.form-input:focus {
+  color: var(--gray-title);
+  border-color: var(--blue-light);
+  box-shadow: none;
+}
+
+.checkbox label, .radio label {
+  background-color: var(--white);
+  border: 2px solid var(--gray-form);
+  border-radius: 50%;
+  cursor: pointer;
+  height: 24px;
+  left: 0;
+  top: 0;
+  width: 24px;
+}
+
+.checkbox label {
+  position: absolute;
+}
+
+.radio label {
+  position: relative;
+  margin-right: 0.5rem;
+}
+
+.checkbox label:after, .radio label:after {
+  border: 2px solid var(--white);
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: 6px;
+  left: 4px;
+  opacity: 0;
+  position: absolute;
+  top: 6px;
+  transform: rotate(-45deg);
+  width: 12px;
+}
+
+.checkbox input[type="checkbox"],
+.radio input[type="radio"],
+.input-file input[type="file"] {
+  visibility: hidden;
+}
+
+.checkbox input[type="checkbox"]:checked + label,
+.radio input[type="radio"]:checked + label {
+  background-color: var(--blue-dark);
+  border-color: var(--blue-dark);
+}
+
+.checkbox input[type="checkbox"]:checked + label:after,
+.radio input[type="radio"]:checked + label:after {
+  opacity: 1;
+}
+
+.select {
+  background-color: #EDEDED;
+  color: var(--gray-title);
+  border-radius: 5px;
+}
+
+.input-file {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+}
+
+.input-file input[type="file"] {
+  width: 0;
+}
+
+.input-file label {
+  padding: 0.75rem 0.59rem;
+  border-radius: 50%;
+  background-color: #EDEDED;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-file span {
+  margin-left: 3.25rem;
+  color: var(--gray-title);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.input-file label img {
+  height: 1rem;
+}
+
+.textarea {
+  resize: none;
+  border: 2px solid #F1F3F5;
+  border-radius: 10px;
+  color: var(--gray-title);
+  font-weight: 700;
+  font-size: 1rem;
+}

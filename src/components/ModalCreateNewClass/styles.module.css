@@ -1,0 +1,7 @@
+.button-add-input {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--gray-light);
+  display: flex;
+  align-items: center;
+}

@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 
 export default function Post(props: PostType) {
   return (
-    <div className={`${styles.post} mt-3 py-4 px-5`}>
+    <div className={`${styles.post} mb-3 py-4 px-5`}>
       <div className={`${styles["post-creator"]} mb-4`}>
         <img src="/icons/user.svg" alt="Usuário" />
         <div className={styles["post-info"]}>
@@ -19,11 +19,11 @@ export default function Post(props: PostType) {
       <div className={`${styles["post-comments"]} my-4 py-4`}>
         <div className={styles["post-comments-title"]}>
           <img src="/icons/comments.svg" alt="Comentários da turma" style={{height: "1.25rem"}} />
-          <h5>{props.comments.length} {props.comments.length > 1 ? "Comentários" : "Comentário"} da turma</h5>
+          <h5>{props.comments?.length || 0} {props.comments?.length === 1 ? "Comentário" : "Comentários"} da turma</h5>
         </div>
 
         <div>
-          {props.comments.map(comment => {
+          {props.comments?.map(comment => {
             return (
               <Comment
                 key={comment.id}

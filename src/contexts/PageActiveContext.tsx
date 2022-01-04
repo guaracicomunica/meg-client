@@ -27,6 +27,8 @@ export function PageActiveProvider({ children }) {
     }
     else if (pathname === "/") {
       setPageActive("Início");
+    } else {
+      setPageActive(null);
     }
   });
 

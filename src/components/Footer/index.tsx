@@ -5,7 +5,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 export function Footer() {
   const { isAuthenticated } = useContext(AuthContext);
-  
+
   return (
     <footer>
       <hr className={styles["border-footer"]} />
@@ -26,9 +26,9 @@ export function Footer() {
               <a className={`${styles["link-footer"]} mr-5`}>Minha conta</a>
             </Link> 
           : 
-          <Link href="/login"> 
-            <a className={`${styles["link-footer"]} mr-5`}>Entrar</a>
-          </Link> 
+            <Link href="/login"> 
+              <a className={`${styles["link-footer"]} mr-5`}>Entrar</a>
+            </Link> 
         }
       </div>
     </footer>

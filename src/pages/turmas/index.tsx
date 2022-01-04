@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { parseCookies } from 'nookies';
 import { ToastContainer } from 'react-toastify';
@@ -31,8 +31,22 @@ export default function Turmas(props: ClassPageType) {
 
   const [showModalTeacher, setShowModalTeacher] = useState(false);
   const [showModalStudent, setShowModalStudent] = useState(false);
-  const [classes, setClasses] = useState(props.classes);
+  const [classes, setClasses] = useState([]);
   const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    if (props) {
+      setClasses(props.classes);
+      setCurrentPage(props.queryProps.currentPage);
+    }
+  }, [props]);
+
+  useEffect(() => {
+    if (currentPage === props.queryProps.totalPages) {
+      setHasMore(false);
+    }
+  }, [classes]);
 
   async function getMorePost() {
     const response = await api.get('classes', {
@@ -42,10 +56,7 @@ export default function Turmas(props: ClassPageType) {
       }
     });
 
-    if (response.data.current_page === props.queryProps.totalPages) {
-      setHasMore(false);
-    }
-
+    setCurrentPage(response.data.current_page);
     setClasses([...classes, ...response.data.data]);
   }
 

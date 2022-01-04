@@ -329,10 +329,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         setSkillsCounter(1);
         setLevelsCounter(1);
         props.onHide();
-
-        setTimeout(() => {
-          router.push("/turmas");
-        }, 2000);
+        router.push("/turmas");
       });
     }
     catch(error) {

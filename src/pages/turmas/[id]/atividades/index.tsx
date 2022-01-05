@@ -1,9 +1,10 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
 
 import CardActivity from "../../../../components/CardActivity";
+import ModalAddTopic from "../../../../components/ModalAddTopic";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { RoleUser } from "../../../../enums/enumRoleUser";
 
@@ -11,6 +12,8 @@ import styles from './styles.module.css';
 
 export default function Atividades() {
   const { user } = useContext(AuthContext);
+
+  const [showModalAddTopic, setShowModalAddTopic] = useState(false);
 
   return (
     <>
@@ -33,7 +36,7 @@ export default function Atividades() {
                     <Nav.Link bsPrefix={styles.topic} eventKey="second">Eventos do MEG</Nav.Link>
                   </Nav.Item>
                   {user?.role === RoleUser.teacher && (
-                    <Nav.Item>
+                    <Nav.Item onClick={() => setShowModalAddTopic(true)}>
                       <Nav.Link bsPrefix={styles["add-topic"]}>
                         +
                       </Nav.Link>
@@ -63,6 +66,11 @@ export default function Atividades() {
             </a>
           </Link>
         </div>
+
+        <ModalAddTopic
+          show={showModalAddTopic}
+          onHide={() => setShowModalAddTopic(false)}
+        />
       </main>
     </>
   )

@@ -39,8 +39,7 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(null);
-
-  const isAuthenticated = !!user;
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     const { 'meg.token': token } = parseCookies();
@@ -55,6 +54,8 @@ export function AuthProvider({ children }) {
         email: userJSON.email,
         role: userJSON.role,
       });
+
+      setIsAuthenticated(!!user);
     }
   }, []);
 
@@ -86,10 +87,12 @@ export function AuthProvider({ children }) {
         email: response.data.user.email,
         role: response.data.user.role,
       });
+      
       setCookie(null, 'meg.user', userString, {
         maxAge: 60 * 60, // 1 hour
       });
-
+      
+      setIsAuthenticated(true);
     }
 
     toast.success('Conta criada com sucesso!', options); 
@@ -119,9 +122,12 @@ export function AuthProvider({ children }) {
       email: response.data.user.email,
       role: response.data.user.role,
     });
+    
     setCookie(null, 'meg.user', userString, {
       maxAge: 60 * 60, // 1 hour
     });
+    
+    setIsAuthenticated(true);
 
     Router.push('/turmas');
   }
@@ -130,6 +136,8 @@ export function AuthProvider({ children }) {
     await api.post('auth/logout').then(function (response) {
       destroyCookie(null, 'meg.token');
       destroyCookie(null, 'meg.user');
+      setUser(null);
+      setIsAuthenticated(false);
       Router.push('/login');
     })
     .catch(function (error) {

@@ -22,29 +22,28 @@ export default function Atividades() {
       </Head>
 
       <main className="page-container">
-        <h1 className="title-gray mb-5">Tópicos da turma</h1>
-
         <div className={user?.role === RoleUser.teacher ? styles["list-activities-teacher"] : ""}>
           <Tab.Container id="topics-list" defaultActiveKey="first">
             <Row>
-              <Col sm={3} className="p-0">
-                <Nav variant="pills" className="flex-column">
+              <Col sm={12} lg={3} className="p-0 mb-3 mb-lg-0">
+                <h1 className="title-gray mb-3">Tópicos da turma</h1>
+                <Nav variant="pills" className="flex-lg-column">
                   <Nav.Item>
-                    <Nav.Link bsPrefix={styles.topic} eventKey="first">Salão principal</Nav.Link>
+                    <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles.topic} eventKey="first">Salão principal</Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link bsPrefix={styles.topic} eventKey="second">Eventos do MEG</Nav.Link>
+                    <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles.topic} eventKey="second">Eventos do MEG</Nav.Link>
                   </Nav.Item>
                   {user?.role === RoleUser.teacher && (
                     <Nav.Item onClick={() => setShowModalAddTopic(true)}>
-                      <Nav.Link bsPrefix={styles["add-topic"]}>
+                      <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles["add-topic"]}>
                         +
                       </Nav.Link>
                     </Nav.Item>
                   )}
                 </Nav>
               </Col>
-              <Col sm={9} className="pr-0" style={{paddingLeft: "2rem"}}>
+              <Col sm={12} lg={9} className="px-0 pl-lg-4">
                 <Tab.Content>
                   <Tab.Pane eventKey="first">
                     <CardActivity key={1} />

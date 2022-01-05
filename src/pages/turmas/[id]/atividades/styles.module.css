@@ -4,9 +4,17 @@
   gap: 2rem;
 }
 
+@media (max-width: 992px) {
+  .list-activities-teacher {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
 .create-activity {
   height: fit-content;
   text-transform: uppercase;
+  padding: 0.75rem 2rem;
 }
 
 .topic, .add-topic {

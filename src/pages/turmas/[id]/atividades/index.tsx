@@ -2,6 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useContext } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
+
+import CardActivity from "../../../../components/CardActivity";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { RoleUser } from "../../../../enums/enumRoleUser";
 
@@ -17,7 +19,7 @@ export default function Atividades() {
       </Head>
 
       <main className="page-container">
-        <h1 className="title-gray mb-4">Tópicos da turma</h1>
+        <h1 className="title-gray mb-5">Tópicos da turma</h1>
 
         <div className={user?.role === RoleUser.teacher ? styles["list-activities-teacher"] : ""}>
           <Tab.Container id="topics-list" defaultActiveKey="first">
@@ -30,15 +32,24 @@ export default function Atividades() {
                   <Nav.Item>
                     <Nav.Link bsPrefix={styles.topic} eventKey="second">Eventos do MEG</Nav.Link>
                   </Nav.Item>
+                  {user?.role === RoleUser.teacher && (
+                    <Nav.Item>
+                      <Nav.Link bsPrefix={styles["add-topic"]}>
+                        +
+                      </Nav.Link>
+                    </Nav.Item>
+                  )}
                 </Nav>
               </Col>
               <Col sm={9} className="pr-0" style={{paddingLeft: "2rem"}}>
                 <Tab.Content>
                   <Tab.Pane eventKey="first">
-                    first
+                    <CardActivity key={1} />
+                    <CardActivity key={2} />
+                    <CardActivity key={3} />
                   </Tab.Pane>
                   <Tab.Pane eventKey="second">
-                    second
+                    <CardActivity key={4} />
                   </Tab.Pane>
                 </Tab.Content>
               </Col>

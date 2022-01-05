@@ -9,18 +9,25 @@
   text-transform: uppercase;
 }
 
+.topic, .add-topic {
+  border-radius: 10px;
+  display: block;
+}
+
 .topic {
-  background-color: var(--white) !important;
+  background-color: var(--white);
+  box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.09);
   text-align: center;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--blue-dark) !important;
-  border-radius: 10px !important;
-  padding: 0.75rem 2rem !important;
+  color: var(--blue-dark);
+  padding: 0.75rem 2rem;
   margin-bottom: 1rem;
-  width: max-content;
-  display: block;
   position: relative;
+}
+
+.topic:hover {
+  color: var(--blue-dark);
 }
 
 .topic[aria-selected="true"]::after {
@@ -32,4 +39,17 @@
   height: 6px;
   background-color: var(--red);
   border-radius: 0 0 10px 10px;
+}
+
+.add-topic {
+  background-color: #F2F2F2;
+  color: var(--gray-form);
+  font-weight: 900;
+  font-size: 2rem;
+  text-align: center;
+  padding: 0rem 2rem;
+}
+
+.add-topic:hover {
+  color: var(--gray-form);
 }

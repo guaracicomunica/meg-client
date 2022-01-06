@@ -22,9 +22,6 @@ export function PageActiveProvider({ children }) {
     else if (pathname.includes("turmas")) {
       setPageActive("Turmas");
     }
-    else if (pathname.includes("atividades")) {
-      setPageActive("Atividades");
-    }
     else if (pathname === "/") {
       setPageActive("Início");
     } else {

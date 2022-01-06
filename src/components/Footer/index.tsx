@@ -17,9 +17,6 @@ export function Footer() {
         <Link href="/turmas"> 
           <a className={`${styles["link-footer"]} mr-5`}>Turmas</a>
         </Link>
-        <Link href="/atividades"> 
-          <a className={`${styles["link-footer"]} mr-5`}>Atividades</a>
-        </Link>
         {isAuthenticated 
           ?        
             <Link href="/minha-conta"> 

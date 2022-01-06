@@ -48,14 +48,6 @@ export function Navbar() {
                 </a>
               </Link>
             </li>
-            <li className={pageActive === PageActive.atividades ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
-              <Link href="/atividades">
-                <a className={styles["menu-link"]}>
-                  Atividades
-                  {pageActive === PageActive.atividades && (<span className="sr-only">(Página atual)</span>)}
-                </a>
-              </Link>
-            </li>
             {
               isAuthenticated 
               ?             

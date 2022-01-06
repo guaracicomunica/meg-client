@@ -55,7 +55,7 @@ export function AuthProvider({ children }) {
         role: userJSON.role,
       });
 
-      setIsAuthenticated(!!user);
+      setIsAuthenticated(true);
     }
   }, []);
 

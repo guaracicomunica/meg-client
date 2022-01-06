@@ -14,7 +14,7 @@
 }
 
 .button-blue-dark-outline {
-  border: 1px solid var(--blue-dark);
+  border: 2px solid var(--blue-dark);
   background-color: var(--white);
   color: var(--blue-dark) !important;
   transition: 0.2s;

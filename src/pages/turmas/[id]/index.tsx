@@ -60,7 +60,7 @@ export default function Turma(props: ClassPage) {
               </div>
             </Link>
 
-            <Link href="#">
+            <Link href={`/turmas/11/participantes`}>
               <div className="card-style link-card p-4 mt-4">
                 <img src="/icons/students.svg" alt="Alunos" className={styles["img-link-card"]} />
                 <h4 className="mt-3">Ver alunos</h4>

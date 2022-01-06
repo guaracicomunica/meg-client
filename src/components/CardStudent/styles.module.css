@@ -1,0 +1,55 @@
+.info-user {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #EDEDED;
+}
+
+.info-user img {
+  height: 4rem;
+  border-radius: 50%;
+  border: 3px solid var(--blue-dark);
+  margin-right: 1rem;
+}
+
+.info-user h5 {
+  margin-bottom: 0;
+  color: var(--gray-title);
+}
+
+.score-user {
+  padding: 1rem 0;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.score-user img {
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.score-user span {
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.points-user, .level-user {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.points-user {
+  margin-right: 1rem;
+}
+
+.points-user span {
+  color: var(--yellow);
+}
+
+.level-user span {
+  color: var(--gray-form);
+}

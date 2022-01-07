@@ -47,7 +47,6 @@ export default function Turma(props: ClassPageProps) {
 
   useEffect(() => {
     if (props) {
-      console.log(props)
       setPostsList(props.postsData.posts);
       setCurrentPage(props.postsData.queryProps.currentPage);
     }
@@ -68,8 +67,18 @@ export default function Turma(props: ClassPageProps) {
       }
     });
 
+    const formatedPosts: PostType[] = response.data.data.map(post => ({
+      id: post.id,
+      name: post?.name,
+      body: post.body,
+      creator: classroom.teacher,
+      date: post.created_at,
+      comments: post?.comments,
+      activity: post?.activity
+    }));
+
     setCurrentPage(response.data.current_page);
-    setPostsList([...postsList, ...response.data.data]);
+    setPostsList([...postsList, ...formatedPosts]);
   }
   
   return (
@@ -183,6 +192,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     const formatedPosts: PostType[] = posts.map(post => ({
       id: post.id,
+      name: post?.name,
       body: post.body,
       creator: classroom.teacher,
       date: post.created_at,

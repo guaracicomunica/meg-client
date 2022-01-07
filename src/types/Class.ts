@@ -23,7 +23,6 @@ export type ClassPage = {
   roleUser: number;
   teacher: string;
   posts: PostType[],
-  activities: PostActivityType[]
 }
 
 export type DraftDataForm = {

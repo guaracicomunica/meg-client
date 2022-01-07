@@ -9,12 +9,12 @@ export default function Post(props: PostType) {
       <div className={`${styles["post-creator"]} mb-4`}>
         <img src="/icons/user.svg" alt="Usuário" />
         <div className={styles["post-info"]}>
-          <h5>{props.creatorPost}</h5>
+          <h5>{props.creator}</h5>
           <small>{props.date}</small>
         </div>
       </div>
 
-      <div className={styles["post-body"]}>{props.postBody}</div>
+      <div className={styles["post-body"]}>{props.body}</div>
 
       <div className={`${styles["post-comments"]} my-4 py-4`}>
         <div className={styles["post-comments-title"]}>
@@ -28,9 +28,9 @@ export default function Post(props: PostType) {
               <Comment
                 key={comment.id}
                 id={comment.id}
-                commentCreator={comment.commentCreator}
+                creator={comment.creator}
                 date={comment.date}
-                commentBody={comment.commentBody}
+                body={comment.body}
               />
             );
           })}

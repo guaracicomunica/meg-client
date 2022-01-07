@@ -1,20 +1,21 @@
 export type PostType = {
   id: number;
-  creatorPost: string;
+  creator: string;
   date: string;
-  postBody: string;
+  body: string;
   comments?: CommentType[];
+  activity?: PostActivityType;
 }
 
 export type PostActivityType = {
   id: number;
   teacher: string;
-  activityTitle: string;
+  title: string;
 }
 
 export type CommentType = {
   id: number;
-  commentCreator: string;
+  creator: string;
   date: string;
-  commentBody: string;
+  body: string;
 }

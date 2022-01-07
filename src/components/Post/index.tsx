@@ -1,16 +1,34 @@
+import { useEffect, useState } from 'react';
+import { format, parseISO } from 'date-fns'
+import { ptBR } from 'date-fns/locale';
+
 import Comment from '../Comment';
 import { PostType } from '../../types/Post';
 
 import styles from './styles.module.css';
 
 export default function Post(props: PostType) {
+  const [isToday, setIsToday] = useState(false);
+  const today = Date.now();
+
+  useEffect(() => {
+    const datePostString = format(parseISO(props.date), 'd/M/u');
+    const dateTodayString = format(today, 'd/M/u');
+
+    if (datePostString === dateTodayString) {
+      setIsToday(true);
+    }
+  }, []);
+  
   return (
     <div className={`${styles.post} mb-3 py-4 px-5`}>
       <div className={`${styles["post-creator"]} mb-4`}>
         <img src="/icons/user.svg" alt="Usuário" />
         <div className={styles["post-info"]}>
           <h5>{props.creator}</h5>
-          <small>{props.date}</small>
+          <small>
+            {isToday ? format(parseISO(props.date), "HH:mm") : format(parseISO(props.date), "d 'de' MMMM", {locale: ptBR})}
+          </small>
         </div>
       </div>
 

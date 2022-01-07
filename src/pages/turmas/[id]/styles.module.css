@@ -22,6 +22,11 @@
   resize: vertical;
 }
 
+.card-no-data {
+  height: fit-content;
+  border: 2px solid #F1F3F5;
+}
+
 @media (max-width: 1000px) {
   .posts-section {
     gap: 2rem;

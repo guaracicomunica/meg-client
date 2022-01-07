@@ -79,8 +79,8 @@ export default function Turma(props: ClassPageProps) {
               ?
               <PostList items={posts} />
               : 
-              <div className="card-style p-2 mt-3" style={{height: 'fit-content'}}>
-                <h4>Não há posts cadastrados no momento</h4>
+              <div className={`${styles["card-no-data"]} card-style px-5 py-4 mt-3`}>
+                <h4 className="mb-0">Não há posts cadastrados no momento</h4>
               </div>
               }
             </div>

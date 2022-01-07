@@ -27,6 +27,12 @@
   border: 2px solid #F1F3F5;
 }
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
 @media (max-width: 1000px) {
   .posts-section {
     gap: 2rem;

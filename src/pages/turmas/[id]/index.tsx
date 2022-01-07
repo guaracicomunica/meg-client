@@ -6,22 +6,34 @@ import { parseCookies } from "nookies";
 
 import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
 import PostList from "../../../components/PostList";
+import { api } from "../../../services/api";
 import { getAPIClient } from "../../../services/apiClient";
 import { ClassType } from "../../../types/Class";
 import { PostType } from "../../../types/Post";
 
 import styles from './styles.module.css';
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Spinner } from "react-bootstrap";
 
 type ClassPageProps = {
   classroom: ClassType,
-  posts: PostType[],
+  postsData: {
+    posts: PostType[],
+    queryProps: {
+      currentPage: number;
+      totalPages: number;
+    }
+  },
 };
 
 export default function Turma(props: ClassPageProps) {
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
-  const { classroom } = props; 
-  const { posts } = props;
+  const [postsList, setPostsList] = useState<PostType[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { classroom } = props;
 
   useEffect(() => {
     if (classroom.banner !== null) {
@@ -32,6 +44,33 @@ export default function Turma(props: ClassPageProps) {
       setBannerURL("/images/banner-class.svg");
     }
   }, []);
+
+  useEffect(() => {
+    if (props) {
+      console.log(props)
+      setPostsList(props.postsData.posts);
+      setCurrentPage(props.postsData.queryProps.currentPage);
+    }
+  }, [props]);
+
+  useEffect(() => {
+    if (currentPage === props.postsData.queryProps.totalPages) {
+      setHasMore(false);
+    }
+  }, [postsList]);
+
+  async function getMorePost() {
+    const response = await api.get('posts', {
+      params: {
+        page: props.postsData.queryProps.currentPage + 1,
+        per_page: 10,
+        classroom_id: classroom.id
+      }
+    });
+
+    setCurrentPage(response.data.current_page);
+    setPostsList([...postsList, ...response.data.data]);
+  }
   
   return (
     <>
@@ -86,15 +125,22 @@ export default function Turma(props: ClassPageProps) {
                   rows={1}
                 ></textarea>
               </form>
-              {posts.length > 0
-              ?
-              <PostList items={posts} />
-              : 
+            </div>
+            <InfiniteScroll
+              style={{overflow: 'hidden'}}
+              dataLength={postsList.length}
+              next={getMorePost}
+              hasMore={hasMore}
+              loader={<div className={styles["loading-container"]}><Spinner animation="border" /></div>}
+            >
+            {postsList.length > 0 ? (
+              <PostList items={postsList} />
+            ) : (
               <div className={`${styles["card-no-data"]} card-style px-5 py-4 mt-3`}>
                 <h4 className="mb-0">Não há posts cadastrados no momento</h4>
               </div>
-              }
-            </div>
+            )}
+            </InfiniteScroll>
           </div>
         </div>
       </main>
@@ -144,10 +190,18 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       activity: post?.activity
     }));
 
+    const queryProps = {
+      currentPage: response.data.current_page,
+      totalPages: response.data.last_page,
+    }
+
     return {
       props: {
         classroom,
-        posts: formatedPosts
+        postsData: {
+          posts: formatedPosts,
+          queryProps
+        }
       },
     }
   }

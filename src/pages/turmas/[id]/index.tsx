@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -19,8 +19,19 @@ type ClassPageProps = {
 
 export default function Turma(props: ClassPageProps) {
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
+  const [bannerURL, setBannerURL] = useState("");
   const { classroom } = props; 
   const { posts } = props;
+
+  useEffect(() => {
+    if (classroom.banner !== null) {
+      let bannerFileName = classroom.banner.replace("public", "storage");
+      setBannerURL(`http://localhost:8000/${bannerFileName}`);
+    }
+    else {
+      setBannerURL("/images/banner-class.svg");
+    }
+  }, []);
   
   return (
     <>
@@ -31,7 +42,7 @@ export default function Turma(props: ClassPageProps) {
       <main className="page-container">
         <div className={`banner ${styles["banner-class"]}`}>
           <img
-            src="/images/banner-class-2.svg"
+            src={bannerURL}
             alt="Banner da turma"
           />
 

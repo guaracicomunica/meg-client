@@ -106,7 +106,7 @@ export default function Turma(props: ClassPageProps) {
           </div>
         </div>
 
-        <div className={`${styles["posts-section"]} py-3 py-md-5`}>
+        <div className={`${styles["posts-section"]} pt-3 pt-md-5`}>
           <div className={styles["posts-aside"]}>
             <Link href={`/turmas/11/atividades`}>
               <div className="card-style link-card p-4 mt-4 mt-md-0">

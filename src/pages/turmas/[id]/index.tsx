@@ -70,42 +70,50 @@ export default function Turma(props: ClassPage) {
                   rows={1}
                 ></textarea>
               </form>
+              {classroom.posts 
+              ?
+              <>
+                <Post
+                  key={1}
+                id={1}
+                creatorPost="Marjorie Ramos"
+                date="20 de Jun."
+                postBody="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                comments={[
+                  {
+                    id: 1,
+                    commentCreator: 'Higor Nascimento',
+                    date: "20 de Jun.",
+                    commentBody: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                  },
+                  {
+                    id: 2,
+                    commentCreator: 'Fabiana Pereira',
+                    date: "20 de Jun.",
+                    commentBody: "Lorem Ipsum."
+                  },
+                  {
+                    id: 3,
+                    commentCreator: 'João Paulo Pereira',
+                    date: "20 de Jun.",
+                    commentBody: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                  }
+                ]}
+              />
+
+              <PostActivity
+                key={2}
+                id={2}
+                teacher="Marjorie Ramos"
+                activityTitle="Lorem Ipsum is simply dummy text"
+              />
+              </> 
+              : 
+              <div className="card-style p-2 mt-3" style={{height: 'fit-content'}}>
+                <h4>Não há posts cadastrados no momento</h4>
+              </div>
+            }
             </div>
-
-            <Post
-              key={1}
-              id={1}
-              creatorPost="Marjorie Ramos"
-              date="20 de Jun."
-              postBody="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-              comments={[
-                {
-                  id: 1,
-                  commentCreator: 'Higor Nascimento',
-                  date: "20 de Jun.",
-                  commentBody: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                },
-                {
-                  id: 2,
-                  commentCreator: 'Fabiana Pereira',
-                  date: "20 de Jun.",
-                  commentBody: "Lorem Ipsum."
-                },
-                {
-                  id: 3,
-                  commentCreator: 'João Paulo Pereira',
-                  date: "20 de Jun.",
-                  commentBody: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                }
-              ]}
-            />
-
-            <PostActivity
-              key={2}
-              id={2}
-              teacher="Marjorie Ramos"
-              activityTitle="Lorem Ipsum is simply dummy text"
-            />
           </div>
         </div>
       </main>

@@ -1,7 +1,6 @@
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useContext, useEffect, useState } from "react";
 import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
@@ -10,26 +9,18 @@ import PostActivity from "../../../components/PostActivity";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 import { api } from "../../../services/api";
+import { getAPIClient } from "../../../services/apiClient";
 import { ClassPage } from "../../../types/Class";
 
 import styles from './styles.module.css';
 
 export default function Turma(props: ClassPage) {
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    const { ['meg.token']: token } = parseCookies();
-
-    if (!token) {
-      router.push("/sessao-expirada");
-    }
-  }, []);
-  
+  const classroom = props; 
   return (
     <>
       <Head>
-        <title>Turma 1</title>
+        <title>{classroom.name}</title>
       </Head>
 
       <main className="page-container">
@@ -40,14 +31,14 @@ export default function Turma(props: ClassPage) {
           />
 
           <div className="info-class p-4">
-            <h3 className='text-uppercase title'>Turma 1</h3>
-            <h4 className="nickname">As aventuras de jovens aprendizes na Escola de Magia Geogwarts</h4>
+            <h3 className='text-uppercase title'>{classroom.name}</h3>
+            <h4 className="nickname">{classroom.nickname}</h4>
             <hr className='my-2 w-50' />
-            <p>Prof. Marjorie Ramos</p>
+            <p>Prof. {classroom.teacher}</p>
           </div>
 
           <div className="link-class" onClick={() => setShowModalSeeCode(true)}>
-            Código da turma
+            Código da Turma
           </div>
         </div>
 
@@ -120,7 +111,7 @@ export default function Turma(props: ClassPage) {
       </main>
 
       <ModalSeeClassCode
-        code="12345678"
+        code={classroom.code}
         show={showModalSeeCode}
         onHide={() => setShowModalSeeCode(false)}
       />
@@ -128,54 +119,28 @@ export default function Turma(props: ClassPage) {
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  /*const { data } = await api.get('classes');
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx);
 
-  const paths = data.data.map(classroom => {
+  const { ['meg.token']: token } = parseCookies(ctx);
+
+  if (!token) {
     return {
-      params: {
-        slug: classroom.id
+      redirect: {
+        destination: '/sessao-expirada',
+        permanent: false,
       }
     }
-  });
-
-  return {
-    paths,
-    fallback: 'blocking'
-  }*/
-
-  return {
-    paths: [],
-    fallback: 'blocking'
   }
-}
+  else {
+    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    
+    const { data } = await apiClient.get(`classes/${ctx.params.id}`);
+    
+    console.log(data);
 
-export const getStaticProps: GetStaticProps = async (ctx) => {
-  /*const { user } = useContext(AuthContext);
-
-  const { slug } = ctx.params;
-  const { data } = await api.get(`classes/${slug}`);
-
-  const classroom: ClassPage = {
-    id: data.data.id,
-    name: data.data.name,
-    nickname: data.data.nickname,
-    banner: data.data.banner,
-    code: data.data.code,
-    roleUser: user.role,
-    teacher: data.data.teacher,
-    posts: data.data.posts,
-    activities: data.data.activities
-  }
-
-  return {
-    props: {
-      classroom
-    },
-    revalidate: 60 * 60 // 1 hour
-  }*/
-
-  return {
-    props: {}
+    return {
+      props: data
+    }
   }
 }

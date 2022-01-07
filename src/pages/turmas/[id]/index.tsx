@@ -1,24 +1,23 @@
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next";
+import { useState } from "react";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { parseCookies } from "nookies";
-import { useContext, useEffect, useState } from "react";
+
 import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
-import Post from "../../../components/Post";
-import PostActivity from "../../../components/PostActivity";
 import PostList from "../../../components/PostList";
 import { getAPIClient } from "../../../services/apiClient";
-import { ClassPage } from "../../../types/Class";
+import { ClassType } from "../../../types/Class";
 import { PostType } from "../../../types/Post";
 
 import styles from './styles.module.css';
 
-type TurmaProps = {
-  classroom: ClassPage,
+type ClassPageProps = {
+  classroom: ClassType,
   posts: PostType[],
 };
 
-export default function Turma(props: TurmaProps) {
+export default function Turma(props: ClassPageProps) {
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const { classroom } = props; 
   const { posts } = props;
@@ -114,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   else {
     apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
     
-    const { data: classroom} = await apiClient.get<ClassPage>(`classes/${ctx.params.id}`);
+    const { data: classroom } = await apiClient.get<ClassType>(`classes/${ctx.params.id}`);
     
     const response = await apiClient.get('posts', {
       params: {
@@ -123,7 +122,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     });
 
-    const {data: posts} = response.data;
+    const { data: posts } = response.data;
 
     const formatedPosts: PostType[] = posts.map(post => ({
       id: post.id,
@@ -132,7 +131,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       date: post.created_at,
       comments: post?.comments,
       activity: post?.activity
-    }))
+    }));
 
     return {
       props: {

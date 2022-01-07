@@ -1,4 +1,4 @@
-import { PostActivityType, PostType } from "./Post"
+import { PostType } from "./Post"
 
 export type ClassCard = {
   id: number;
@@ -14,7 +14,7 @@ export type ClassCard = {
   roleUser: number;
 }
 
-export type ClassPage = {
+export type ClassType = {
   id: number;
   name: string;
   nickname: string;

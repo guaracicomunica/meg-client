@@ -340,6 +340,13 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         return toast.error(string, options);
       }
       switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
 

@@ -3,16 +3,16 @@ import Link from "next/link";
 
 import styles from './styles.module.css';
 
-export default function AcaoNegada() {
+export default function Custom500() {
   return (
     <>
       <Head>
-        <title>Acesso Negado</title>
+        <title>Erro inesperado</title>
       </Head>
 
       <main className={`${styles.page} section`}>
-        <img src="./icons/access-denied.svg" alt="Acesso negado" /> 
-        <h1>Ops... Você não possui permissão para realizar esta ação!</h1>
+        <img src="./icons/500.svg" alt="Erro inesperado" /> 
+        <h1>Ops... erro inesperado!</h1>
         <p>Clique <Link href="/">aqui</Link> para voltar à página inicial.</p>
       </main>
     </>

@@ -216,12 +216,28 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
       }
     } catch(error) {
-      console.log(error);
-
-      return {
-        redirect: {
-          destination: '/acesso-negado',
-          permanent: false,
+      if(error.response.status == 403 || error.response.status == 401)
+      {
+        return {
+          redirect: {
+            destination: '/acesso-negado',
+            permanent: false,
+          }
+        }
+      } else if(error.response.status == 404)
+      {
+        return {
+          redirect: {
+            destination: '/404',
+            permanent: false,
+          }
+        }
+      } else {
+        return {
+          redirect: {
+            destination: '/500',
+            permanent: false,
+          }
         }
       }
     }

@@ -10,8 +10,6 @@ export type PostType = {
 
 export type PostActivityType = {
   id: number;
-  teacher: string;
-  title: string;
 }
 
 export type CommentType = {

@@ -1,9 +1,14 @@
 import Link from 'next/link';
-import { PostActivityType } from '../../types/Post';
 
 import styles from './styles.module.css';
 
-export default function PostActivity(props: PostActivityType) {
+type PostActivityProps = {
+  id: number;
+  title: string;
+  teacher: string;
+}
+
+export default function PostActivity(props: PostActivityProps) {
   return (
     <div className={`${styles["post-activity"]} mb-3 py-4 px-5`}>
       <img src="/icons/activity-post.svg" alt="Atividade" />

@@ -6,15 +6,15 @@ import { parseCookies } from "nookies";
 export function getAPIClient(ctx?: Pick<next.NextPageContext, 'req'> | {
   req: next.NextApiRequest;
 } | null | undefined) {
-  const { 'meg.token': token } = parseCookies();
-
   const api = axios.create({
     baseURL: 'http://localhost:8000/api'
   })
 
-  if (token) {
-    api.defaults.headers['Authorization'] = `Bearer ${token}`;
-  }
+  api.interceptors.request.use(function(request) {
+    const { 'meg.token': token } = parseCookies();
+    api.defaults.headers['Authorization'] = token ? `Bearer ${token}` : '';
+    return request;
+  })
 
   return api;
 }

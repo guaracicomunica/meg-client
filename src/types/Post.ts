@@ -18,3 +18,19 @@ export type CommentType = {
   date: string;
   body: string;
 }
+
+export type ActivityType = {
+  id: number;
+  name: string;
+  body: string;
+  deadline?: string;
+  points: number;
+  xp: number;
+  coins: number;
+  comments?: CommentType[];
+}
+
+export type ActivityTopicType = {
+  id: number;
+  name: string;
+}

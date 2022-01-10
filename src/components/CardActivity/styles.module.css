@@ -33,7 +33,8 @@
 }
 
 .card-activity-body {
-  margin-top: 1rem;
+  margin-top: 1rem;  
+  white-space: pre-wrap;
 }
 
 .activity-grade {

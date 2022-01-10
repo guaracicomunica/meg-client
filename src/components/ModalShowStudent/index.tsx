@@ -29,7 +29,7 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="card-style px-2">
+        <div className="px-2">
           <div className={styles["info-user"]}>
             <img src={student.avatar} alt="Imagem do aluno" />
             <h5>{student.name}</h5>
@@ -56,10 +56,10 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
       </Modal.Body>
       <Modal.Footer>
         <div className="d-flex justify-content-center my-3 w-100">
-            <Link href="#">
-              <a className="button button-blue text-uppercase">Remover aluno da turma</a>
-            </Link>
-          </div>
+          <Link href="#">
+            <a className="button button-blue text-uppercase">Remover aluno da turma</a>
+          </Link>
+        </div>
       </Modal.Footer>
     </Modal>
   );

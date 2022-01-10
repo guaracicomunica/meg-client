@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Link from "next/link";
+
 import CardStudent from "../../../../components/CardStudent";
 import CardTeacher from "../../../../components/CardTeacher";
 

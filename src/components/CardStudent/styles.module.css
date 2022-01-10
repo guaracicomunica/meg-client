@@ -8,6 +8,7 @@
 
 .info-user img {
   height: 4rem;
+  width: 4rem;
   border-radius: 50%;
   border: 3px solid var(--blue-dark);
   margin-right: 1rem;

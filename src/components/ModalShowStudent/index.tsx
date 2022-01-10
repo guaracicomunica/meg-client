@@ -1,14 +1,18 @@
 import Link from 'next/link';
 import { Modal } from 'react-bootstrap';
+import { StudentType } from '../../types/Participant';
 
 import styles from './styles.module.css';
 
 type ModalShowStudentType = {
+  student: StudentType;
   show: boolean;
   onHide: () => void;
 }
 
 export default function ModalShowStudent(props: ModalShowStudentType) {
+  const { student } = props;
+
   return (
     <Modal
       id="modal-add-class-student"
@@ -27,31 +31,31 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
       <Modal.Body>
         <div className="card-style px-2">
           <div className={styles["info-user"]}>
-            <img src="/icons/user-student.svg" alt="Imagem do aluno" />
-            <h5>Higor do Nascimento Guilhermino</h5>
+            <img src={student.avatar} alt="Imagem do aluno" />
+            <h5>{student.name}</h5>
           </div>
           <div className={styles["email-user"]}>
             <strong className='mr-2'>Email:</strong>
-            <span>higornascimento@gmail.com</span>
+            <span>{student.email}</span>
           </div>
           <div className={styles["score-user"]}>
             <div className={styles["points-user"]}>
               <img src="/icons/crown.svg" />
-              <span>164 pontos</span>
+              <span>{student.points} pontos</span>
             </div>
             <div className={styles["coins-user"]}>
               <img src="/icons/coins.svg" />
-              <span>22 moedas</span>
+              <span>{student.coins} moedas</span>
             </div>
             <div className={styles["level-user"]}>
               <img src="/icons/level.svg" />
-              <span>Nível 04 | Senhor Lobo</span>
+              <span>Nível {student.level} | {student.levelName}</span>
             </div>
           </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <div className="d-flex justify-content-center mt-4 w-100">
+        <div className="d-flex justify-content-center my-3 w-100">
             <Link href="#">
               <a className="button button-blue text-uppercase">Remover aluno da turma</a>
             </Link>

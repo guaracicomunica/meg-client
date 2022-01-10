@@ -72,7 +72,7 @@ export function AuthProvider({ children }) {
     {
 
       setCookie(undefined, 'meg.token', response.data.access_token, {
-        maxAge: 60 * 60, // 1 hour
+        maxAge: 60 * 60 * 24, // 1 day
       });
 
       const userString = JSON.stringify(response.data.user);
@@ -89,7 +89,7 @@ export function AuthProvider({ children }) {
       });
       
       setCookie(null, 'meg.user', userString, {
-        maxAge: 60 * 60, // 1 hour
+        maxAge: 60 * 60 * 24, // 1 day
       });
       
       setIsAuthenticated(true);
@@ -110,7 +110,7 @@ export function AuthProvider({ children }) {
     });
 
     setCookie(undefined, 'meg.token', response.data.access_token, {
-      maxAge: 60 * 60, // 1 hour
+      maxAge: 60 * 60 * 24, // 1 day
     });
     const userString = JSON.stringify(response.data.user);
 
@@ -124,7 +124,7 @@ export function AuthProvider({ children }) {
     });
     
     setCookie(null, 'meg.user', userString, {
-      maxAge: 60 * 60, // 1 hour
+      maxAge: 60 * 60 * 24, // 1 day
     });
     
     setIsAuthenticated(true);

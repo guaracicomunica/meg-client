@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Spinner } from "react-bootstrap";
 
 import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
 import PostList from "../../../components/PostList";
@@ -12,8 +15,6 @@ import { ClassType } from "../../../types/Class";
 import { PostType } from "../../../types/Post";
 
 import styles from './styles.module.css';
-import InfiniteScroll from "react-infinite-scroll-component";
-import { Spinner } from "react-bootstrap";
 
 type ClassPageProps = {
   classroom: ClassType,
@@ -27,6 +28,8 @@ type ClassPageProps = {
 };
 
 export default function Turma(props: ClassPageProps) {
+  const router = useRouter();
+  const { ['meg.token']: token } = parseCookies();
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [postsList, setPostsList] = useState<PostType[]>([]);
@@ -59,26 +62,37 @@ export default function Turma(props: ClassPageProps) {
   }, [postsList]);
 
   async function getMorePost() {
-    const response = await api.get('posts', {
-      params: {
-        page: props.postsData.queryProps.currentPage + 1,
-        per_page: 10,
-        classroom_id: classroom.id
+    try {
+      const response = await api.get('posts', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: {
+          page: props.postsData.queryProps.currentPage + 1,
+          per_page: 10,
+          classroom_id: classroom.id
+        }
+      });
+
+      const formatedPosts: PostType[] = response.data.data.map(post => ({
+        id: post.id,
+        name: post?.name,
+        body: post.body,
+        creator: classroom.teacher,
+        date: post.created_at,
+        comments: post?.comments,
+        activity: post?.activity
+      }));
+
+      setCurrentPage(response.data.current_page);
+      setPostsList([...postsList, ...formatedPosts]);
+    }
+    catch (error) {
+      if (error.response.status === 401) {
+        router.push('/sessao-expirada');
       }
-    });
-
-    const formatedPosts: PostType[] = response.data.data.map(post => ({
-      id: post.id,
-      name: post?.name,
-      body: post.body,
-      creator: classroom.teacher,
-      date: post.created_at,
-      comments: post?.comments,
-      activity: post?.activity
-    }));
-
-    setCurrentPage(response.data.current_page);
-    setPostsList([...postsList, ...formatedPosts]);
+    }
+    
   }
   
   return (

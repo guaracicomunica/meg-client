@@ -63,7 +63,7 @@ export default function Login() {
       </Head>
       
       <main className="section pb-0 d-flex flex-column align-items-center">
-        <div className="card-style col-12 col-md-8 col-lg-7 col-xl-4 p-5">
+        <div className="card-style col-12 col-md-8 col-lg-7 col-xl-5 p-5">
           <img
             src="./images/icon-user.svg"
             alt="Icon do user"

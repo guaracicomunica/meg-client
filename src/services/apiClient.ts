@@ -14,7 +14,21 @@ export function getAPIClient(ctx?: Pick<next.NextPageContext, 'req'> | {
     const { 'meg.token': token } = parseCookies();
     api.defaults.headers['Authorization'] = token ? `Bearer ${token}` : '';
     return request;
-  })
+  });
+
+  axios.interceptors.response.use(function (response) {
+    return response;
+  }, function (error) {
+    if(error.response.status == 401)
+    {
+      return {
+        redirect: {
+          destination: '/sessao-expirada',
+          permanent: false,
+        }
+      }
+    }
+  });
 
   return api;
 }

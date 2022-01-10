@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
+import { RoleUser } from '../../enums/enumRoleUser';
 import { StudentType } from '../../types/Participant';
 import ModalShowStudent from '../ModalShowStudent';
 
@@ -11,6 +13,7 @@ type CardStudentProps = {
 export default function CardStudent(props: CardStudentProps) {
   const [showModalSeeStudent, setShowModalSeeStudent] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
+  const { user } = useContext(AuthContext);
 
   const { student } = props;
   
@@ -38,15 +41,17 @@ export default function CardStudent(props: CardStudentProps) {
           </div>
           <div className={styles["level-user"]}>
             <img src="/icons/level.svg" />
-            <span>Nível {student.level} | {student.levelName}</span>
+            <span>Nível {student.level || "0"} | {student.levelName || "-"}</span>
           </div>
         </div>
-        <div className="d-flex justify-content-center mt-4 w-100">
-          <button
-            onClick={() => setShowModalSeeStudent(true)}
-            className="button button-blue-dark-outline text-uppercase"
-          >Detalhar</button>
-        </div>
+        {user?.role === RoleUser.teacher && (
+          <div className="d-flex justify-content-center mt-4 w-100">
+            <button
+              onClick={() => setShowModalSeeStudent(true)}
+              className="button button-blue-dark-outline text-uppercase"
+            >Detalhar</button>
+          </div>
+        )}
       </div>
 
       <ModalShowStudent

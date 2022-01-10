@@ -74,18 +74,8 @@ export default function Turma(props: ClassPageProps) {
         }
       });
 
-      const formatedPosts: PostType[] = response.data.data.map(post => ({
-        id: post.id,
-        name: post?.name,
-        body: post.body,
-        creator: classroom.teacher,
-        date: post.created_at,
-        comments: post?.comments,
-        activity: post?.activity
-      }));
-
-      setCurrentPage(response.data.current_page);
-      setPostsList([...postsList, ...formatedPosts]);
+      setCurrentPage(response.data.meta.current_page);
+      setPostsList([...postsList, ...response.data.data]);
     }
     catch (error) {
       if (error.response.status === 401) {
@@ -210,26 +200,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   
       const { data: posts } = response.data;
   
-      const formatedPosts: PostType[] = posts.map(post => ({
-        id: post.id,
-        name: post?.name,
-        body: post.body,
-        creator: classroom.teacher,
-        date: post.created_at,
-        comments: post?.comments,
-        activity: post?.activity
-      }));
-  
       const queryProps = {
-        currentPage: response.data.current_page,
-        totalPages: response.data.last_page,
+        currentPage: response.data.meta.current_page,
+        totalPages: response.data.meta.last_page,
       }
   
       return {
         props: {
           classroom,
           postsData: {
-            posts: formatedPosts,
+            posts,
             queryProps
           }
         },

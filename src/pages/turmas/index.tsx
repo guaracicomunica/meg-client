@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import { OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { parseCookies } from 'nookies';
@@ -28,7 +29,8 @@ type ClassPageType = {
 
 export default function Turmas(props: ClassPageType) {
   const { user } = useContext(AuthContext);
-
+  const { 'meg.token': token } = parseCookies();
+  const router = useRouter();
   const [showModalTeacher, setShowModalTeacher] = useState(false);
   const [showModalStudent, setShowModalStudent] = useState(false);
   const [classes, setClasses] = useState([]);
@@ -49,15 +51,25 @@ export default function Turmas(props: ClassPageType) {
   }, [classes]);
 
   async function getMorePost() {
-    const response = await api.get('classes', {
-      params: {
-        page: props.queryProps.currentPage + 1,
-        per_page: 10
-      }
-    });
+    try {
+      const response = await api.get('classes', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: {
+          page: currentPage + 1,
+          per_page: 10
+        }
+      });
 
-    setCurrentPage(response.data.current_page);
-    setClasses([...classes, ...response.data.data]);
+      setCurrentPage(response.data.current_page);
+      setClasses([...classes, ...response.data.data]);
+    }
+    catch (error) {
+      if (error.response.status === 401) {
+        router.push('/sessao-expirada');
+      }
+    }
   }
 
   function openModal(role: number) {

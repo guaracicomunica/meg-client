@@ -178,11 +178,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
   else {
     try {
-      apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
-    
-      const { data: classroom } = await apiClient.get<ClassType>(`classes/${ctx.params.id}`);
+      const { data: classroom } = await apiClient.get<ClassType>(`classes/${ctx.params.id}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       
       const response = await apiClient.get('posts', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
         params: {
           per_page: 10,
           classroom_id: ctx.params.id
@@ -216,29 +221,38 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
       }
     } catch(error) {
-      if(error.response.status == 403 || error.response.status == 401)
-      {
-        return {
-          redirect: {
-            destination: '/acesso-negado',
-            permanent: false,
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
           }
-        }
-      } else if(error.response.status == 404)
-      {
-        return {
-          redirect: {
-            destination: '/404',
-            permanent: false,
+
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
           }
-        }
-      } else {
-        return {
-          redirect: {
-            destination: '/500',
-            permanent: false,
+
+        case 404:
+          return {
+            redirect: {
+              destination: '/404',
+              permanent: false,
+            }
           }
-        }
+        
+        default:
+          return {
+            redirect: {
+              destination: '/500',
+              permanent: false,
+            }
+          }
       }
     }
   }

@@ -27,4 +27,5 @@
   font-size: 1rem;
   color: var(--gray-text);
   line-height: 1.5rem;
+  white-space: pre-wrap;
 }

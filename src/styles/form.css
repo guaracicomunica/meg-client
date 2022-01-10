@@ -14,7 +14,7 @@
   transition: 0.3s ease-in-out border-color;
 }
 
-.form-input:focus {
+.form-input:focus, .textarea:focus {
   color: var(--gray-title);
   border-color: var(--blue-light);
   box-shadow: none;
@@ -119,4 +119,5 @@
   color: var(--gray-title);
   font-weight: 700;
   font-size: 1rem;
+  transition: 0.3s ease-in-out border-color;
 }

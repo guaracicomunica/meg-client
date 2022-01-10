@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
 import PostList from "../../../components/PostList";
@@ -163,6 +165,8 @@ export default function Turma(props: ClassPageProps) {
         show={showModalSeeCode}
         onHide={() => setShowModalSeeCode(false)}
       />
+
+      <ToastContainer />
     </>
   );
 }

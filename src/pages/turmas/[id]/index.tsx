@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
@@ -17,6 +17,8 @@ import { ClassType } from "../../../types/Class";
 import { PostType } from "../../../types/Post";
 
 import styles from './styles.module.css';
+import { AuthContext } from "../../../contexts/AuthContext";
+import { RoleUser } from "../../../enums/enumRoleUser";
 
 type ClassPageProps = {
   classroom: ClassType,
@@ -32,6 +34,7 @@ type ClassPageProps = {
 export default function Turma(props: ClassPageProps) {
   const router = useRouter();
   const { ['meg.token']: token } = parseCookies();
+  const { user } = useContext(AuthContext);
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [postsList, setPostsList] = useState<PostType[]>([]);
@@ -124,6 +127,15 @@ export default function Turma(props: ClassPageProps) {
               <div className="card-style link-card p-4 mt-4">
                 <img src="/icons/students.svg" alt="Alunos" className={styles["img-link-card"]} />
                 <h4 className="mt-3">Ver alunos</h4>
+              </div>
+            </Link>
+
+            <Link href="#">
+              <div className="card-style link-card p-4 mt-4">
+                <img src="/icons/grades.svg" alt="Notas" className={styles["img-link-card"]} />
+                <h4 className="mt-3">
+                  {user?.role === RoleUser.teacher ? "Ver notas" : "Ver minhas notas" }
+                </h4>
               </div>
             </Link>
           </div>

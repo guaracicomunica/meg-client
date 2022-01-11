@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
@@ -27,6 +28,7 @@ type ActivitiesPageProps = {
 
 export default function Atividades(props: ActivitiesPageProps) {
   const { user } = useContext(AuthContext);
+  const router = useRouter();
 
   const [showModalAddTopic, setShowModalAddTopic] = useState(false);
 
@@ -66,16 +68,20 @@ export default function Atividades(props: ActivitiesPageProps) {
               <Col sm={12} lg={9} className="px-0 pl-lg-4">
                 <Tab.Content>
                   <Tab.Pane eventKey="all">
-                    {props.activitiesData.activities.map(activity => {
-                      return <CardActivity key={activity.id} activity={activity} />
-                    })}
+                    {props.activitiesData.activities.length > 0 ? (
+                      props.activitiesData.activities.map(activity => {
+                        return <CardActivity key={activity.id} activity={activity} />
+                      })
+                    ) : (
+                      <p>Não há atividades cadastradas nesta turma.</p>
+                    )}
                   </Tab.Pane>
                 </Tab.Content>
               </Col>
             </Row>
           </Tab.Container>
 
-          <Link href="#">
+          <Link href={`/turmas/${router.query.id}/atividades/criar`}>
             <a className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}>
               <img src="/icons/plus-white.svg" style={{height: "1rem"}} />
               <span className="ml-2">Criar</span>

@@ -72,9 +72,10 @@
 }
 
 .select {
-  background-color: #EDEDED;
   color: var(--gray-title);
-  border-radius: 5px;
+  background-color: #F8F9FA;
+  padding: 0.5rem 0.75rem !important;
+  width: 100%;
 }
 
 .input-file {

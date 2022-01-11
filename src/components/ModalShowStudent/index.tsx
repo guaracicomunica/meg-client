@@ -22,13 +22,15 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
 
   async function removeStudent() {
     try {
-      await api.post('classes/enrollment/cancellation', {
+      const body = {
+        classroom_id: Number(router.query.id),
+        user_id: student.id
+      }
+      await api.post('classes/enrollment/cancellation', body, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }, 
-        params: {
-          classroom_id: Number(router.query.id),
-          user_id: student.id
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         }
       })
       .then(function (success) {

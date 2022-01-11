@@ -84,7 +84,6 @@ export default function Turma(props: ClassPageProps) {
         router.push('/sessao-expirada');
       }
     }
-    
   }
   
   return (
@@ -114,14 +113,14 @@ export default function Turma(props: ClassPageProps) {
 
         <div className={`${styles["posts-section"]} pt-3 pt-md-5`}>
           <div className={styles["posts-aside"]}>
-            <Link href={`/turmas/11/atividades`}>
+            <Link href={`/turmas/${router.query.id}/atividades`}>
               <div className="card-style link-card p-4 mt-4 mt-md-0">
                 <img src="/icons/activity.svg" alt="Atividade" className={styles["img-link-card"]} />
                 <h4 className="mt-3">Ver atividades</h4>
               </div>
             </Link>
 
-            <Link href={`/turmas/11/participantes`}>
+            <Link href={`/turmas/${router.query.id}/participantes`}>
               <div className="card-style link-card p-4 mt-4">
                 <img src="/icons/students.svg" alt="Alunos" className={styles["img-link-card"]} />
                 <h4 className="mt-3">Ver alunos</h4>

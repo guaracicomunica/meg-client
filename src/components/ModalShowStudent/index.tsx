@@ -1,6 +1,11 @@
-import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { parseCookies } from 'nookies';
 import { Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+
+import { api } from '../../services/api';
 import { StudentType } from '../../types/Participant';
+import { options } from '../../utils/defaultToastOptions';
 
 import styles from './styles.module.css';
 
@@ -11,7 +16,59 @@ type ModalShowStudentType = {
 }
 
 export default function ModalShowStudent(props: ModalShowStudentType) {
+  const router = useRouter();
+  const { 'meg.token': token } = parseCookies();
   const { student } = props;
+
+  async function removeStudent() {
+    try {
+      await api.post('classes/enrollment/cancellation', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }, 
+        params: {
+          classroom_id: Number(router.query.id),
+          user_id: student.id
+        }
+      })
+      .then(function (success) {
+        toast.success("Estudante removido da turma com sucesso!", options);
+        router.push(`/turmas/${router.query.id}/participantes`);
+        props.onHide();
+      });
+    }
+    catch (error) {
+      const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
+
+      if (!error.response) {
+        // network error
+        return toast.error(string, options);
+      }
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+        
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+
+        case 403:
+          toast.error("Você não possui permissão para remover o aluno", options);
+
+        case 500: 
+          toast.error(string, options);
+          break;
+
+        default:
+          toast.error(string, options);
+          break;
+      }
+    }
+  }
 
   return (
     <Modal
@@ -56,9 +113,7 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
       </Modal.Body>
       <Modal.Footer>
         <div className="d-flex justify-content-center my-3 w-100">
-          <Link href="#">
-            <a className="button button-blue text-uppercase">Remover aluno da turma</a>
-          </Link>
+          <button onClick={removeStudent} className="button button-blue text-uppercase">Remover aluno da turma</button>
         </div>
       </Modal.Footer>
     </Modal>

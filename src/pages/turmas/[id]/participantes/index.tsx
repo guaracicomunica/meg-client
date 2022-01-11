@@ -5,6 +5,7 @@ import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { ToastContainer } from "react-toastify";
 
 import CardStudent from "../../../../components/CardStudent";
 import CardTeacher from "../../../../components/CardTeacher";
@@ -101,6 +102,8 @@ export default function Participantes(props: ParticipantsProps) {
           )}
         </InfiniteScroll>
       </main>
+
+      <ToastContainer />
     </>
   );
 }

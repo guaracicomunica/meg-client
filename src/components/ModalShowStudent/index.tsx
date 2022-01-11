@@ -108,7 +108,7 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
             </div>
             <div className={styles["level-user"]}>
               <img src="/icons/level.svg" />
-              <span>Nível {student.level || "0"} | {student.levelName || "-"}</span>
+              <span>{student.level ? `Nível ${student.level} - ${student.levelName}` : "Nível inicial"}</span>
             </div>
           </div>
         </div>

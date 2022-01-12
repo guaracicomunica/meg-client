@@ -16,8 +16,8 @@ export default function CardClass(props: ClassCard) {
 
   useEffect(() => {
     if (props.banner !== null) {
-      let bannerFileName = props.banner.replace("public", "storage");
-      setBannerURL(`http://localhost:8000/${bannerFileName}`);
+      //let bannerFileName = props.banner.replace("public", "storage");
+      setBannerURL(`${props.banner}`);
     }
     else {
       setBannerURL("./images/banner-class.svg");

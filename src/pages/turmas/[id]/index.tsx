@@ -45,8 +45,7 @@ export default function Turma(props: ClassPageProps) {
 
   useEffect(() => {
     if (classroom.banner !== null) {
-      let bannerFileName = classroom.banner.replace("public", "storage");
-      setBannerURL(`http://localhost:8000/${bannerFileName}`);
+      setBannerURL(`${classroom.banner}`);
     }
     else {
       setBannerURL("/images/banner-class.svg");

@@ -53,13 +53,31 @@
   color: var(--green);
 }
 
-.attachments {
+.attachments-buttons {
   display: flex;
 }
 
-.attachments button {
+.attachments-buttons button {
   background-color: transparent;
   border: none;
   cursor: pointer;
   margin-right: 1rem;
+}
+
+.attachments {
+  margin-top: 2rem;
+}
+
+.attachments h5 {
+  color: var(--gray-title);
+  margin-bottom: 1rem;
+}
+
+.attachments .link img {
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+.attachments .link a {
+  font-weight: 700;
 }

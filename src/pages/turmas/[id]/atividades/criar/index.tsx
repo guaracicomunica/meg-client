@@ -1,8 +1,26 @@
 import Head from 'next/head';
+import Link from 'next/link';
+import { useState } from 'react';
+import ModalAddLink from '../../../../../components/ModalAddLink';
 
 import styles from './styles.module.css';
 
+type LinkType = {
+  link: string;
+}
+
 export default function Criar() {
+  const [showModalAddLink, setShowModalAddLink] = useState(false);
+  const [links, setLinks] = useState<LinkType[]>([]);
+
+  function addLink(data: LinkType) {
+    setLinks([
+      ...links,
+      data
+    ]);
+    console.log(links);
+  }
+
   return (
     <>
       <Head>
@@ -35,13 +53,31 @@ export default function Criar() {
                 placeholder="Instruções (opcional)"
               ></textarea>
             </div>
-            <div className={styles.attachments}>
-              <button type='button'>
+            <div className={styles["attachments-buttons"]}>
+              <button onClick={() => setShowModalAddLink(true)} type='button'>
                 <img src="/icons/send-link.svg" alt="Anexar link" />
               </button>
               <button type='button'>
                 <img src="/icons/send-file.svg" alt="Anexar arquivo" />
               </button>
+            </div>
+            <div className={styles["attachments"]}>
+              <h5>Arquivos e links anexados</h5>
+              {links.length > 0 && (
+                links.map(link => {
+                  return (
+                    <div className={styles["link"]}>
+                      <img src="/icons/link.svg" alt="Ícone" />
+                      <Link href={link.link}>
+                        <a target="_blank">{link.link}</a>
+                      </Link>
+                    </div>
+                  )
+                })
+              )}
+              {links.length === 0 && (
+                <p>Sem anexos.</p>
+              )}
             </div>
           </div>
 
@@ -157,6 +193,12 @@ export default function Criar() {
           </div>
         </form>
       </main>
+
+      <ModalAddLink
+        show={showModalAddLink}
+        onHide={() => setShowModalAddLink(false)}
+        addLink={addLink}
+      />
     </>
   );
 }

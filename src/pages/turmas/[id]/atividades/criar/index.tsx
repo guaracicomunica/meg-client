@@ -82,13 +82,13 @@ export default function Criar() {
             <div className={styles["form-label"]}>Turma</div>
             <div className="form-row mt-2">
               <div className="form-group col-sm-6">
-                <select className='select p-2' name="classes" id="classes">
+                <select className='select w-100 p-2' name="classes" id="classes">
                   <option value="">Turma 02</option>
                 </select>
               </div>
 
               <div className="form-group col-sm-6">
-                <select className='select p-2' name="students" id="students">
+                <select className='select w-100 p-2' name="students" id="students">
                   <option value="">Todos os alunos</option>
                 </select>
               </div>
@@ -109,7 +109,7 @@ export default function Criar() {
 
               <div className="form-group col-sm-6">
                 <label className={styles["form-label"]} htmlFor="period">Bimestre</label>
-                <select className='select p-2' name="period" id="period">
+                <select className='select w-100 p-2' name="period" id="period">
                   <option value="">Escolha o bimestre...</option>
                 </select>
               </div>

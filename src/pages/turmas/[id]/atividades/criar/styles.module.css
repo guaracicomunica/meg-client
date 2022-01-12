@@ -73,6 +73,11 @@
   margin-bottom: 1rem;
 }
 
+.attachments .link {
+  display: flex;
+  align-items: center;
+}
+
 .attachments .link img {
   height: 1rem;
   margin-right: 0.5rem;
@@ -80,4 +85,5 @@
 
 .attachments .link a {
   font-weight: 700;
+  font-size: 1rem;
 }

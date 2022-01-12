@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { useState } from 'react';
 import ModalAddLink from '../../../../../components/ModalAddLink';
 
@@ -68,9 +67,7 @@ export default function Criar() {
                   return (
                     <div className={styles["link"]}>
                       <img src="/icons/link.svg" alt="Ícone" />
-                      <Link href={link.link}>
-                        <a target="_blank">{link.link}</a>
-                      </Link>
+                      <a href={link.link} target="_blank">{link.link}</a>
                     </div>
                   )
                 })

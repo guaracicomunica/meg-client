@@ -1,0 +1,13 @@
+.private-comment {
+  border-radius: 10px;
+  background-color: #F8F8F8;
+  width: max-content;
+}
+
+.private-comment h5 {
+  color: var(--gray-title) !important;
+}
+
+.response h5 {
+  color: var(--blue-dark) !important;
+}

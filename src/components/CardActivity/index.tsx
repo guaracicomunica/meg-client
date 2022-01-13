@@ -1,5 +1,6 @@
 import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ActivityType } from '../../types/Post';
 
@@ -12,6 +13,7 @@ type CardActivityProps = {
 }
 
 export default function CardActivity(props: CardActivityProps) {
+  const router = useRouter();
   const { activity } = props;
   const [isCardExpanded, setIsCardExpanded] = useState(false);
 
@@ -75,7 +77,7 @@ export default function CardActivity(props: CardActivityProps) {
           </div>
 
           <div className={styles["card-activity-footer"]}>
-            <Link href="#">
+            <Link href={`/turmas/${router.query.id}/atividades/${props.activity.id}`}>
               <a className='button button-blue-dark-outline text-uppercase px-5'>Acessar a atividade</a>
             </Link>
           </div>

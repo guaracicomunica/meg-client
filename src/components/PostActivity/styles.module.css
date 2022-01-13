@@ -16,3 +16,7 @@
   margin-left: 1rem;
   color: var(--gray-title);
 }
+
+.post-activity h5 a {
+  margin-left: 0.5rem;
+}

@@ -141,7 +141,7 @@ export default function Turma(props: ClassPageProps) {
 
           <div className={styles["posts-list"]}>
             <div className={`${styles["post-comment"]} mb-3`}>
-              <form id="post-comment">
+              <form id="post-comment" method="post">
                 <textarea
                   name="post"
                   id="post"
@@ -149,6 +149,11 @@ export default function Turma(props: ClassPageProps) {
                   className="textarea w-100 p-4"
                   rows={1}
                 ></textarea>
+                <button
+                  type="submit"
+                  className="button button-blue"
+                  form="post-comment"
+                >Postar</button>
               </form>
             </div>
             <InfiniteScroll

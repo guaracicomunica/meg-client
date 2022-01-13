@@ -1,0 +1,41 @@
+.input-add-file {
+  height: 7rem;
+  display: flex;
+  justify-content: center;
+}
+
+.input-add-file label {
+  left: auto !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+}
+
+.input-add-file span {
+  margin-left: 0 !important;
+  position: absolute;
+  bottom: 0;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+.input-add-file label img {
+  height: 5rem !important;
+}
+
+.attachment {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.attachment img {
+  height: 1.1rem;
+}
+
+.attachment span {
+  margin-left: 0.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--blue-light);
+}

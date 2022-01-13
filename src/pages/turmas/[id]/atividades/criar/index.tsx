@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useState } from 'react';
+import ModalAddFile from '../../../../../components/ModalAddFile';
 import ModalAddLink from '../../../../../components/ModalAddLink';
 
 import styles from './styles.module.css';
@@ -10,14 +11,22 @@ type LinkType = {
 
 export default function Criar() {
   const [showModalAddLink, setShowModalAddLink] = useState(false);
+  const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [links, setLinks] = useState<LinkType[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
 
   function addLink(data: LinkType) {
     setLinks([
       ...links,
       data
     ]);
-    console.log(links);
+  }
+
+  function addFile(data: any) {
+    setFiles([
+      ...files,
+      data.file[0]
+    ])
   }
 
   return (
@@ -56,23 +65,35 @@ export default function Criar() {
               <button onClick={() => setShowModalAddLink(true)} type='button'>
                 <img src="/icons/send-link.svg" alt="Anexar link" />
               </button>
-              <button type='button'>
+              <button onClick={() => setShowModalAddFile(true)} type='button'>
                 <img src="/icons/send-file.svg" alt="Anexar arquivo" />
               </button>
             </div>
             <div className={styles["attachments"]}>
               <h5>Arquivos e links anexados</h5>
               {links.length > 0 && (
-                links.map(link => {
+                links.map((link, index) => {
                   return (
-                    <div className={styles["link"]}>
+                    <div className={styles["link"]} key={index}>
                       <img src="/icons/link.svg" alt="Ícone" />
                       <a href={link.link} target="_blank">{link.link}</a>
                     </div>
                   )
                 })
               )}
-              {links.length === 0 && (
+
+              {files.length > 0 && (
+                files.map((file, index) => {
+                  return (
+                    <div className={styles["link"]} key={index}>
+                      <img src="/icons/file.svg" alt="Ícone" />
+                      <span>{file.name}</span>
+                    </div>
+                  )
+                })
+              )}
+
+              {links.length === 0 && files.length === 0 && (
                 <p>Sem anexos.</p>
               )}
             </div>
@@ -195,6 +216,12 @@ export default function Criar() {
         show={showModalAddLink}
         onHide={() => setShowModalAddLink(false)}
         addLink={addLink}
+      />
+
+      <ModalAddFile
+        show={showModalAddFile}
+        onHide={() => setShowModalAddFile(false)}
+        addFile={addFile}
       />
     </>
   );

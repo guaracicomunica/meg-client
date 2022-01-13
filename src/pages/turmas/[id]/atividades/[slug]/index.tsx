@@ -1,6 +1,7 @@
 import { format, parseISO } from "date-fns";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 
 import Comment from "../../../../../components/Comment";
@@ -12,6 +13,7 @@ import { RoleUser } from "../../../../../enums/enumRoleUser";
 import styles from './styles.module.css';
 
 export default function Atividade() {
+  const router = useRouter();
   const { user } = useContext(AuthContext);
   const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
@@ -54,11 +56,11 @@ export default function Atividade() {
 
             {user?.role === RoleUser.teacher && (
               <div className={`${styles["delivery-cards"]} pl-md-4 mt-4 mt-md-0`}>
-                <div className={`p-3 mr-3 ${styles["info-card"]}`}>
+                <div className={`p-2 mr-3 ${styles["info-card"]}`}>
                   <div className={styles.quantity}>12</div>
                   <span>Entregue</span>
                 </div>
-                <div className={`p-3 ${styles["info-card"]}`}>
+                <div className={`p-2 ${styles["info-card"]}`}>
                   <div className={styles.quantity}>20</div>
                   <span>Trabalhos atribuídos</span>
                 </div>
@@ -68,7 +70,7 @@ export default function Atividade() {
 
           {user?.role === RoleUser.teacher && (
             <div className="d-flex mt-3">
-              <Link href="#">
+              <Link href={`/turmas/${router.query.id}/atividades/${router.query.slug}/corrigir`}>
                 <a className="button button-blue text-uppercase">Corrigir atividade</a>
               </Link>
             </div>

@@ -1,0 +1,56 @@
+.card-file {
+  border: 2px solid var(--gray-form);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.info-user img {
+  height: 3rem;
+  margin-right: 0.5rem;
+}
+
+.info-user h5 {
+  font-size: 1.1rem;
+  color: var(--gray-title);
+  margin-bottom: 0;
+}
+
+.file {
+  display: flex;
+  align-items: center;
+}
+
+.file img {
+  height: 1.1rem;
+  margin-right: 0.25rem;
+}
+
+.file span {
+  color: var(--gray-form);
+  font-weight: 700;
+}
+
+.status {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.status.pending {
+  color: var(--red);
+}
+
+.status.on-time {
+  color: var(--green);
+}

@@ -1,0 +1,155 @@
+.page-layout {
+  padding: 3rem 9rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+}
+
+.assign-grades {
+  height: fit-content;
+}
+
+.assign-grades-all, .assign-grades-each-one {
+  width: 100%;
+}
+
+.assign-grades-all h5 {
+  color: var(--gray-title);
+}
+
+.assign-grades-all input {
+  width: 73px;
+}
+
+.assign-grades-all input::-webkit-outer-spin-button,
+.assign-grades-all input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.assign-grades-all input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.assign-grades-all button {
+  padding: 0 0.75rem;
+}
+
+.assign-grades-each-one form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.students-files h1 {
+  color: var(--gray-title);
+  font-size: 2rem;
+}
+
+.info-card {
+  background-color: var(--blue);
+  border-radius: 10px;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 6.5rem;
+  height: 6.5rem;
+}
+
+.info-card .quantity {
+  font-size: 2rem;
+  font-weight: 900;
+}
+
+.info-card span {
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.input-grade {
+  display: grid;
+  grid-template-columns: 1fr 73px;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.student-info {
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--gray-form);
+  border-radius: 10px;
+}
+
+.student-info img {
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.student-info h6 {
+  color: var(--gray-title);
+  font-size: 1.1rem;
+  margin-left: 0.5rem;
+  margin-bottom: 0;
+}
+
+.input-grade input::-webkit-outer-spin-button,
+.input-grade input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.input-grade input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.files-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 1400px) {
+  .page-layout {
+    padding: 3rem 7rem;
+    grid-template-columns: 1fr 1fr;
+  }
+  .files-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1200px) {
+  .files-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 992px) {
+  .page-layout {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .files-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-layout {
+    padding: 3rem 5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-layout {
+    padding: 3rem;
+  }
+  .files-list {
+    grid-template-columns: 1fr;
+  }
+}

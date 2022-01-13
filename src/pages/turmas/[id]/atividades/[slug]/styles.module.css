@@ -68,8 +68,9 @@
   color: var(--white);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
+  width: 6.5rem;
+  height: 6.5rem;
 }
 
 .info-card .quantity {
@@ -79,6 +80,7 @@
 
 .info-card span {
   font-size: 0.8rem;
+  text-align: center;
 }
 
 .activity-grade {

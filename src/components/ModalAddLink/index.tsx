@@ -18,11 +18,16 @@ export default function ModalAddLink(props: ModalAddLinkType) {
   const onSubmit = async (data: LinkForm) => handleAddLink(data);
 
   function handleAddLink(data: LinkForm) {
-    props.addLink(data);
-    props.onHide();
-    reset({
-      link: ""
-    });
+    if (data.link !== "") {
+      props.addLink(data);
+      props.onHide();
+      reset({
+        link: ""
+      });
+    }
+    else {
+      props.onHide();
+    }
   }
 
   return (

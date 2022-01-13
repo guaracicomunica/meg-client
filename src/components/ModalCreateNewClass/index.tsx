@@ -36,7 +36,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [levelInputs, setLevelInputs] = useState([]);
   const [isDraft, setIsDraft] = useState(1);
   const [idClass, setIdClass] = useState(0);
-f
+
   useEffect(() => {
     if (props.formData) {
       setIdClass(props.formData.id);

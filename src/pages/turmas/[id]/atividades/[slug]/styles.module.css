@@ -81,6 +81,17 @@
   font-size: 0.8rem;
 }
 
+.activity-grade {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--gray-title);
+  margin-right: 1rem;
+}
+
+.activity-score {
+  color: var(--yellow);
+}
+
 .activity-body {
   white-space: pre-wrap;
   line-height: 1.5;
@@ -113,7 +124,7 @@
   width: 100%;
 }
 
-.card-private-comments {
+.card-private-comments, .card-send-activity {
   height: fit-content;
 }
 
@@ -121,4 +132,60 @@
   color: var(--black);
   font-weight: 900;
   width: 100%;
+}
+
+.card-send-activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.card-activity-header small {
+  text-transform: uppercase;
+}
+
+.card-send-activity-header .delivered {
+  color: var(--green);
+}
+
+.card-send-activity-header .pending {
+  color: var(--red);
+}
+
+.attachments {
+  width: 100%;
+}
+
+.attachments .file {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+
+.attachments .file img {
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+.attachments .file span {
+  color: var(--blue-light);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.send-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.send-button {
+  display: flex;
+  align-items: center;
+}
+
+.send-button img {
+  height: 1rem;
+  margin-right: 0.5rem;
 }

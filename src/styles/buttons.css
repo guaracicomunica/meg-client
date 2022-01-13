@@ -2,13 +2,14 @@
   width: fit-content;
   padding: 0.5rem 1.25rem;
   border-radius: 10px;
-  border: none;
+  border: 2px solid;
   font-size: 1rem;
   font-weight: 700;
   transition: background-color .2s, color .2s;
 }
 
 .button-blue-dark {
+  border-color: var(--blue-dark);
   background-color: var(--blue-dark);
   color: var(--white) !important;
 }
@@ -27,12 +28,33 @@
 }
 
 .button-blue {
+  border-color: var(--blue);
   background-color: var(--blue);
+  color: var(--white) !important;
+}
+
+.button-gray {
+  border-color: var(--gray-form);
+  background-color: var(--gray-form);
+  color: var(--white) !important;
+}
+
+.button-gray-outline {
+  border: 2px solid var(--gray-form);
+  background-color: var(--white);
+  color: var(--gray-form) !important;
+  transition: 0.2s;
+}
+
+.button-gray-outline:hover {
+  border-color: var(--white);
+  background-color: var(--gray-form);
   color: var(--white) !important;
 }
 
 .button:disabled {
   cursor: not-allowed;
+  border-color: var(--gray-title);
   background-color: var(--gray-title) !important;
   color: var(--black) !important;
 }

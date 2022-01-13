@@ -1,13 +1,28 @@
 import { format, parseISO } from "date-fns";
 import Head from "next/head";
 import Link from "next/link";
+import { useContext, useState } from "react";
 
 import Comment from "../../../../../components/Comment";
+import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
+import { AuthContext } from "../../../../../contexts/AuthContext";
+import { RoleUser } from "../../../../../enums/enumRoleUser";
 
 import styles from './styles.module.css';
 
 export default function Atividade() {
+  const { user } = useContext(AuthContext);
+  const [showModalAddFile, setShowModalAddFile] = useState(false);
+  const [files, setFiles] = useState<File[]>([]);
+
+  function addFile(data: any) {
+    setFiles([
+      ...files,
+      data.file[0]
+    ]);
+  }
+
   return (
     <>
       <Head>
@@ -15,7 +30,7 @@ export default function Atividade() {
       </Head>
 
       <main className={`${styles["page-layout"]} mt-3`}>
-        <div className={`card-style p-4 ${styles["card-activity"]}`}>
+        <div className="card-style p-4">
           <div className={`${styles["card-activity-header"]} border-bottom pb-4`}>
             <img src="/icons/activity-post.svg" alt="Atividade" />
             <div className={styles["info-activity"]}>
@@ -26,29 +41,38 @@ export default function Atividade() {
             </div>
           </div>
 
+          <div className="d-flex w-100 mt-3">
+            <div className={styles["activity-grade"]}>Nota: 100 pontos</div>
+            <div className={styles["activity-score"]}>60 XP | 60 moedas</div>
+          </div>
+
           <div className="d-flex flex-column flex-md-row py-4">
             <div className={`pr-3 ${styles["activity-body"]}`}>
             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
             </div>
 
-            <div className={`${styles["delivery-cards"]} pl-md-4 mt-4 mt-md-0`}>
-              <div className={`p-3 mr-3 ${styles["info-card"]}`}>
-                <div className={styles.quantity}>12</div>
-                <span>Entregue</span>
+            {user?.role === RoleUser.teacher && (
+              <div className={`${styles["delivery-cards"]} pl-md-4 mt-4 mt-md-0`}>
+                <div className={`p-3 mr-3 ${styles["info-card"]}`}>
+                  <div className={styles.quantity}>12</div>
+                  <span>Entregue</span>
+                </div>
+                <div className={`p-3 ${styles["info-card"]}`}>
+                  <div className={styles.quantity}>20</div>
+                  <span>Trabalhos atribuídos</span>
+                </div>
               </div>
-              <div className={`p-3 ${styles["info-card"]}`}>
-                <div className={styles.quantity}>20</div>
-                <span>Trabalhos atribuídos</span>
-              </div>
-            </div>
+            )}
           </div>
 
-          <div className="d-flex mt-3">
-            <Link href="#">
-              <a className="button button-blue text-uppercase">Corrigir atividade</a>
-            </Link>
-          </div>
+          {user?.role === RoleUser.teacher && (
+            <div className="d-flex mt-3">
+              <Link href="#">
+                <a className="button button-blue text-uppercase">Corrigir atividade</a>
+              </Link>
+            </div>
+          )}
 
           <div className={`${styles["post-comments"]} my-4 py-4`}>
             <div className={styles["post-comments-title"]}>
@@ -80,11 +104,72 @@ export default function Atividade() {
           </div>
         </div>
 
-        <div className={`card-style p-4 ${styles["card-private-comments"]}`}>
-          <h5 className="pb-3 border-bottom">Dúvida dos participantes</h5>
-          <PrivateComment />
-        </div>
+        {user?.role === RoleUser.teacher ? (
+          <div className={`card-style p-4 ${styles["card-private-comments"]}`}>
+            <h5 className="pb-3 border-bottom">Dúvida dos participantes</h5>
+            <PrivateComment />
+          </div>
+        ) : (
+          <div>
+            <div className={`card-style p-4 ${styles["card-send-activity"]}`}>
+              <div className={`pb-3 border-bottom ${styles["card-send-activity-header"]}`}>
+                <h5>Envie sua atividade</h5>
+                <small className={styles.delivered}>ENTREGUE</small>
+              </div>
+              <div className={`mt-4 ${styles.attachments}`}>
+                <h6 className="mb-3">Arquivos a serem enviados:</h6>
+                {files.length > 0 ? (
+                  files.map((file, index) => {
+                    return (
+                      <div className={styles["file"]} key={index}>
+                        <img src="/icons/file.svg" alt="Ícone" />
+                        <span>{file.name}</span>
+                      </div>
+                    )
+                  })
+                ) : (
+                  <p>Nenhum arquivo anexado.</p>
+                )}
+              </div>
+              <div className={styles["send-buttons"]}>
+                <button
+                  onClick={() => setShowModalAddFile(true)}
+                  className={`button button-blue text-uppercase mt-2 ${styles["send-button"]}`}
+                >
+                  <img src="/icons/file-white.svg" alt="Arquivo" />
+                  Anexar arquivo
+                </button>
+                <button className="button button-gray-outline text-uppercase mt-2">Marcar como concluída</button>
+              </div>
+            </div>
+
+            <div className={`card-style mt-4 p-4 ${styles["card-send-private-comment"]}`}>
+              <h5 className="pb-3 mb-4 border-bottom w-100">Dúvidas? Fale com o(a) professor(a)</h5>
+              <PrivateComment />
+              <form className="w-100 mt-3" method="post" id="send-private-comment">
+                <textarea
+                  name="comment"
+                  id="comment"
+                  rows={4}
+                  className='textarea w-100 p-3'
+                  placeholder="Faça um comentário privado..."
+                ></textarea>
+                <button
+                  type='submit'
+                  form="send-private-comment"
+                  className='button button-blue mt-2'
+                >Enviar</button>
+              </form>
+            </div>
+          </div>
+        )}
       </main>
+
+      <ModalAddFile
+        show={showModalAddFile}
+        onHide={() => setShowModalAddFile(false)}
+        addFile={addFile}
+      />
     </>
   );
 }

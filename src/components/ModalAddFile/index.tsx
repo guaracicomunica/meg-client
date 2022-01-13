@@ -10,7 +10,7 @@ type ModalAddFileType = {
   addFile: (data: any) => void;
 }
 
-export default function ModalAddLink(props: ModalAddFileType) {
+export default function ModalAddFile(props: ModalAddFileType) {
   const [fileNameSelected, setFileNameSelected] = useState("");
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     file: null,

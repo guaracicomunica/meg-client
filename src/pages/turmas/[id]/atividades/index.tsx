@@ -51,7 +51,9 @@ export default function Atividades(props: ActivitiesPageProps) {
                   {props.topics.map((topic) => {
                     return (
                       <Nav.Item>
-                        <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles.topic} eventKey={topic.id}>{topic.name}</Nav.Link>
+                        <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles.topic} eventKey={topic.id} >
+                          {topic.name}
+                        </Nav.Link>
                       </Nav.Item>
                     )
                   })}
@@ -90,6 +92,7 @@ export default function Atividades(props: ActivitiesPageProps) {
         </div>
 
         <ModalAddTopic
+          classroom_id={Number(router.query.id)}
           show={showModalAddTopic}
           onHide={() => setShowModalAddTopic(false)}
         />
@@ -99,6 +102,7 @@ export default function Atividades(props: ActivitiesPageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
   const apiClient = getAPIClient(ctx);
 
   const { ['meg.token']: token } = parseCookies(ctx);
@@ -117,14 +121,16 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         headers: {
           'Authorization': `Bearer ${token}`
         },
-        params: {
+        params: { 
           per_page: 10
         }
       });
-  
-      const { data: activities } = response.data;
 
+      const { data: activities } = response.data;
+      
       const formattedActivities: ActivityType[] = activities.map(activity => {
+
+        console.log(activity.post.comments)
         return {
           id: activity.post_id,
           name: activity.post.name,
@@ -133,18 +139,24 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           points: activity.points,
           xp: activity.xp,
           coins: activity.coins,
-          comments: []
-        }
+          comments: []//activity.post.comments
+         }
       });
-
-      console.log(formattedActivities)
   
+      //console.log(activities)
+
       const queryProps = {
         currentPage: response.data.current_page,
         totalPages: response.data.last_page,
       }
 
-      const topics = [];
+      const topicsOfThisClassroom = await apiClient.get(`topics/classroom/${ctx.params.id.toString()}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
+
+      const topics = topicsOfThisClassroom.data;
   
       return {
         props: {
@@ -156,7 +168,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
       }
     } catch(error) {
-      switch (error.response.status) {
+      switch (error?.response?.status) {
         case 401:
           return {
             redirect: {

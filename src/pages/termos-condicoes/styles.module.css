@@ -1,0 +1,12 @@
+.page-layout {
+  display: flex;
+  justify-content: center;
+  padding-top: 3rem;
+}
+
+.page-layout p {
+  font-size: 1rem;
+  color: var(--gray-text);
+  line-height: 1.5rem;
+  white-space: pre-wrap;
+}

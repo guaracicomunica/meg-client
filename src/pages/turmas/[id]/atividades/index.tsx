@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
 import { Col, Nav, Row, Tab } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
 
 import CardActivity from "../../../../components/CardActivity";
 import ModalAddTopic from "../../../../components/ModalAddTopic";
@@ -97,6 +98,8 @@ export default function Atividades(props: ActivitiesPageProps) {
           onHide={() => setShowModalAddTopic(false)}
         />
       </main>
+
+      <ToastContainer />
     </>
   )
 }
@@ -129,8 +132,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       const { data: activities } = response.data;
       
       const formattedActivities: ActivityType[] = activities.map(activity => {
-
-        console.log(activity.post.comments)
         return {
           id: activity.post_id,
           name: activity.post.name,
@@ -139,24 +140,25 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           points: activity.points,
           xp: activity.xp,
           coins: activity.coins,
-          comments: []//activity.post.comments
+          comments: activity.post.comments
          }
       });
-  
-      //console.log(activities)
 
       const queryProps = {
         currentPage: response.data.current_page,
         totalPages: response.data.last_page,
       }
 
-      const topicsOfThisClassroom = await apiClient.get(`topics/classroom/${ctx.params.id.toString()}`, {
+      const topicsOfThisClassroom = await apiClient.get("topics", {
         headers: {
           'Authorization': `Bearer ${token}`
         },
+        params : {
+          classroom_id: ctx.params.id
+        }
       });
 
-      const topics = topicsOfThisClassroom.data;
+      const topics = topicsOfThisClassroom.data.data;
   
       return {
         props: {

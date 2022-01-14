@@ -191,7 +191,7 @@ export default function Cadastro() {
               />
             </div>
             <div className="form-group">
-              Ao se cadastrar no MEG, você aceita o contrato de privacidade e todos os termos de segurança. Leia os termos <Link href='#'>aqui</Link>
+              Ao se cadastrar no MEG, você aceita o contrato de privacidade e todos os termos de segurança. Leia os termos <Link href='/termos-condicoes'>aqui</Link>
             </div>
 
             <button

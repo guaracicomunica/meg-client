@@ -44,6 +44,12 @@ export type DataFormClass = {
   file?: File;
 }
 
+export type DataFormTopic = 
+{
+  name: string,
+  classroom_id: number
+}
+
 export type Skill = {
   name: string;
   coins: number;

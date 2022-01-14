@@ -3,14 +3,16 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { useContext, useState } from "react";
-import { Col, Nav, Row, Tab } from "react-bootstrap";
+import { useContext, useEffect, useState } from "react";
+import { Col, Nav, Row, Spinner, Tab } from "react-bootstrap";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { ToastContainer } from "react-toastify";
 
 import CardActivity from "../../../../components/CardActivity";
 import ModalAddTopic from "../../../../components/ModalAddTopic";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { RoleUser } from "../../../../enums/enumRoleUser";
+import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ActivityTopicType, ActivityType } from "../../../../types/Post";
 
@@ -28,12 +30,65 @@ type ActivitiesPageProps = {
 }
 
 export default function Atividades(props: ActivitiesPageProps) {
+  const { 'meg.token': token } = parseCookies();
   const { user } = useContext(AuthContext);
   const router = useRouter();
 
   const [showModalAddTopic, setShowModalAddTopic] = useState(false);
+  const [activitiesList, setActivitiesList] = useState<ActivityType[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(props.activitiesData.activities)
+  useEffect(() => {
+    if (props) {
+      setActivitiesList(props.activitiesData.activities);
+      setCurrentPage(props.activitiesData.queryProps.currentPage);
+    }
+  }, [props]);
+
+  useEffect(() => {
+    if (currentPage === props.activitiesData.queryProps.totalPages) {
+      setHasMore(false);
+    }
+  }, [activitiesList]);
+
+  async function getMoreActivity() {
+    try {
+      const response = await api.get('activities', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: {
+          page: currentPage + 1,
+          per_page: 10
+        }
+      });
+
+      const formattedActivities: ActivityType[] = response.data.data.map(activity => {
+        return {
+          id: activity.post_id,
+          name: activity.post.name,
+          body: activity.post.body,
+          deadline: activity?.deadline,
+          points: activity.points,
+          xp: activity.xp,
+          coins: activity.coins,
+          comments: activity.post.comments,
+          topicId: activity.topic_id
+         }
+      });
+
+      console.log(formattedActivities)
+
+      setCurrentPage(response.data.current_page);
+      setActivitiesList([...activitiesList, ...formattedActivities]);
+    }
+    catch (error) {
+      if (error.response.status === 401) {
+        router.push('/sessao-expirada');
+      }
+    }
+  }
 
   return (
     <>
@@ -73,19 +128,27 @@ export default function Atividades(props: ActivitiesPageProps) {
               <Col sm={12} lg={9} className="px-0 pl-lg-4">
                 <Tab.Content>
                   <Tab.Pane eventKey="all">
-                    {props.activitiesData.activities.length > 0 ? (
-                      props.activitiesData.activities.map(activity => {
-                        return <CardActivity key={activity.id} activity={activity} />
-                      })
-                    ) : (
-                      <p>Não há atividades cadastradas nesta turma.</p>
-                    )}
+                    <InfiniteScroll
+                      style={{overflow: 'hidden'}}
+                      dataLength={activitiesList.length}
+                      next={getMoreActivity}
+                      hasMore={hasMore}
+                      loader={<div className={styles["loading-container"]}><Spinner animation="border" /></div>}
+                    >
+                      {activitiesList.length > 0 ? (
+                        activitiesList.map(activity => {
+                          return <CardActivity key={activity.id} activity={activity} />
+                        })
+                      ) : (
+                        <p>Não há atividades cadastradas nesta turma.</p>
+                      )}
+                    </InfiniteScroll>
                   </Tab.Pane>
                   {props.topics.map(topic => {
                     return (
                       <Tab.Pane eventKey={topic.id} key={topic.id}>
-                        {props.activitiesData.activities.length > 0 && (
-                          props.activitiesData.activities.map(activity => {
+                        {activitiesList.length > 0 && (
+                          activitiesList.map(activity => {
                             if (activity.topicId === topic.id) {
                               return <CardActivity key={activity.id} activity={activity} />
                             }

@@ -28,6 +28,7 @@ export type ActivityType = {
   xp: number;
   coins: number;
   comments?: CommentType[];
+  topicId: number;
 }
 
 export type ActivityTopicType = {

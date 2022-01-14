@@ -33,6 +33,8 @@ export default function Atividades(props: ActivitiesPageProps) {
 
   const [showModalAddTopic, setShowModalAddTopic] = useState(false);
 
+  console.log(props.activitiesData.activities)
+
   return (
     <>
       <Head>
@@ -51,7 +53,7 @@ export default function Atividades(props: ActivitiesPageProps) {
                   </Nav.Item>
                   {props.topics.map((topic) => {
                     return (
-                      <Nav.Item>
+                      <Nav.Item key={topic.id}>
                         <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles.topic} eventKey={topic.id} >
                           {topic.name}
                         </Nav.Link>
@@ -79,6 +81,19 @@ export default function Atividades(props: ActivitiesPageProps) {
                       <p>Não há atividades cadastradas nesta turma.</p>
                     )}
                   </Tab.Pane>
+                  {props.topics.map(topic => {
+                    return (
+                      <Tab.Pane eventKey={topic.id} key={topic.id}>
+                        {props.activitiesData.activities.length > 0 && (
+                          props.activitiesData.activities.map(activity => {
+                            if (activity.topicId === topic.id) {
+                              return <CardActivity key={activity.id} activity={activity} />
+                            }
+                          })
+                        )}
+                      </Tab.Pane>
+                    )
+                  })}
                 </Tab.Content>
               </Col>
             </Row>
@@ -140,7 +155,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           points: activity.points,
           xp: activity.xp,
           coins: activity.coins,
-          comments: activity.post.comments
+          comments: activity.post.comments,
+          topicId: activity.topic_id
          }
       });
 

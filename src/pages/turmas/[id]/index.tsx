@@ -129,7 +129,7 @@ export default function Turma(props: ClassPageProps) {
               </div>
             </Link>
 
-            <Link href="#">
+            <Link href={`/turmas/${router.query.id}/notas`}>
               <div className="card-style link-card p-4 mt-4">
                 <img src="/icons/grades.svg" alt="Notas" className={styles["img-link-card"]} />
                 <h4 className="mt-3">

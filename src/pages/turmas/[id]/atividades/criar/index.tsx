@@ -103,21 +103,6 @@ export default function Criar() {
           </div>
 
           <div className='w-100 px-4 border-left'>
-            <div className={styles["form-label"]}>Turma</div>
-            <div className="form-row mt-2">
-              <div className="form-group col-sm-6">
-                <select className='select w-100 p-2' name="classes" id="classes">
-                  <option value="">Turma 02</option>
-                </select>
-              </div>
-
-              <div className="form-group col-sm-6">
-                <select className='select w-100 p-2' name="students" id="students">
-                  <option value="">Todos os alunos</option>
-                </select>
-              </div>
-            </div>
-
             <div className="form-row">
               <div className="form-group col-sm-6">
                 <label className={styles["form-label"]} htmlFor="points">Pontos</label>
@@ -133,8 +118,12 @@ export default function Criar() {
 
               <div className="form-group col-sm-6">
                 <label className={styles["form-label"]} htmlFor="period">Bimestre</label>
-                <select className='select w-100 p-2' name="period" id="period">
-                  <option value="">Escolha o bimestre...</option>
+                <select className='select w-100 p-2' name="period" id="period" defaultValue={0}>
+                  <option value="0">Escolha o bimestre...</option>
+                  <option value="1">1º bimestre</option>
+                  <option value="2">2º bimestre</option>
+                  <option value="3">3º bimestre</option>
+                  <option value="4">4º bimestre</option>
                 </select>
               </div>
             </div>
@@ -182,7 +171,6 @@ export default function Criar() {
                 <input
                   type="number"
                   min={1}
-                  max={100}
                   className='form-input form-control w-100'
                   placeholder='00'
                   name='coins'
@@ -194,7 +182,6 @@ export default function Criar() {
                 <input
                   type="number"
                   min={1}
-                  max={100}
                   className='form-input form-control w-100'
                   placeholder='00'
                   name='xp'
@@ -204,7 +191,11 @@ export default function Criar() {
 
             <hr className='mb-4' />
 
-            <div className='d-flex justify-content-center'>
+            <div className='d-flex flex-column align-items-center'>
+              <p className={styles.alert}>
+                <strong className='mr-1'>ATENÇÃO:</strong>
+                Os campos de pontos, moedas e XP não podem ser editados após a criação da atividade.
+              </p>
               <button
                 type='submit'
                 form="create-activity"

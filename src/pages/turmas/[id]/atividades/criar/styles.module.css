@@ -88,3 +88,9 @@
   font-weight: 700;
   font-size: 1rem;
 }
+
+.alert {
+  color: var(--red);
+  max-width: 25rem;
+  text-align: center;
+}

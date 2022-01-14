@@ -1,5 +1,9 @@
+import { GetServerSideProps } from "next";
 import Head from "next/head";
+import { parseCookies } from "nookies";
 import { Table } from "react-bootstrap";
+
+import { getAPIClient } from "../../../../services/apiClient";
 
 import styles from './styles.module.css';
 
@@ -79,4 +83,22 @@ export default function Boletim() {
       </main>
     </>
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx);
+  const { ['meg.token']: token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/sessao-expirada',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
 }

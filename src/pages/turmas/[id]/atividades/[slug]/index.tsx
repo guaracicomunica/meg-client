@@ -1,7 +1,9 @@
 import { format, parseISO } from "date-fns";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
 
 import Comment from "../../../../../components/Comment";
@@ -9,6 +11,7 @@ import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
 import { AuthContext } from "../../../../../contexts/AuthContext";
 import { RoleUser } from "../../../../../enums/enumRoleUser";
+import { getAPIClient } from "../../../../../services/apiClient";
 
 import styles from './styles.module.css';
 
@@ -174,4 +177,22 @@ export default function Atividade() {
       />
     </>
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const apiClient = getAPIClient(ctx);
+  const { ['meg.token']: token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/sessao-expirada',
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
 }

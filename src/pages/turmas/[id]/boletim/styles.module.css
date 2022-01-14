@@ -1,0 +1,21 @@
+.card-gamification {
+  height: fit-content;
+  width: fit-content;
+}
+
+.info-group {
+  display: flex;
+  align-items: center;
+  margin-right: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-group img {
+  margin-right: 0.5rem;
+}
+
+.info-group span {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 1.1rem;
+}

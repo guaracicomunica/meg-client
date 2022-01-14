@@ -492,17 +492,19 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           </p>
         </form>
       </Modal.Body>
-      <Modal.Footer className='d-flex justify-content-between p-4 border-top-0'>
-        <button
-          className="modal-button"
-          style={{color: "var(--gray-light)"}}
-          form="create-class"
-          type="submit"
-          name="save-draft"
-          onClick={() => setIsDraft(1)}
-        >
-          Salvar para depois
-        </button>
+      <Modal.Footer className={props.type === "create" ? 'd-flex justify-content-between p-4 border-top-0' : 'd-flex p-4 border-top-0'}>
+        {props.type === "create" && (
+          <button
+            className="modal-button"
+            style={{color: "var(--gray-title)"}}
+            form="create-class"
+            type="submit"
+            name="save-draft"
+            onClick={() => setIsDraft(1)}
+          >
+            Salvar para depois
+          </button>
+        )}
         <div>
           <button className="mr-4 modal-button" onClick={closeModal}>Cancelar</button>
           <button

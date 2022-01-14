@@ -1,0 +1,37 @@
+.table-body td {
+  color: var(--blue-dark);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.table-body tr:hover {
+  background-color: #FAFAFA;
+}
+
+.table-head th {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gray-title);
+}
+
+.status {
+  border-radius: 10px;
+  border: 2px solid var(--blue-dark);
+  text-transform: uppercase;
+}
+
+.unit-grade {
+  display: flex;
+  align-items: center;
+}
+
+.unit-grade span {
+  color: var(--blue-dark);
+  font-weight: 700;
+}
+
+.grade {
+  border-radius: 10px;
+  border: 1px solid var(--gray-form);
+  color: var(--gray-form);
+}

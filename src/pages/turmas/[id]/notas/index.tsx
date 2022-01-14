@@ -34,7 +34,7 @@ export default function Notas() {
           </div>
           
           <Table responsive>
-            <thead className={styles["table-head"]}>
+            <thead className="table-head">
               <tr>
                 <th>Nome do estudante</th>
                 <th>Status</th>
@@ -42,31 +42,31 @@ export default function Notas() {
                 <th>Opções</th>
               </tr>
             </thead>
-            <tbody className={styles["table-body"]}>
+            <tbody className="table-body">
               <tr>
                 <td>Fabiana Pereira Duarte</td>
                 <td>
                   <div className="d-flex">
-                    <div className={`py-1 px-2 ${styles.status}`}>Cursando</div>
+                    <div className="py-1 px-2 status">Cursando</div>
                   </div>
                 </td>
                 <td>
                   <div className="d-flex">
-                    <div className={`${styles["unit-grade"]} mr-3`}>
+                    <div className="unit-grade mr-3">
                       <span>1º</span>
-                      <div className={`${styles.grade} ml-2 py-1 px-2`}>100</div>
+                      <div className="grade ml-2 py-1 px-2">100</div>
                     </div>
-                    <div className={`${styles["unit-grade"]} mr-3`}>
+                    <div className="unit-grade mr-3">
                       <span>2º</span>
-                      <div className={`${styles.grade} ml-2 py-1 px-2`}>100</div>
+                      <div className="grade ml-2 py-1 px-2">100</div>
                     </div>
-                    <div className={`${styles["unit-grade"]} mr-3`}>
+                    <div className="unit-grade mr-3">
                       <span>3º</span>
-                      <div className={`${styles.grade} ml-2 py-1 px-2`}>100</div>
+                      <div className="grade ml-2 py-1 px-2">100</div>
                     </div>
-                    <div className={`${styles["unit-grade"]} mr-3`}>
+                    <div className="unit-grade mr-3">
                       <span>4º</span>
-                      <div className={`${styles.grade} ml-2 py-1 px-2`}>100</div>
+                      <div className="grade ml-2 py-1 px-2">100</div>
                     </div>
                   </div>
                 </td>

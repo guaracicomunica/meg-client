@@ -133,19 +133,56 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
   else {
-    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    try {
+      const response = await apiClient.get('report-cards', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: {
+          per_page: 100,
+          classroom_id: ctx.params.id
+      }});
+  
+      const grades = response.data.data;
+  
+      return {
+        props: {
+          grades
+        }
+      }
+    } catch(error) {
+      switch (error?.response?.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
 
-    const response = await apiClient.get('report-cards', {
-      params: {
-        per_page: 100,
-        classroom_id: ctx.params.id
-    }});
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
+          }
 
-    const grades = response.data.data;
-
-    return {
-      props: {
-        grades
+        case 404:
+          return {
+            redirect: {
+              destination: '/404',
+              permanent: false,
+            }
+          }
+        
+        default:
+          return {
+            redirect: {
+              destination: '/500',
+              permanent: false,
+            }
+          }
       }
     }
   }  

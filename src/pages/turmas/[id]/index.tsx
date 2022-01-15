@@ -141,7 +141,7 @@ export default function Turma(props: ClassPageProps) {
 
           <div className={styles["posts-list"]}>
             <div className={`${styles["post-comment"]} mb-3`}>
-              <form id="post-comment" method="post">
+              <form id="post-comment" method="post" className="d-flex flex-column">
                 <textarea
                   name="post"
                   id="post"
@@ -151,7 +151,7 @@ export default function Turma(props: ClassPageProps) {
                 ></textarea>
                 <button
                   type="submit"
-                  className="button button-blue"
+                  className="button button-blue align-self-end mt-2"
                   form="post-comment"
                 >Postar</button>
               </form>

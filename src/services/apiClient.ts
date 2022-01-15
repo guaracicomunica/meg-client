@@ -7,7 +7,7 @@ export function getAPIClient(ctx?: Pick<next.NextPageContext, 'req'> | {
   req: next.NextApiRequest;
 } | null | undefined) {
   const api = axios.create({
-    baseURL: 'http://192.168.2.105:8000/api'
+    baseURL: 'http://localhost:8000/api'
   })
 
   return api;

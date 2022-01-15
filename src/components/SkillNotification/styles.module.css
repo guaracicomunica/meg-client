@@ -1,0 +1,59 @@
+.notifications {
+  height: fit-content;
+}
+
+.card-header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.card-header img {
+  height: 1.5rem;
+  margin-right: 0.75rem;
+  border-radius: 50%;
+}
+
+.card-header h4 {
+  font-weight: 900;
+  color: var(--blue-dark);
+  margin-bottom: 0;
+}
+
+.notification {
+  background-color: #F8F8F8;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+}
+
+.notification img {
+  height: 2.5rem;
+}
+
+.student-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--blue);
+}
+
+.class {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gray-text);
+}
+
+.skill {
+  display: flex;
+  flex-direction: column;
+}
+
+.skill strong {
+  color: var(--blue-dark);
+}
+
+.skill span {
+  color: var(--green);
+}

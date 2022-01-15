@@ -5,8 +5,13 @@ import { useState } from 'react';
 import ModalAddFile from '../../../../../components/ModalAddFile';
 import ModalAddLink from '../../../../../components/ModalAddLink';
 import { getAPIClient } from '../../../../../services/apiClient';
+import { ActivityTopicType } from '../../../../../types/Post';
 
 import styles from './styles.module.css';
+
+type CreateActivityProps = {
+  topics: ActivityTopicType[];
+}
 
 type LinkType = {
   link: string;
@@ -103,6 +108,17 @@ export default function Criar() {
           </div>
 
           <div className='w-100 px-4 border-left'>
+            <div className="form-row">
+              <div className="form-group col-12">
+                <label className={styles["form-label"]} htmlFor="topic_id">Tópico</label>
+                <select className='select w-100 p-2' name="topic_id" id="period" defaultValue={0}>
+                  <option value="0">Escolha um tópico...</option>
+                  {props.topics.map(topic => {
+                    return <option value={topic.id}>{topic.name}</option>
+                  })}
+                </select>
+              </div>
+            </div>
             <div className="form-row">
               <div className="form-group col-sm-6">
                 <label className={styles["form-label"]} htmlFor="points">Pontos</label>
@@ -233,6 +249,18 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
+  else {
+    try {
+      const response = await apiClient.get("topics", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params : {
+          classroom_id: ctx.params.id
+        }
+      });
+
+      const topics = response.data.data;
 
   return {
     props: {}

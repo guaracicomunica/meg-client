@@ -1,11 +1,18 @@
+import { format } from 'date-fns';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
+
 import ModalAddFile from '../../../../../components/ModalAddFile';
 import ModalAddLink from '../../../../../components/ModalAddLink';
+import { api } from '../../../../../services/api';
 import { getAPIClient } from '../../../../../services/apiClient';
 import { ActivityTopicType } from '../../../../../types/Post';
+import { options } from '../../../../../utils/defaultToastOptions';
 
 import styles from './styles.module.css';
 
@@ -17,7 +24,39 @@ type LinkType = {
   link: string;
 }
 
-export default function Criar() {
+type DataFormActivity = {
+  name: string;
+  body: string;
+  points: number;
+  xp: number;
+  coins: number;
+  disabled: number;
+  deadline: Date;
+  topic_id: number;
+  unit_id: number;
+  attachments: File[];
+  links: string[];
+}
+
+export default function Criar(props: CreateActivityProps) {
+  const {'meg.token': token} = parseCookies();
+  const router = useRouter();
+  const { register, handleSubmit } = useForm({defaultValues: {
+    name: "",
+    body: "",
+    points: 0,
+    xp: 0,
+    coins: 0,
+    disabled: 1,
+    deadline: null,
+    topic_id: 0,
+    unit_id: 0,
+    attachments: null,
+    links: null
+  }});
+
+  const onSubmit = async (data: DataFormActivity) => handleCreateActivity(data);
+  
   const [showModalAddLink, setShowModalAddLink] = useState(false);
   const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [links, setLinks] = useState<LinkType[]>([]);
@@ -37,6 +76,90 @@ export default function Criar() {
     ])
   }
 
+  function generateFormData(data: DataFormActivity) {
+    const form = new FormData();
+    const date = new Date(data.deadline);
+
+    form.append('classroom_id', router.query.id.toString());
+    form.append('name', data.name);
+    form.append('body', data.body);
+    form.append('points', data.points.toString());
+    form.append('xp', data.xp.toString());
+    form.append('coins', data.coins.toString());
+    form.append('disabled', data.disabled.toString());
+    form.append('deadline', format(date, "uuuu-MM-dd HH:mm:ss"));
+    form.append('topic_id', data.topic_id.toString());
+    form.append('unit_id', data.unit_id.toString());
+
+    for (let i = 0; i < files.length; i++) {
+      form.append(`attachments[${i}]`, files[i]);
+    }
+
+    for (let i = 0; i < links.length; i++) {
+      form.append(`links[${i}]`, links[i].link);
+    }
+    
+    return form;
+  }
+
+  async function handleCreateActivity(data: DataFormActivity) {
+    try {
+      const request = generateFormData(data);
+      
+      await api.post('activities', request, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "multipart/form-data"
+        }
+      })
+      .then(function (success) {
+        router.push(`/turmas/${router.query.id}`);
+      });
+    }
+    catch(error) {
+      const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
+
+      if (!error.response) {
+        // network error
+        return toast.error(string, options);
+      }
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
+          }
+
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], options);
+          });
+
+        case 500: 
+          toast.error(string, options);
+          break;
+
+        default:
+          toast.error(string, options);
+          break;
+      }
+    }
+  }
+
   return (
     <>
       <Head>
@@ -49,6 +172,7 @@ export default function Criar() {
           method="post"
           id="create-activity"
           className={`card-style py-5 ${styles["form-layout"]}`}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <div className='w-100 mb-5 mb-xl-0 px-4'>
             <h1>Criar atividade</h1>
@@ -59,6 +183,7 @@ export default function Criar() {
                 className="form-control form-input w-100"
                 name="name"
                 placeholder="Título"
+                {...register('name')}
               />
             </div>
             <div className="form-group">
@@ -67,6 +192,7 @@ export default function Criar() {
                 className="form-control form-input w-100"
                 name="body"
                 placeholder="Instruções (opcional)"
+                {...register('body')}
               ></textarea>
             </div>
             <div className={styles["attachments-buttons"]}>
@@ -111,10 +237,15 @@ export default function Criar() {
             <div className="form-row">
               <div className="form-group col-12">
                 <label className={styles["form-label"]} htmlFor="topic_id">Tópico</label>
-                <select className='select w-100 p-2' name="topic_id" id="period" defaultValue={0}>
-                  <option value="0">Escolha um tópico...</option>
+                <select
+                  className='select w-100 p-2'
+                  name="topic_id"
+                  defaultValue={0}
+                  {...register('topic_id')}
+                >
+                  <option disabled value="0">Escolha um tópico...</option>
                   {props.topics.map(topic => {
-                    return <option value={topic.id}>{topic.name}</option>
+                    return <option key={topic.id} value={topic.id}>{topic.name}</option>
                   })}
                 </select>
               </div>
@@ -129,13 +260,19 @@ export default function Criar() {
                   className='form-input form-control w-100'
                   placeholder='00'
                   name='points'
+                  {...register('points')}
                 />
               </div>
 
               <div className="form-group col-sm-6">
-                <label className={styles["form-label"]} htmlFor="period">Bimestre</label>
-                <select className='select w-100 p-2' name="period" id="period" defaultValue={0}>
-                  <option value="0">Escolha o bimestre...</option>
+                <label className={styles["form-label"]} htmlFor="unit_id">Bimestre</label>
+                <select
+                  className='select w-100 p-2'
+                  name="unit_id"
+                  defaultValue={0}
+                  {...register('unit_id')}
+                >
+                  <option disabled value="0">Escolha o bimestre...</option>
                   <option value="1">1º bimestre</option>
                   <option value="2">2º bimestre</option>
                   <option value="3">3º bimestre</option>
@@ -148,21 +285,23 @@ export default function Criar() {
               <div className="form-group col-sm-6">
                 <label className={styles["form-label"]} htmlFor="deadline">Data de entrega</label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   className='form-input form-control w-100'
                   name='deadline'
+                  {...register('deadline')}
                 />
               </div>
 
               <div className="form-group col-sm-6">
-                <label className={styles["form-label"]} htmlFor="status">Status</label>
+                <label className={styles["form-label"]} htmlFor="disabled">Status</label>
                 <div className='d-flex flex-wrap'>
                   <div className={`mr-2 ${styles["radio-status"]}`}>
                     <input
                       type="radio"
                       id="status-active"
-                      name="status"
-                      defaultChecked={true}
+                      name="disabled"
+                      value={0}
+                      {...register('disabled')}
                     />
                     <label htmlFor="status-active">Ativo</label>
                   </div>
@@ -171,7 +310,9 @@ export default function Criar() {
                     <input
                       type="radio"
                       id="status-inactive"
-                      name="status"
+                      name="disabled"
+                      value={1}
+                      {...register('disabled')}
                     />
                     <label htmlFor="status-inactive">Inativo</label>
                   </div>
@@ -190,6 +331,7 @@ export default function Criar() {
                   className='form-input form-control w-100'
                   placeholder='00'
                   name='coins'
+                  {...register('coins')}
                 />
               </div>
 
@@ -201,6 +343,7 @@ export default function Criar() {
                   className='form-input form-control w-100'
                   placeholder='00'
                   name='xp'
+                  {...register('xp')}
                 />
               </div>
             </div>
@@ -233,6 +376,8 @@ export default function Criar() {
         onHide={() => setShowModalAddFile(false)}
         addFile={addFile}
       />
+
+      <ToastContainer />
     </>
   );
 }
@@ -261,8 +406,46 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       });
 
       const topics = response.data.data;
+  
+      return {
+        props: {
+          topics
+        },
+      }
+    } catch(error) {
+      switch (error?.response?.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
 
-  return {
-    props: {}
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
+          }
+
+        case 404:
+          return {
+            redirect: {
+              destination: '/404',
+              permanent: false,
+            }
+          }
+        
+        default:
+          return {
+            redirect: {
+              destination: '/500',
+              permanent: false,
+            }
+          }
+      }
+    }
   }
 }

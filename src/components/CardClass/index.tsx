@@ -19,7 +19,6 @@ export default function CardClass(props: ClassCard) {
       setBannerURL(`${props.banner}`);
     }
     else {
-      console.log(props.id, props.banner);
       setBannerURL("./images/banner-class.svg");
     }
   }, [props.banner]);

@@ -13,10 +13,10 @@ import styles from './styles.module.css';
 
 type Grade = {
   user: string,
-  bim1: number,
-  bim2: number,
-  bim3: number,
-  bim4: number,
+  bim1: number | null,
+  bim2: number | null,
+  bim3: number | null,
+  bim4: number | null,
 };
 
 type GradeProps = {
@@ -78,19 +78,19 @@ export default function Notas(props: GradeProps) {
                             <div className="d-flex">
                               <div className="unit-grade mr-3">
                                 <span>1º</span>
-                                <div className="grade ml-2 py-1 px-2">{grade.bim1}</div>
+                                <div className="grade ml-2 py-1 px-2">{grade.bim1 ?? '-'}</div>
                               </div>
                               <div className="unit-grade mr-3">
                                 <span>2º</span>
-                                <div className="grade ml-2 py-1 px-2">{grade.bim2}</div>
+                                <div className="grade ml-2 py-1 px-2">{grade.bim2 ?? '-'}</div>
                               </div>
                               <div className="unit-grade mr-3">
                                 <span>3º</span>
-                                <div className="grade ml-2 py-1 px-2">{grade.bim3}</div>
+                                <div className="grade ml-2 py-1 px-2">{grade.bim3 ?? '-'}</div>
                               </div>
                               <div className="unit-grade mr-3">
                                 <span>4º</span>
-                                <div className="grade ml-2 py-1 px-2">{grade.bim4}</div>
+                                <div className="grade ml-2 py-1 px-2">{grade.bim4 ?? '-'}</div>
                               </div>
                             </div>
                           </td>

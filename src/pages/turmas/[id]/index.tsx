@@ -21,15 +21,13 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { RoleUser } from "../../../enums/enumRoleUser";
 import { useForm } from "react-hook-form";
 import { genericMessageError, options } from "../../../utils/defaultToastOptions";
+import { QueryProps } from "../../../types/Query";
 
 type ClassPageProps = {
   classroom: ClassType,
   postsData: {
     posts: PostType[],
-    queryProps: {
-      currentPage: number;
-      totalPages: number;
-    }
+    queryProps: QueryProps;
   },
 };
 

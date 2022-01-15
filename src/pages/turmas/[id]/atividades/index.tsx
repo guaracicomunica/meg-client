@@ -15,6 +15,7 @@ import { RoleUser } from "../../../../enums/enumRoleUser";
 import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ActivityTopicType, ActivityType } from "../../../../types/Post";
+import { QueryProps } from "../../../../types/Query";
 
 import styles from './styles.module.css';
 
@@ -22,10 +23,7 @@ type ActivitiesPageProps = {
   topics: ActivityTopicType[];
   activitiesData: {
     activities: ActivityType[];
-    queryProps: {
-      currentPage: number;
-      totalPages: number;
-    }
+    queryProps: QueryProps;
   }
 }
 

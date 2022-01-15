@@ -83,7 +83,7 @@ export default function Turma(props: ClassPageProps) {
           'Authorization': `Bearer ${token}`
         },
         params: {
-          page: props.postsData.queryProps.currentPage + 1,
+          page: currentPage + 1,
           per_page: 10,
           classroom_id: classroom.id
         }

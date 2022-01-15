@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner } from "react-bootstrap";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
@@ -19,6 +19,8 @@ import { PostType } from "../../../types/Post";
 import styles from './styles.module.css';
 import { AuthContext } from "../../../contexts/AuthContext";
 import { RoleUser } from "../../../enums/enumRoleUser";
+import { useForm } from "react-hook-form";
+import { genericMessageError, options } from "../../../utils/defaultToastOptions";
 
 type ClassPageProps = {
   classroom: ClassType,
@@ -31,7 +33,17 @@ type ClassPageProps = {
   },
 };
 
+type CreatePostType = {
+  name: string, 
+  body: string,
+  disabled: boolean,
+  is_private: boolean,
+  classroom_id: number,
+  attachments: File[]
+}
+
 export default function Turma(props: ClassPageProps) {
+
   const router = useRouter();
   const { ['meg.token']: token } = parseCookies();
   const { user } = useContext(AuthContext);
@@ -40,6 +52,9 @@ export default function Turma(props: ClassPageProps) {
   const [postsList, setPostsList] = useState<PostType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const { register, handleSubmit, reset, setValue } = useForm( 
+    {defaultValues: {  
+      name: "", body: "", disabled: false, is_private: false, classroom_id: props.classroom.id }});
 
   const { classroom } = props;
 
@@ -54,12 +69,13 @@ export default function Turma(props: ClassPageProps) {
 
   useEffect(() => {
     if (props) {
+      console.log(props.postsData.posts)
       setPostsList(props.postsData.posts);
       setCurrentPage(props.postsData.queryProps.currentPage);
     }
   }, [props]);
 
-  useEffect(() => {
+  useEffect(() => { 
     if (currentPage === props.postsData.queryProps.totalPages) {
       setHasMore(false);
     }
@@ -84,6 +100,76 @@ export default function Turma(props: ClassPageProps) {
     catch (error) {
       if (error.response.status === 401) {
         router.push('/sessao-expirada');
+      }
+    }
+  }
+
+
+  
+  const onSubmit = async (data: CreatePostType) => handleCreatePost(data);
+
+  async function handleCreatePost(data: CreatePostType) {
+
+    data.classroom_id = props.classroom.id;
+    data.disabled = false;
+    data.is_private = false;
+
+    try {
+
+      await api.post('posts', data, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(function (success) {
+       
+        reset({
+          body: ""
+        });
+
+        router.reload();
+
+        toast.success("Cadastro na turma realizado com sucesso!", options);
+
+      });
+    }
+    catch(error) {
+      
+      if (!error.response) {
+        // network error
+        return toast.error(genericMessageError, options);
+      }
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+        
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          break;
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], options);
+          });
+          break;
+
+        case 500: 
+          console.log("deu 500");
+          console.log("500: " + error.response?.data.error);
+          toast.error(genericMessageError, options);
+          break;
+
+        default:
+          console.log("entrou no default");
+          console.log("default: " + error.response?.data.error);
+          toast.error(genericMessageError, options);
+          break;
       }
     }
   }
@@ -141,14 +227,25 @@ export default function Turma(props: ClassPageProps) {
 
           <div className={styles["posts-list"]}>
             <div className={`${styles["post-comment"]} mb-3`}>
-              <form id="post-comment" method="post">
+              <form id="post-comment" method="post"  onSubmit={handleSubmit(onSubmit)}>
+
+                <input 
+                    type="text" 
+                     className='form-input w-100 mb-1'
+                     name="name"
+                     placeholder="Digite o título da publicação"
+                     {...register('name')}
+                     />
+
                 <textarea
-                  name="post"
                   id="post"
-                  placeholder="Faça um comentário..."
+                  placeholder="Digite o conteúdo da publicação..."
                   className="textarea w-100 p-4"
+                  name="body"
+                  {...register('body')}
                   rows={1}
                 ></textarea>
+
                 <button
                   type="submit"
                   className="button button-blue"

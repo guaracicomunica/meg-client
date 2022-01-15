@@ -94,6 +94,7 @@ export default function Post(props: PostType) {
         </div>
       </div>
 
+      <h5 className={styles["post-title"]} >{props.name}</h5>
       <div className={styles["post-body"]}>{props.body}</div>
 
       <div className={`${styles["post-comments"]} my-4 py-4`}>
@@ -103,17 +104,18 @@ export default function Post(props: PostType) {
         </div>
 
         <div>
-          {props.comments?.map(comment => {
+          
+           {props.comments?.map(comment => {
             return (
               <Comment
                 key={comment.id}
                 id={comment.id}
                 creator={comment.creator}
-                date={comment.date}
+                date={comment?.date}
                 body={comment.body}
               />
             );
-          })}
+          })} 
         </div>
       </div>
 

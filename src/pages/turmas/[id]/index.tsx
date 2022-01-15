@@ -34,7 +34,7 @@ type ClassPageProps = {
 };
 
 type CreatePostType = {
-  name: string, 
+  //name: string,  //o título do post foi removido pra entrar em consonância com o frontend 
   body: string,
   disabled: boolean,
   is_private: boolean,
@@ -53,8 +53,7 @@ export default function Turma(props: ClassPageProps) {
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const { register, handleSubmit, reset, setValue } = useForm( 
-    {defaultValues: {  
-      name: "", body: "", disabled: false, is_private: false, classroom_id: props.classroom.id }});
+    {defaultValues: {  body: "", disabled: false, is_private: false, classroom_id: props.classroom.id }});
 
   const { classroom } = props;
 
@@ -166,8 +165,6 @@ export default function Turma(props: ClassPageProps) {
           break;
 
         default:
-          console.log("entrou no default");
-          console.log("default: " + error.response?.data.error);
           toast.error(genericMessageError, options);
           break;
       }
@@ -227,15 +224,8 @@ export default function Turma(props: ClassPageProps) {
 
           <div className={styles["posts-list"]}>
             <div className={`${styles["post-comment"]} mb-3`}>
-              <form id="post-comment" method="post"  onSubmit={handleSubmit(onSubmit)}>
 
-                <input 
-                    type="text" 
-                     className='form-input w-100 mb-1'
-                     name="name"
-                     placeholder="Digite o título da publicação"
-                     {...register('name')}
-                     />
+              <form id="post-comment" method="post"  onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column">
 
                 <textarea
                   id="post"
@@ -248,7 +238,7 @@ export default function Turma(props: ClassPageProps) {
 
                 <button
                   type="submit"
-                  className="button button-blue"
+                  className="button button-blue align-self-end mt-2"
                   form="post-comment"
                 >Postar</button>
               </form>

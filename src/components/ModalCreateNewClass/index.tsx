@@ -9,6 +9,7 @@ import { options } from '../../utils/defaultToastOptions';
 import { DraftDataForm, DataFormClass } from '../../types/Class';
 
 import styles from './styles.module.css';
+import { parseCookies } from 'nookies';
 
 type ModalCreateNewClassType = {
   type: string;
@@ -283,10 +284,13 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       form.append(`levels[${i}][xp]`, data.levels[i].xp.toString());
     }
 
-    if (data?.skills[0]?.name != undefined && data?.skills[0]?.coins != undefined) {
-      for (let i = 0; i < data.skills.length; i++) {
-        form.append(`skills[${i}][name]`, data.skills[i].name);
-        form.append(`skills[${i}][coins]`, data.skills[i].coins.toString());
+    if(data.skills != undefined)
+    {
+      if (data.skills[0].name != undefined && data.skills[0].coins != undefined) {
+        for (let i = 0; i < data.skills.length; i++) {
+          form.append(`skills[${i}][name]`, data.skills[i].name);
+          form.append(`skills[${i}][coins]`, data.skills[i].coins.toString());
+        }
       }
     }
 
@@ -305,11 +309,11 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     try {
       const request = generateFormData(data);
       
-      await api.post('classes', request, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      })
+      const { 'meg.token': token } = parseCookies();
+
+      api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+      await api.post('classes', request)
       .then(function (success) {
         if (props.type === "create") {
           toast.success("Turma criada com sucesso!", options);
@@ -492,17 +496,19 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           </p>
         </form>
       </Modal.Body>
-      <Modal.Footer className='d-flex justify-content-between p-4 border-top-0'>
-        <button
-          className="modal-button"
-          style={{color: "var(--gray-light)"}}
-          form="create-class"
-          type="submit"
-          name="save-draft"
-          onClick={() => setIsDraft(1)}
-        >
-          Salvar para depois
-        </button>
+      <Modal.Footer className={props.type === "create" ? 'd-flex justify-content-between p-4 border-top-0' : 'd-flex p-4 border-top-0'}>
+        {props.type === "create" && (
+          <button
+            className="modal-button"
+            style={{color: "var(--gray-title)"}}
+            form="create-class"
+            type="submit"
+            name="save-draft"
+            onClick={() => setIsDraft(1)}
+          >
+            Salvar para depois
+          </button>
+        )}
         <div>
           <button className="mr-4 modal-button" onClick={closeModal}>Cancelar</button>
           <button

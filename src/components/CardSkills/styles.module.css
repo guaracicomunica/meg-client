@@ -1,0 +1,50 @@
+.card-skills {
+  width: 100%;
+  height: fit-content;
+}
+
+.skills-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skills-header img {
+  height: 10rem;
+  margin-bottom: 1rem;
+}
+
+.skills-header h4 {
+  font-weight: 900;
+  color: var(--blue-dark);
+}
+
+.skill {
+  background-color: #F8F8F8;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.skill img {
+  height: 2.5rem;
+}
+
+.skill-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--blue);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.skill button {
+  font-weight: 700;
+  color: var(--blue-dark);
+  background-color: transparent;
+  border: 0;
+}

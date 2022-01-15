@@ -1,0 +1,66 @@
+.card-user {
+  height: fit-content;
+}
+
+.card-user, .user-info {
+  width: 100%;
+}
+
+.user-img {
+  position: relative;
+}
+
+.user-img img {
+  height: 10rem;
+  border-radius: 50%;
+}
+
+.edit-user-img {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  padding: 0.25rem 0.485rem;
+  background-color: var(--yellow);
+  cursor: pointer;
+}
+
+.edit-user-img img {
+  height: 1rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-info h4 {
+  color: var(--gray-title);
+}
+
+.user-info p {
+  color: var(--gray-text);
+}
+
+.user-info strong {
+  color: var(--blue-dark);
+}
+
+.coins {
+  display: flex;
+  align-items: center;
+}
+
+.coins img {
+  height: 2rem;
+  margin-right: 0.5rem;
+}
+
+.coins span {
+  text-transform: uppercase;
+  color: var(--green);
+  font-size: 1.1rem;
+  font-weight: 700;
+}

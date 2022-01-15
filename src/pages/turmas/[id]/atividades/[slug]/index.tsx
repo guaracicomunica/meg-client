@@ -12,10 +12,11 @@ import PrivateComment from "../../../../../components/PrivateComment";
 import { AuthContext } from "../../../../../contexts/AuthContext";
 import { RoleUser } from "../../../../../enums/enumRoleUser";
 import { getAPIClient } from "../../../../../services/apiClient";
+import { ActivityType } from "../../../../../types/Post";
 
 import styles from './styles.module.css';
 
-export default function Atividade() {
+export default function Atividade(props: ActivityType) {
   const router = useRouter();
   const { user } = useContext(AuthContext);
   const [showModalAddFile, setShowModalAddFile] = useState(false);
@@ -31,7 +32,7 @@ export default function Atividade() {
   return (
     <>
       <Head>
-        <title>Título da atividade</title>
+        <title>{props.name}</title>
       </Head>
 
       <main className={`${styles["page-layout"]} mt-3`}>
@@ -53,8 +54,7 @@ export default function Atividade() {
 
           <div className="d-flex flex-column flex-md-row py-4">
             <div className={`pr-3 ${styles["activity-body"]}`}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                {props.body}
             </div>
 
             {user?.role === RoleUser.teacher && (
@@ -184,6 +184,7 @@ export default function Atividade() {
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx);
+
   const { ['meg.token']: token } = parseCookies(ctx);
 
   if (!token) {
@@ -194,8 +195,58 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   }
+  else {
+    try {
 
-  return {
-    props: {}
+       const { data: activity} = await apiClient.get<ActivityType>(`activities/${ctx.params.slug}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      console.log(activity.deadline)
+
+      
+
+
+      return {
+        props: { activity },
+      }
+    } catch(error) {
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
+          }
+
+        case 404:
+          return {
+            redirect: {
+              destination: '/404',
+              permanent: false,
+            }
+          }
+        
+        default:
+          return {
+            redirect: {
+              destination: '/500',
+              permanent: false,
+            }
+          }
+      }
+    }
   }
+
 }

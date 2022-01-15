@@ -9,6 +9,7 @@ import { options } from '../../utils/defaultToastOptions';
 import { DraftDataForm, DataFormClass } from '../../types/Class';
 
 import styles from './styles.module.css';
+import { parseCookies } from 'nookies';
 
 type ModalCreateNewClassType = {
   type: string;
@@ -283,10 +284,13 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       form.append(`levels[${i}][xp]`, data.levels[i].xp.toString());
     }
 
-    if (data?.skills[0]?.name != undefined && data?.skills[0]?.coins != undefined) {
-      for (let i = 0; i < data.skills.length; i++) {
-        form.append(`skills[${i}][name]`, data.skills[i].name);
-        form.append(`skills[${i}][coins]`, data.skills[i].coins.toString());
+    if(data.skills != undefined)
+    {
+      if (data.skills[0].name != undefined && data.skills[0].coins != undefined) {
+        for (let i = 0; i < data.skills.length; i++) {
+          form.append(`skills[${i}][name]`, data.skills[i].name);
+          form.append(`skills[${i}][coins]`, data.skills[i].coins.toString());
+        }
       }
     }
 
@@ -305,11 +309,11 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     try {
       const request = generateFormData(data);
       
-      await api.post('classes', request, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      })
+      const { 'meg.token': token } = parseCookies();
+
+      api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+      await api.post('classes', request)
       .then(function (success) {
         if (props.type === "create") {
           toast.success("Turma criada com sucesso!", options);

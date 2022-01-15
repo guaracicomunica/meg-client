@@ -133,16 +133,24 @@ export function AuthProvider({ children }) {
   }
 
   async function logoff() {
-    await api.post('auth/logout').then(function (response) {
+    try {
+      const { 'meg.token': token } = parseCookies();
+
+      if(token)
+      {
+        api.defaults.headers['Authorization'] = `Bearer ${token}`;
+        await api.post('auth/logout');
+      }
+      
       destroyCookie(null, 'meg.token');
       destroyCookie(null, 'meg.user');
       setUser(null);
       setIsAuthenticated(false);
       Router.push('/login');
-    })
-    .catch(function (error) {
+    } catch(error)
+    {
       toast.error('Ops! Não foi possível sair da sua conta. Tente novamente ou entre em contato com o suporte.', options);
-    });
+    }
   }
 
   return (

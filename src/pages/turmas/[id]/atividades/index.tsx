@@ -168,7 +168,7 @@ export default function Atividades(props: ActivitiesPageProps) {
               className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}
             >
               <img src="/icons/plus-white.svg" style={{height: "1rem"}} />
-              <span className="ml-2">Criar</span>
+              <span className="ml-2 text-white">Criar</span>
             </button>
           </Link>
         </div>

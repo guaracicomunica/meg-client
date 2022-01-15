@@ -16,13 +16,13 @@ export default function CardClass(props: ClassCard) {
 
   useEffect(() => {
     if (props.banner !== null) {
-      //let bannerFileName = props.banner.replace("public", "storage");
       setBannerURL(`${props.banner}`);
     }
     else {
+      console.log(props.id, props.banner);
       setBannerURL("./images/banner-class.svg");
     }
-  }, []);
+  }, [props.banner]);
 
   return (
     <div className={`${styles["card-class"]} card-style`}>

@@ -4,7 +4,7 @@ import { formatDate } from '../../utils/formatDate';
 import styles from './styles.module.css';
 
 export default function Comment(props: CommentType) {
-  const dateFormatted = formatDate(props.date);
+  const dateFormatted = props.date != null ? formatDate(props.date) : null;
 
   return (
     <div className="mt-4">

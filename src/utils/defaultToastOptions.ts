@@ -10,3 +10,5 @@ export const options: ToastOptions = {
   draggable: true,
   progress: undefined,
 };
+
+export const genericMessageError: string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";

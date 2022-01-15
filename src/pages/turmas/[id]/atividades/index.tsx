@@ -163,10 +163,13 @@ export default function Atividades(props: ActivitiesPageProps) {
           </Tab.Container>
 
           <Link href={`/turmas/${router.query.id}/atividades/criar`}>
-            <a className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}>
+            <button
+              disabled={props.topics.length === 0}
+              className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}
+            >
               <img src="/icons/plus-white.svg" style={{height: "1rem"}} />
               <span className="ml-2">Criar</span>
-            </a>
+            </button>
           </Link>
         </div>
 

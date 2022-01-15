@@ -29,6 +29,7 @@ export default function PostList(props: PostListProps) {
             date={post.date}
             body={post.body}
             comments={post.comments}
+            name={post.name}
           />
       ))
     }

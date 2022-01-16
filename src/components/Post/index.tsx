@@ -43,7 +43,7 @@ export default function Post(props: PostType) {
           body: ""
         });
         toast.success("Comentário enviado com sucesso!", options);
-        router.reload();
+        router.push(`/turmas/${router.query.id}`, undefined, {scroll: false});
       });
     }
     catch(error) {

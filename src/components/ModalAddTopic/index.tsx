@@ -36,7 +36,7 @@ export default function ModalAddTopic(props: ModalAddTopicProps) {
           name: ""
         });
         toast.success("Tópico criada com sucesso!", options);
-        router.push(`/turmas/${router.query.id}/missoes`);
+        router.push(`/turmas/${router.query.id}/missoes`, undefined, {scroll: false});
         props.onHide();
       });
     }

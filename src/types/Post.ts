@@ -16,6 +16,7 @@ export type CommentType = {
   id: number;
   creator: string;
   date: string;
+  is_private?: boolean;
   body: string;
 }
 
@@ -27,8 +28,10 @@ export type ActivityType = {
   points: number;
   xp: number;
   coins: number;
+  disabled: boolean;
   comments?: CommentType[];
   topicId: number;
+  attachments?: AttachmentType[]
 }
 
 export type ActivityTopicType = {
@@ -43,4 +46,8 @@ export type ActivityStudent = {
   files: string[];
   points: number;
   delivery_at: string;
+}
+
+export type AttachmentType = {
+  path: string;  
 }

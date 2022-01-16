@@ -40,16 +40,23 @@ export default function Atividade(props: ActivityType) {
           <div className={`${styles["card-activity-header"]} border-bottom pb-4`}>
             <img src="/icons/activity-post.svg" alt="Atividade" />
             <div className={styles["info-activity"]}>
-              <h5>Atividade 1</h5>
+              <h5>{props.name}</h5>
               <div className={styles["activity-deadline"]}>
                 Data de entrega: {format(parseISO("2021-12-31 15:00:00"), "dd/MM/yyyy 'até' HH:mm")}
               </div>
             </div>
           </div>
 
-          <div className="d-flex w-100 mt-3">
-            <div className={styles["activity-grade"]}>Nota: 100 pontos</div>
-            <div className={styles["activity-score"]}>60 XP | 60 moedas</div>
+          <div className="d-flex justify-content-between w-100 mt-3">
+            <div className="d-flex">
+              <div className={styles["activity-grade"]}>Nota: {props.points} pontos</div>
+              <div className={styles["activity-score"]}>{props.xp} XP | {props.coins} moedas</div>
+            </div>
+            <div>{props.disabled 
+                ? <span className="text-success text-uppercase">Ativo</span>  
+                : <span className="text-danger text-uppercase">Inativo</span>
+              }
+            </div>
           </div>
 
           <div className="d-flex flex-column flex-md-row py-4">
@@ -76,26 +83,28 @@ export default function Atividade(props: ActivityType) {
               <Link href={`/turmas/${router.query.id}/atividades/${router.query.slug}/corrigir`}>
                 <a className="button button-blue text-uppercase">Corrigir atividade</a>
               </Link>
-              <Link href={`/turmas/${router.query.id}/atividades/${router.query.slug}/editar`}>
-                <a className="button button-blue text-uppercase ml-3">Editar atividade</a>
-              </Link>
             </div>
           )}
 
           <div className={`${styles["post-comments"]} my-4 py-4`}>
             <div className={styles["post-comments-title"]}>
               <img src="/icons/comments.svg" alt="Comentários da turma" style={{height: "1.25rem"}} />
-              <h5>3 Comentários da turma</h5>
+              <h5>{props.comments.length} Comentários da turma</h5>
             </div>
 
             <div>
+            {props.comments?.filter(comment => !comment.is_private).map(comment => {
+            return (
               <Comment
-                key={1}
-                id={1}
-                creator="aa"
-                date="2021-12-31 15:00:00"
-                body="aaa"
+                key={comment.id}
+                id={comment.id}
+                creator={comment.creator}
+                date={comment?.date}
+                body={comment.body}
               />
+            );
+          })} 
+    
             </div>
 
             <div className={`${styles["add-comment"]} mt-4 w-100`}>
@@ -115,7 +124,15 @@ export default function Atividade(props: ActivityType) {
         {user?.role === RoleUser.teacher ? (
           <div className={`card-style p-4 ${styles["card-private-comments"]}`}>
             <h5 className="pb-3 border-bottom">Dúvida dos participantes</h5>
-            <PrivateComment />
+            
+            {props.comments?.filter(comment => comment.is_private).map(comment => {
+            return (
+              <PrivateComment
+                key={comment.id}
+              />
+              );
+              })} 
+
           </div>
         ) : (
           <div>
@@ -131,7 +148,7 @@ export default function Atividade(props: ActivityType) {
                     return (
                       <div className={styles["file"]} key={index}>
                         <img src="/icons/file.svg" alt="Ícone" />
-                        <span>{file.name}</span>
+                        <span>{file.name}</span>  
                       </div>
                     )
                   })
@@ -196,24 +213,31 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
   else {
-    try {
 
-       const { data: activity} = await apiClient.get<ActivityType>(`activities/${ctx.params.slug}`, {
+    try {
+       const {data: activity} = await apiClient.get<any>(`activities/${ctx.params.slug}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      
-      console.log(activity.deadline)
 
-      
-
-
-      return {
-        props: { activity },
-      }
+      const formattedActivity: ActivityType  = 
+          {  
+          id: activity.id,
+          name: activity.name,
+          body: activity.body,
+          deadline: activity?.deadline,
+          points: activity.points,
+          xp: activity.xp,
+          coins: activity.coins,
+          comments: activity.comments,
+          topicId: activity.topicId,
+          disabled: activity.disabled,
+          attachments: activity.attachments
+         }
+      return { props: formattedActivity }
     } catch(error) {
-      switch (error.response.status) {
+     switch (error.response.status) {
         case 401:
           return {
             redirect: {
@@ -245,7 +269,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
               permanent: false,
             }
           }
-      }
+      } 
     }
   }
 

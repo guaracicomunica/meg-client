@@ -145,34 +145,32 @@ select:focus {
 .text-gray {
   font-size: 1rem;
   font-weight: 400;
-  color: var(--gray-title);
+  color: var(--gray-text);
 }
 
 .navbar-collapse {
   flex-grow: unset !important;
 }
 
-.border-blue {
+.border-soft-blue {
   width: 12rem;
-  height: 2px;
+  height: 1px;
   margin: 0.75rem auto 1rem;
   
   background-color: var(--blue);
 }
 
-.border-red {
+.border-blue, .border-yellow {
   width: 6rem;
   height: 2px;
   margin: 0.75rem 0 1rem;
-  
-  background-color: var(--red);
+}
+
+.border-blue {
+  background-color: var(--blue);
 }
 
 .border-yellow {
-  width: 6rem;
-  height: 2px;
-  margin: 0.75rem 0 1rem;
-
   background-color: var(--yellow);
 }
 

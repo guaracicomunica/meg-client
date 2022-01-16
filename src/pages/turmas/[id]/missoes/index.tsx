@@ -129,7 +129,7 @@ export default function Atividades(props: ActivitiesPageProps) {
   return (
     <>
       <Head>
-        <title>Atividades da turma</title>
+        <title>Missões da turma</title>
       </Head>
 
       <main className="page-container">
@@ -206,15 +206,17 @@ export default function Atividades(props: ActivitiesPageProps) {
             </Row>
           </Tab.Container>
 
-          <Link href={`/turmas/${router.query.id}/missoes/criar`}>
-            <button
-              disabled={props.topics.length === 0}
-              className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}
-            >
-              <img src="/icons/plus-white.svg" style={{height: "1rem"}} />
-              <span className="ml-2 text-white">Criar</span>
-            </button>
-          </Link>
+          {user?.role === RoleUser.teacher && (
+            <Link href={`/turmas/${router.query.id}/missoes/criar`}>
+              <button
+                disabled={props.topics.length === 0}
+                className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}
+              >
+                <img src="/icons/plus-white.svg" style={{height: "1rem"}} />
+                <span className="ml-2 text-white">Criar</span>
+              </button>
+            </Link>
+          )}
         </div>
 
         <ModalAddTopic

@@ -53,12 +53,14 @@ export default function Atividade(props: ActivityType) {
               <div className={styles["activity-grade"]}>Nota: {props.points} pontos</div>
               <div className={styles["activity-score"]}>{props.xp} XP | {props.coins} moedas</div>
             </div>
-            <div className={styles["activity-status"]}>
-              {props.disabled 
-                ? <span className={styles.inactive}>Inativo</span>  
-                : <span className={styles.active}>Ativo</span>
-              }
-            </div>
+            {user?.role === RoleUser.teacher && (
+              <div className={styles["activity-status"]}>
+                {props.disabled 
+                  ? <span className={styles.inactive}>Inativo</span>  
+                  : <span className={styles.active}>Ativo</span>
+                }
+              </div>
+            )}
           </div>
 
           <div className="d-flex flex-column flex-md-row py-4">

@@ -116,7 +116,7 @@ export default function Turma(props: ClassPageProps) {
         reset({
           body: ""
         });
-        router.reload();
+        router.push(`/turmas/${router.query.id}`);
         toast.success("Post enviado com sucesso!", options);
       });
     }

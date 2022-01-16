@@ -9,9 +9,9 @@ export default function Comment(props: CommentType) {
   return (
     <div className="mt-4">
       <div className={`${styles["comment-creator"]} mb-2`}>
-        <img src={props.creator.avatar ?? "/icons/user-gray.svg"} alt="Usuário" />
+        <img src={props.creator?.avatar ?? "/icons/user-gray.svg"} alt="Usuário" />
         <div className={styles["comment-info"]}>
-          <h6>{props.creator.name}</h6>
+          <h6>{props.creator?.name}</h6>
           <small>{dateFormatted}</small>
         </div>
       </div>

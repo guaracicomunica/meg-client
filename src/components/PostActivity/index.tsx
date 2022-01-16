@@ -14,10 +14,10 @@ export default function PostActivity(props: PostActivityProps) {
 
   return (
     <div className={`${styles["post-activity"]} mb-3 py-4 px-5`}>
-      <img src="/icons/activity-post.svg" alt="Atividade" />
+      <img src="/icons/activity-post.svg" alt="Missão" />
       <h5>
-        Prof. {props.teacher} postou uma nova atividade:
-        <Link href={`/turmas/${router.query.id}/atividades/${props.id}`}>{props.title}</Link>
+        Prof. {props.teacher} postou uma nova missão:
+        <Link href={`/turmas/${router.query.id}/missoes/${props.id}`}>{props.title}</Link>
       </h5>
     </div>
   );

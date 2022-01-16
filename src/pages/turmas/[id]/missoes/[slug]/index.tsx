@@ -38,7 +38,7 @@ export default function Atividade(props: ActivityType) {
       <main className={`${styles["page-layout"]} mt-3`}>
         <div className="card-style p-4">
           <div className={`${styles["card-activity-header"]} border-bottom pb-4`}>
-            <img src="/icons/activity-post.svg" alt="Atividade" />
+            <img src="/icons/activity-post.svg" alt="Missão" />
             <div className={styles["info-activity"]}>
               <h5>{props.name}</h5>
               <div className={styles["activity-deadline"]}>
@@ -81,12 +81,12 @@ export default function Atividade(props: ActivityType) {
 
           {user?.role === RoleUser.teacher && (
             <div className="d-flex mt-3">
-              <Link href={`/turmas/${router.query.id}/atividades/${router.query.slug}/corrigir`}>
-                <a className="button button-blue text-uppercase">Corrigir atividade</a>
+              <Link href={`/turmas/${router.query.id}/missoes/${router.query.slug}/corrigir`}>
+                <a className="button button-blue text-uppercase">Corrigir missão</a>
               </Link>
 
-              <Link href={`/turmas/${router.query.id}/atividades/${router.query.slug}/editar`}>
-                <a className="ml-4 button button-blue text-uppercase">Editar atividade</a>
+              <Link href={`/turmas/${router.query.id}/missoes/${router.query.slug}/editar`}>
+                <a className="ml-4 button button-blue text-uppercase">Editar missão</a>
               </Link>
             </div>
           )}
@@ -147,7 +147,7 @@ export default function Atividade(props: ActivityType) {
           <div>
             <div className={`card-style p-4 ${styles["card-send-activity"]}`}>
               <div className={`pb-3 border-bottom ${styles["card-send-activity-header"]}`}>
-                <h5>Envie sua atividade</h5>
+                <h5>Envie sua missão</h5>
                 <small className={styles.delivered}>ENTREGUE</small>
               </div>
               <div className={`mt-4 ${styles.attachments}`}>

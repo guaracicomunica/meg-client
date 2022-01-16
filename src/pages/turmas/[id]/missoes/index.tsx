@@ -140,7 +140,7 @@ export default function Atividades(props: ActivitiesPageProps) {
                 <h1 className="title-gray mb-3">Tópicos da turma</h1>
                 <Nav variant="pills" className="flex-lg-column">
                   <Nav.Item>
-                    <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles.topic} eventKey="all">Todas as atividades</Nav.Link>
+                    <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles.topic} eventKey="all">Todas as missões</Nav.Link>
                   </Nav.Item>
                   {props.topics.map((topic) => {
                     return (
@@ -176,7 +176,7 @@ export default function Atividades(props: ActivitiesPageProps) {
                           return <CardActivity key={activity.id} activity={activity} />
                         })
                       ) : (
-                        <p>Não há atividades cadastradas nesta turma.</p>
+                        <p>Não há missões cadastradas nesta turma.</p>
                       )}
                     </InfiniteScroll>
                   </Tab.Pane>
@@ -195,7 +195,7 @@ export default function Atividades(props: ActivitiesPageProps) {
                               return <CardActivity key={activity.id} activity={activity} />
                             })
                           ) : (
-                            <p>Não há atividades cadastradas neste tópico.</p>
+                            <p>Não há missões cadastradas neste tópico.</p>
                           )}
                         </InfiniteScroll>
                       </Tab.Pane>
@@ -206,7 +206,7 @@ export default function Atividades(props: ActivitiesPageProps) {
             </Row>
           </Tab.Container>
 
-          <Link href={`/turmas/${router.query.id}/atividades/criar`}>
+          <Link href={`/turmas/${router.query.id}/missoes/criar`}>
             <button
               disabled={props.topics.length === 0}
               className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}

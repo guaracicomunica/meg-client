@@ -67,7 +67,7 @@ export default function Corrigir(props: CorrectActivityProps) {
           grade: 0
         });
         toast.success("Notas cadastradas com sucesso!", options);
-        router.push(`/turmas/${router.query.id}/atividades/${router.query.slug}`);
+        router.push(`/turmas/${router.query.id}/missoes/${router.query.slug}`);
       });
     }
     catch(error) {
@@ -124,7 +124,7 @@ export default function Corrigir(props: CorrectActivityProps) {
           grade: 0
         });
         toast.success("Notas cadastradas com sucesso!", options);
-        router.push(`/turmas/${router.query.id}/atividades/${router.query.slug}`);
+        router.push(`/turmas/${router.query.id}/missoes/${router.query.slug}`);
       });
     }
     catch(error) {
@@ -165,7 +165,7 @@ export default function Corrigir(props: CorrectActivityProps) {
   return (
     <>
       <Head>
-        <title>Corrigir atividade</title>
+        <title>Corrigir missão</title>
       </Head>
 
       <main className={styles["page-layout"]}>
@@ -263,7 +263,7 @@ export default function Corrigir(props: CorrectActivityProps) {
                 return <StudentFile key={student.id} student={student} activityDeadline={props.deadline} />
               })
             ) : (
-              <p>Nenhuma atividade entregue.</p>
+              <p>Nenhuma missão concluída.</p>
             )}
           </div>
         </div>

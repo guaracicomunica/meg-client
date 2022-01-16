@@ -42,7 +42,7 @@ export default function ModalAddLink(props: ModalAddLinkType) {
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">
-          Adicionar link na atividade
+          Adicionar link na missão
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className='px-4'>

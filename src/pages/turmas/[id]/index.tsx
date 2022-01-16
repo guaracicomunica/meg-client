@@ -185,10 +185,10 @@ export default function Turma(props: ClassPageProps) {
 
         <div className={`${styles["posts-section"]} pt-3 pt-md-5`}>
           <div className={styles["posts-aside"]}>
-            <Link href={`/turmas/${router.query.id}/atividades`}>
+            <Link href={`/turmas/${router.query.id}/missoes`}>
               <div className="card-style link-card p-4 mt-4 mt-md-0">
-                <img src="/icons/activity.svg" alt="Atividade" className={styles["img-link-card"]} />
-                <h4 className="mt-3">Ver atividades</h4>
+                <img src="/icons/activity.svg" alt="Missão" className={styles["img-link-card"]} />
+                <h4 className="mt-3">Ver missões</h4>
               </div>
             </Link>
 

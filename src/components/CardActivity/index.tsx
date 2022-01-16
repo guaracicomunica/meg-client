@@ -23,7 +23,7 @@ export default function CardActivity(props: CardActivityProps) {
         className={styles["card-activity-header"]}
         onClick={() => setIsCardExpanded(!isCardExpanded)}
       >
-        <img src="/icons/activity-post.svg" alt="Atividade" />
+        <img src="/icons/activity-post.svg" alt="Missão" />
         <div className={styles["info-activity"]}>
           <h5>{activity.name}</h5>
           <div className={styles["activity-deadline"]}>
@@ -77,8 +77,8 @@ export default function CardActivity(props: CardActivityProps) {
           </div>
 
           <div className={styles["card-activity-footer"]}>
-            <Link href={`/turmas/${router.query.id}/atividades/${props.activity.id}`}>
-              <a className='button button-blue-dark-outline text-uppercase px-5'>Acessar a atividade</a>
+            <Link href={`/turmas/${router.query.id}/missoes/${props.activity.id}`}>
+              <a className='button button-blue-dark-outline text-uppercase px-5'>Acessar a missão</a>
             </Link>
           </div>
         </>

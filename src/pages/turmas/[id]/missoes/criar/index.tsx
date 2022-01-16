@@ -163,7 +163,7 @@ export default function Criar(props: CreateActivityProps) {
   return (
     <>
       <Head>
-        <title>Criar nova atividade</title>
+        <title>Criar nova missão</title>
       </Head>
 
       <main className="page-container">
@@ -175,7 +175,7 @@ export default function Criar(props: CreateActivityProps) {
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className='w-100 mb-5 mb-xl-0 px-4'>
-            <h1>Criar atividade</h1>
+            <h1>Criar nova missão</h1>
 
             <div className="form-group mt-4">
               <input
@@ -354,13 +354,13 @@ export default function Criar(props: CreateActivityProps) {
             <div className='d-flex flex-column align-items-center'>
               <p className={styles.alert}>
                 <strong className='mr-1'>ATENÇÃO:</strong>
-                Os campos de pontos, moedas e XP não podem ser editados após a criação da atividade.
+                Os campos de pontos, moedas e XP não podem ser editados após a criação da missão.
               </p>
               <button
                 type='submit'
                 form="create-activity"
                 className='button button-blue text-uppercase'
-              >Criar atividade</button>
+              >Criar missão</button>
             </div>
           </div>
         </form>

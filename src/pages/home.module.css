@@ -5,9 +5,6 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
-  background-image: url("../../public/images/bg-home.svg");
-  background-repeat: no-repeat;
-  background-position: right bottom;
 }
 
 .logo-home {

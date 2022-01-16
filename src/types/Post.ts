@@ -32,7 +32,9 @@ export type ActivityType = {
   comments?: CommentType[];
   topicId: number;
   postId: number;
-  attachments?: AttachmentType[]
+  attachments?: AttachmentType[],
+  totalAssignments?: number,
+  totalDeliveredActivities?: number,
 }
 
 export type ActivityTopicType = {

@@ -69,11 +69,11 @@ export default function Atividade(props: ActivityType) {
             {user?.role === RoleUser.teacher && (
               <div className={`${styles["delivery-cards"]} pl-md-4 mt-4 mt-md-0`}>
                 <div className={`p-2 mr-3 ${styles["info-card"]}`}>
-                  <div className={styles.quantity}>12</div>
+                  <div className={styles.quantity}>{props.totalDeliveredActivities}</div>
                   <span>Entregue</span>
                 </div>
                 <div className={`p-2 ${styles["info-card"]}`}>
-                  <div className={styles.quantity}>20</div>
+                  <div className={styles.quantity}>{props.totalAssignments}</div>
                   <span>Trabalhos atribuídos</span>
                 </div>
               </div>
@@ -219,7 +219,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           topicId: activity.topicId,
           postId: activity.postId,
           disabled: activity.disabled,
-          attachments: activity.attachments
+          attachments: activity.attachments,
+          totalAssignments: activity.totalAssignments,
+          totalDeliveredActivities: activity.totalDeliveredActivities,
          }
       return { props: formattedActivity }
     } catch(error) {

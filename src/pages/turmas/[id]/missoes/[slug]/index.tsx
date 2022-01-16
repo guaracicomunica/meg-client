@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
 
-import Comment from "../../../../../components/Comment";
 import CommentList from "../../../../../components/CommentList";
 import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
@@ -28,7 +27,7 @@ export default function Atividade(props: ActivityType) {
       ...files,
       data.file[0]
     ]);
-  }
+  }  
 
   return (
     <>
@@ -128,7 +127,11 @@ export default function Atividade(props: ActivityType) {
             <div className={`card-style p-4 ${styles["card-send-activity"]}`}>
               <div className={`pb-3 border-bottom ${styles["card-send-activity-header"]}`}>
                 <h5>Envie sua missão</h5>
-                <small className={styles.delivered}>ENTREGUE</small>
+                {props.attachments.length === 0 ? (
+                  <small className={styles.pending}>Pendente</small>
+                ) : (
+                  <small className={styles.delivered}>Entregue</small>
+                )}
               </div>
               <div className={`mt-4 ${styles.attachments}`}>
                 <h6 className="mb-3">Arquivos a serem enviados:</h6>

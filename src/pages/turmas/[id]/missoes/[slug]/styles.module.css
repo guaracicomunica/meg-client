@@ -160,16 +160,14 @@
   width: 100%;
 }
 
-.card-activity-header small {
-  text-transform: uppercase;
-}
-
 .card-send-activity-header .delivered {
   color: var(--green);
+  text-transform: uppercase;
 }
 
 .card-send-activity-header .pending {
   color: var(--red);
+  text-transform: uppercase;
 }
 
 .attachments {

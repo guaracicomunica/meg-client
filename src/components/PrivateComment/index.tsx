@@ -25,11 +25,9 @@ export default function PrivateComment(props: CommentType) {
               rows={4}
               className='textarea w-100 p-3'
             ></textarea>
-            <button
-              type='submit'
-              form="response-comment"
-              className='button button-blue mt-2'
-            >Responder</button>
+            <button type="submit" form="response-comment">
+              <img src="/icons/send.svg" alt="Enviar" />
+            </button>
           </form>
         </div>
       )}

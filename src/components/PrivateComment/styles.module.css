@@ -11,3 +11,20 @@
 .response h5 {
   color: var(--blue-dark) !important;
 }
+
+.response form {
+  position: relative;
+}
+
+.response button {
+  background-color: var(--white);
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+.response button img {
+  height: 2rem;
+}

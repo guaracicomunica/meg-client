@@ -206,3 +206,20 @@
   height: 1rem;
   margin-right: 0.5rem;
 }
+
+.card-send-private-comment form {
+  position: relative;
+}
+
+.card-send-private-comment button {
+  background-color: var(--white);
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+.card-send-private-comment button img {
+  height: 2rem;
+}

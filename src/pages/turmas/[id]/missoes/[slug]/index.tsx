@@ -181,11 +181,9 @@ export default function Atividade(props: ActivityType) {
                   className='textarea w-100 p-3'
                   placeholder="Faça um comentário privado..."
                 ></textarea>
-                <button
-                  type='submit'
-                  form="send-private-comment"
-                  className='button button-blue mt-2'
-                >Enviar</button>
+                <button type="submit" form="send-private-comment">
+                  <img src="/icons/send.svg" alt="Enviar" />
+                </button>
               </form>
             </div>
           </div>

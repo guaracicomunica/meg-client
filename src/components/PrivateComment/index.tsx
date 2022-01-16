@@ -1,16 +1,18 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { RoleUser } from '../../enums/enumRoleUser';
+import { CommentType } from '../../types/Post';
 import styles from './styles.module.css';
 
-export default function PrivateComment() {
+
+export default function PrivateComment(props: CommentType) {
   const { user } = useContext(AuthContext);
 
   return (
     <div className={`p-3 mt-2 w-100 ${styles["private-comment"]}`}>
       <div className='mb-3'>
-        <h5 className='mb-1'>Fabiana Pereira</h5>
-        <p>professora estou com dúvida sobre atividade. É o seguinte</p>
+        <h5 className='mb-1'>{props.creator}</h5>
+        <p>{props.body}</p>
       </div>
 
       {user?.role === RoleUser.teacher && (

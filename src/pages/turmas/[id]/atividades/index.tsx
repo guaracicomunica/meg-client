@@ -78,8 +78,6 @@ export default function Atividades(props: ActivitiesPageProps) {
          }
       });
 
-      console.log(formattedActivities)
-
       setCurrentPage(response.data.current_page);
       setActivitiesList([...activitiesList, ...formattedActivities]);
     }

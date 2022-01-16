@@ -16,6 +16,7 @@ export type CommentType = {
   id: number;
   creator: string;
   date: string;
+  is_private?: boolean;
   body: string;
 }
 
@@ -29,9 +30,14 @@ export type ActivityType = {
   coins: number;
   comments?: CommentType[];
   topicId: number;
+  attachments?: AttachmentType[]
 }
 
 export type ActivityTopicType = {
   id: number;
   name: string;
+}
+
+export type AttachmentType = {
+  path: string;  
 }

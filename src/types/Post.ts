@@ -35,3 +35,12 @@ export type ActivityTopicType = {
   id: number;
   name: string;
 }
+
+export type ActivityStudent = {
+  id: number;
+  name: string;
+  avatar: string | null;
+  files: string[];
+  points: number;
+  delivery_at: string;
+}

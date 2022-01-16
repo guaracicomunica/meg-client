@@ -47,7 +47,7 @@
   margin-top: 0.5rem;
 }
 
-.status.pending {
+.status.overdue {
   color: var(--red);
 }
 

@@ -31,6 +31,7 @@ export type ActivityType = {
   disabled: boolean;
   comments?: CommentType[];
   topicId: number;
+  postId: number;
   attachments?: AttachmentType[]
 }
 

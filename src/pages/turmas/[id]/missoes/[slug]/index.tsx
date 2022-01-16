@@ -248,6 +248,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           coins: activity.coins,
           comments: activity.comments,
           topicId: activity.topicId,
+          postId: activity.postId,
           disabled: activity.disabled,
           attachments: activity.attachments
          }

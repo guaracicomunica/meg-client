@@ -131,18 +131,17 @@ export default function Atividade(props: ActivityType) {
             <h5 className="pb-3 border-bottom">Dúvida dos participantes</h5>
             
             {props.comments?.filter(comment => comment.is_private).map((comment, index) => {
-            return (
-              <PrivateComment
-                key={index}
-                id={comment.id}
-                creator={"joão"}
-                date={"d"}
-                is_private={true}
-                body={"b"}
-              />
+              return (
+                <PrivateComment
+                  key={index}
+                  id={comment.id}
+                  creator={"joão"}
+                  date={"d"}
+                  is_private={true}
+                  body={"b"}
+                />
               );
-              })} 
-
+            })}
           </div>
         ) : (
           <div>
@@ -180,7 +179,14 @@ export default function Atividade(props: ActivityType) {
 
             <div className={`card-style mt-4 p-4 ${styles["card-send-private-comment"]}`}>
               <h5 className="pb-3 mb-4 border-bottom w-100">Dúvidas? Fale com o(a) professor(a)</h5>
-              <PrivateComment />
+              <PrivateComment
+                key={1}
+                id={1}
+                creator={"joão"}
+                date={"d"}
+                is_private={true}
+                body={"b"}
+              />
               <form className="w-100 mt-3" method="post" id="send-private-comment">
                 <textarea
                   name="comment"

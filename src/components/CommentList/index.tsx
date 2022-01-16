@@ -89,7 +89,7 @@ export default function CommentList(props: CommentListprops) {
   
   return (
       <>
-        <div className={`${styles["post-comments"]} my-4 py-4`}>
+        <div className={`${styles["post-comments"]} my-4 py-4 w-100`}>
             <div className={styles["post-comments-title"]}>
                 <img src="/icons/comments.svg" alt="Comentários da turma" style={{height: "1.25rem"}} />
                 <h5>{props.comments?.length || 0} {props.comments?.length === 1 ? "Comentário" : "Comentários"} da turma</h5>

@@ -7,6 +7,7 @@ import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
 
 import Comment from "../../../../../components/Comment";
+import CommentList from "../../../../../components/CommentList";
 import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
 import { AuthContext } from "../../../../../contexts/AuthContext";
@@ -91,39 +92,7 @@ export default function Atividade(props: ActivityType) {
             </div>
           )}
 
-          <div className={`${styles["post-comments"]} my-4 py-4`}>
-            <div className={styles["post-comments-title"]}>
-              <img src="/icons/comments.svg" alt="Comentários da turma" style={{height: "1.25rem"}} />
-              <h5>{props.comments.length} Comentários da turma</h5>
-            </div>
-
-            <div>
-            {props.comments?.filter(comment => !comment.is_private).map(comment => {
-            return (
-              <Comment
-                key={comment.id}
-                id={comment.id}
-                creator={comment.creator}
-                date={comment?.date}
-                body={comment.body}
-              />
-            );
-          })} 
-    
-            </div>
-
-            <div className={`${styles["add-comment"]} mt-4 w-100`}>
-              <img src="/icons/user-gray.svg" alt="Minha foto do perfil" style={{height: "3rem"}} />
-              <form id="post-comment">
-                <input
-                  className='form-input w-100'
-                  type="text"
-                  name="comment"
-                  placeholder='Adicionar comentário para a turma...'
-                />
-              </form>
-            </div>
-          </div>
+          <CommentList postId={props.postId} comments={props.comments} redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}/>
         </div>
 
         {user?.role === RoleUser.teacher ? (

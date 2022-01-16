@@ -188,6 +188,7 @@ export default function Criar(props: CreateActivityProps) {
             </div>
             <div className="form-group">
               <textarea
+                maxLength={800}
                 rows={10}
                 className="form-control form-input w-100"
                 name="body"

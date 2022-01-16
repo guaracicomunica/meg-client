@@ -34,4 +34,6 @@
   border-radius: 10px;
   border: 1px solid var(--gray-form);
   color: var(--gray-form);
+  min-width: 3rem;
+  text-align: center;
 }

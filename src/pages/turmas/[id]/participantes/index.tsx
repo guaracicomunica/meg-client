@@ -12,6 +12,7 @@ import CardTeacher from "../../../../components/CardTeacher";
 import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { StudentType, TeacherType } from "../../../../types/Participant";
+import { QueryProps } from "../../../../types/Query";
 
 import styles from './styles.module.css';
 
@@ -19,10 +20,7 @@ type ParticipantsProps = {
   teachers: TeacherType[];
   studentsData: {
     students: StudentType[];
-    queryProps: {
-      currentPage: number;
-      totalPages: number;
-    }
+    queryProps: QueryProps;
   }
 }
 

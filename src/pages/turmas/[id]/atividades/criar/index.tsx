@@ -191,7 +191,7 @@ export default function Criar(props: CreateActivityProps) {
                 rows={10}
                 className="form-control form-input w-100"
                 name="body"
-                placeholder="Instruções (opcional)"
+                placeholder="Instruções"
                 {...register('body')}
               ></textarea>
             </div>

@@ -15,6 +15,7 @@ import { RoleUser } from "../../../../enums/enumRoleUser";
 import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ActivityTopicType, ActivityType } from "../../../../types/Post";
+import { QueryProps } from "../../../../types/Query";
 
 import styles from './styles.module.css';
 
@@ -22,10 +23,7 @@ type ActivitiesPageProps = {
   topics: ActivityTopicType[];
   activitiesData: {
     activities: ActivityType[];
-    queryProps: {
-      currentPage: number;
-      totalPages: number;
-    }
+    queryProps: QueryProps;
   }
 }
 
@@ -38,21 +36,23 @@ export default function Atividades(props: ActivitiesPageProps) {
   const [activitiesList, setActivitiesList] = useState<ActivityType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     if (props) {
       setActivitiesList(props.activitiesData.activities);
       setCurrentPage(props.activitiesData.queryProps.currentPage);
+      setTotalPages(props.activitiesData.queryProps.totalPages)
     }
   }, [props]);
 
   useEffect(() => {
-    if (currentPage === props.activitiesData.queryProps.totalPages) {
+    if (currentPage === totalPages) {
       setHasMore(false);
     }
-  }, [activitiesList]);
+  }, [activitiesList, totalPages]);
 
-  async function getMoreActivity() {
+  async function getMoreActivity(topicId?: number) {
     try {
       const response = await api.get('activities', {
         headers: {
@@ -60,7 +60,8 @@ export default function Atividades(props: ActivitiesPageProps) {
         },
         params: {
           page: currentPage + 1,
-          per_page: 10
+          per_page: 10,
+          topic_id: topicId
         }
       });
 
@@ -88,6 +89,43 @@ export default function Atividades(props: ActivitiesPageProps) {
     }
   }
 
+  async function filterActivities(activeKey: number | string) {
+    try {
+      const response = await api.get('activities', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: {
+          per_page: 10,
+          topic_id: activeKey !== "all" ? activeKey : ""
+        }
+      });
+
+      const formattedActivities: ActivityType[] = response.data.data.map(activity => {
+        return {
+          id: activity.post_id,
+          name: activity.post.name,
+          body: activity.post.body,
+          deadline: activity?.deadline,
+          points: activity.points,
+          xp: activity.xp,
+          coins: activity.coins,
+          comments: activity.post.comments,
+          topicId: activity.topic_id
+        }
+      });
+
+      setActivitiesList(formattedActivities);
+      setCurrentPage(response.data.current_page);
+      setTotalPages(response.data.last_page);
+    }
+    catch (error) {
+      if (error.response.status === 401) {
+        router.push('/sessao-expirada');
+      }
+    }
+  }
+
   return (
     <>
       <Head>
@@ -96,7 +134,7 @@ export default function Atividades(props: ActivitiesPageProps) {
 
       <main className="page-container">
         <div className={user?.role === RoleUser.teacher ? styles["list-activities-teacher"] : ""}>
-          <Tab.Container id="topics-list" defaultActiveKey="all">
+          <Tab.Container id="topics-list" defaultActiveKey="all" onSelect={filterActivities}>
             <Row>
               <Col sm={12} lg={3} className="p-0 mb-3 mb-lg-0">
                 <h1 className="title-gray mb-3">Tópicos da turma</h1>
@@ -145,13 +183,21 @@ export default function Atividades(props: ActivitiesPageProps) {
                   {props.topics.map(topic => {
                     return (
                       <Tab.Pane eventKey={topic.id} key={topic.id}>
-                        {activitiesList.length > 0 && (
-                          activitiesList.map(activity => {
-                            if (activity.topicId === topic.id) {
+                        <InfiniteScroll
+                          style={{overflow: 'hidden'}}
+                          dataLength={activitiesList.length}
+                          next={() => getMoreActivity(topic.id)}
+                          hasMore={hasMore}
+                          loader={<div className={styles["loading-container"]}><Spinner animation="border" /></div>}
+                        >
+                          {activitiesList.length > 0 ? (
+                            activitiesList.map(activity => {
                               return <CardActivity key={activity.id} activity={activity} />
-                            }
-                          })
-                        )}
+                            })
+                          ) : (
+                            <p>Não há atividades cadastradas neste tópico.</p>
+                          )}
+                        </InfiniteScroll>
                       </Tab.Pane>
                     )
                   })}
@@ -166,7 +212,7 @@ export default function Atividades(props: ActivitiesPageProps) {
               className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}
             >
               <img src="/icons/plus-white.svg" style={{height: "1rem"}} />
-              <span className="ml-2">Criar</span>
+              <span className="ml-2 text-white">Criar</span>
             </button>
           </Link>
         </div>

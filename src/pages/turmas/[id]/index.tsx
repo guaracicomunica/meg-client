@@ -21,20 +21,17 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { RoleUser } from "../../../enums/enumRoleUser";
 import { useForm } from "react-hook-form";
 import { genericMessageError, options } from "../../../utils/defaultToastOptions";
+import { QueryProps } from "../../../types/Query";
 
 type ClassPageProps = {
   classroom: ClassType,
   postsData: {
     posts: PostType[],
-    queryProps: {
-      currentPage: number;
-      totalPages: number;
-    }
+    queryProps: QueryProps;
   },
 };
 
 type CreatePostType = {
-  //name: string,  //o título do post foi removido pra entrar em consonância com o frontend 
   body: string,
   disabled: boolean,
   is_private: boolean,
@@ -68,7 +65,6 @@ export default function Turma(props: ClassPageProps) {
 
   useEffect(() => {
     if (props) {
-      console.log(props.postsData.posts)
       setPostsList(props.postsData.posts);
       setCurrentPage(props.postsData.queryProps.currentPage);
     }
@@ -87,7 +83,7 @@ export default function Turma(props: ClassPageProps) {
           'Authorization': `Bearer ${token}`
         },
         params: {
-          page: props.postsData.queryProps.currentPage + 1,
+          page: currentPage + 1,
           per_page: 10,
           classroom_id: classroom.id
         }
@@ -103,37 +99,28 @@ export default function Turma(props: ClassPageProps) {
     }
   }
 
-
-  
   const onSubmit = async (data: CreatePostType) => handleCreatePost(data);
 
   async function handleCreatePost(data: CreatePostType) {
-
     data.classroom_id = props.classroom.id;
     data.disabled = false;
     data.is_private = false;
 
     try {
-
       await api.post('posts', data, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
       .then(function (success) {
-       
         reset({
           body: ""
         });
-
         router.reload();
-
-        toast.success("Cadastro na turma realizado com sucesso!", options);
-
+        toast.success("Post enviado com sucesso!", options);
       });
     }
     catch(error) {
-      
       if (!error.response) {
         // network error
         return toast.error(genericMessageError, options);
@@ -224,9 +211,7 @@ export default function Turma(props: ClassPageProps) {
 
           <div className={styles["posts-list"]}>
             <div className={`${styles["post-comment"]} mb-3`}>
-
               <form id="post-comment" method="post"  onSubmit={handleSubmit(onSubmit)} className="d-flex flex-column">
-
                 <textarea
                   id="post"
                   placeholder="Digite o conteúdo da publicação..."

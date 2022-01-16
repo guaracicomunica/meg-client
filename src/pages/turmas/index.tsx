@@ -187,23 +187,61 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
   else {
-    apiClient.defaults.headers['Authorization'] = `Bearer ${token}`;
+    try {
+      const response = await apiClient.get('classes', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: { 
+          per_page: 10
+        }
+      });
 
-    const response = await apiClient.get('classes', {
-      params: {
-        per_page: 10
+      const classes = response.data.data;
+      const queryProps = {
+        currentPage: response.data.current_page,
+        totalPages: response.data.last_page,
       }
-    });
-    const classes = response.data.data;
-    const queryProps = {
-      currentPage: response.data.current_page,
-      totalPages: response.data.last_page,
-    }
 
-    return {
-      props: {
-        classes,
-        queryProps
+      return {
+        props: {
+          classes,
+          queryProps
+        }
+      }
+    } catch(error) {
+      switch (error?.response?.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
+          }
+
+        case 404:
+          return {
+            redirect: {
+              destination: '/404',
+              permanent: false,
+            }
+          }
+        
+        default:
+          return {
+            redirect: {
+              destination: '/500',
+              permanent: false,
+            }
+          }
       }
     }
   }  

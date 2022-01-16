@@ -11,9 +11,9 @@ export default function Post(props: PostType) {
   return (
     <div className={`${styles.post} mb-3 py-4 px-5`}>
       <div className={`${styles["post-creator"]} mb-4`}>
-        <img src={props.creator.avatar ?? "/icons/user.svg"} alt="Usuário" />
+        <img src={props.creator?.avatar ?? "./icons/user.svg"} alt="Usuário" />
         <div className={styles["post-info"]}>
-          <h5>{props.creator.name}</h5>
+          <h5>{props.creator?.name}</h5>
           <small>{dateFormatted}</small>
         </div>
       </div>

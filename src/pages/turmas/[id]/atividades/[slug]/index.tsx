@@ -52,9 +52,10 @@ export default function Atividade(props: ActivityType) {
               <div className={styles["activity-grade"]}>Nota: {props.points} pontos</div>
               <div className={styles["activity-score"]}>{props.xp} XP | {props.coins} moedas</div>
             </div>
-            <div>{props.disabled 
-                ? <span className="text-success text-uppercase">Ativo</span>  
-                : <span className="text-danger text-uppercase">Inativo</span>
+            <div className={styles["activity-status"]}>
+              {props.disabled 
+                ? <span className={styles.inactive}>Inativo</span>  
+                : <span className={styles.active}>Ativo</span>
               }
             </div>
           </div>

@@ -99,6 +99,23 @@
   line-height: 1.5;
 }
 
+.activity-status {
+  text-transform: uppercase;
+  background-color: #F8F8F8;
+  border-radius: 5px;
+  padding: 0.15rem 0.5rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.activity-status .active {
+  color: var(--green);
+}
+
+.activity-status .inactive {
+  color: var(--red);
+}
+
 .post-comments {
   border-top: 2px solid #F1F3F5;
   border-bottom: 2px solid #F1F3F5;

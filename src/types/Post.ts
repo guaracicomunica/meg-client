@@ -28,6 +28,7 @@ export type ActivityType = {
   points: number;
   xp: number;
   coins: number;
+  disabled: boolean;
   comments?: CommentType[];
   topicId: number;
   attachments?: AttachmentType[]

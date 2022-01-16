@@ -47,9 +47,16 @@ export default function Atividade(props: ActivityType) {
             </div>
           </div>
 
-          <div className="d-flex w-100 mt-3">
-            <div className={styles["activity-grade"]}>Nota: {props.points} pontos</div>
-            <div className={styles["activity-score"]}>{props.xp} XP | {props.coins} moedas</div>
+          <div className="d-flex justify-content-between w-100 mt-3">
+            <div className="d-flex">
+              <div className={styles["activity-grade"]}>Nota: {props.points} pontos</div>
+              <div className={styles["activity-score"]}>{props.xp} XP | {props.coins} moedas</div>
+            </div>
+            <div>{props.disabled 
+                ? <span className="text-success text-uppercase">Ativo</span>  
+                : <span className="text-danger text-uppercase">Inativo</span>
+              }
+            </div>
           </div>
 
           <div className="d-flex flex-column flex-md-row py-4">
@@ -225,11 +232,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           coins: activity.coins,
           comments: activity.comments,
           topicId: activity.topicId,
+          disabled: activity.disabled,
           attachments: activity.attachments
          }
-
-         console.log(formattedActivity)
-
       return { props: formattedActivity }
     } catch(error) {
      switch (error.response.status) {

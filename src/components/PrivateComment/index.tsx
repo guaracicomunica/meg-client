@@ -11,7 +11,7 @@ export default function PrivateComment(props: CommentType) {
   return (
     <div className={`p-3 mt-2 w-100 ${styles["private-comment"]}`}>
       <div className='mb-3'>
-        <h5 className='mb-1'>{props.creator}</h5>
+        <h5 className='mb-1'>{props.creator.name}</h5>
         <p>{props.body}</p>
       </div>
 

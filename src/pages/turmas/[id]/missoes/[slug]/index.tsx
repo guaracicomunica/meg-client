@@ -99,18 +99,27 @@ export default function Atividade(props: ActivityType) {
           <div className={`card-style p-4 ${styles["card-private-comments"]}`}>
             <h5 className="pb-3 border-bottom">Dúvida dos participantes</h5>
             
-            {props.comments?.filter(comment => comment.is_private).map((comment, index) => {
-              return (
-                <PrivateComment
-                  key={index}
-                  id={comment.id}
-                  creator={"joão"}
-                  date={"d"}
-                  is_private={true}
-                  body={"b"}
-                />
-              );
-            })}
+            {props?.comments.length > 0
+            ? (
+              [
+                props.comments?.filter(comment => comment.is_private).map((comment, index) => {
+                  return (
+                    <PrivateComment
+                      key={index}
+                      id={comment.id}
+                      creator={{
+                        name: "joão",
+                        avatar: null,
+                      }}
+                      date={"d"}
+                      is_private={true}
+                      body={"b"}
+                    />
+                  );
+                })
+              ]
+            )
+            : 'Não há duvidas postadas no momento '}
           </div>
         ) : (
           <div>
@@ -151,7 +160,10 @@ export default function Atividade(props: ActivityType) {
               <PrivateComment
                 key={1}
                 id={1}
-                creator={"joão"}
+                creator={{
+                  name: "joão",
+                  avatar: null,
+                }}
                 date={"d"}
                 is_private={true}
                 body={"b"}

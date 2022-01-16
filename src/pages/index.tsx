@@ -15,7 +15,7 @@ export default function Home() {
         <section className={`${styles["home-banner"]}`}>
           <div className="col-8 col-md-4 flex-column">
             <img
-              src="./images/meg-logo.svg"
+              src="./images/meg-logo.png"
               alt="Logo do MEG"
               className={styles["logo-home"]}
             />

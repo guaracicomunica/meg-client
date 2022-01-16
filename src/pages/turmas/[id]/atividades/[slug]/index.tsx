@@ -84,6 +84,10 @@ export default function Atividade(props: ActivityType) {
               <Link href={`/turmas/${router.query.id}/atividades/${router.query.slug}/corrigir`}>
                 <a className="button button-blue text-uppercase">Corrigir atividade</a>
               </Link>
+
+              <Link href={`/turmas/${router.query.id}/atividades/${router.query.slug}/editar`}>
+                <a className="ml-4 button button-blue text-uppercase">Editar atividade</a>
+              </Link>
             </div>
           )}
 

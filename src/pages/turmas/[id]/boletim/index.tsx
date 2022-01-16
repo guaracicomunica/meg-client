@@ -2,12 +2,12 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { parseCookies } from "nookies";
 import { Table } from "react-bootstrap";
-
 import { getAPIClient } from "../../../../services/apiClient";
+import { StudentGrade } from "../../../../types/Grade";
 
 import styles from './styles.module.css';
 
-export default function Boletim() {
+export default function Boletim({ grade }) {
   return (
     <>
       <Head>
@@ -30,7 +30,7 @@ export default function Boletim() {
             </thead>
             <tbody className="table-body">
               <tr>
-                <td>Turma 03 | As Aventuras dos Jovens Sonhadores</td>
+                <td>{grade.classroom}</td>
                 <td>
                   <div className="d-flex">
                     <div className="py-1 px-2 status">Cursando</div>
@@ -40,19 +40,19 @@ export default function Boletim() {
                   <div className="d-flex">
                     <div className="unit-grade mr-3">
                       <span>1º</span>
-                      <div className="grade ml-2 py-1 px-2">100</div>
+                      <div className="grade ml-2 py-1 px-2">{grade.bim1 ?? '-'}</div>
                     </div>
                     <div className="unit-grade mr-3">
                       <span>2º</span>
-                      <div className="grade ml-2 py-1 px-2">100</div>
+                      <div className="grade ml-2 py-1 px-2">{grade.bim2 ?? '-'}</div>
                     </div>
                     <div className="unit-grade mr-3">
                       <span>3º</span>
-                      <div className="grade ml-2 py-1 px-2">100</div>
+                      <div className="grade ml-2 py-1 px-2">{grade.bim3 ?? '-'}</div>
                     </div>
                     <div className="unit-grade mr-3">
                       <span>4º</span>
-                      <div className="grade ml-2 py-1 px-2">100</div>
+                      <div className="grade ml-2 py-1 px-2">{grade.bim4 ?? '-'}</div>
                     </div>
                   </div>
                 </td>
@@ -68,15 +68,15 @@ export default function Boletim() {
           <div className="d-flex flex-wrap w-100">
             <div className={styles["info-group"]}>
               <img src="/icons/level.svg" alt="Brasão do nível" style={{height: "2rem"}} />
-              <span style={{color: "var(--gray-form)"}}>Nível 04 | Senhor Lobo</span>
+              <span style={{color: "var(--gray-form)"}}>{grade.level ?? 'Sem Nível'}</span>
             </div>
             <div className={styles["info-group"]}>
               <img src="/icons/crown.svg" style={{height: "1.5rem"}} />
-              <span style={{color: "var(--yellow)"}}>60 XP</span>
+              <span style={{color: "var(--yellow)"}}>{grade.xp ?? 0} XP</span>
             </div>
             <div className={styles["info-group"]}>
               <img src="/icons/coins.svg" style={{height: "2rem"}} />
-              <span style={{color: "var(--green)"}}>22 moedas</span>
+              <span style={{color: "var(--green)"}}>{grade.coins ?? 0} moedas</span>
             </div>
           </div>
         </div> 
@@ -96,9 +96,57 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         permanent: false,
       }
     }
-  }
+  } else {
+    try {
+      const response = await apiClient.get('report-cards/student', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: {
+          classroom_id: ctx.params.id
+      }});
+  
+      const grade = response.data; 
 
-  return {
-    props: {}
+      return {
+        props: {
+          grade
+        }
+      }
+    } catch(error) {
+      switch (error?.response?.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
+          }
+
+        case 404:
+          return {
+            redirect: {
+              destination: '/404',
+              permanent: false,
+            }
+          }
+        
+        default:
+          return {
+            redirect: {
+              destination: '/500',
+              permanent: false,
+            }
+          }
+      }
+    }
   }
 }

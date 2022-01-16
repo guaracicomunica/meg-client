@@ -5,19 +5,12 @@ import { parseCookies } from "nookies";
 import { useState } from "react";
 import { Table } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
-
+import { Grade } from '../../../../types/Grade';
 import ModalPostGrades from "../../../../components/ModalPostGrades";
 import { getAPIClient } from "../../../../services/apiClient";
 
 import styles from './styles.module.css';
 
-type Grade = {
-  user: string,
-  bim1: number | null,
-  bim2: number | null,
-  bim3: number | null,
-  bim4: number | null,
-};
 
 type GradeProps = {
   grades: Grade[]

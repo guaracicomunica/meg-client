@@ -125,10 +125,15 @@ export default function Atividade(props: ActivityType) {
           <div className={`card-style p-4 ${styles["card-private-comments"]}`}>
             <h5 className="pb-3 border-bottom">Dúvida dos participantes</h5>
             
-            {props.comments?.filter(comment => comment.is_private).map(comment => {
+            {props.comments?.filter(comment => comment.is_private).map((comment, index) => {
             return (
               <PrivateComment
-                key={comment.id}
+                key={index}
+                id={comment.id}
+                creator={"joão"}
+                date={"d"}
+                is_private={true}
+                body={"b"}
               />
               );
               })} 

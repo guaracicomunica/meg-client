@@ -121,3 +121,27 @@
   font-size: 1rem;
   transition: 0.3s ease-in-out border-color;
 }
+
+.preview-image { 
+  display: flex;
+  justify-content: center; 
+}
+
+.preview-image img {
+  margin-top: 1rem;
+  display: none;
+  height: 10rem;
+}
+
+.small-preview {
+  display: flex;
+  align-items: center;
+}
+
+.small-preview .preview-image img {
+  height: 2rem !important;
+  width: 2rem;
+  border-radius: 50%;
+  margin-left: 1.5rem;
+  margin-top: 0 !important;
+}

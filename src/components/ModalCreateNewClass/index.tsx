@@ -44,16 +44,26 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       setValue('name', props.formData.name);
       setValue('nickname', props.formData.nickname);
 
+      /*if (props.formData.file) {
+        const previewImageBanner = document.querySelector<any>('#preview-banner .preview-image img');
+        previewImageBanner.src = props.formData.file;
+        previewImageBanner.style.display = 'block';
+      }*/
+
       if (props.formData.partners) {
         setValue('partners.0', props.formData.partners[0]);
       }
       if (props.formData.skills) {
+        setIsSkillStoreEnabled(true);
         for (let i = 0; i < props.formData.skills.length; i++) {
           setValue(`skills.${i}.name`, props.formData.skills[i].name);
           setValue(`skills.${i}.coins`, props.formData.skills[i].coins);
         }
       }
       for (let i = 0; i < props.formData.levels.length; i++) {
+        /*const previewImageLevel = document.querySelector<any>(`#preview-level-${i} .preview-image img`);
+        previewImageLevel.src = props.formData.file;
+        previewImageLevel.style.display = 'block';*/
         setValue(`levels.${i}.name`, props.formData.levels[i].name);
         setValue(`levels.${i}.xp`, props.formData.levels[i].xp);
       }
@@ -85,17 +95,23 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             />
           </div>
 
-          <div className="form-group input-file col-lg-4" onChange={changeFileSpanText}>
-            <input
-              type="file"
-              id="img-level-1"
-              name="img-level-1"
-              accept=".png, .jpg, .jpeg, .svg"
-            />
-            <label htmlFor="img-level-1" className='ml-1'>
-              <img src="./icons/camera.svg" alt="Adicionar imagem" />
-            </label>
-            <span>Defina uma capa</span>
+          <div className='form-group col-lg-4 small-preview' id="preview-level-0" onChange={uploadFile}>
+            <div className="input-file">
+              <input
+                type="file"
+                id="levels[0][file]"
+                name="levels[0][file]"
+                accept=".png, .jpg, .jpeg, .svg"
+                {...register('levels.0.file')}
+              />
+              <label htmlFor="levels[0][file]" className='ml-1'>
+                <img src="./icons/camera.svg" alt="Adicionar imagem" />
+              </label>
+              <span>Defina uma capa</span>
+            </div>
+            <div className='preview-image'>
+              <img alt="Preview da imagem selecionada" />
+            </div>
           </div>
         </div>
       ]);
@@ -127,17 +143,22 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             />
           </div>
 
-          <div className="form-group input-file col-lg-4" onChange={changeFileSpanText}>
-            <input
-              type="file"
-              name="img-skill-1"
-              id="img-skill-1"
-              accept=".png, .jpg, .jpeg, .svg"
-            />
-            <label htmlFor="img-skill-1" className='ml-1'>
-              <img src="./icons/camera.svg" alt="Adicionar imagem" />
-            </label>
-            <span>Defina uma capa</span>
+          <div className='form-group col-lg-4 small-preview' onChange={uploadFile}>
+            <div className="input-file">
+              <input
+                type="file"
+                id="img-skill-1"
+                name="img-skill-1"
+                accept=".png, .jpg, .jpeg, .svg"
+              />
+              <label htmlFor="img-skill-1" className='ml-1'>
+                <img src="./icons/camera.svg" alt="Adicionar imagem" />
+              </label>
+              <span>Defina uma capa</span>
+            </div>
+            <div className='preview-image'>
+              <img alt="Preview da imagem selecionada" />
+            </div>
           </div>
         </div>
       ]);
@@ -156,9 +177,14 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     }
   }
 
-  function changeFileSpanText(e: React.ChangeEvent<HTMLDivElement>) {
-    if (e.currentTarget.querySelector("input").files.length > 0) {
-      e.currentTarget.querySelector("span").innerText = "Alterar capa selecionada";
+  function uploadFile(e: React.ChangeEvent<HTMLDivElement>) {
+    //change span text and preview image selected
+    const fileSelected = e.currentTarget.querySelector<HTMLInputElement>(".input-file input").files;
+    const previewImage = e.currentTarget.querySelector<HTMLImageElement>(".preview-image img");
+    if (fileSelected.length > 0) {
+      e.currentTarget.querySelector<HTMLSpanElement>(".input-file span").innerText = "Alterar capa";
+      previewImage.src = URL.createObjectURL(fileSelected[0]);
+      previewImage.style.display = 'block';
     }
     else {
       e.currentTarget.querySelector("span").innerText = "Defina uma capa";
@@ -191,17 +217,22 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           />
         </div>
 
-        <div className="form-group input-file col-lg-4" onChange={changeFileSpanText}>
-          <input
-            type="file"
-            name={`img-skill-${skillsCounter+1}`}
-            id={`img-skill-${skillsCounter+1}`}
-            accept=".png, .jpg, .jpeg, .svg"
-          />
-          <label htmlFor={`img-skill-${skillsCounter+1}`} className='ml-1'>
-            <img src="./icons/camera.svg" alt="Adicionar imagem" />
-          </label>
-          <span>Defina uma capa</span>
+        <div className='form-group col-lg-4 small-preview' onChange={uploadFile}>
+          <div className="input-file">
+            <input
+              type="file"
+              name={`img-skill-${skillsCounter+1}`}
+              id={`img-skill-${skillsCounter+1}`}
+              accept=".png, .jpg, .jpeg, .svg"
+            />
+            <label htmlFor={`img-skill-${skillsCounter+1}`} className='ml-1'>
+              <img src="./icons/camera.svg" alt="Adicionar imagem" />
+            </label>
+            <span>Defina uma capa</span>
+          </div>
+          <div className='preview-image'>
+            <img alt="Preview da imagem selecionada" />
+          </div>
         </div>
       </div>
     );
@@ -239,17 +270,22 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           />
         </div>
 
-        <div className="form-group input-file col-lg-4" onChange={changeFileSpanText}>
-          <input
-            type="file"
-            name={`img-level-${levelsCounter+1}`}
-            id={`img-level-${levelsCounter+1}`}
-            accept=".png, .jpg, .jpeg, .svg"
-          />
-          <label htmlFor={`img-level-${levelsCounter+1}`} className='ml-1'>
-            <img src="./icons/camera.svg" alt="Adicionar imagem" />
-          </label>
-          <span>Defina uma capa</span>
+        <div className='form-group col-lg-4 small-preview' id={`preview-level-${levelsCounter+1}`} onChange={uploadFile}>
+          <div className="input-file">
+            <input
+              type="file"
+              name={`img-level-${levelsCounter+1}`}
+              id={`img-level-${levelsCounter+1}`}
+              accept=".png, .jpg, .jpeg, .svg"
+            />
+            <label htmlFor={`img-level-${levelsCounter+1}`} className='ml-1'>
+              <img src="./icons/camera.svg" alt="Adicionar imagem" />
+            </label>
+            <span>Defina uma capa</span>
+          </div>
+          <div className='preview-image'>
+            <img alt="Preview da imagem selecionada" />
+          </div>
         </div>
       </div>
     );
@@ -286,6 +322,9 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     for (let i = 0; i < data.levels.length; i++) {
       form.append(`levels[${i}][name]`, data.levels[i].name);
       form.append(`levels[${i}][xp]`, data.levels[i].xp.toString());
+      if (data.levels[i].file[0]) {
+        form.append(`levels[${i}][file]`, data.levels[i].file[0]);
+      }
     }
 
     if(data.skills != undefined)
@@ -419,18 +458,23 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               {...register('nickname')}
             />
           </div>
-          <div className="input-file" onChange={changeFileSpanText}>
-            <input
-              type="file"
-              id="file"
-              name="file"
-              accept=".png, .jpg, .jpeg, .svg, .gif"
-              {...register('file')}
-            />
-            <label htmlFor="file">
-              <img src="./icons/camera.svg" alt="Adicionar imagem" />
-            </label>
-            <span>Defina uma capa</span>
+          <div onChange={uploadFile} id="preview-banner">
+            <div className="input-file">
+              <input
+                type="file"
+                id="file"
+                name="file"
+                accept=".png, .jpg, .jpeg, .svg, .gif"
+                {...register('file')}
+              />
+              <label htmlFor="file">
+                <img src="./icons/camera.svg" alt="Adicionar imagem" />
+              </label>
+              <span>Defina uma capa</span>
+            </div>
+            <div className='preview-image'>
+              <img alt="Preview da imagem selecionada" />
+            </div>
           </div>
 
           <hr className="my-4" />

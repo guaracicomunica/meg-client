@@ -24,6 +24,8 @@ export type CommentType = {
   date: string;
   is_private?: boolean;
   body: string;
+  comments?: CommentType[];
+  comment_id?: number;
 }
 
 export type ActivityType = {

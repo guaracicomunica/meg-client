@@ -10,3 +10,9 @@
   line-height: 1.5rem;
   white-space: pre-wrap;
 }
+
+.li {
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 1rem;
+}

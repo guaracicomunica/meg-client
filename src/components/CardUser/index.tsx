@@ -13,7 +13,7 @@ export default function CardUser() {
         <div className={styles["edit-user-img"]}>
           <img src="/icons/edit.svg" />
         </div>
-        <img src="/icons/user.svg" alt="Minha foto de perfil" />
+        <img src="/icons/user-gray.svg" alt="Minha foto de perfil" />
       </div>
       <div className={`${styles["user-info"]} my-4 pb-2 border-bottom`}>
         <h4>{user?.name}</h4>

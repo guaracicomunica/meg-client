@@ -11,7 +11,7 @@ export default function PrivateComment(props: CommentType) {
   return (
     <div className={`p-3 mt-2 w-100 ${styles["private-comment"]}`}>
       <div className='mb-3'>
-        <h5 className='mb-1'>{props.creator}</h5>
+        <h5 className='mb-1'>{props.creator?.name}</h5>
         <p>{props.body}</p>
       </div>
 
@@ -25,11 +25,9 @@ export default function PrivateComment(props: CommentType) {
               rows={4}
               className='textarea w-100 p-3'
             ></textarea>
-            <button
-              type='submit'
-              form="response-comment"
-              className='button button-blue mt-2'
-            >Responder</button>
+            <button type="submit" form="response-comment">
+              <img src="/icons/send.svg" alt="Enviar" />
+            </button>
           </form>
         </div>
       )}

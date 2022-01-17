@@ -160,16 +160,14 @@
   width: 100%;
 }
 
-.card-activity-header small {
-  text-transform: uppercase;
-}
-
 .card-send-activity-header .delivered {
   color: var(--green);
+  text-transform: uppercase;
 }
 
 .card-send-activity-header .pending {
   color: var(--red);
+  text-transform: uppercase;
 }
 
 .attachments {
@@ -207,4 +205,21 @@
 .send-button img {
   height: 1rem;
   margin-right: 0.5rem;
+}
+
+.card-send-private-comment form {
+  position: relative;
+}
+
+.card-send-private-comment button {
+  background-color: var(--white);
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+}
+
+.card-send-private-comment button img {
+  height: 2rem;
 }

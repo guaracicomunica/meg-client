@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { StudentType } from '../../types/Participant';
@@ -12,26 +12,15 @@ type CardStudentProps = {
 
 export default function CardStudent(props: CardStudentProps) {
   const [showModalSeeStudent, setShowModalSeeStudent] = useState(false);
-  const [bannerURL, setBannerURL] = useState("");
   const { user } = useContext(AuthContext);
 
   const { student } = props;
-  
-  useEffect(() => {
-    if (student.avatar !== null) {
-      let bannerFileName = student.avatar.replace("public", "storage");
-      setBannerURL(`http://localhost:8000/${bannerFileName}`);
-    }
-    else {
-      setBannerURL("/icons/user-student.svg");
-    }
-  }, []);
 
   return (
     <>
       <div className="card-style p-4">
         <div className={styles["info-user"]}>
-          <img src={bannerURL} alt="Imagem do aluno" />
+          <img src={student.avatar ?? "/icons/user-gray.svg"} alt="Imagem do aluno" />
           <h5>{student.name}</h5>
         </div>
         <div className={styles["score-user"]}>
@@ -55,10 +44,7 @@ export default function CardStudent(props: CardStudentProps) {
       </div>
 
       <ModalShowStudent
-        student={{
-          ...student,
-          avatar: bannerURL
-        }}
+        student={student}
         show={showModalSeeStudent}
         onHide={() => setShowModalSeeStudent(false)}
       />

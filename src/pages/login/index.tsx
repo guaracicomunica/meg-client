@@ -54,8 +54,6 @@ export default function Login() {
 
   const onSubmit = async data => handleSignIn(data);
 
-  const [roleUser, setRoleUser] = useState("teacher");
-
   return (
     <>
       <Head>
@@ -78,40 +76,8 @@ export default function Login() {
             onSubmit={handleSubmit(onSubmit)}
             method='post'
           >
-            <div className="form-group form-check-inline justify-content-around flex-wrap mr-0 mb-2">
-              <div className='d-flex mt-2'>
-                <div className="radio">
-                  <input
-                    type="radio"
-                    id="radio-teacher"
-                    name="role-user"
-                    defaultChecked={true}
-                    required={true}
-                    onChange={() => setRoleUser("teacher")}
-                  />
-                  <label htmlFor="radio-teacher"> </label>
-                </div>
-                <span>Sou docente</span>
-              </div>
-              
-              <div className='d-flex mt-2'>
-                <div className="radio">
-                  <input
-                    type="radio"
-                    id="radio-student"
-                    name="role-user"
-                    onChange={() => setRoleUser("student")}
-                  />
-                  <label htmlFor="radio-student"> </label>
-                </div>
-                <span>Sou estudante</span>
-              </div>
-            </div>
-
             <div className="form-group">
-              <label className="form-label" htmlFor="user-email">
-                {roleUser === "student" ? "Digite seu e-mail escolar" : "Digite seu e-mail acadêmico"}
-              </label>
+              <label className="form-label" htmlFor="user-email">Digite seu e-mail</label>
               <input
                 type="email"
                 className="form-control form-input"
@@ -122,9 +88,7 @@ export default function Login() {
               />
             </div>
             <div className="form-group">
-              <label className="form-label"  htmlFor="user-password">
-                Digite sua senha
-              </label>
+              <label className="form-label"  htmlFor="user-password">Digite sua senha</label>
               <input
                 type="password"
                 className="form-control form-input"

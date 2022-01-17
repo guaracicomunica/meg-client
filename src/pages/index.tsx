@@ -15,7 +15,7 @@ export default function Home() {
         <section className={`${styles["home-banner"]}`}>
           <div className="col-8 col-md-4 flex-column">
             <img
-              src="./images/meg-logo.svg"
+              src="./images/meg-logo.png"
               alt="Logo do MEG"
               className={styles["logo-home"]}
             />
@@ -37,27 +37,34 @@ export default function Home() {
             <h1 className="title-primary text-center">
               Conheça o Mundo Encantado da Geografia (MEG)
             </h1>
-            <hr className="border-blue" />
+            <hr className="border-soft-blue" />
           </div>
           
           <div className="col-11 col-lg-7">
             <p className="text-section text-center">
-              Donec accumsan, dolor ac malesuada rhoncus, leo arcu pellentesque dolor, nec tristique diam neque vitae sem. Nulla a lectus sollicitudin, volutpat lacus id, eleifend ipsum. Donec accumsan, dolor ac malesuada rhoncus, leo arcu pellentesque dolor, nec tristique diam neque vitae sem.
+              Seja bem-vindo(a) ao MEG – O Mundo Encantado da Geografia! O MEG é um projeto de ensino que tem como objetivo aperfeiçoar o processo de ensino e de aprendizagem através da interdisciplinaridade e da gamificação.
+            </p>
+            <p className="text-section text-center">
+              O projeto tem como questão norteadora: como vencer o monstro da ignorância? Focado na storytelling, as narrativas são construídas considerando-se o mundo das lendas, dos contos de fadas, das sagas, dos seriados e dos filmes.
+            </p>
+            <p className="text-section text-center">
+              Aqui você encontrará um ambiente para se conectar e, de forma colaborativa e com perseverança, solucionar todas as missões e conquistar a chave dourada do conhecimento, de onde quer que esteja.
             </p>
           </div>
           
           <div className="col-11 col-md-7 d-flex flex-wrap justify-content-center">
-            <div className={styles.keyword}>gamificação</div>
-            <div className={styles.keyword}>geografia</div>
-            <div className={styles.keyword}>arte</div>
-            <div className={styles.keyword}>diversidade</div>
-            <div className={styles.keyword}>tecnologia</div>
+            <div className={styles.keyword}>MEG</div>
+            <div className={styles.keyword}>Geografia</div>
+            <div className={styles.keyword}>Interdisciplinaridade</div>
+            <div className={styles.keyword}>Gamificação</div>
+            <div className={styles.keyword}>Storytelling</div>
+            <div className={styles.keyword}>Ensino</div>
           </div>
         </section>
 
         <section className="section row justify-content-around align-items-center">
           <div className="col-11 col-lg-4 mb-5 mb-lg-0 flex-column">
-            <h1 className="text-center title-secondary">
+            <h1 className={styles["title-home"]}>
               Veja como o Mundo Encantado da Geografia funciona
             </h1>
             <img
@@ -100,8 +107,8 @@ export default function Home() {
             </h1>
 
             <div className="d-flex justify-content-center">
-              <hr className="border-red" />
               <hr className="border-yellow" />
+              <hr className="border-blue" />
             </div>
             
             <img
@@ -118,8 +125,8 @@ export default function Home() {
             </h1>
 
             <div className="d-flex justify-content-center">
-              <hr className="border-red" />
               <hr className="border-yellow" />
+              <hr className="border-blue" />
             </div>
           </div>
           
@@ -150,8 +157,8 @@ export default function Home() {
             </h1>
 
             <div className="d-flex justify-content-center">
-              <hr className="border-red" />
               <hr className="border-yellow" />
+              <hr className="border-blue" />
             </div>
             
             <img

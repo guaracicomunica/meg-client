@@ -19,7 +19,7 @@
 }
 
 .comment-info small {
-  color: var(--gray-light);
+  color: var(--gray-title);
   font-size: 0.9rem;
 }
 

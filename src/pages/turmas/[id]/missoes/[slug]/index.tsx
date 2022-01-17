@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
 
-import Comment from "../../../../../components/Comment";
 import CommentList from "../../../../../components/CommentList";
 import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
@@ -28,7 +27,7 @@ export default function Atividade(props: ActivityType) {
       ...files,
       data.file[0]
     ]);
-  }
+  }  
 
   return (
     <>
@@ -56,12 +55,14 @@ export default function Atividade(props: ActivityType) {
               <div className={styles["activity-grade"]}>Nota: {props.points} pontos</div>
               <div className={styles["activity-score"]}>{props.xp} XP | {props.coins} moedas</div>
             </div>
-            <div className={styles["activity-status"]}>
-              {props.disabled 
-                ? <span className={styles.inactive}>Inativo</span>  
-                : <span className={styles.active}>Ativo</span>
-              }
-            </div>
+            {user?.role === RoleUser.teacher && (
+              <div className={styles["activity-status"]}>
+                {props.disabled 
+                  ? <span className={styles.inactive}>Inativo</span>  
+                  : <span className={styles.active}>Ativo</span>
+                }
+              </div>
+            )}
           </div>
 
           <div className="d-flex flex-column flex-md-row py-4">
@@ -102,25 +103,39 @@ export default function Atividade(props: ActivityType) {
           <div className={`card-style p-4 ${styles["card-private-comments"]}`}>
             <h5 className="pb-3 border-bottom">Dúvida dos participantes</h5>
             
-            {props.comments?.filter(comment => comment.is_private).map((comment, index) => {
-              return (
-                <PrivateComment
-                  key={index}
-                  id={comment.id}
-                  creator={comment.creator}
-                  date={comment?.date}
-                  is_private={true}
-                  body={comment.body}
-                />
-              );
-            })}
+            {props?.comments.length > 0
+            ? (
+              [
+                props.comments?.filter(comment => comment.is_private).map((comment, index) => {
+                  return (
+                    <PrivateComment
+                      key={index}
+                      id={comment.id}
+                      creator={{
+                        name: "joão",
+                        avatar: null,
+                      }}
+                      date={"d"}
+                      is_private={true}
+                      body={"b"}
+                    />
+                  );
+                })
+              ]
+            )
+            : 'Não há duvidas postadas no momento '}
+
           </div>
         ) : (
           <div>
             <div className={`card-style p-4 ${styles["card-send-activity"]}`}>
               <div className={`pb-3 border-bottom ${styles["card-send-activity-header"]}`}>
                 <h5>Envie sua missão</h5>
-                <small className={styles.delivered}>ENTREGUE</small>
+                {props.attachments.length === 0 ? (
+                  <small className={styles.pending}>Pendente</small>
+                ) : (
+                  <small className={styles.delivered}>Entregue</small>
+                )}
               </div>
               <div className={`mt-4 ${styles.attachments}`}>
                 <h6 className="mb-3">Arquivos a serem enviados:</h6>
@@ -154,7 +169,10 @@ export default function Atividade(props: ActivityType) {
               <PrivateComment
                 key={1}
                 id={1}
-                creator={"joão"}
+                creator={{
+                  name: "joão",
+                  avatar: null,
+                }}
                 date={"d"}
                 is_private={true}
                 body={"b"}
@@ -167,11 +185,9 @@ export default function Atividade(props: ActivityType) {
                   className='textarea w-100 p-3'
                   placeholder="Faça um comentário privado..."
                 ></textarea>
-                <button
-                  type='submit'
-                  form="send-private-comment"
-                  className='button button-blue mt-2'
-                >Enviar</button>
+                <button type="submit" form="send-private-comment">
+                  <img src="/icons/send.svg" alt="Enviar" />
+                </button>
               </form>
             </div>
           </div>

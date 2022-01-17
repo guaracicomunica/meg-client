@@ -1,6 +1,9 @@
 export type PostType = {
   id: number;
-  creator: string;
+  creator: {
+    name: string;
+    avatar?: string;
+  };
   date: string;
   body: string;
   name?: string;
@@ -14,7 +17,10 @@ export type PostActivityType = {
 
 export type CommentType = {
   id: number;
-  creator: string;
+  creator: {
+    name: string;
+    avatar?: string;
+  }
   date: string;
   is_private?: boolean;
   body: string;

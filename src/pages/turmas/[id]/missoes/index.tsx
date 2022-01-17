@@ -41,8 +41,6 @@ export default function Atividades(props: ActivitiesPageProps) {
   useEffect(() => {
     if (props) {
       setActivitiesList(props.activitiesData.activities);
-      setCurrentPage(props.activitiesData.queryProps.currentPage);
-      setTotalPages(props.activitiesData.queryProps.totalPages)
     }
   }, [props]);
 
@@ -67,15 +65,15 @@ export default function Atividades(props: ActivitiesPageProps) {
 
       const formattedActivities: ActivityType[] = response.data.data.map(activity => {
         return {
-          id: activity.post_id,
-          name: activity.post.name,
-          body: activity.post.body,
+          id: activity.postId,
+          name: activity.name,
+          body: activity.body,
           deadline: activity?.deadline,
           points: activity.points,
           xp: activity.xp,
           coins: activity.coins,
-          comments: activity.post.comments,
-          topicId: activity.topic_id
+          comments: activity.comments,
+          topicId: activity.topicId
          }
       });
 
@@ -83,7 +81,7 @@ export default function Atividades(props: ActivitiesPageProps) {
       setActivitiesList([...activitiesList, ...formattedActivities]);
     }
     catch (error) {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         router.push('/sessao-expirada');
       }
     }
@@ -103,16 +101,16 @@ export default function Atividades(props: ActivitiesPageProps) {
 
       const formattedActivities: ActivityType[] = response.data.data.map(activity => {
         return {
-          id: activity.post_id,
-          name: activity.post.name,
-          body: activity.post.body,
+          id: activity.postId,
+          name: activity.name,
+          body: activity.body,
           deadline: activity?.deadline,
           points: activity.points,
           xp: activity.xp,
           coins: activity.coins,
-          comments: activity.post.comments,
-          topicId: activity.topic_id
-        }
+          comments: activity.comments,
+          topicId: activity.topicId
+         }
       });
 
       setActivitiesList(formattedActivities);
@@ -120,7 +118,7 @@ export default function Atividades(props: ActivitiesPageProps) {
       setTotalPages(response.data.last_page);
     }
     catch (error) {
-      if (error.response.status === 401) {
+      if (error?.response?.status === 401) {
         router.push('/sessao-expirada');
       }
     }
@@ -129,7 +127,7 @@ export default function Atividades(props: ActivitiesPageProps) {
   return (
     <>
       <Head>
-        <title>Atividades da turma</title>
+        <title>Missões da turma</title>
       </Head>
 
       <main className="page-container">
@@ -206,15 +204,17 @@ export default function Atividades(props: ActivitiesPageProps) {
             </Row>
           </Tab.Container>
 
-          <Link href={`/turmas/${router.query.id}/missoes/criar`}>
-            <button
-              disabled={props.topics.length === 0}
-              className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}
-            >
-              <img src="/icons/plus-white.svg" style={{height: "1rem"}} />
-              <span className="ml-2 text-white">Criar</span>
-            </button>
-          </Link>
+          {user?.role === RoleUser.teacher && (
+            <Link href={`/turmas/${router.query.id}/missoes/criar`}>
+              <button
+                disabled={props.topics.length === 0}
+                className={`${styles["create-activity"]} button button-blue d-flex align-items-center`}
+              >
+                <img src="/icons/plus-white.svg" style={{height: "1rem"}} />
+                <span className="ml-2 text-white">Criar</span>
+              </button>
+            </Link>
+          )}
         </div>
 
         <ModalAddTopic
@@ -253,11 +253,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           per_page: 10
         }
       });
-
-      const { data: activities } = response.data;
       
-      const formattedActivities: ActivityType[] = activities.map(activity => {
+      const formattedActivities: ActivityType[] = response.data.data.map(activity => {
         return {
+          
           id: activity.id,
           name: activity.post.name,
           body: activity.post.body,
@@ -265,15 +264,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           points: activity.points,
           xp: activity.xp,
           coins: activity.coins,
-          comments: activity.post.comments,
-          topicId: activity.topic_id
+          comments: activity.comments,
+          topicId: activity.topicId
          }
       });
 
       const queryProps = {
-        currentPage: response.data.current_page,
-        totalPages: response.data.last_page,
+        currentPage: response.data.meta.current_page,
+        totalPages: response.data.meta.last_page,
       }
+
+      console.log(queryProps)
 
       const topicsOfThisClassroom = await apiClient.get("topics", {
         headers: {

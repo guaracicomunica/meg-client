@@ -30,8 +30,8 @@ export type DraftDataForm = {
   name: string;
   nickname: string;
   partners?: string[];
-  skills?: Skill[];
-  levels: Level[];
+  skills?: SkillForm[];
+  levels: LevelForm[];
   file?: string;
 }
 
@@ -56,8 +56,20 @@ export type Skill = {
   file: File;
 }
 
+export type SkillForm = {
+  name: string;
+  coins: number;
+  file?: string;
+}
+
 export type Level = {
   name: string;
   xp: number;
   file: File;
+}
+
+export type LevelForm = {
+  name: string;
+  xp: number;
+  file?: string;
 }

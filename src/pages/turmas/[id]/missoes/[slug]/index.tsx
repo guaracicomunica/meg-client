@@ -5,14 +5,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 import CommentList from "../../../../../components/CommentList";
 import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
 import { AuthContext } from "../../../../../contexts/AuthContext";
 import { RoleUser } from "../../../../../enums/enumRoleUser";
+import { api } from "../../../../../services/api";
 import { getAPIClient } from "../../../../../services/apiClient";
 import { ActivityType } from "../../../../../types/Post";
+import { options } from "../../../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
 
@@ -27,7 +30,52 @@ export default function Atividade(props: ActivityType) {
       ...files,
       data.file[0]
     ]);
-  }  
+  }
+
+  async function completeActivity() {
+    try {
+      const data = { activity_id: props.id }
+      const { ['meg.token']: token } = parseCookies();
+      api.defaults.headers['Authorization'] = `Bearer ${token}`;
+      await api.post('activities/delivery', data)
+      .then(function (success) {
+        router.push(`/turmas/${router.query.id}/missoes/${props.id}`, undefined, {scroll: false});
+        toast.success("Atividade marcada como concluída", options);
+      });
+    } catch (error) {
+      const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
+
+      if (!error.response) {
+        // network error
+        return toast.error(string, options);
+      }
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], options);
+          });
+
+        case 500: 
+          toast.error(string, options);
+          break;
+
+        default:
+          toast.error(string, options);
+          break;
+      }
+    }
+  }
 
   return (
     <>
@@ -160,7 +208,10 @@ export default function Atividade(props: ActivityType) {
                   <img src="/icons/file-white.svg" alt="Arquivo" />
                   Anexar arquivo
                 </button>
-                <button className="button button-gray-outline text-uppercase mt-2">Marcar como concluída</button>
+                <button
+                  onClick={completeActivity}
+                  className="button button-gray-outline text-uppercase mt-2"
+                >Marcar como concluída</button>
               </div>
             </div>
 
@@ -199,6 +250,8 @@ export default function Atividade(props: ActivityType) {
         onHide={() => setShowModalAddFile(false)}
         addFile={addFile}
       />
+
+      <ToastContainer />
     </>
   );
 }

@@ -7,11 +7,11 @@ export type ClassCard = {
   banner: string | null;
   code: string;
   status: number;
-  partners: string[];
+  partners?: string[];
   skills: Skill[];
   levels: Level[];
   teacher: string;
-  roleUser: number;
+  roleUser?: number;
 }
 
 export type ClassType = {
@@ -53,9 +53,11 @@ export type DataFormTopic =
 export type Skill = {
   name: string;
   coins: number;
+  file: File;
 }
 
 export type Level = {
   name: string;
   xp: number;
+  file: File;
 }

@@ -105,7 +105,7 @@ export default function Turmas(props: ClassPageType) {
                     id={classroom.id}
                     name={classroom.name}
                     nickname={classroom.nickname}
-                    teacher={user?.name}
+                    teacher={classroom.teacher}
                     code={classroom.code}
                     banner={classroom.banner}
                     roleUser={user?.role}
@@ -129,7 +129,7 @@ export default function Turmas(props: ClassPageType) {
                     id={classroom.id}
                     name={classroom.name}
                     nickname={classroom.nickname}
-                    teacher={user?.name}
+                    teacher={classroom.teacher}
                     code={classroom.code}
                     banner={classroom.banner}
                     roleUser={user?.role}
@@ -197,7 +197,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
       });
 
-      const classes = response.data.data;
+      const classes = response.data.data.map(classroom => {
+        return {
+          id: classroom.id,
+          name: classroom.name,
+          nickname: classroom.nickname,
+          banner: classroom?.banner,
+          code: classroom.code,
+          status: classroom.status,
+          skills: classroom.skills,
+          levels: classroom.levels,
+          teacher: classroom.creator.name,
+        }
+      });
+
       const queryProps = {
         currentPage: response.data.current_page,
         totalPages: response.data.last_page,

@@ -295,7 +295,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         currentPage: response.data.meta.current_page,
         totalPages: response.data.meta.last_page,
       }
-  
+      
       return {
         props: {
           classroom,

@@ -256,9 +256,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       
       const formattedActivities: ActivityType[] = response.data.data.map(activity => {
         return {
-          id: activity.postId,
-          name: activity.name,
-          body: activity.body,
+          
+          id: activity.id,
+          name: activity.post.name,
+          body: activity.post.body,
           deadline: activity?.deadline,
           points: activity.points,
           xp: activity.xp,

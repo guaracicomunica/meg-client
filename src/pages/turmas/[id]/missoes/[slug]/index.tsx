@@ -42,7 +42,10 @@ export default function Atividade(props: ActivityType) {
             <div className={styles["info-activity"]}>
               <h5>{props.name}</h5>
               <div className={styles["activity-deadline"]}>
-                Data de entrega: {format(parseISO("2021-12-31 15:00:00"), "dd/MM/yyyy 'até' HH:mm")}
+                {props.deadline != null
+                  ? <p> Data de entrega: {format(parseISO(`${props.deadline}`), "dd/MM/yyyy 'até' HH:mm")}  </p> 
+                  : <p > </p>
+                }
               </div>
             </div>
           </div>
@@ -109,18 +112,19 @@ export default function Atividade(props: ActivityType) {
                       key={index}
                       id={comment.id}
                       creator={{
-                        name: "joão",
+                        name: comment.creator,
                         avatar: null,
                       }}
-                      date={"d"}
+                      date={comment?.date}
                       is_private={true}
-                      body={"b"}
+                      body={comment.body}
                     />
                   );
                 })
               ]
             )
             : 'Não há duvidas postadas no momento '}
+
           </div>
         ) : (
           <div>

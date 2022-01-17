@@ -258,7 +258,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       
       const formattedActivities: ActivityType[] = activities.map(activity => {
         return {
-          id: activity.post_id,
+          id: activity.id,
           name: activity.post.name,
           body: activity.post.body,
           deadline: activity?.deadline,

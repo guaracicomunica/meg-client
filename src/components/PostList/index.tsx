@@ -17,7 +17,7 @@ export default function PostList(props: PostListProps) {
         ?
           <PostActivity
             key={index}
-            id={post.id}
+            id={post.activity.id}
             title={post.name}
             teacher={post.creator}
           />

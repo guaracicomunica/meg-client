@@ -18,6 +18,11 @@ type ModalCreateNewClassType = {
   onHide: () => void;
 }
 
+type PreviewObjectType = {
+  id: number;
+  path: string;
+}
+
 export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const { register, unregister, handleSubmit, reset, setValue } = useForm({defaultValues: {
     name: "",
@@ -38,7 +43,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [isDraft, setIsDraft] = useState(1);
   const [idClass, setIdClass] = useState(0);
   const [srcPreviewBanner, setSrcPreviewBanner] = useState("");
-  const [srcPreviewLevels, setSrcPreviewLevels] = useState<string[]>([]);
+  const [srcPreviewLevels, setSrcPreviewLevels] = useState<PreviewObjectType[]>([]);
 
   useEffect(() => {
     if (props.formData) {
@@ -63,15 +68,17 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       for (let i = 0; i < props.formData.levels.length; i++) {
         setValue(`levels.${i}.name`, props.formData.levels[i].name);
         setValue(`levels.${i}.xp`, props.formData.levels[i].xp);
-        if (props.formData.levels[i].file) {
+        if (props.formData.levels[i].path) {
           setSrcPreviewLevels([
             ...srcPreviewLevels,
-            props.formData.levels[i].file
+            {
+              id: i,
+              path: props.formData.levels[i].path
+            }
           ]);
         }
       }
     }
-    console.log(props.formData)
   }, []);
 
   useEffect(() => {
@@ -115,8 +122,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             </div>
             <div className='preview-image'>
               <img
-                src={srcPreviewLevels[0] ?? "#"}
-                style={{display: srcPreviewLevels[0] ? "block" : "none"}}
+                src={srcPreviewLevels.find(level => {
+                  if (level.id === 0) {
+                    return level;
+                  }
+                }).path}
+                style={{display: srcPreviewLevels.find(level => {
+                  if (level.id === 0) {
+                    return level;
+                  }
+                }).path ? "block" : "none"}}
                 id="preview-level-0"
                 alt="Preview da imagem selecionada"
               />
@@ -294,8 +309,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           </div>
           <div className='preview-image'>
             <img
-              src={srcPreviewLevels[levelsCounter+1] ?? "#"}
-              style={{display: srcPreviewLevels[levelsCounter+1] ? "block" : "none"}}
+              src={srcPreviewLevels.find(level => {
+                if (level.id === levelsCounter+1) {
+                  return level;
+                }
+              }).path}
+              style={{display: srcPreviewLevels.find(level => {
+                if (level.id === levelsCounter+1) {
+                  return level;
+                }
+              }).path ? "block" : "none"}}
               id={`preview-level-${levelsCounter+1}`}
               alt="Preview da imagem selecionada"
             />

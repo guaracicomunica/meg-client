@@ -88,6 +88,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           <div className="form-group input-file col-lg-4" onChange={changeFileSpanText}>
             <input
               type="file"
+              id="img-level-1"
               name="img-level-1"
               accept=".png, .jpg, .jpeg, .svg"
             />
@@ -130,6 +131,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             <input
               type="file"
               name="img-skill-1"
+              id="img-skill-1"
               accept=".png, .jpg, .jpeg, .svg"
             />
             <label htmlFor="img-skill-1" className='ml-1'>
@@ -193,6 +195,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           <input
             type="file"
             name={`img-skill-${skillsCounter+1}`}
+            id={`img-skill-${skillsCounter+1}`}
             accept=".png, .jpg, .jpeg, .svg"
           />
           <label htmlFor={`img-skill-${skillsCounter+1}`} className='ml-1'>
@@ -240,6 +243,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           <input
             type="file"
             name={`img-level-${levelsCounter+1}`}
+            id={`img-level-${levelsCounter+1}`}
             accept=".png, .jpg, .jpeg, .svg"
           />
           <label htmlFor={`img-level-${levelsCounter+1}`} className='ml-1'>

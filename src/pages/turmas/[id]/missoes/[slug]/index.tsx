@@ -112,12 +112,12 @@ export default function Atividade(props: ActivityType) {
                       key={index}
                       id={comment.id}
                       creator={{
-                        name: "joão",
+                        name: comment.creator,
                         avatar: null,
                       }}
-                      date={"d"}
+                      date={comment?.date}
                       is_private={true}
-                      body={"b"}
+                      body={comment.body}
                     />
                   );
                 })

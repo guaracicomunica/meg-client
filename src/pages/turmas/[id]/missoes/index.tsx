@@ -253,13 +253,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           per_page: 10
         }
       });
+
+      
+      console.log(response.data.data);
       
       const formattedActivities: ActivityType[] = response.data.data.map(activity => {
         return {
-          
           id: activity.id,
-          name: activity.post.name,
-          body: activity.post.body,
+          name: activity.name,
+          body: activity.body,
           deadline: activity?.deadline,
           points: activity.points,
           xp: activity.xp,
@@ -297,6 +299,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
       }
     } catch(error) {
+      console.log(error);
       switch (error?.response?.status) {
         case 401:
           return {

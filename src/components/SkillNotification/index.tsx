@@ -4,7 +4,7 @@ type SkillNotification = {
   id: number;
   skill: string;
   classroom: string;
-  creator: {
+  claimer: {
     name: string,
     avatar: string,
   };
@@ -25,8 +25,8 @@ export default function SkillNotification(props: SkillNotificationProps) {
       {props.notifications.map(notification => {
         return (
           <div className={`p-3 mt-3 ${styles.notification}`} key={notification.id}>
-          <img src={notification.creator.avatar ?? "/icons/user-gray.svg"} alt="Avatar do estudante" />
-          <div className={`${styles["student-name"]} px-3 border-right`}>{notification.creator.name}</div>
+          <img src={notification.claimer.avatar ?? "/icons/user-gray.svg"} alt="Avatar do estudante" />
+          <div className={`${styles["student-name"]} px-3 border-right`}>{notification.claimer.name}</div>
           <div className={`${styles["class"]} px-3 border-right`}>{notification.classroom}</div>
           <div className={`${styles["skill"]} pl-3`}>
             <strong>Reivindicou a habilidade</strong>

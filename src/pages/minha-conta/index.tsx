@@ -54,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   } else {
     try {
-      const response = await apiClient.get('notifications', {
+      const response = await apiClient.get('store/skills/teacher/notifications', {
         headers: {
           'Authorization': `Bearer ${token}`
         },
@@ -68,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           id: notification.id,
           skill: notification.skill,
           classroom: notification.classroom,
-          creator: notification.creator,
+          claimer: notification.claimer,
           createdAt: notification.created_at,
         }
       });

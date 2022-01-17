@@ -106,18 +106,21 @@ export default function Atividade(props: ActivityType) {
             {props?.comments.length > 0
             ? (
               [
-                props.comments?.filter(comment => comment.is_private).map((comment, index) => {
+                props.comments?.filter(comment => comment.is_private && comment.comment_id == null ).map((comment, index) => {
                   return (
                     <PrivateComment
                       key={index}
                       id={comment.id}
                       creator={{
-                        name: comment.creator,
+                        name: comment.creator.name,
                         avatar: null,
                       }}
                       date={comment?.date}
                       is_private={true}
                       body={comment.body}
+                      comments={comment?.comments}
+                      postId={props.postId}
+                      redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}
                     />
                   );
                 })
@@ -167,7 +170,7 @@ export default function Atividade(props: ActivityType) {
             <div className={`card-style mt-4 p-4 ${styles["card-send-private-comment"]}`}>
               <h5 className="pb-3 mb-4 border-bottom w-100">Dúvidas? Fale com o(a) professor(a)</h5>
               <PrivateComment
-                key={1}
+                key={999}
                 id={1}
                 creator={{
                   name: "joão",
@@ -176,6 +179,8 @@ export default function Atividade(props: ActivityType) {
                 date={"d"}
                 is_private={true}
                 body={"b"}
+                postId={222}
+                redirectTo="google.com"
               />
               <form className="w-100 mt-3" method="post" id="send-private-comment">
                 <textarea
@@ -242,7 +247,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           totalAssignments: activity.totalAssignments,
           totalDeliveredActivities: activity.totalDeliveredActivities,
          }
+    
+   //   console.log(formattedActivity)
+
       return { props: formattedActivity }
+
     } catch(error) {
      switch (error.response.status) {
         case 401:

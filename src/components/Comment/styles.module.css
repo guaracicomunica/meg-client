@@ -29,4 +29,5 @@
   color: var(--gray-text);
   line-height: 1.5rem;
   white-space: pre-wrap;
+  line-break: anywhere;
 }

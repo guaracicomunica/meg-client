@@ -13,7 +13,7 @@ import { getAPIClient } from "../../services/apiClient";
 import styles from './styles.module.css';
 import SkillStore from "../../components/SkillStore";
 
-export default function Dashboard() {
+export default function Dashboard(props: any) {
   const { user } = useContext(AuthContext);
 
   return (
@@ -25,7 +25,7 @@ export default function Dashboard() {
       <main className="page-container">
         <div className="d-flex justify-content-between mb-5">
           {user?.role === RoleUser.teacher ? (
-            <SkillNotification />
+            <SkillNotification notifications={props.notifications} />
           ) : (
             <CardSkills />
           )}
@@ -52,9 +52,72 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         permanent: false,
       }
     }
-  }
+  } else {
+    try {
+      const response = await apiClient.get('notifications', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: { 
+          per_page: 2
+        }
+      });
 
-  return {
-    props: {}
-  }
+      const notifications = response.data.data.map(notification => {
+        return {
+          id: notification.id,
+          skill: notification.skill,
+          classroom: notification.classroom,
+          creator: notification.creator,
+          createdAt: notification.created_at,
+        }
+      });
+
+      const queryProps = {
+        currentPage: response.data.meta.current_page,
+        totalPages: response.data.meta.last_page,
+      }
+
+      return {
+        props: {
+          notifications,
+          queryProps
+        }
+      }
+    } catch(error) {
+      switch (error?.response?.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
+          }
+
+        case 404:
+          return {
+            redirect: {
+              destination: '/404',
+              permanent: false,
+            }
+          }
+        
+        default:
+          return {
+            redirect: {
+              destination: '/500',
+              permanent: false,
+            }
+          }
+      }
+    }
+  }  
 }

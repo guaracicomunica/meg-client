@@ -37,6 +37,8 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [levelInputs, setLevelInputs] = useState([]);
   const [isDraft, setIsDraft] = useState(1);
   const [idClass, setIdClass] = useState(0);
+  const [srcPreviewBanner, setSrcPreviewBanner] = useState("");
+  const [srcPreviewLevels, setSrcPreviewLevels] = useState<string[]>([]);
 
   useEffect(() => {
     if (props.formData) {
@@ -44,11 +46,9 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       setValue('name', props.formData.name);
       setValue('nickname', props.formData.nickname);
 
-      /*if (props.formData.file) {
-        const previewImageBanner = document.querySelector<any>('#preview-banner .preview-image img');
-        previewImageBanner.src = props.formData.file;
-        previewImageBanner.style.display = 'block';
-      }*/
+      if (props.formData.file) {
+        setSrcPreviewBanner(props.formData.file);
+      }
 
       if (props.formData.partners) {
         setValue('partners.0', props.formData.partners[0]);
@@ -61,14 +61,18 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         }
       }
       for (let i = 0; i < props.formData.levels.length; i++) {
-        /*const previewImageLevel = document.querySelector<any>(`#preview-level-${i} .preview-image img`);
-        previewImageLevel.src = props.formData.file;
-        previewImageLevel.style.display = 'block';*/
         setValue(`levels.${i}.name`, props.formData.levels[i].name);
         setValue(`levels.${i}.xp`, props.formData.levels[i].xp);
+        if (props.formData.levels[i].file) {
+          setSrcPreviewLevels([
+            ...srcPreviewLevels,
+            props.formData.levels[i].file
+          ]);
+        }
       }
     }
-  }, [props.show]);
+    console.log(props.formData)
+  }, []);
 
   useEffect(() => {
     if (props.show) {
@@ -110,7 +114,12 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               <span>Defina uma capa</span>
             </div>
             <div className='preview-image'>
-              <img alt="Preview da imagem selecionada" />
+              <img
+                src={srcPreviewLevels[0] ?? "#"}
+                style={{display: srcPreviewLevels[0] ? "block" : "none"}}
+                id="preview-level-0"
+                alt="Preview da imagem selecionada"
+              />
             </div>
           </div>
         </div>
@@ -284,7 +293,12 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             <span>Defina uma capa</span>
           </div>
           <div className='preview-image'>
-            <img alt="Preview da imagem selecionada" />
+            <img
+              src={srcPreviewLevels[levelsCounter+1] ?? "#"}
+              style={{display: srcPreviewLevels[levelsCounter+1] ? "block" : "none"}}
+              id={`preview-level-${levelsCounter+1}`}
+              alt="Preview da imagem selecionada"
+            />
           </div>
         </div>
       </div>
@@ -458,7 +472,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               {...register('nickname')}
             />
           </div>
-          <div onChange={uploadFile} id="preview-banner">
+          <div onChange={uploadFile}>
             <div className="input-file">
               <input
                 type="file"
@@ -473,7 +487,12 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               <span>Defina uma capa</span>
             </div>
             <div className='preview-image'>
-              <img alt="Preview da imagem selecionada" />
+              <img
+                src={srcPreviewBanner ?? "#"}
+                style={{display: srcPreviewBanner ? "block" : "none"}}
+                id="preview-banner"
+                alt="Preview da imagem selecionada"
+              />
             </div>
           </div>
 

@@ -420,7 +420,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               type="file"
               id="file"
               name="file"
-              accept=".png, .jpg, .jpeg, .svg"
+              accept=".png, .jpg, .jpeg, .svg, .gif"
               {...register('file')}
             />
             <label htmlFor="file">

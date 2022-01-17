@@ -105,7 +105,7 @@ export default function Turmas(props: ClassPageType) {
                     id={classroom.id}
                     name={classroom.name}
                     nickname={classroom.nickname}
-                    teacher={user?.name}
+                    teacher={classroom.creator.name}
                     code={classroom.code}
                     banner={classroom.banner}
                     roleUser={user?.role}

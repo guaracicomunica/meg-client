@@ -24,7 +24,7 @@ type PreviewObjectType = {
 }
 
 export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
-  const { register, unregister, handleSubmit, reset, setValue } = useForm({defaultValues: {
+  const { register, handleSubmit, reset, setValue } = useForm({defaultValues: {
     name: "",
     nickname: "",
     partners: [],
@@ -261,9 +261,6 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     }
     if (e.currentTarget.value === "no") {
       setIsSkillStoreEnabled(false);
-      unregister('skills.0.name');
-      unregister('skills.0.coins');
-      unregister('skills.0.file');
       setSkillsCounter(0);
     }
   }
@@ -307,7 +304,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     form.append('nickname', data.nickname);
     form.append('is_draft', isDraft.toString());
 
-    if (data.levels != undefined) {
+    if (data.levels.length > 0) {
       if (data.levels[0].name != undefined && data.levels[0].xp != undefined && data.levels[0].file != undefined) {
         for (let i = 0; i < data.levels.length; i++) {
           form.append(`levels[${i}][name]`, data.levels[i].name);
@@ -319,7 +316,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       }
     }
 
-    if(data.skills != undefined) {
+    if(data.skills.length > 0) {
       if (data.skills[0].name != undefined && data.skills[0].coins != undefined && data.skills[0].file != undefined) {
         for (let i = 0; i < data.skills.length; i++) {
           form.append(`skills[${i}][name]`, data.skills[i].name);

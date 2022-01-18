@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { parseCookies } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -46,6 +46,8 @@ export default function CardUser() {
           ...user,
           avatar_path: success.data.user.avatar_path
         });
+        const userString = JSON.stringify(user);
+        setCookie(null, 'meg.user', userString);
         router.push("/minha-conta", undefined, { scroll: false });
       });
     }

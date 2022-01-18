@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { parseCookies, setCookie } from 'nookies';
+import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthContext';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { api } from '../../services/api';
+import { User } from '../../types/User';
 import { options } from '../../utils/defaultToastOptions';
 
 import styles from './styles.module.css';
@@ -42,12 +43,16 @@ export default function CardUser() {
         reset({
           avatar_path: null
         });
-        setUser({
+        const newUserObject : User = {
           ...user,
           avatar_path: success.data.user.avatar_path
+        }
+        setUser(newUserObject);
+        const userString = JSON.stringify(newUserObject);
+        destroyCookie(null, 'meg.user');
+        setCookie(null, 'meg.user', userString, {
+          maxAge: 60 * 60 * 24
         });
-        const userString = JSON.stringify(user);
-        setCookie(null, 'meg.user', userString);
         router.push("/minha-conta", undefined, { scroll: false });
       });
     }

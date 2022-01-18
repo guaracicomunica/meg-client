@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ActivityType } from '../../types/Post';
+import AttachmentFile from '../AttachmentFile';
+import AttachmentLink from '../AttachmentLink';
 
 import CommentList from '../CommentList';
 
@@ -40,7 +42,16 @@ export default function CardActivity(props: CardActivityProps) {
             </div>
             <div className={`py-2 ${styles["activity-content"]}`}>
               <p>{activity.body}</p>
-              <div></div>
+              <div className="d-flex">
+                {activity.attachments.length > 0 && activity.attachments.map((attachment, index) => {
+                  if (attachment.is_external_link === true) {
+                    return <AttachmentLink key={index} index={index+1} path={attachment.path} />
+                  }
+                  else {
+                    return <AttachmentFile key={index} index={index+1} path={attachment.path} />
+                  }
+                })}
+              </div>
             </div>
 
             <CommentList postId={props.activity.id} comments={props.activity.comments} redirectTo={`/turmas/${router.query.id}/missoes`}/>  

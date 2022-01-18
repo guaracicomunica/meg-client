@@ -8,6 +8,8 @@ import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 
+import AttachmentFile from "../../../../../components/AttachmentFile";
+import AttachmentLink from "../../../../../components/AttachmentLink";
 import CommentList from "../../../../../components/CommentList";
 import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
@@ -17,8 +19,8 @@ import { api } from "../../../../../services/api";
 import { getAPIClient } from "../../../../../services/apiClient";
 import { ActivityType, CommentType } from "../../../../../types/Post";
 import { genericMessageError, options } from "../../../../../utils/defaultToastOptions";
-import styles from './styles.module.css';
 
+import styles from './styles.module.css';
 
 type CommentForm = {
   body: string;
@@ -226,6 +228,17 @@ export default function Atividade(props: ActivityType) {
                 </div>
               </div>
             )}
+          </div>
+
+          <div className="d-flex w-100">
+            {props.attachments.length > 0 && props.attachments.map((attachment, index) => {
+              if (attachment.is_external_link === true) {
+                return <AttachmentLink key={index} index={index+1} path={attachment.path} />
+              }
+              else {
+                return <AttachmentFile key={index} index={index+1} path={attachment.path} />
+              }
+            })}
           </div>
 
           {user?.role === RoleUser.teacher && (

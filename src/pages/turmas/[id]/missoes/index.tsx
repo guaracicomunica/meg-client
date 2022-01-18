@@ -267,7 +267,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           xp: activity.xp,
           coins: activity.coins,
           comments: activity.comments,
-          topicId: activity.topicId
+          topicId: activity.topicId,
+          attachments: activity.attachments
          }
       });
 

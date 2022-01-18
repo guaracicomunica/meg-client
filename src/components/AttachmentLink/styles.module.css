@@ -1,0 +1,19 @@
+.attachment {
+  border: 2px solid var(--gray-form);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.attachment:not(.attachment:last-of-type) {
+  margin-right: 1rem;
+}
+
+.attachment img {
+  height: 2rem;
+}
+
+.attachment a {
+  color: var(--gray-title);
+  font-weight: 700;
+}

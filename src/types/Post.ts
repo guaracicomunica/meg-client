@@ -61,5 +61,6 @@ export type ActivityStudent = {
 }
 
 export type AttachmentType = {
-  path: string;  
+  path: string;
+  is_external_link: boolean;
 }

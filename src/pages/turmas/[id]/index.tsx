@@ -145,9 +145,7 @@ export default function Turma(props: ClassPageProps) {
           });
           break;
 
-        case 500: 
-          console.log("deu 500");
-          console.log("500: " + error.response?.data.error);
+        case 500:
           toast.error(genericMessageError, options);
           break;
 

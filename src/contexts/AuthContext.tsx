@@ -53,6 +53,7 @@ export function AuthProvider({ children }) {
         name: userJSON.name,
         email: userJSON.email,
         role: userJSON.role,
+        avatar_path: userJSON.avatar_path
       });
 
       setIsAuthenticated(true);
@@ -86,6 +87,7 @@ export function AuthProvider({ children }) {
         name: response.data.user.name,
         email: response.data.user.email,
         role: response.data.user.role,
+        avatar_path: null
       });
       
       setCookie(null, 'meg.user', userString, {
@@ -121,6 +123,7 @@ export function AuthProvider({ children }) {
       name: response.data.user.name,
       email: response.data.user.email,
       role: response.data.user.role,
+      avatar_path: response.data.user.avatar_path
     });
     
     setCookie(null, 'meg.user', userString, {

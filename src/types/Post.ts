@@ -18,6 +18,7 @@ export type PostActivityType = {
 export type CommentType = {
   id: number;
   creator: {
+    id: number;
     name: string;
     avatar?: string;
   }

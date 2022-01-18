@@ -71,5 +71,5 @@ export type Level = {
 export type LevelForm = {
   name: string;
   xp: number;
-  file?: string;
+  path?: string;
 }

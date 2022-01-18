@@ -26,6 +26,11 @@ type CommentForm = {
   comment_id: number;
 }
 
+type UserActivity = {
+  delivered: boolean;
+  path: string;
+}
+
 export default function Atividade(props: ActivityType) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
@@ -116,22 +121,40 @@ export default function Atividade(props: ActivityType) {
     }
    }
 
+
+   function generateFormData() {
+    const form = new FormData();
+  
+    form.append('activity_id', props.id.toString());
+ 
+    for (let i = 0; i < files.length; i++) {
+      form.append(`files[${i}]`, files[i]);
+    }
+
+    return form;
+  }
+
   async function completeActivity() {
+    const request = generateFormData();
     try {
-      const data = { activity_id: props.id }
+      //const data = { activity_id: props.id }
+      
       const { ['meg.token']: token } = parseCookies();
+      
       api.defaults.headers['Authorization'] = `Bearer ${token}`;
-      await api.post('activities/delivery', data)
-      .then(function (success) {
+
+      await api.post('activities/delivery', request).then(function (success) {
+        
         router.push(`/turmas/${router.query.id}/missoes/${props.id}`, undefined, {scroll: false});
+
         toast.success("Atividade marcada como concluída", options);
+
       });
     } catch (error) {
-      const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
 
       if (!error.response) {
         // network error
-        return toast.error(string, options);
+        return toast.error(genericMessageError, options);
       }
       switch (error.response.status) {
         case 401:
@@ -142,7 +165,7 @@ export default function Atividade(props: ActivityType) {
             }
           }
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
 
         case 422:
           let errors = error.response?.data.errors;
@@ -151,11 +174,11 @@ export default function Atividade(props: ActivityType) {
           });
 
         case 500: 
-          toast.error(string, options);
+          toast.error(genericMessageError, options);
           break;
 
         default:
-          toast.error(string, options);
+          toast.error(genericMessageError, options);
           break;
       }
     }

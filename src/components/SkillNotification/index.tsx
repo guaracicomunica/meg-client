@@ -1,18 +1,9 @@
+import { SkillNotificationType } from '../../types/Notification';
+
 import styles from './styles.module.css';
 
-type SkillNotification = {
-  id: number;
-  skill: string;
-  classroom: string;
-  claimer: {
-    name: string,
-    avatar: string,
-  };
-  createdAt: string;
-};
-
 type SkillNotificationProps = {
-  notifications: SkillNotification[],
+  notifications: SkillNotificationType[];
 };
 
 export default function SkillNotification(props: SkillNotificationProps) {

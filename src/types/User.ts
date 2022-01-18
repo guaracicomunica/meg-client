@@ -3,4 +3,5 @@ export type User = {
   name: string;
   email: string;
   role: number;
+  avatar_path: string | null;
 }

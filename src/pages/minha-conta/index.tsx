@@ -2,18 +2,26 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useContext } from "react"
 import { parseCookies } from 'nookies'
+import { ToastContainer } from "react-toastify";
 
 import SkillNotification from "../../components/SkillNotification";
 import CardUser from "../../components/CardUser";
 import { RoleUser } from "../../enums/enumRoleUser";
 import CardSkills from "../../components/CardSkills";
+import SkillStore from "../../components/SkillStore";
 import { AuthContext } from "../../contexts/AuthContext"
 import { getAPIClient } from "../../services/apiClient";
+import { SkillNotificationType } from "../../types/Notification";
+import { QueryProps } from "../../types/Query";
 
 import styles from './styles.module.css';
-import SkillStore from "../../components/SkillStore";
 
-export default function Dashboard(props: any) {
+type MyAccountProps = {
+  notifications: SkillNotificationType[];
+  queryProps: QueryProps;
+}
+
+export default function MinhaConta(props: MyAccountProps) {
   const { user } = useContext(AuthContext);
 
   return (
@@ -37,6 +45,8 @@ export default function Dashboard(props: any) {
           <SkillStore />
         )}
       </main>
+
+      <ToastContainer />
     </>
   )
 }
@@ -63,7 +73,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
       });
 
-      const notifications = response.data.data.map(notification => {
+      const notifications : SkillNotificationType[] = response.data.data.map(notification => {
         return {
           id: notification.id,
           skill: notification.skill,

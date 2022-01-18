@@ -49,19 +49,18 @@ export default function Atividade(props: ActivityType) {
     ]);
   }
 
-
   const onSubmit = async (data: CommentForm) => handleCreateComment(data);
 
   async function handleCreateComment(data: CommentForm) {
-
     data.is_private = true;
     
     let commentsThisUser:CommentType[] = props.comments.filter( 
       comment => comment.is_private  
       && comment.comment_id == null 
-      && comment.creator.id == user?.id);
+      && comment.creator.id == user?.id
+    );
 
-    if(  commentsThisUser.length > 0 )
+    if(commentsThisUser.length > 0)
       data.comment_id = commentsThisUser[0].id; //pegar esse comentário
     else data.comment_id = null;
 
@@ -83,11 +82,9 @@ export default function Atividade(props: ActivityType) {
         toast.success("Comentário enviado com sucesso!", options);
         
         router.push(current_route, undefined, {scroll: false});
-
       });
     }
-    catch(error) {
-      
+    catch(error) { 
       if (!error.response) {
         // network error
         return toast.error(genericMessageError, options);
@@ -121,8 +118,7 @@ export default function Atividade(props: ActivityType) {
     }
    }
 
-
-   function generateFormData() {
+  function generateFormData() {
     const form = new FormData();
   
     form.append('activity_id', props.id.toString());
@@ -136,22 +132,17 @@ export default function Atividade(props: ActivityType) {
 
   async function completeActivity() {
     const request = generateFormData();
+
     try {
-      //const data = { activity_id: props.id }
-      
       const { ['meg.token']: token } = parseCookies();
       
       api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-      await api.post('activities/delivery', request).then(function (success) {
-        
+      await api.post('activities/delivery', request).then(function (success) { 
         router.push(`/turmas/${router.query.id}/missoes/${props.id}`, undefined, {scroll: false});
-
         toast.success("Atividade marcada como concluída", options);
-
       });
     } catch (error) {
-
       if (!error.response) {
         // network error
         return toast.error(genericMessageError, options);
@@ -197,9 +188,9 @@ export default function Atividade(props: ActivityType) {
             <div className={styles["info-activity"]}>
               <h5>{props.name}</h5>
               <div className={styles["activity-deadline"]}>
-                {props.deadline != null
-                  ? <p> Data de entrega: {format(parseISO(`${props.deadline}`), "dd/MM/yyyy 'até' HH:mm")}  </p> 
-                  : <p > </p>
+                {props.deadline !== null
+                  ? <p>Data de entrega: {format(parseISO(`${props.deadline}`), "dd/MM/yyyy 'até' HH:mm")}</p> 
+                  : <p>Sem data de entrega</p>
                 }
               </div>
             </div>
@@ -220,10 +211,8 @@ export default function Atividade(props: ActivityType) {
             )}
           </div>
 
-          <div className="d-flex flex-column flex-md-row py-4">
-            <div className={`pr-3 ${styles["activity-body"]}`}>
-                {props.body}
-            </div>
+          <div className="d-flex flex-column flex-md-row w-100 py-4">
+            <div className={`pr-3 w-100 ${styles["activity-body"]}`}>{props.body}</div>
 
             {user?.role === RoleUser.teacher && (
               <div className={`${styles["delivery-cards"]} pl-md-4 mt-4 mt-md-0`}>
@@ -251,7 +240,11 @@ export default function Atividade(props: ActivityType) {
             </div>
           )}
 
-          <CommentList postId={props.postId} comments={props.comments.filter(comment => !comment.is_private)} redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}/>
+          <CommentList 
+            postId={props.postId}
+            comments={props.comments.filter(comment => !comment.is_private)}
+            redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}
+          />
         </div>
 
         {user?.role === RoleUser.teacher ? (
@@ -260,29 +253,25 @@ export default function Atividade(props: ActivityType) {
             
             {props?.comments.length > 0
             ? (
-              [
-                props.comments?.filter(comment => comment.is_private && comment.comment_id == null ).map((comment, index) => {
-                  return (
-                    <PrivateComment
-                      key={index}
-                      id={comment.id}
-                      creator={{
-                        name: comment.creator.name,
-                        avatar: null,
-                      }}
-                      date={comment?.date}
-                      is_private={true}
-                      body={comment.body}
-                      comments={comment?.comments}
-                      postId={props.postId}
-                      redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}
-                    />
-                  );
-                })
-              ]
-            )
-            : 'Não há duvidas postadas no momento '}
-
+              props.comments?.filter(comment => comment.is_private && comment.comment_id == null ).map((comment, index) => {
+                return (
+                  <PrivateComment
+                    key={index}
+                    id={comment.id}
+                    creator={{
+                      name: comment.creator.name,
+                      avatar: null,
+                    }}
+                    date={comment?.date}
+                    is_private={true}
+                    body={comment.body}
+                    comments={comment?.comments}
+                    postId={props.postId}
+                    redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}
+                  />
+                );
+              })
+            ) : 'Não há duvidas postadas no momento.'}
           </div>
         ) : (
           <div>
@@ -327,14 +316,12 @@ export default function Atividade(props: ActivityType) {
 
             <div className={`card-style mt-4 p-4 ${styles["card-send-private-comment"]}`}>
               <h5 className="pb-3 mb-4 border-bottom w-100">Dúvidas? Fale com o(a) professor(a)</h5>
-              {props?.comments.length > 0
-            ? (
-              [
-                props.comments?.filter(
-                  comment => 
+              {props?.comments.length > 0 && (
+                props.comments?.filter(comment => 
                   comment.is_private 
                   && comment.comment_id == null 
-                  && comment.creator.id == user?.id ).map((comment, index) => {
+                  && comment.creator.id == user?.id)
+                .map((comment, index) => {
                   return (
                     <PrivateComment
                       key={index}
@@ -350,13 +337,15 @@ export default function Atividade(props: ActivityType) {
                       postId={props.postId}
                       redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}
                     />
-                  );
-                })
-              ]
-            )
-            : '' }
-                <form className="w-100 mt-3" method="post" id="send-private-comment"
-                onSubmit={handleSubmit(onSubmit)}>
+                  )}
+                )
+              )}
+              <form
+                className="w-100 mt-3"
+                method="post"
+                id="send-private-comment"
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <textarea
                   name="comment"
                   id="comment"
@@ -399,36 +388,33 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
   else {
-
     try {
-       const {data: activity} = await apiClient.get<any>(`activities/${ctx.params.slug}`, {
+      const {data: activity} = await apiClient.get<any>(`activities/${ctx.params.slug}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
 
-      const formattedActivity: ActivityType  = 
-          {  
-          id: activity.id,
-          name: activity.name,
-          body: activity.body,
-          deadline: activity?.deadline,
-          points: activity.points,
-          xp: activity.xp,
-          coins: activity.coins,
-          comments: activity.comments,
-          topicId: activity.topicId,
-          postId: activity.postId,
-          disabled: activity.disabled,
-          attachments: activity.attachments,
-          totalAssignments: activity.totalAssignments,
-          totalDeliveredActivities: activity.totalDeliveredActivities,
-         }
+      const formattedActivity: ActivityType = {  
+        id: activity.id,
+        name: activity.name,
+        body: activity.body,
+        deadline: activity?.deadline,
+        points: activity.points,
+        xp: activity.xp,
+        coins: activity.coins,
+        comments: activity.comments,
+        topicId: activity.topicId,
+        postId: activity.postId,
+        disabled: activity.disabled,
+        attachments: activity.attachments,
+        totalAssignments: activity.totalAssignments,
+        totalDeliveredActivities: activity.totalDeliveredActivities,
+      }
          
       return { props: formattedActivity }
-
     } catch(error) {
-     switch (error.response.status) {
+      switch (error.response.status) {
         case 401:
           return {
             redirect: {
@@ -463,5 +449,4 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       } 
     }
   }
-
 }

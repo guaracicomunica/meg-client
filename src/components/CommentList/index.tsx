@@ -106,7 +106,11 @@ export default function CommentList(props: CommentListprops) {
         </div>
 
         <div className={`${styles["add-comment"]} w-100`}>
-            <img src="/icons/user-gray.svg" alt="Minha foto do perfil" style={{height: "3rem"}} />
+            <img
+              src={user?.avatar_path ?? "/icons/user-gray.svg"}
+              alt="Minha foto do perfil"
+              className={styles["img-profile"]}
+            />
             <form id="post-comment" method='post' onSubmit={handleSubmit(onSubmit)}>
                 <textarea
                     name={`comment-${props.postId}`}

@@ -20,11 +20,16 @@
   position: absolute;
   top: 0;
   right: 1rem;
-  border-radius: 50%;
-  border: 2px solid var(--white);
-  padding: 0.25rem 0.485rem;
-  background-color: var(--yellow);
   cursor: pointer;
+}
+
+.edit-user-img label {
+  border-radius: 50% !important;
+  border: 2px solid var(--white) !important;
+  padding: 0.25rem 0.485rem !important;
+  background-color: var(--yellow) !important;
+  display: block;
+  position: relative;
 }
 
 .edit-user-img img {
@@ -36,6 +41,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 .user-info h4 {
@@ -44,6 +50,7 @@
 
 .user-info p {
   color: var(--gray-text);
+  word-break: break-all;
 }
 
 .user-info strong {

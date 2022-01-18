@@ -18,6 +18,11 @@ type ModalCreateNewClassType = {
   onHide: () => void;
 }
 
+type PreviewObjectType = {
+  index: number;
+  path: string;
+}
+
 export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const { register, unregister, handleSubmit, reset, setValue } = useForm({defaultValues: {
     name: "",
@@ -31,17 +36,34 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const onSubmit = async (data: DataFormClass) => handleCreateClass(data);
 
   const [isSkillStoreEnabled, setIsSkillStoreEnabled] = useState(false);
-  const [skillsCounter, setSkillsCounter] = useState(1);
+  const [skillsCounter, setSkillsCounter] = useState(0);
   const [skillInputs, setSkillInputs] = useState([]);
-  const [levelsCounter, setLevelsCounter] = useState(1);
+  const [levelsCounter, setLevelsCounter] = useState(0);
   const [levelInputs, setLevelInputs] = useState([]);
   const [isDraft, setIsDraft] = useState(1);
   const [idClass, setIdClass] = useState(0);
   const [srcPreviewBanner, setSrcPreviewBanner] = useState("");
-  const [srcPreviewLevels, setSrcPreviewLevels] = useState<string[]>([]);
+  const [srcPreviewLevels, setSrcPreviewLevels] = useState<PreviewObjectType[]>([]);
+  const [srcPreviewSkills, setSrcPreviewSkills] = useState<PreviewObjectType[]>([]);
 
   useEffect(() => {
+    if (levelsCounter === 0) {
+      setLevelInputs([]);
+    }
+    else {
+      generateFormLevelInputs(levelsCounter);
+    }
+  }, [levelsCounter]);
+
+  useEffect(() => {
+    generateFormSkillInputs(skillsCounter);
+  }, [skillsCounter]);
+
+  //modal edit class
+  useEffect(() => {
     if (props.formData) {
+      console.log(props.formData);
+
       setIdClass(props.formData.id);
       setValue('name', props.formData.name);
       setValue('nickname', props.formData.nickname);
@@ -53,38 +75,56 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       if (props.formData.partners) {
         setValue('partners.0', props.formData.partners[0]);
       }
+
       if (props.formData.skills) {
         setIsSkillStoreEnabled(true);
+        setSkillsCounter(props.formData.skills.length);
+
         for (let i = 0; i < props.formData.skills.length; i++) {
           setValue(`skills.${i}.name`, props.formData.skills[i].name);
           setValue(`skills.${i}.coins`, props.formData.skills[i].coins);
+          if (props.formData.skills[i].path) {
+            setSrcPreviewSkills([
+              ...srcPreviewSkills,
+              {
+                index: i,
+                path: props.formData.skills[i].path
+              }
+            ]);
+          }
         }
       }
-      for (let i = 0; i < props.formData.levels.length; i++) {
-        setValue(`levels.${i}.name`, props.formData.levels[i].name);
-        setValue(`levels.${i}.xp`, props.formData.levels[i].xp);
-        if (props.formData.levels[i].file) {
-          setSrcPreviewLevels([
-            ...srcPreviewLevels,
-            props.formData.levels[i].file
-          ]);
+
+      if (props.formData.levels) {
+        setLevelsCounter(props.formData.levels.length);
+        for (let i = 0; i < props.formData.levels.length; i++) {
+          setValue(`levels.${i}.name`, props.formData.levels[i].name);
+          setValue(`levels.${i}.xp`, props.formData.levels[i].xp);
+          if (props.formData.levels[i].path) {
+            setSrcPreviewLevels([
+              ...srcPreviewLevels,
+              {
+                index: i,
+                path: props.formData.levels[i].path
+              }
+            ]);
+          }
         }
       }
     }
-    console.log(props.formData)
-  }, []);
+  }, [props.formData]);
 
-  useEffect(() => {
-    if (props.show) {
-      setLevelInputs([
-        <div className="form-row" key="input-level-1">
+  function generateFormLevelInputs(levels: number) {
+    for (let i = 0; i < levels; i++) {
+      const input = (
+        <div className="form-row" key={`input-level-${i}`}>
           <div className="form-group col-lg-4">
             <input
               type="text"
               className="form-control form-input"
-              name="levels[0][name]"
+              name={`levels[${i}][name]`}
               placeholder="Nome do nível"
-              {...register('levels.0.name')}
+              {...register(`levels.${i}.name`)}
             />
           </div>
 
@@ -93,51 +133,64 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               type="number"
               min={1}
               className="form-control form-input"
-              name="levels[0][xp]"
+              name={`levels[${i}][xp]`}
               placeholder="XP do nível"
-              {...register('levels.0.xp')}
+              {...register(`levels.${i}.xp`)}
             />
           </div>
 
-          <div className='form-group col-lg-4 small-preview' id="preview-level-0" onChange={uploadFile}>
+          <div className='form-group col-lg-4 small-preview' id={`preview-level-${i}`} onChange={uploadFile}>
             <div className="input-file">
               <input
                 type="file"
-                id="levels[0][file]"
-                name="levels[0][file]"
+                name={`levels[${i}][file]`}
+                id={`levels[${i}][file]`}
                 accept=".png, .jpg, .jpeg, .svg"
-                {...register('levels.0.file')}
+                {...register(`levels.${i}.file`)}
               />
-              <label htmlFor="levels[0][file]" className='ml-1'>
+              <label htmlFor={`levels[${i}][file]`} className='ml-1'>
                 <img src="./icons/camera.svg" alt="Adicionar imagem" />
               </label>
               <span>Defina uma capa</span>
             </div>
             <div className='preview-image'>
               <img
-                src={srcPreviewLevels[0] ?? "#"}
-                style={{display: srcPreviewLevels[0] ? "block" : "none"}}
-                id="preview-level-0"
+                src={srcPreviewLevels.find(level => {
+                  if (level.index === i) {
+                    return level;
+                  }
+                })?.path ?? "#"}
+                style={{display: srcPreviewLevels.find(level => {
+                  if (level.index === i) {
+                    return level;
+                  }
+                })?.path ? "block" : "none"}}
+                id={`preview-level-${i}`}
                 alt="Preview da imagem selecionada"
               />
             </div>
           </div>
         </div>
+      );
+
+      setLevelInputs([
+        ...levelInputs,
+        input
       ]);
     }
-  }, [props.show]);
+  }
 
-  useEffect(() => {
-    if (!isSkillStoreEnabled) {
-      setSkillInputs([
-        <div className="form-row" key="input-skill-1">
+  function generateFormSkillInputs(skills: number) {
+    for (let i = 0; i < skills; i++) {
+      const input = (
+        <div className="form-row" key={`input-skill-${i}`}>
           <div className="form-group col-lg-4">
             <input
               type="text"
               className="form-control form-input"
-              name="skills[0][name]"
+              name={`skills[${i}][name]`}
               placeholder="Nome da habilidade"
-              {...register('skills.0.name')}
+              {...register(`skills.${i}.name`)}
             />
           </div>
 
@@ -146,9 +199,9 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               type="number"
               min={1}
               className="form-control form-input"
-              name="skills[0][coins]"
+              name={`skills[${i}][coins]`}
               placeholder="Valor da habilidade"
-              {...register('skills.0.coins')}
+              {...register(`skills.${i}.coins`)}
             />
           </div>
 
@@ -156,33 +209,62 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             <div className="input-file">
               <input
                 type="file"
-                id="img-skill-1"
-                name="img-skill-1"
+                name={`skills[${i}][file]`}
+                id={`skills[${i}][file]`}
                 accept=".png, .jpg, .jpeg, .svg"
+                {...register(`skills.${i}.file`)}
               />
-              <label htmlFor="img-skill-1" className='ml-1'>
+              <label htmlFor={`skills[${i}][file]`} className='ml-1'>
                 <img src="./icons/camera.svg" alt="Adicionar imagem" />
               </label>
               <span>Defina uma capa</span>
             </div>
             <div className='preview-image'>
-              <img alt="Preview da imagem selecionada" />
+              <img
+                src={srcPreviewSkills.find(skill => {
+                  if (skill.index === i) {
+                    return skill;
+                  }
+                })?.path ?? "#"}
+                style={{display: srcPreviewSkills.find(skill => {
+                  if (skill.index === i) {
+                    return skill;
+                  }
+                })?.path ? "block" : "none"}}
+                id={`preview-skill-${i}`}
+                alt="Preview da imagem selecionada"
+              />
             </div>
           </div>
         </div>
+      );
+
+      setSkillInputs([
+        ...skillInputs,
+        input
       ]);
     }
-  }, [isSkillStoreEnabled]);
+  }
+
+  function addLevel() {
+    setLevelsCounter(levelsCounter+1);
+  }
+
+  function addSkill() {
+    setSkillsCounter(skillsCounter+1);
+  }
 
   function enableSkillStore(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.currentTarget.value === "yes") {
       setIsSkillStoreEnabled(true);
+      setSkillsCounter(0);
     }
     if (e.currentTarget.value === "no") {
       setIsSkillStoreEnabled(false);
       unregister('skills.0.name');
       unregister('skills.0.coins');
-      setSkillsCounter(1);
+      unregister('skills.0.file');
+      setSkillsCounter(0);
     }
   }
 
@@ -190,6 +272,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     //change span text and preview image selected
     const fileSelected = e.currentTarget.querySelector<HTMLInputElement>(".input-file input").files;
     const previewImage = e.currentTarget.querySelector<HTMLImageElement>(".preview-image img");
+
     if (fileSelected.length > 0) {
       e.currentTarget.querySelector<HTMLSpanElement>(".input-file span").innerText = "Alterar capa";
       previewImage.src = URL.createObjectURL(fileSelected[0]);
@@ -200,122 +283,13 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     }
   }
 
-  function addSkill(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-
-    const input = (
-      <div className="form-row" key={`input-skill-${skillsCounter+1}`}>
-        <div className="form-group col-lg-4">
-          <input
-            type="text"
-            className="form-control form-input"
-            name={`skills[${skillsCounter}][name]`}
-            placeholder="Nome da habilidade"
-            {...register(`skills.${skillsCounter}.name`)}
-          />
-        </div>
-
-        <div className="form-group col-lg-4">
-          <input
-            type="number"
-            min={1}
-            className="form-control form-input"
-            name={`skills[${skillsCounter}][coins]`}
-            placeholder="Valor da habilidade"
-            {...register(`skills.${skillsCounter}.coins`)}
-          />
-        </div>
-
-        <div className='form-group col-lg-4 small-preview' onChange={uploadFile}>
-          <div className="input-file">
-            <input
-              type="file"
-              name={`img-skill-${skillsCounter+1}`}
-              id={`img-skill-${skillsCounter+1}`}
-              accept=".png, .jpg, .jpeg, .svg"
-            />
-            <label htmlFor={`img-skill-${skillsCounter+1}`} className='ml-1'>
-              <img src="./icons/camera.svg" alt="Adicionar imagem" />
-            </label>
-            <span>Defina uma capa</span>
-          </div>
-          <div className='preview-image'>
-            <img alt="Preview da imagem selecionada" />
-          </div>
-        </div>
-      </div>
-    );
-
-    setSkillsCounter(skillsCounter+1);
-    setSkillInputs([
-      ...skillInputs,
-      input
-    ]);
-  }
-
-  function addLevel(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    
-    const input = (
-      <div className="form-row" key={`input-level-${levelsCounter+1}`}>
-        <div className="form-group col-lg-4">
-          <input
-            type="text"
-            className="form-control form-input"
-            name={`levels[${levelsCounter}][name]`}
-            placeholder="Nome do nível"
-            {...register(`levels.${levelsCounter}.name`)}
-          />
-        </div>
-
-        <div className="form-group col-lg-4">
-          <input
-            type="number"
-            min={1}
-            className="form-control form-input"
-            name={`levels[${levelsCounter}][xp]`}
-            placeholder="XP do nível"
-            {...register(`levels.${levelsCounter}.xp`)}
-          />
-        </div>
-
-        <div className='form-group col-lg-4 small-preview' id={`preview-level-${levelsCounter+1}`} onChange={uploadFile}>
-          <div className="input-file">
-            <input
-              type="file"
-              name={`img-level-${levelsCounter+1}`}
-              id={`img-level-${levelsCounter+1}`}
-              accept=".png, .jpg, .jpeg, .svg"
-            />
-            <label htmlFor={`img-level-${levelsCounter+1}`} className='ml-1'>
-              <img src="./icons/camera.svg" alt="Adicionar imagem" />
-            </label>
-            <span>Defina uma capa</span>
-          </div>
-          <div className='preview-image'>
-            <img
-              src={srcPreviewLevels[levelsCounter+1] ?? "#"}
-              style={{display: srcPreviewLevels[levelsCounter+1] ? "block" : "none"}}
-              id={`preview-level-${levelsCounter+1}`}
-              alt="Preview da imagem selecionada"
-            />
-          </div>
-        </div>
-      </div>
-    );
-
-    setLevelsCounter(levelsCounter+1);
-    setLevelInputs([
-      ...levelInputs,
-      input
-    ]);
-  }
-
   function closeModal() {
     props.onHide();
     setIsSkillStoreEnabled(false);
-    setLevelsCounter(1);
-    setSkillsCounter(1);
+    setLevelsCounter(0);
+    setLevelInputs([]);
+    setSkillsCounter(0);
+    setLevelInputs([]);
     reset({
       name: "",
       nickname: "",
@@ -333,20 +307,26 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     form.append('nickname', data.nickname);
     form.append('is_draft', isDraft.toString());
 
-    for (let i = 0; i < data.levels.length; i++) {
-      form.append(`levels[${i}][name]`, data.levels[i].name);
-      form.append(`levels[${i}][xp]`, data.levels[i].xp.toString());
-      if (data.levels[i].file[0]) {
-        form.append(`levels[${i}][file]`, data.levels[i].file[0]);
+    if (data.levels != undefined) {
+      if (data.levels[0].name != undefined && data.levels[0].xp != undefined && data.levels[0].file != undefined) {
+        for (let i = 0; i < data.levels.length; i++) {
+          form.append(`levels[${i}][name]`, data.levels[i].name);
+          form.append(`levels[${i}][xp]`, data.levels[i].xp.toString());
+          if (data.levels[i].file[0] != undefined) {
+            form.append(`levels[${i}][file]`, data.levels[i].file[0]);
+          }
+        }
       }
     }
 
-    if(data.skills != undefined)
-    {
-      if (data.skills[0].name != undefined && data.skills[0].coins != undefined) {
+    if(data.skills != undefined) {
+      if (data.skills[0].name != undefined && data.skills[0].coins != undefined && data.skills[0].file != undefined) {
         for (let i = 0; i < data.skills.length; i++) {
           form.append(`skills[${i}][name]`, data.skills[i].name);
           form.append(`skills[${i}][coins]`, data.skills[i].coins.toString());
+          if (data.skills[i].file[0] != undefined) {
+            form.append(`skills[${i}][file]`, data.skills[i].file[0]);
+          }
         }
       }
     }
@@ -363,11 +343,10 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   }
 
   async function handleCreateClass(data: DataFormClass) {
-    try {
-      const request = generateFormData(data);
-      
-      const { 'meg.token': token } = parseCookies();
+    const request = generateFormData(data);
 
+    try {
+      const { 'meg.token': token } = parseCookies();
       api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
       await api.post('classes', request)
@@ -387,8 +366,8 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           levels: [],
           file: null
         });
-        setSkillsCounter(1);
-        setLevelsCounter(1);
+        setSkillsCounter(0);
+        setLevelsCounter(0);
         props.onHide();
         router.push("/turmas");
       });
@@ -523,7 +502,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                 {skillInputs.map(input => input)}
               </div>
 
-              <button onClick={addSkill} className={`${styles["button-add-input"]} modal-button`}>
+              <button type="button" onClick={addSkill} className={`${styles["button-add-input"]} modal-button`}>
                 <img src="./icons/plus.svg" alt="Adicionar habilidade" style={{height: "1.2rem"}} />
                 <span className="ml-2">Nova habilidade</span>
               </button>
@@ -538,7 +517,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             {levelInputs.map(input => input)}
           </div>
 
-          <button onClick={addLevel} className={`${styles["button-add-input"]} modal-button`}>
+          <button type="button" onClick={addLevel} className={`${styles["button-add-input"]} modal-button`}>
             <img src="./icons/plus.svg" alt="Adicionar nível" style={{height: "1.2rem"}} />
             <span className="ml-2">Novo nível</span>
           </button>

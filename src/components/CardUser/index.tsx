@@ -25,13 +25,14 @@ export default function CardUser() {
 
   async function handleChangeAvatar(data: DataForm) {
     const form = new FormData();
+    form.append("_method", "PUT");
     form.append("avatar_path", data.avatar_path[0]);
 
     try {
       const { 'meg.token': token } = parseCookies();
       api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-      await api.put(`users/update-avatar/${user?.id}`, form, {
+      await api.post(`users/update-avatar/${user?.id}`, form, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -64,13 +65,10 @@ export default function CardUser() {
             }
           }
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+          toast.warning(error.response?.data.error.avatar_path[0] ? error.response?.data.error.avatar_path[0] : string, options);
 
         case 422:
-          let errors = error.response?.data.errors;
-          Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
-          });
+          toast.warning(error.response?.data.error.avatar_path[0], options);
 
         case 500: 
           toast.error(string, options);

@@ -18,12 +18,15 @@ export type PostActivityType = {
 export type CommentType = {
   id: number;
   creator: {
+    id: number;
     name: string;
     avatar?: string;
   }
   date: string;
   is_private?: boolean;
   body: string;
+  comments?: CommentType[];
+  comment_id?: number;
 }
 
 export type ActivityType = {

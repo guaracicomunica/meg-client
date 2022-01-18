@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 
 import CommentList from "../../../../../components/CommentList";
@@ -14,16 +15,27 @@ import { AuthContext } from "../../../../../contexts/AuthContext";
 import { RoleUser } from "../../../../../enums/enumRoleUser";
 import { api } from "../../../../../services/api";
 import { getAPIClient } from "../../../../../services/apiClient";
-import { ActivityType } from "../../../../../types/Post";
-import { options } from "../../../../../utils/defaultToastOptions";
-
+import { ActivityType, CommentType } from "../../../../../types/Post";
+import { genericMessageError, options } from "../../../../../utils/defaultToastOptions";
 import styles from './styles.module.css';
+
+
+type CommentForm = {
+  body: string;
+  is_private: boolean;
+  comment_id: number;
+}
 
 export default function Atividade(props: ActivityType) {
   const router = useRouter();
+  const { 'meg.token': token } = parseCookies();
   const { user } = useContext(AuthContext);
   const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
+  const { register, handleSubmit, reset } = useForm({defaultValues: {
+    body: ""
+  }});
+  const current_route: string = `/turmas/${router.query.id}/missoes/${router.query.slug}`;
 
   function addFile(data: any) {
     setFiles([
@@ -31,6 +43,78 @@ export default function Atividade(props: ActivityType) {
       data.file[0]
     ]);
   }
+
+
+  const onSubmit = async (data: CommentForm) => handleCreateComment(data);
+
+  async function handleCreateComment(data: CommentForm) {
+
+    data.is_private = true;
+    
+    let commentsThisUser:CommentType[] = props.comments.filter( 
+      comment => comment.is_private  
+      && comment.comment_id == null 
+      && comment.creator.id == user?.id);
+
+    if(  commentsThisUser.length > 0 )
+      data.comment_id = commentsThisUser[0].id; //pegar esse comentário
+    else data.comment_id = null;
+
+    try {
+      await api.post('comments', data, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: {
+          'post_id': props.postId,
+          'user_id': user.id
+        }
+      })
+      .then(function (success) {
+        reset({
+          body: ""
+        });
+
+        toast.success("Comentário enviado com sucesso!", options);
+        
+        router.push(current_route, undefined, {scroll: false});
+
+      });
+    }
+    catch(error) {
+      
+      if (!error.response) {
+        // network error
+        return toast.error(genericMessageError, options);
+      }
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+        
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], options);
+          });
+
+        case 500: 
+          toast.error(genericMessageError, options);
+          break;
+
+        default:
+          toast.error(genericMessageError, options);
+          break;
+      }
+    }
+   }
 
   async function completeActivity() {
     try {
@@ -144,7 +228,7 @@ export default function Atividade(props: ActivityType) {
             </div>
           )}
 
-          <CommentList postId={props.postId} comments={props.comments} redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}/>
+          <CommentList postId={props.postId} comments={props.comments.filter(comment => !comment.is_private)} redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}/>
         </div>
 
         {user?.role === RoleUser.teacher ? (
@@ -154,18 +238,21 @@ export default function Atividade(props: ActivityType) {
             {props?.comments.length > 0
             ? (
               [
-                props.comments?.filter(comment => comment.is_private).map((comment, index) => {
+                props.comments?.filter(comment => comment.is_private && comment.comment_id == null ).map((comment, index) => {
                   return (
                     <PrivateComment
                       key={index}
                       id={comment.id}
                       creator={{
-                        name: comment.creator,
+                        name: comment.creator.name,
                         avatar: null,
                       }}
                       date={comment?.date}
                       is_private={true}
                       body={comment.body}
+                      comments={comment?.comments}
+                      postId={props.postId}
+                      redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}
                     />
                   );
                 })
@@ -217,24 +304,43 @@ export default function Atividade(props: ActivityType) {
 
             <div className={`card-style mt-4 p-4 ${styles["card-send-private-comment"]}`}>
               <h5 className="pb-3 mb-4 border-bottom w-100">Dúvidas? Fale com o(a) professor(a)</h5>
-              <PrivateComment
-                key={1}
-                id={1}
-                creator={{
-                  name: "joão",
-                  avatar: null,
-                }}
-                date={"d"}
-                is_private={true}
-                body={"b"}
-              />
-              <form className="w-100 mt-3" method="post" id="send-private-comment">
+              {props?.comments.length > 0
+            ? (
+              [
+                props.comments?.filter(
+                  comment => 
+                  comment.is_private 
+                  && comment.comment_id == null 
+                  && comment.creator.id == user?.id ).map((comment, index) => {
+                  return (
+                    <PrivateComment
+                      key={index}
+                      id={comment.id}
+                      creator={{
+                        name: comment.creator.name,
+                        avatar: null,
+                      }}
+                      date={comment?.date}
+                      is_private={true}
+                      body={comment.body}
+                      comments={comment?.comments}
+                      postId={props.postId}
+                      redirectTo={`/turmas/${router.query.id}/missoes/${router.query.slug}`}
+                    />
+                  );
+                })
+              ]
+            )
+            : '' }
+                <form className="w-100 mt-3" method="post" id="send-private-comment"
+                onSubmit={handleSubmit(onSubmit)}>
                 <textarea
                   name="comment"
                   id="comment"
                   rows={4}
                   className='textarea w-100 p-3'
                   placeholder="Faça um comentário privado..."
+                  {...register('body')}
                 ></textarea>
                 <button type="submit" form="send-private-comment">
                   <img src="/icons/send.svg" alt="Enviar" />
@@ -295,7 +401,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           totalAssignments: activity.totalAssignments,
           totalDeliveredActivities: activity.totalDeliveredActivities,
          }
+         
       return { props: formattedActivity }
+
     } catch(error) {
      switch (error.response.status) {
         case 401:

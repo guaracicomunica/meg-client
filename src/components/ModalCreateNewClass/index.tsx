@@ -34,7 +34,6 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   }});
 
   const onSubmit = async (data: DataFormClass) => {
-    console.log(data);
     await handleCreateClass(data);
   };
 
@@ -63,7 +62,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         setValue('partners.0', props.formData.partners[0]);
       }
 
-      if (props.formData.skills.length > 0) {
+      if (props.formData.skills) {
         setIsSkillStoreEnabled(true);
         setSkillInputs(props.formData.skills);
         
@@ -138,17 +137,6 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
   function closeModal() {
     props.onHide();
-    setIsSkillStoreEnabled(false);
-    setSkillInputs([]);
-    setLevelInputs([]);
-    reset({
-      name: "",
-      nickname: "",
-      partners: [],
-      skills: [],
-      levels: [],
-      file: null,
-    });
   }
 
   function generateFormData(data: DataFormClass) {
@@ -170,7 +158,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       }
     }
 
-    if(data.skills.length > 0) {
+    if(data.skills) {
       if (data.skills[0].name != undefined && data.skills[0].coins != undefined && data.skills[0].file != undefined) {
         for (let i = 0; i < data.skills.length; i++) {
           form.append(`skills[${i}][name]`, data.skills[i].name);
@@ -208,17 +196,8 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         else {
           toast.success("Turma editada com sucesso!", options);
         }
-        setIsSkillStoreEnabled(false);
-        reset({
-          name: "",
-          nickname: "",
-          partners: [],
-          skills: [],
-          levels: [],
-          file: null
-        });
         props.onHide();
-        router.push("/turmas");
+        router.push('/turmas')
       });
     }
     catch(error) {

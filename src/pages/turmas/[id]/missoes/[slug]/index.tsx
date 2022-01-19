@@ -102,12 +102,14 @@ export default function Atividade(props: ActivityType) {
         
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
             toast.warning(errors[item][0], options);
           });
+          break;
 
         case 500: 
           toast.error(genericMessageError, options);
@@ -159,12 +161,14 @@ export default function Atividade(props: ActivityType) {
           }
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
             toast.warning(errors[item][0], options);
           });
+          break;
 
         case 500: 
           toast.error(genericMessageError, options);

@@ -98,12 +98,14 @@ export default function Atividade(props: ActivityType) {
         
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
             toast.warning(errors[item][0], options);
           });
+          break;
 
         case 500: 
           toast.error(genericMessageError, options);
@@ -155,12 +157,14 @@ export default function Atividade(props: ActivityType) {
           }
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
             toast.warning(errors[item][0], options);
           });
+          break;
 
         case 500: 
           toast.error(genericMessageError, options);
@@ -276,7 +280,7 @@ export default function Atividade(props: ActivityType) {
 
           <div className="d-flex w-100">
             {props.attachments.length > 0 && props.attachments.map((attachment, index) => {
-              if (attachment.is_external_link === true) {
+              if (attachment.is_external_link === 1) {
                 return <AttachmentLink key={index} index={index+1} path={attachment.path} />
               }
               else {

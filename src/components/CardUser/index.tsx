@@ -73,9 +73,11 @@ export default function CardUser() {
           }
         case 400:
           toast.warning(error.response?.data.error.avatar_path[0] ? error.response?.data.error.avatar_path[0] : string, options);
+          break;
 
         case 422:
           toast.warning(error.response?.data.error.avatar_path[0], options);
+          break;
 
         case 500: 
           toast.error(string, options);

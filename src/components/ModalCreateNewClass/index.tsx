@@ -67,32 +67,27 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         setIsSkillStoreEnabled(true);
         setSkillInputs(props.formData.skills);
         
-        for (let i = 0; i < props.formData.skills.length; i++) {
-          if (props.formData.skills[i].path) {
-            setSrcPreviewSkills([
-              ...srcPreviewSkills,
-              {
-                index: i,
-                path: props.formData.skills[i].path
-              }
-            ]);
+        const prs = props.formData.skills.map((item, index) => {
+          return {
+            index: index,
+            path: item.path
           }
-        }
+        })
+
+        setSrcPreviewSkills(prs);
       }
 
       if (props.formData.levels.length > 0) {
         setLevelInputs(props.formData.levels);
-        for (let i = 0; i < props.formData.levels.length; i++) {
-          if (props.formData.levels[i].path) {
-            setSrcPreviewLevels([
-              ...srcPreviewLevels,
-              {
-                index: i,
-                path: props.formData.levels[i].path
-              }
-            ]);
+        
+        const prl = props.formData.levels.map((item, index) => {
+          return {
+            index: index,
+            path: item.path
           }
-        }
+        })
+
+        setSrcPreviewLevels(prl);
       }
     }
   }, [props.formData]);

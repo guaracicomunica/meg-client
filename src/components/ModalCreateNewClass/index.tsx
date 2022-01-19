@@ -197,7 +197,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           toast.success("Turma editada com sucesso!", options);
         }
         props.onHide();
-        router.push('/turmas')
+        router.push('/turmas', undefined, {scroll: false});
       });
     }
     catch(error) {

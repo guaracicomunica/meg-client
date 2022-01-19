@@ -37,7 +37,7 @@ export default function SkillStore() {
       
 
       <div className={`p-3 mt-3 ${styles.skill}`}>
-        <img src="/icons/user-gray.svg" alt="Avatar do estudante" />
+        <img src="/icons/skill.svg" alt="Avatar do estudante" />
         <div className={`${styles["skill-name"]} px-3`}>Nome da habilidade aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
         <div className='px-3 border-left'>
           <div className={`py-1 px-3 ${styles.coins}`}>$ 22</div>
@@ -45,7 +45,7 @@ export default function SkillStore() {
       </div>
 
       <div className={`p-3 mt-3 ${styles.skill}`}>
-        <img src="/icons/user-gray.svg" alt="Avatar do estudante" />
+        <img src="/icons/skill.svg" alt="Avatar do estudante" />
         <div className={`${styles["skill-name"]} px-3`}>Nome da habilidade</div>
         <div className='px-3 border-left'>
           <div className={`py-1 px-3 ${styles.coins}`}>$ 22</div>

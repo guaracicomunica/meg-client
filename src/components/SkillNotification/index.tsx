@@ -8,7 +8,7 @@ type SkillNotificationProps = {
 
 export default function SkillNotification(props: SkillNotificationProps) {
   return (
-    <div className={`card-style p-4 col-5 ${styles.notifications}`}>
+    <div className={`card-style mb-5 order-2 order-xl-1 p-4 col-xl-6 ${styles.notifications}`}>
       <div className={`border-bottom pb-3 ${styles["card-header"]}`}>
         <img src="/icons/notification.svg" alt="Notificações" />
         <h4>Notificações da Loja</h4>

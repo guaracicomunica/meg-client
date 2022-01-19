@@ -91,7 +91,7 @@ export default function CardUser() {
   }
   
   return (
-    <div className={`card-style p-4 col-4 ${styles["card-user"]}`}>
+    <div className={`card-style mb-5 p-4 order-1 order-xl-2 col-xl-5 ${styles["card-user"]}`}>
       <div className={styles["user-img"]}>
         <form
           autoComplete='off'

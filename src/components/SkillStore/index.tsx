@@ -2,7 +2,7 @@ import styles from './styles.module.css';
 
 export default function SkillStore() {
   return (
-    <div className={`card-style p-4 col-5 ${styles["skill-store"]}`}>
+    <div className={`card-style mb-5 order-2 order-xl-1 p-4 col-xl-6 ${styles["skill-store"]}`}>
       <div className={`pb-2 border-bottom ${styles["skills-header"]}`}>
         <img src="/images/skills-store.svg" />
         <h4>Loja de habilidades especiais</h4>

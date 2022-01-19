@@ -31,7 +31,7 @@ export default function MinhaConta(props: MyAccountProps) {
       </Head>
 
       <main className="page-container">
-        <div className="d-flex justify-content-between mb-5">
+        <div className="d-flex flex-wrap justify-content-between">
           {user?.role === RoleUser.teacher ? (
             <SkillNotification notifications={props.notifications} />
           ) : (

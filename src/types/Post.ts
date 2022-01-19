@@ -44,6 +44,16 @@ export type ActivityType = {
   attachments?: AttachmentType[],
   totalAssignments?: number,
   totalDeliveredActivities?: number,
+  userActivity?: UserActivity,
+}
+
+export type UserActivity = {
+  xp: number,
+  coins: number, 
+  points?: number,
+  scored_at?: number,
+  delivered_at?: string,
+  attachments?: []
 }
 
 export type ActivityTopicType = {
@@ -62,5 +72,5 @@ export type ActivityStudent = {
 
 export type AttachmentType = {
   path: string;
-  is_external_link: boolean;
+  is_external_link: number;
 }

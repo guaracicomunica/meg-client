@@ -67,6 +67,7 @@ export default function ModalAddTopic(props: ModalAddTopicProps) {
           Object.keys(errors).forEach((item) => {
             toast.warning(errors[item][0], options);
           });
+          break;
 
         case 500: 
           toast.error(string, options);

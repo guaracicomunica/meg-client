@@ -33,7 +33,36 @@ type DataFormActivity = {
   links: string[];
 }
 
-export default function Editar(props: any) {
+type ActivityType = {
+  name: string;
+  body: string;
+  points: number;
+  xp: number;
+  coins: number;
+  disabled: number;
+  deadline: Date;
+  topicId: number;
+  unitId: number;
+  attachments: AttachmentType[];
+}
+
+type AttachmentType = {
+  id: number
+  is_external_link: number;
+  path: string;
+}
+
+type TopicType = {
+  id: number;
+  name: string;
+}
+
+type EditPageProps = {
+  topics: TopicType[];
+  activity: ActivityType;
+}
+
+export default function Editar(props: EditPageProps) {
   const {'meg.token': token} = parseCookies();
   const router = useRouter();
   const { register, handleSubmit, setValue } = useForm({defaultValues: {
@@ -42,7 +71,7 @@ export default function Editar(props: any) {
     points: 0,
     xp: 0,
     coins: 0,
-    disabled: 1,
+    disabled: "1",
     deadline: null,
     topic_id: 0,
     unit_id: 0,
@@ -50,31 +79,46 @@ export default function Editar(props: any) {
     links: null
   }});
 
-  useEffect(() =>{
-    setValue('name', 'joão');
-    setValue('body', 'Lorem ipsum dolor siamet');
-    setValue('points', 10);
-    setValue('xp', 2);
-    setValue('coins', 0);
-    setValue('disabled', 0);
-    setValue('deadline', new Date());
-    setValue('topic_id', 1);
-    setValue('unit_id', 2);
-    setValue('attachments', null);
-  }, []);
+  const { activity } = props;
 
-  const onSubmit = async (data: DataFormActivity) => handleCreateActivity(data);
+  const onSubmit = async (data: DataFormActivity) => handleEditActivity(data);
   
   const [showModalAddLink, setShowModalAddLink] = useState(false);
   const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [links, setLinks] = useState<LinkType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
+  const [attachments, setAttachments] = useState<AttachmentType[]>([]);
+
+  useEffect(() => {
+    if (activity) {
+      setValue('name', activity.name);
+      setValue('body', activity.body);
+      setValue('points', activity.points);
+      setValue('xp', activity.xp);
+      setValue('coins', activity.coins);
+      setValue('disabled', activity.disabled.toString());
+      setValue('deadline', format(new Date(activity.deadline), "yyyy-MM-dd'T'hh:mm"));
+      setValue('topic_id', activity.topicId);
+      setValue('unit_id', activity.unitId);
+      setAttachments(activity.attachments);
+    }
+  }, []);
 
   function addLink(data: LinkType) {
     setLinks([
       ...links,
       data
     ]);
+  }
+  
+  function deleteLink(linkIndex: number) {
+    const newLinks = links.filter((link, index) => {
+      if (index !== linkIndex) {
+        return link;
+      }
+    });
+
+    setLinks(newLinks);
   }
 
   function addFile(data: any) {
@@ -84,20 +128,98 @@ export default function Editar(props: any) {
     ])
   }
 
+  function deleteFile(fileIndex: number) {
+    const newFiles = files.filter((file, index) => {
+      if (index !== fileIndex) {
+        return file;
+      }
+    });
+
+    setFiles(newFiles);
+  }
+
+  function deleteAttachmentState(idAttachment: number) {
+    const newAttachments = attachments.filter(attachment => {
+      if (attachment.id !== idAttachment) {
+        return attachment;
+      }
+    });
+
+    setAttachments(newAttachments);
+  }
+
+  async function deleteAttachment(idAttachment: number) {
+    try {
+      await api.delete(`attachments/${idAttachment}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      .then(function (success) {
+        toast.success("Anexo excluído com sucesso!", options);
+        deleteAttachmentState(idAttachment);
+      });
+    } catch(error) {
+      const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
+
+      if (!error.response) {
+        // network error
+        return toast.error(string, options);
+      }
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
+          }
+
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+          break;
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], options);
+          });
+          break;
+
+        case 500: 
+          toast.error(string, options);
+          break;
+
+        default:
+          toast.error(string, options);
+          break;
+      }
+    }
+  }
+
   function generateFormData(data: DataFormActivity) {
     const form = new FormData();
     const date = new Date(data.deadline);
 
-    form.append('classroom_id', router.query.id.toString());
-    form.append('name', data.name);
-    form.append('body', data.body);
-    form.append('points', data.points.toString());
-    form.append('xp', data.xp.toString());
-    form.append('coins', data.coins.toString());
-    form.append('disabled', data.disabled.toString());
-    form.append('deadline', format(date, "uuuu-MM-dd HH:mm:ss"));
-    form.append('topic_id', data.topic_id.toString());
-    form.append('unit_id', data.unit_id.toString());
+    form.append("_method", "PATCH");
+
+    if (data.name !== activity.name) form.append('name', data.name);
+    if (data.body !== activity.body) form.append('body', data.body);
+    if (data.points !== activity.points) form.append('points', data.points.toString());
+    if (data.xp !== activity.xp) form.append('xp', data.xp.toString());
+    if (data.coins !== activity.coins) form.append('coins', data.coins.toString());
+    if (data.disabled !== activity.disabled) form.append('disabled', data.disabled.toString());
+    if (data.deadline !== activity.deadline) form.append('deadline', format(date, "uuuu-MM-dd HH:mm:ss"));
+    if (data.topic_id !== activity.topicId) form.append('topic_id', data.topic_id.toString());
+    if (data.unit_id !== activity.unitId) form.append('unit_id', data.unit_id.toString());
 
     for (let i = 0; i < files.length; i++) {
       form.append(`attachments[${i}]`, files[i]);
@@ -110,11 +232,11 @@ export default function Editar(props: any) {
     return form;
   }
 
-  async function handleCreateActivity(data: DataFormActivity) {
+  async function handleEditActivity(data: DataFormActivity) {
     try {
       const request = generateFormData(data);
       
-      await api.post('activities', request, {
+      await api.post(`activities/${router.query.slug}`, request, {
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "multipart/form-data"
@@ -150,12 +272,14 @@ export default function Editar(props: any) {
 
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+          break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
             toast.warning(errors[item][0], options);
           });
+          break;
 
         case 500: 
           toast.error(string, options);
@@ -178,7 +302,7 @@ export default function Editar(props: any) {
         <form
           autoComplete='off'
           method="post"
-          id="create-activity"
+          id="edit-activity"
           className={`card-style py-5 ${styles["form-layout"]}`}
           onSubmit={handleSubmit(onSubmit)}
         >
@@ -214,16 +338,47 @@ export default function Editar(props: any) {
             </div>
             <div className={styles["attachments"]}>
               <h5>Arquivos e links anexados</h5>
+              {attachments.map((link, index) => {
+                if (link.is_external_link === 1) {
+                  return (
+                    <div className={styles["link"]} key={index}>
+                      <img src="/icons/link.svg" alt="Ícone" />
+                      <a href={link.path} target="_blank">{link.path}</a>
+                      <button type="button" onClick={() => deleteAttachment(link.id)} className={styles["delete-attachment"]}>
+                        <img src="/icons/x.svg" alt="Excluir" />
+                      </button>
+                    </div>
+                  )
+                }
+              })}
+
               {links.length > 0 && (
                 links.map((link, index) => {
                   return (
                     <div className={styles["link"]} key={index}>
                       <img src="/icons/link.svg" alt="Ícone" />
                       <a href={link.link} target="_blank">{link.link}</a>
+                      <button type="button" onClick={() => deleteLink(index)} className={styles["delete-attachment"]}>
+                        <img src="/icons/x.svg" alt="Excluir" />
+                      </button>
                     </div>
                   )
                 })
               )}
+
+              {attachments.map((file, index) => {
+                if (file.is_external_link === 0) {
+                  return (
+                    <div className={styles["link"]} key={index}>
+                      <img src="/icons/file.svg" alt="Ícone" />
+                      <a href={file.path} target="_blank">{file.path}</a>
+                      <button type="button" onClick={() => deleteAttachment(file.id)} className={styles["delete-attachment"]}>
+                        <img src="/icons/x.svg" alt="Excluir" />
+                      </button>
+                    </div>
+                  )
+                }
+              })}
 
               {files.length > 0 && (
                 files.map((file, index) => {
@@ -231,12 +386,15 @@ export default function Editar(props: any) {
                     <div className={styles["link"]} key={index}>
                       <img src="/icons/file.svg" alt="Ícone" />
                       <span>{file.name}</span>
+                      <button type="button" onClick={() => deleteFile(index)} className={styles["delete-attachment"]}>
+                        <img src="/icons/x.svg" alt="Excluir" />
+                      </button>
                     </div>
                   )
                 })
               )}
 
-              {links.length === 0 && files.length === 0 && (
+              {links.length === 0 && files.length === 0 && activity.attachments.length === 0 && (
                 <p>Sem anexos.</p>
               )}
             </div>
@@ -309,7 +467,7 @@ export default function Editar(props: any) {
                       type="radio"
                       id="status-active"
                       name="disabled"
-                      value={0}
+                      value="0"
                       {...register('disabled')}
                     />
                     <label htmlFor="status-active">Ativo</label>
@@ -320,7 +478,7 @@ export default function Editar(props: any) {
                       type="radio"
                       id="status-inactive"
                       name="disabled"
-                      value={1}
+                      value="1"
                       {...register('disabled')}
                     />
                     <label htmlFor="status-inactive">Inativo</label>
@@ -362,13 +520,13 @@ export default function Editar(props: any) {
             <div className='d-flex flex-column align-items-center'>
               <p className={styles.alert}>
                 <strong className='mr-1'>ATENÇÃO:</strong>
-                Os campos de pontos, moedas e XP não podem ser editados após a criação da missão.
+                Os campos de pontos, moedas e XP não poderão ser editados se algum estudante da turma tiver entregado a atividade.
               </p>
               <button
                 type='submit'
-                form="create-activity"
+                form="edit-activity"
                 className='button button-blue text-uppercase'
-              >Criar missão</button>
+              >Editar missão</button>
             </div>
           </div>
         </form>
@@ -416,12 +574,18 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
       const topics = topicsResponse.data.data;
 
-      console.log(topics);
+      const activityResponse = await apiClient.get(`activities/${ctx.params.slug}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const activity = activityResponse.data;
   
       return {
         props: {
           topics,
-          //activity
+          activity
         },
       }
     } catch(error) {

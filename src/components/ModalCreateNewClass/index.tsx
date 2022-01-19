@@ -33,12 +33,13 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     file: null,
   }});
 
-  const onSubmit = async (data: DataFormClass) => handleCreateClass(data);
+  const onSubmit = async (data: DataFormClass) => {
+    console.log(data);
+    await handleCreateClass(data);
+  };
 
   const [isSkillStoreEnabled, setIsSkillStoreEnabled] = useState(false);
-  const [skillsCounter, setSkillsCounter] = useState(0);
   const [skillInputs, setSkillInputs] = useState([]);
-  const [levelsCounter, setLevelsCounter] = useState(0);
   const [levelInputs, setLevelInputs] = useState([]);
   const [isDraft, setIsDraft] = useState(1);
   const [idClass, setIdClass] = useState(0);
@@ -46,24 +47,10 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [srcPreviewLevels, setSrcPreviewLevels] = useState<PreviewObjectType[]>([]);
   const [srcPreviewSkills, setSrcPreviewSkills] = useState<PreviewObjectType[]>([]);
 
-  useEffect(() => {
-    if (levelsCounter === 0) {
-      setLevelInputs([]);
-    }
-    else {
-      generateFormLevelInputs(levelsCounter);
-    }
-  }, [levelsCounter]);
-
-  useEffect(() => {
-    generateFormSkillInputs(skillsCounter);
-  }, [skillsCounter]);
 
   //modal edit class
   useEffect(() => {
     if (props.formData) {
-      console.log(props.formData);
-
       setIdClass(props.formData.id);
       setValue('name', props.formData.name);
       setValue('nickname', props.formData.nickname);
@@ -76,192 +63,43 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         setValue('partners.0', props.formData.partners[0]);
       }
 
-      if (props.formData.skills) {
+      if (props.formData.skills.length > 0) {
         setIsSkillStoreEnabled(true);
-        setSkillsCounter(props.formData.skills.length);
-
-        for (let i = 0; i < props.formData.skills.length; i++) {
-          setValue(`skills.${i}.name`, props.formData.skills[i].name);
-          setValue(`skills.${i}.coins`, props.formData.skills[i].coins);
-          if (props.formData.skills[i].path) {
-            setSrcPreviewSkills([
-              ...srcPreviewSkills,
-              {
-                index: i,
-                path: props.formData.skills[i].path
-              }
-            ]);
-          }
-        }
+        setSkillInputs(props.formData.skills);
       }
 
-      if (props.formData.levels) {
-        setLevelsCounter(props.formData.levels.length);
-        for (let i = 0; i < props.formData.levels.length; i++) {
-          setValue(`levels.${i}.name`, props.formData.levels[i].name);
-          setValue(`levels.${i}.xp`, props.formData.levels[i].xp);
-          if (props.formData.levels[i].path) {
-            setSrcPreviewLevels([
-              ...srcPreviewLevels,
-              {
-                index: i,
-                path: props.formData.levels[i].path
-              }
-            ]);
-          }
-        }
+      if (props.formData.levels.length > 0) {
+        setLevelInputs(props.formData.levels);
       }
     }
   }, [props.formData]);
 
-  function generateFormLevelInputs(levels: number) {
-    for (let i = 0; i < levels; i++) {
-      const input = (
-        <div className="form-row" key={`input-level-${i}`}>
-          <div className="form-group col-lg-4">
-            <input
-              type="text"
-              className="form-control form-input"
-              name={`levels[${i}][name]`}
-              placeholder="Nome do nível"
-              {...register(`levels.${i}.name`)}
-            />
-          </div>
-
-          <div className="form-group col-lg-4">
-            <input
-              type="number"
-              min={1}
-              className="form-control form-input"
-              name={`levels[${i}][xp]`}
-              placeholder="XP do nível"
-              {...register(`levels.${i}.xp`)}
-            />
-          </div>
-
-          <div className='form-group col-lg-4 small-preview' id={`preview-level-${i}`} onChange={uploadFile}>
-            <div className="input-file">
-              <input
-                type="file"
-                name={`levels[${i}][file]`}
-                id={`levels[${i}][file]`}
-                accept=".png, .jpg, .jpeg, .svg"
-                {...register(`levels.${i}.file`)}
-              />
-              <label htmlFor={`levels[${i}][file]`} className='ml-1'>
-                <img src="./icons/camera.svg" alt="Adicionar imagem" />
-              </label>
-              <span>Defina uma capa</span>
-            </div>
-            <div className='preview-image'>
-              <img
-                src={srcPreviewLevels.find(level => {
-                  if (level.index === i) {
-                    return level;
-                  }
-                })?.path ?? "#"}
-                style={{display: srcPreviewLevels.find(level => {
-                  if (level.index === i) {
-                    return level;
-                  }
-                })?.path ? "block" : "none"}}
-                id={`preview-level-${i}`}
-                alt="Preview da imagem selecionada"
-              />
-            </div>
-          </div>
-        </div>
-      );
-
-      setLevelInputs([
-        ...levelInputs,
-        input
-      ]);
-    }
-  }
-
-  function generateFormSkillInputs(skills: number) {
-    for (let i = 0; i < skills; i++) {
-      const input = (
-        <div className="form-row" key={`input-skill-${i}`}>
-          <div className="form-group col-lg-4">
-            <input
-              type="text"
-              className="form-control form-input"
-              name={`skills[${i}][name]`}
-              placeholder="Nome da habilidade"
-              {...register(`skills.${i}.name`)}
-            />
-          </div>
-
-          <div className="form-group col-lg-4">
-            <input
-              type="number"
-              min={1}
-              className="form-control form-input"
-              name={`skills[${i}][coins]`}
-              placeholder="Valor da habilidade"
-              {...register(`skills.${i}.coins`)}
-            />
-          </div>
-
-          <div className='form-group col-lg-4 small-preview' onChange={uploadFile}>
-            <div className="input-file">
-              <input
-                type="file"
-                name={`skills[${i}][file]`}
-                id={`skills[${i}][file]`}
-                accept=".png, .jpg, .jpeg, .svg"
-                {...register(`skills.${i}.file`)}
-              />
-              <label htmlFor={`skills[${i}][file]`} className='ml-1'>
-                <img src="./icons/camera.svg" alt="Adicionar imagem" />
-              </label>
-              <span>Defina uma capa</span>
-            </div>
-            <div className='preview-image'>
-              <img
-                src={srcPreviewSkills.find(skill => {
-                  if (skill.index === i) {
-                    return skill;
-                  }
-                })?.path ?? "#"}
-                style={{display: srcPreviewSkills.find(skill => {
-                  if (skill.index === i) {
-                    return skill;
-                  }
-                })?.path ? "block" : "none"}}
-                id={`preview-skill-${i}`}
-                alt="Preview da imagem selecionada"
-              />
-            </div>
-          </div>
-        </div>
-      );
-
-      setSkillInputs([
-        ...skillInputs,
-        input
-      ]);
-    }
-  }
-
   function addLevel() {
-    setLevelsCounter(levelsCounter+1);
+    const input = {
+      xp: null,
+      name: null,
+      path: null,
+    }
+    setLevelInputs([...levelInputs, input])
   }
 
   function addSkill() {
-    setSkillsCounter(skillsCounter+1);
+    const input = {
+      coins: null,
+      name: null,
+      path: null,
+    }
+    setSkillInputs([...skillInputs, input]);
   }
 
   function enableSkillStore(e: React.ChangeEvent<HTMLSelectElement>) {
     if (e.currentTarget.value === "yes") {
       setIsSkillStoreEnabled(true);
-      setSkillsCounter(0);
+      addSkill();
     }
     if (e.currentTarget.value === "no") {
       setIsSkillStoreEnabled(false);
-      setSkillsCounter(0);
+      setSkillInputs([]);
     }
   }
 
@@ -283,9 +121,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   function closeModal() {
     props.onHide();
     setIsSkillStoreEnabled(false);
-    setLevelsCounter(0);
-    setLevelInputs([]);
-    setSkillsCounter(0);
+    setSkillInputs([]);
     setLevelInputs([]);
     reset({
       name: "",
@@ -363,8 +199,6 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           levels: [],
           file: null
         });
-        setSkillsCounter(0);
-        setLevelsCounter(0);
         props.onHide();
         router.push("/turmas");
       });
@@ -496,7 +330,66 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               <h4>Loja de habilidades</h4>
 
               <div id="form-skills">
-                {skillInputs.map(input => input)}
+                {skillInputs.map((input, i) => {
+                  return (
+                    <div className="form-row" key={`input-skill-${i}`}>
+                    <div className="form-group col-lg-4">
+                      <input
+                        type="text"
+                        className="form-control form-input"
+                        name={`skills[${i}][name]`}
+                        placeholder="Nome da habilidade"
+                        {...register(`skills.${i}.name`)}
+                        defaultValue={input.name}
+                      />
+                    </div>
+          
+                    <div className="form-group col-lg-4">
+                      <input
+                        type="number"
+                        min={1}
+                        className="form-control form-input"
+                        name={`skills[${i}][coins]`}
+                        placeholder="Valor da habilidade"
+                        {...register(`skills.${i}.coins`)}
+                        defaultValue={input.coins}
+                      />
+                    </div>
+          
+                    <div className='form-group col-lg-4 small-preview' onChange={uploadFile}>
+                      <div className="input-file">
+                        <input
+                          type="file"
+                          name={`skills[${i}][file]`}
+                          id={`skills[${i}][file]`}
+                          accept=".png, .jpg, .jpeg, .svg"
+                          {...register(`skills.${i}.file`)}
+                        />
+                        <label htmlFor={`skills[${i}][file]`} className='ml-1'>
+                          <img src="./icons/camera.svg" alt="Adicionar imagem" />
+                        </label>
+                        <span>Defina uma capa</span>
+                      </div>
+                      <div className='preview-image'>
+                        <img
+                          src={srcPreviewSkills.find(skill => {
+                            if (skill.index === i) {
+                              return skill;
+                            }
+                          })?.path ?? "#"}
+                          style={{display: srcPreviewSkills.find(skill => {
+                            if (skill.index === i) {
+                              return skill;
+                            }
+                          })?.path ? "block" : "none"}}
+                          id={`preview-skill-${i}`}
+                          alt="Preview da imagem selecionada"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  )
+                })}
               </div>
 
               <button type="button" onClick={addSkill} className={`${styles["button-add-input"]} modal-button`}>
@@ -511,7 +404,66 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           <h4>Definir níveis da turma</h4>
 
           <div id="form-levels">
-            {levelInputs.map(input => input)}
+            {levelInputs.map((input, i) => {
+              return (
+                <div className="form-row" key={`input-level-${i}`}>
+                <div className="form-group col-lg-4">
+                  <input
+                    type="text"
+                    className="form-control form-input"
+                    name={`levels[${i}][name]`}
+                    placeholder="Nome do nível"
+                    {...register(`levels.${i}.name`)}
+                    defaultValue={input.name}
+                  />
+                </div>
+
+                <div className="form-group col-lg-4">
+                  <input
+                    type="number"
+                    min={1}
+                    className="form-control form-input"
+                    name={`levels[${i}][xp]`}
+                    placeholder="XP do nível"
+                    {...register(`levels.${i}.xp`)}
+                    defaultValue={input.xp}
+                  />
+                </div>
+
+                <div className='form-group col-lg-4 small-preview' id={`preview-level-${i}`} onChange={uploadFile}>
+                  <div className="input-file">
+                    <input
+                      type="file"
+                      name={`levels[${i}][file]`}
+                      id={`levels[${i}][file]`}
+                      accept=".png, .jpg, .jpeg, .svg"
+                      {...register(`levels.${i}.file`)}
+                    />
+                    <label htmlFor={`levels[${i}][file]`} className='ml-1'>
+                      <img src="./icons/camera.svg" alt="Adicionar imagem" />
+                    </label>
+                    <span>Defina uma capa</span>
+                  </div>
+                  <div className='preview-image'>
+                    <img
+                      src={srcPreviewLevels.find(level => {
+                        if (level.index === i) {
+                          return level;
+                        }
+                      })?.path ?? "#"}
+                      style={{display: srcPreviewLevels.find(level => {
+                        if (level.index === i) {
+                          return level;
+                        }
+                      })?.path ? "block" : "none"}}
+                      id={`preview-level-${i}`}
+                      alt="Preview da imagem selecionada"
+                    />
+                  </div>
+                </div>
+              </div>
+              )
+            })}
           </div>
 
           <button type="button" onClick={addLevel} className={`${styles["button-add-input"]} modal-button`}>

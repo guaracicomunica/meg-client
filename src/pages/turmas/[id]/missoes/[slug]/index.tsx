@@ -7,7 +7,6 @@ import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
-
 import AttachmentFile from "../../../../../components/AttachmentFile";
 import AttachmentLink from "../../../../../components/AttachmentLink";
 import CommentList from "../../../../../components/CommentList";
@@ -17,7 +16,8 @@ import { AuthContext } from "../../../../../contexts/AuthContext";
 import { RoleUser } from "../../../../../enums/enumRoleUser";
 import { api } from "../../../../../services/api";
 import { getAPIClient } from "../../../../../services/apiClient";
-import { ActivityType, CommentType } from "../../../../../types/Post";
+import { ActivityType, CommentType, UserActivity } from "../../../../../types/Post";
+import { User } from "../../../../../types/User";
 import { genericMessageError, options } from "../../../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
@@ -28,10 +28,6 @@ type CommentForm = {
   comment_id: number;
 }
 
-type UserActivity = {
-  delivered: boolean;
-  path: string;
-}
 
 export default function Atividade(props: ActivityType) {
   const router = useRouter();
@@ -177,6 +173,54 @@ export default function Atividade(props: ActivityType) {
     }
   }
 
+  async function withDrawActivity(){
+
+    const request = generateFormData();
+
+    try {
+      const { ['meg.token']: token } = parseCookies();
+      
+      api.defaults.headers['Authorization'] = `Bearer ${token}`;
+
+      await api.post('activities/cancel', request).then(function (success) { 
+        router.push(`/turmas/${router.query.id}/missoes/${props.id}`, undefined, {scroll: false});
+        toast.success("Entrega da atividade foi cancelada", options);
+        console.log(success)
+      });
+    } catch (error) {
+      if (!error.response) {
+        // network error
+        return toast.error(genericMessageError, options);
+      }
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], options);
+          });
+
+        case 500: 
+          toast.error(genericMessageError, options);
+          break;
+
+        default:
+          toast.error(genericMessageError, options);
+          break;
+      }
+    }
+
+  }
+
   return (
     <>
       <Head>
@@ -291,10 +335,10 @@ export default function Atividade(props: ActivityType) {
             <div className={`card-style p-4 ${styles["card-send-activity"]}`}>
               <div className={`pb-3 border-bottom ${styles["card-send-activity-header"]}`}>
                 <h5>Envie sua missão</h5>
-                {props.attachments.length === 0 ? (
-                  <small className={styles.pending}>Pendente</small>
+                {props?.userActivity?.delivered_at != null ? (
+                  <small className={styles.delivered}>Entregue</small> 
                 ) : (
-                  <small className={styles.delivered}>Entregue</small>
+                  <small className={styles.pending}>Pendente</small>
                 )}
               </div>
               <div className={`mt-4 ${styles.attachments}`}>
@@ -320,10 +364,21 @@ export default function Atividade(props: ActivityType) {
                   <img src="/icons/file-white.svg" alt="Arquivo" />
                   Anexar arquivo
                 </button>
-                <button
+                { props?.userActivity?.delivered_at == null ? 
+                (
+                  <button
                   onClick={completeActivity}
                   className="button button-gray-outline text-uppercase mt-2"
-                >Marcar como concluída</button>
+                >Entregar atividade</button>
+                ) :
+                (
+                  <button
+                  onClick={withDrawActivity}
+                  className="button button-gray-outline text-uppercase mt-2"
+                >Cancelar entrega da atividade</button>
+                )
+                }
+                
               </div>
             </div>
 
@@ -388,9 +443,14 @@ export default function Atividade(props: ActivityType) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
   const apiClient = getAPIClient(ctx);
 
   const { ['meg.token']: token } = parseCookies(ctx);
+
+  const { ['meg.user']: user } = parseCookies(ctx);
+
+  const userFormatted: User = JSON.parse(user);
 
   if (!token) {
     return {
@@ -401,12 +461,21 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   }
   else {
-    try {
+    try { 
+
+
       const {data: activity} = await apiClient.get<any>(`activities/${ctx.params.slug}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
+      //console.log(activity)
+
+     /*   let thisUserActivity: UserActivity;
+      if(activity?.assignment) {
+        thisUserActivity.delivered = activity?.assignment?.delivered_at != null ? true : false;
+        thisUserActivity.deliveried_at = activity?.assignment?.delivered_at;
+      } */ 
 
       const formattedActivity: ActivityType = {  
         id: activity.id,
@@ -421,13 +490,26 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         postId: activity.postId,
         disabled: activity.disabled,
         attachments: activity.attachments,
-        totalAssignments: activity.totalAssignments,
-        totalDeliveredActivities: activity.totalDeliveredActivities,
+        totalAssignments: activity.totalAssignments ?? 0,
+        totalDeliveredActivities: activity.totalDeliveredActivities ?? 0,
+        userActivity: activity.assignment ?? null,
       }
-         
+
+   /*    if(activity?.assignment) {
+        //formattedActivity.userActivity.delivered = activity?.assignment?.delivered_at != null ? true : false;
+        //formattedActivity.userActivity.deliveried_at = activity?.assignment?.delivered_at;
+      }else{
+        //formattedActivity.userActivity = null;
+      } */
+      
+     // console.log(formattedActivity)
+
       return { props: formattedActivity }
+
     } catch(error) {
-      switch (error.response.status) {
+      console.log(error)
+
+      switch (error.response?.status ?? 0) {
         case 401:
           return {
             redirect: {
@@ -454,10 +536,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         
         default:
           return {
-            redirect: {
+             redirect: {
               destination: '/500',
               permanent: false,
-            }
+            } 
           }
       } 
     }

@@ -219,7 +219,7 @@ export default function Corrigir(props: CorrectActivityProps) {
                   return (
                     <div key={student.id} className={`${styles["input-grade"]} mb-3`}>
                       <div className={`py-2 px-3 ${styles["student-info"]}`}>
-                        <img src={student.avatar ?? '/icons/user-gray.svg'} alt="Avatar do aluno" />
+                        <img src={student.avatar ?? '/icons/user.svg'} alt="Avatar do aluno" />
                         <h6>{student.name}</h6>
                       </div>
                       <input

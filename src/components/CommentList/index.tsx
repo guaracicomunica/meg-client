@@ -109,7 +109,7 @@ export default function CommentList(props: CommentListprops) {
 
         <div className={`${styles["add-comment"]} w-100`}>
             <img
-              src={user?.avatar_path ?? "/icons/user-gray.svg"}
+              src={user?.avatar_path ?? "/icons/user.svg"}
               alt="Minha foto do perfil"
               className={styles["img-profile"]}
             />

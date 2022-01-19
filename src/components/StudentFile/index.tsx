@@ -31,7 +31,7 @@ export default function StudentFile(props: StudentFileProps) {
   return (
     <div className={`py-2 px-3 ${styles["card-file"]}`}>
       <div className={styles["info-user"]}>
-        <img src={student.avatar ?? "/icons/user-gray.svg"} alt="Avatar do aluno" />
+        <img src={student.avatar ?? "/icons/user.svg"} alt="Avatar do aluno" />
         <h5>{student.name}</h5>
       </div>
       {student.files.length > 0 ? (

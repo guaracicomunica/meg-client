@@ -111,7 +111,7 @@ export default function CardUser() {
             </label>
           </div>
         </form>
-        <img src={user?.avatar_path ?? "/icons/user-gray.svg"} alt="Minha foto de perfil" />
+        <img src={user?.avatar_path ?? "/icons/user.svg"} alt="Minha foto de perfil" />
       </div>
 
       <div className={`${styles["user-info"]} my-4 pb-2 border-bottom`}>

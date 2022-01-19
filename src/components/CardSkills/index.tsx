@@ -9,12 +9,12 @@ export default function CardSkills() {
       </div>
 
       <div className={`p-3 mt-3 ${styles.skill}`}>
-        <img src="/icons/user-gray.svg" alt="Avatar do estudante" />
+        <img src="/icons/user.svg" alt="Avatar do estudante" />
         <div className={`${styles["skill-name"]} px-3`}>Nome da habilidade aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
         <button className='px-3 border-left'>Reivindicar</button>
       </div>
       <div className={`p-3 mt-3 ${styles.skill}`}>
-        <img src="/icons/user-gray.svg" alt="Avatar do estudante" />
+        <img src="/icons/user.svg" alt="Avatar do estudante" />
         <div className={`${styles["skill-name"]} px-3`}>Nome da habilidade</div>
         <button className='px-3 border-left'>Reivindicar</button>
       </div>

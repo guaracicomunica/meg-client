@@ -9,7 +9,7 @@ type CardTeacherProps = {
 export default function CardTeacher(props: CardTeacherProps) {
   return (
     <div className={`card-style p-4 ${styles["card-teacher"]}`}>
-      <img src={props.teacher.avatar ?? "/icons/user-gray.svg"} alt="Imagem do professor" />
+      <img src={props.teacher.avatar ?? "/icons/user.svg"} alt="Imagem do professor" />
       <h5>{props.teacher.name}</h5>
     </div>
   );

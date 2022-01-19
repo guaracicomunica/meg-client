@@ -59,7 +59,7 @@ export type Skill = {
 export type SkillForm = {
   name: string;
   coins: number;
-  file?: string;
+  path?: string;
 }
 
 export type Level = {

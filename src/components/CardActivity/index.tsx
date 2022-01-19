@@ -44,7 +44,7 @@ export default function CardActivity(props: CardActivityProps) {
               <p>{activity.body}</p>
               <div className="d-flex">
                 {activity.attachments.length > 0 && activity.attachments.map((attachment, index) => {
-                  if (attachment.is_external_link === true) {
+                  if (attachment.is_external_link === 1) {
                     return <AttachmentLink key={index} index={index+1} path={attachment.path} />
                   }
                   else {

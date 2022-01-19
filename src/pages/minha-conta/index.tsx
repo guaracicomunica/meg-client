@@ -14,8 +14,6 @@ import { getAPIClient } from "../../services/apiClient";
 import { SkillNotificationType } from "../../types/Notification";
 import { QueryProps } from "../../types/Query";
 
-import styles from './styles.module.css';
-
 type MyAccountProps = {
   notifications: SkillNotificationType[];
   queryProps: QueryProps;

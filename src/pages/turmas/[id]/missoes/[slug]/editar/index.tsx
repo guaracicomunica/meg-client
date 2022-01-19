@@ -243,7 +243,8 @@ export default function Editar(props: EditPageProps) {
         }
       })
       .then(function (success) {
-        router.push(`/turmas/${router.query.id}`);
+        toast.success("Missão editada com sucesso", options);
+        router.push(`/turmas/${router.query.id}/missoes/${router.query.slug}`, undefined, { scroll: false });
       });
     }
     catch(error) {

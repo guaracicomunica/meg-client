@@ -1,0 +1,96 @@
+.form-layout {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    align-items: flex-start;
+  }
+  
+  @media (max-width: 1200px) {
+    .form-layout {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  
+  .form-layout h1 {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--gray-title);
+  }
+  
+  .form-label{
+    color: var(--gray-title);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  
+  .form-label + input[type="number"] {
+    font-weight: 400 !important;
+  }
+  
+  .radio-status input[type="radio"] {
+    visibility: hidden;
+    width: 0;
+  }
+  
+  .radio-status label {
+    background-color: #F8F9FA;
+    color: var(--gray-form);
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border: 2px solid var(--gray-form);
+    border-radius: 20px;
+    cursor: pointer;
+    left: 0;
+    top: 0;
+    height: max-content;
+    width: max-content;
+    position: relative;
+  }
+  
+  .radio-status input[type="radio"]:checked + label {
+    background-color: #B7EFC5;
+    border-color: var(--green);
+    color: var(--green);
+  }
+  
+  .attachments-buttons {
+    display: flex;
+  }
+  
+  .attachments-buttons button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
+  
+  .attachments {
+    margin-top: 2rem;
+  }
+  
+  .attachments h5 {
+    color: var(--gray-title);
+    margin-bottom: 1rem;
+  }
+  
+  .attachments .link {
+    display: flex;
+    align-items: center;
+  }
+  
+  .attachments .link img {
+    height: 1rem;
+    margin-right: 0.5rem;
+  }
+  
+  .attachments .link a, .attachments .link span {
+    color: var(--blue-light);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  
+  .alert {
+    color: var(--red);
+    max-width: 25rem;
+    text-align: center;
+  }

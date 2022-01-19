@@ -236,7 +236,7 @@ export default function Atividade(props: ActivityType) {
 
           <div className="d-flex w-100">
             {props.attachments.length > 0 && props.attachments.map((attachment, index) => {
-              if (attachment.is_external_link === true) {
+              if (attachment.is_external_link === 1) {
                 return <AttachmentLink key={index} index={index+1} path={attachment.path} />
               }
               else {

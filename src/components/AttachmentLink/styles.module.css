@@ -1,5 +1,5 @@
 .attachment {
-  border: 2px solid var(--gray-form);
+  border: 2px solid var(--gray-title);
   border-radius: 10px;
   display: flex;
   align-items: center;

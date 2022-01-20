@@ -1,4 +1,4 @@
-import { SkillNotificationType } from '../../types/Notification';
+import { SkillNotificationType } from '../../types/StoreSkill';
 
 import styles from './styles.module.css';
 

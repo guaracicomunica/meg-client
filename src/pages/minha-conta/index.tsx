@@ -11,15 +11,9 @@ import CardSkills from "../../components/CardSkills";
 import SkillStore from "../../components/SkillStore";
 import { AuthContext } from "../../contexts/AuthContext"
 import { getAPIClient } from "../../services/apiClient";
-import { SkillNotificationType } from "../../types/Notification";
-import { QueryProps } from "../../types/Query";
+import { SkillNotificationType, SkillClaimedType } from "../../types/StoreSkill";
 
-type MyAccountProps = {
-  notifications: SkillNotificationType[];
-  queryProps: QueryProps;
-}
-
-export default function MinhaConta(props: MyAccountProps) {
+export default function MinhaConta(props) {
   const { user } = useContext(AuthContext);
 
   return (
@@ -33,7 +27,7 @@ export default function MinhaConta(props: MyAccountProps) {
           {user?.role === RoleUser.teacher ? (
             <SkillNotification notifications={props.notifications} />
           ) : (
-            <CardSkills />
+            <CardSkills skills={props.skills} />
           )}
 
           <CardUser />
@@ -52,6 +46,7 @@ export default function MinhaConta(props: MyAccountProps) {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const apiClient = getAPIClient(ctx);
   const { ['meg.token']: token } = parseCookies(ctx);
+  const { ['meg.user']: userData } = parseCookies(ctx);
 
   if (!token) {
     return {
@@ -61,35 +56,60 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   } else {
+    const user = JSON.parse(userData);
+
     try {
-      const response = await apiClient.get('store/skills/teacher/notifications', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        params: { 
-          per_page: 2
-        }
-      });
+      if (user?.role === RoleUser.teacher) {
+        const response = await apiClient.get('store/skills/teacher/notifications', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          params: { 
+            per_page: 2
+          }
+        });
 
-      const notifications : SkillNotificationType[] = response.data.data.map(notification => {
+        const notifications: SkillNotificationType[] = response.data.data.map(notification => {
+          return {
+            id: notification.id,
+            skill: notification.skill,
+            classroom: notification.classroom,
+            claimer: notification.claimer,
+            createdAt: notification.created_at,
+          }
+        });
+
+        const queryProps = {
+          currentPage: response.data.meta.current_page,
+          totalPages: response.data.meta.last_page,
+        }
+
         return {
-          id: notification.id,
-          skill: notification.skill,
-          classroom: notification.classroom,
-          claimer: notification.claimer,
-          createdAt: notification.created_at,
+          props: {
+            notifications,
+            queryProps
+          }
         }
-      });
-
-      const queryProps = {
-        currentPage: response.data.meta.current_page,
-        totalPages: response.data.meta.last_page,
       }
 
-      return {
-        props: {
-          notifications,
-          queryProps
+      if (user?.role === RoleUser.student) {
+        const response = await apiClient.get('store/skills/student', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        const skills: SkillClaimedType[] = response.data.data.map(skill => {
+          return {
+            id: skill.id,
+            name: skill.name,
+          }
+        });
+
+        return {
+          props: {
+            skills
+          }
         }
       }
     } catch(error) {

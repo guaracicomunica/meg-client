@@ -14,7 +14,7 @@ export default function CardSkills(props: CardSkillsProps) {
         <h4>Suas habilidades especiais</h4>
       </div>
 
-      {props.skills.length > 0 ? props.skills.map(skill => {
+      {props.skills?.length > 0 ? props.skills?.map(skill => {
         return (
           <div key={skill.id} className={`p-3 mt-3 ${styles.skill}`}>
             <img src="/icons/skill.svg" alt="Avatar da habilidade" />

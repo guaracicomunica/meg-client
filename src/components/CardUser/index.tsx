@@ -51,7 +51,8 @@ export default function CardUser() {
         const userString = JSON.stringify(newUserObject);
         destroyCookie(null, 'meg.user');
         setCookie(null, 'meg.user', userString, {
-          maxAge: 60 * 60 * 24
+          maxAge: 60 * 60 * 24,
+          path: '/'
         });
         router.push("/minha-conta", undefined, { scroll: false });
       });

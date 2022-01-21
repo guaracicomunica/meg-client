@@ -60,49 +60,17 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  async function signUp(data: SignUpData, makeLogin: boolean = false) {
-    const response = await api.post<DataAuth>('/auth/register', {
+  async function signUp(data: SignUpData) {
+    await api.post<DataAuth>('/auth/register', {
       name: data.name,
       email: data.email,
       password: data.password,
       password_confirmation: data.password_confirmation,
       role: data.role
+    }).then(function (success) {
+      toast.success('Conta criada com sucesso!', options); 
+      toast.success('Foi enviado um e-mail de confirmação. Acesse sua caixa de entrada e confirme-o para ter acesso.', options); 
     });
-    
-    if(makeLogin == true)
-    {
-
-      setCookie(undefined, 'meg.token', response.data.access_token, {
-        maxAge: 60 * 60 * 24, // 1 day
-      });
-
-      const userString = JSON.stringify(response.data.user);
-  
-      api.defaults.headers['Authorization'] = `Bearer ${response.data.access_token}`;
-  
-      setUser(response.data.user);
-
-      setUser({
-        id: response.data.user.id,
-        name: response.data.user.name,
-        email: response.data.user.email,
-        role: response.data.user.role,
-        avatar_path: null
-      });
-      
-      setCookie(null, 'meg.user', userString, {
-        maxAge: 60 * 60 * 24, // 1 day
-      });
-      
-      setIsAuthenticated(true);
-    }
-
-    toast.success('Conta criada com sucesso!', options); 
-
-    toast.success('Foi enviado um e-mail de confirmação. Acesse sua caixa de entrada e confirme-o para ter acesso.', options); 
-
-    if(makeLogin == true) { Router.push('/turmas'); }
-
   }
 
   async function signIn({ email, password }: SignInData) {
@@ -113,6 +81,7 @@ export function AuthProvider({ children }) {
 
     setCookie(undefined, 'meg.token', response.data.access_token, {
       maxAge: 60 * 60 * 24, // 1 day
+      path: '/'
     });
     const userString = JSON.stringify(response.data.user);
 
@@ -128,6 +97,7 @@ export function AuthProvider({ children }) {
     
     setCookie(null, 'meg.user', userString, {
       maxAge: 60 * 60 * 24, // 1 day
+      path: '/'
     });
     
     setIsAuthenticated(true);
@@ -142,12 +112,16 @@ export function AuthProvider({ children }) {
       if(token) {
         api.defaults.headers['Authorization'] = `Bearer ${token}`;
         await api.post('auth/logout')
-        .then(function (success) {
-          Router.push('/login');
-          destroyCookie(null, 'meg.token');
-          destroyCookie(null, 'meg.user');
+        .then(function (success) { 
+          destroyCookie(null, 'meg.token', {
+            path: "/"
+          });
+          destroyCookie(null, 'meg.user', {
+            path: "/"
+          });
           setUser(null);
           setIsAuthenticated(false);
+          Router.push('/login');
         });
       }
     } catch(error) {

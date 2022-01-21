@@ -361,28 +361,26 @@ export default function Atividade(props: ActivityType) {
                 )}
               </div>
               <div className={styles["send-buttons"]}>
-                <button
-                  onClick={() => setShowModalAddFile(true)}
-                  className={`button button-blue text-uppercase mt-2 ${styles["send-button"]}`}
-                >
-                  <img src="/icons/file-white.svg" alt="Arquivo" />
-                  Anexar arquivo
-                </button>
-                { props?.userActivity?.delivered_at == null ? 
-                (
+                {props?.userActivity?.delivered_at == null ? (
+                  <>
+                    <button
+                      onClick={() => setShowModalAddFile(true)}
+                      className={`button button-blue text-uppercase mt-2 ${styles["send-button"]}`}
+                    >
+                      <img src="/icons/file-white.svg" alt="Arquivo" />
+                      Anexar arquivo
+                    </button>
+                    <button
+                      onClick={completeActivity}
+                      className="button button-gray-outline text-uppercase mt-2"
+                    >Entregar atividade</button>
+                  </>
+                ) : (
                   <button
-                  onClick={completeActivity}
-                  className="button button-gray-outline text-uppercase mt-2"
-                >Entregar atividade</button>
-                ) :
-                (
-                  <button
-                  onClick={withDrawActivity}
-                  className="button button-gray-outline text-uppercase mt-2"
-                >Cancelar entrega da atividade</button>
-                )
-                }
-                
+                    onClick={withDrawActivity}
+                    className="button button-gray-outline text-uppercase mt-2"
+                  >Cancelar entrega da atividade</button>
+                )}
               </div>
             </div>
 

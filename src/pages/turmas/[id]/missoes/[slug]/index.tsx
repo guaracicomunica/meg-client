@@ -28,7 +28,6 @@ type CommentForm = {
   comment_id: number;
 }
 
-
 export default function Atividade(props: ActivityType) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
@@ -45,6 +44,16 @@ export default function Atividade(props: ActivityType) {
       ...files,
       data.file[0]
     ]);
+  }
+
+  function deleteFile(fileIndex: number) {
+    const newFiles = files.filter((file, index) => {
+      if (index !== fileIndex) {
+        return file;
+      }
+    });
+
+    setFiles(newFiles);
   }
 
   const onSubmit = async (data: CommentForm) => handleCreateComment(data);
@@ -352,7 +361,10 @@ export default function Atividade(props: ActivityType) {
                     return (
                       <div className={styles["file"]} key={index}>
                         <img src="/icons/file.svg" alt="Ícone" />
-                        <span>{file.name}</span>  
+                        <span>{file.name}</span> 
+                        <button type="button" onClick={() => deleteFile(index)} className={styles["delete-attachment"]}>
+                          <img src="/icons/x.svg" alt="Excluir" />
+                        </button> 
                       </div>
                     )
                   })

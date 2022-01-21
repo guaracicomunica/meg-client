@@ -37,11 +37,19 @@ export default function ModalAddFile(props: ModalAddFileType) {
     }
   }
 
+  function closeModal() {
+    props.onHide();
+    reset({
+      file: null
+    });
+    setFileNameSelected("");
+  }
+
   return (
     <Modal
       id="modal-add-file"
       show={props.show}
-      onHide={props.onHide}
+      onHide={closeModal}
       aria-labelledby="modal-title"
       centered
       className="modal-style"
@@ -76,7 +84,7 @@ export default function ModalAddFile(props: ModalAddFileType) {
         ) : ""}
       </Modal.Body>
       <Modal.Footer className='d-flex justify-content-end p-4 border-top-0'>
-        <button form="add-form" type="submit" className="modal-button">Adicionar</button>
+        <button form="add-form" type="submit" className="modal-button">Anexar</button>
       </Modal.Footer>
     </Modal>
   );

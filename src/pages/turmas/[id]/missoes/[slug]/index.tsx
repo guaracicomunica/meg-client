@@ -4,7 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import AttachmentFile from "../../../../../components/AttachmentFile";
@@ -354,25 +354,29 @@ export default function Atividade(props: ActivityType) {
                   <small className={styles.pending}>Pendente</small>
                 )}
               </div>
-              <div className={`mt-4 ${styles.attachments}`}>
-                <h6 className="mb-3">Arquivos a serem enviados:</h6>
-                {files.length > 0 ? (
-                  files.map((file, index) => {
-                    return (
-                      <div className={styles["file"]} key={index}>
-                        <img src="/icons/file.svg" alt="Ícone" />
-                        <span>{file.name}</span> 
-                        <button type="button" onClick={() => deleteFile(index)} className={styles["delete-attachment"]}>
-                          <img src="/icons/x.svg" alt="Excluir" />
-                        </button> 
-                      </div>
-                    )
-                  })
-                ) : (
-                  <p>Nenhum arquivo anexado.</p>
-                )}
-              </div>
-              <div className={styles["send-buttons"]}>
+              {props?.userActivity?.delivered_at == null && (
+                <div className={`mt-4 ${styles.attachments}`}>
+                  <h6 className="mb-3">Arquivos a serem enviados:</h6>
+                  {files.length > 0 ? (
+                    files.map((file, index) => {
+                      return (
+                        <div className={styles["file"]} key={index}>
+                          <img src="/icons/file.svg" alt="Ícone" />
+                          <span>{file.name}</span>
+                          {props?.userActivity?.delivered_at == null && (
+                            <button type="button" onClick={() => deleteFile(index)} className={styles["delete-attachment"]}>
+                              <img src="/icons/x.svg" alt="Excluir" />
+                            </button> 
+                          )}
+                        </div>
+                      )
+                    })
+                  ) : (
+                    <p>Nenhum arquivo anexado.</p>
+                  )}
+                </div>
+              )}
+              <div className={`${styles["send-buttons"]} mt-3`}>
                 {props?.userActivity?.delivered_at == null ? (
                   <>
                     <button
@@ -457,14 +461,8 @@ export default function Atividade(props: ActivityType) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
   const apiClient = getAPIClient(ctx);
-
   const { ['meg.token']: token } = parseCookies(ctx);
-
-  const { ['meg.user']: user } = parseCookies(ctx);
-
-  const userFormatted: User = JSON.parse(user);
 
   if (!token) {
     return {
@@ -476,20 +474,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
   else {
     try { 
-
-
       const {data: activity} = await apiClient.get<any>(`activities/${ctx.params.slug}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      //console.log(activity)
-
-     /*   let thisUserActivity: UserActivity;
-      if(activity?.assignment) {
-        thisUserActivity.delivered = activity?.assignment?.delivered_at != null ? true : false;
-        thisUserActivity.deliveried_at = activity?.assignment?.delivered_at;
-      } */ 
 
       const formattedActivity: ActivityType = {  
         id: activity.id,
@@ -509,20 +498,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         userActivity: activity.assignment ?? null,
       }
 
-   /*    if(activity?.assignment) {
-        //formattedActivity.userActivity.delivered = activity?.assignment?.delivered_at != null ? true : false;
-        //formattedActivity.userActivity.deliveried_at = activity?.assignment?.delivered_at;
-      }else{
-        //formattedActivity.userActivity = null;
-      } */
-      
-     // console.log(formattedActivity)
-
       return { props: formattedActivity }
 
     } catch(error) {
-      console.log(error)
-
       switch (error.response?.status ?? 0) {
         case 401:
           return {

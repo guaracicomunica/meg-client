@@ -34,9 +34,11 @@ export default function Atividades(props: ActivitiesPageProps) {
 
   const [showModalAddTopic, setShowModalAddTopic] = useState(false);
   const [activitiesList, setActivitiesList] = useState<ActivityType[]>([]);
+  const [filteredActivitiesList, setFilteredActivitiesList] = useState<ActivityType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (props) {
@@ -48,7 +50,7 @@ export default function Atividades(props: ActivitiesPageProps) {
     if (currentPage === totalPages) {
       setHasMore(false);
     }
-  }, [activitiesList, totalPages]);
+  }, [activitiesList]);
 
   async function getMoreActivity(topicId?: number) {
     try {
@@ -58,8 +60,7 @@ export default function Atividades(props: ActivitiesPageProps) {
         },
         params: {
           page: currentPage + 1,
-          per_page: 10,
-          topic_id: topicId
+          per_page: 10
         }
       });
 
@@ -78,6 +79,7 @@ export default function Atividades(props: ActivitiesPageProps) {
       });
 
       setCurrentPage(response.data.current_page);
+      setTotalPages(response.data.last_page);
       setActivitiesList([...activitiesList, ...formattedActivities]);
     }
     catch (error) {
@@ -89,33 +91,34 @@ export default function Atividades(props: ActivitiesPageProps) {
 
   async function filterActivities(activeKey: number | string) {
     try {
-      const response = await api.get('activities', {
+      setLoading(true);
+
+      await api.get('activities', {
         headers: {
           'Authorization': `Bearer ${token}`
         },
         params: {
-          per_page: 10,
+          per_page: 100,
           topic_id: activeKey !== "all" ? activeKey : ""
         }
-      });
+      }).then(function (success) {
+        const formattedActivities: ActivityType[] = success.data.data.map(activity => {
+          return {
+            id: activity.postId,
+            name: activity.name,
+            body: activity.body,
+            deadline: activity?.deadline,
+            points: activity.points,
+            xp: activity.xp,
+            coins: activity.coins,
+            comments: activity.comments,
+            topicId: activity.topicId
+          }
+        });
 
-      const formattedActivities: ActivityType[] = response.data.data.map(activity => {
-        return {
-          id: activity.postId,
-          name: activity.name,
-          body: activity.body,
-          deadline: activity?.deadline,
-          points: activity.points,
-          xp: activity.xp,
-          coins: activity.coins,
-          comments: activity.comments,
-          topicId: activity.topicId
-         }
+        setFilteredActivitiesList(formattedActivities);
+        setLoading(false);
       });
-
-      setActivitiesList(formattedActivities);
-      setCurrentPage(response.data.current_page);
-      setTotalPages(response.data.last_page);
     }
     catch (error) {
       if (error?.response?.status === 401) {
@@ -181,21 +184,17 @@ export default function Atividades(props: ActivitiesPageProps) {
                   {props.topics.map(topic => {
                     return (
                       <Tab.Pane eventKey={topic.id} key={topic.id}>
-                        <InfiniteScroll
-                          style={{overflow: 'hidden'}}
-                          dataLength={activitiesList.length}
-                          next={() => getMoreActivity(topic.id)}
-                          hasMore={hasMore}
-                          loader={<div className={styles["loading-container"]}><Spinner animation="border" /></div>}
-                        >
-                          {activitiesList.length > 0 ? (
-                            activitiesList.map(activity => {
+                        {loading ? (
+                          <div className={styles["loading-container"]}><Spinner animation="border" /></div>
+                        ) : (
+                          filteredActivitiesList.length > 0 ? (
+                            filteredActivitiesList.map(activity => {
                               return <CardActivity key={activity.id} activity={activity} />
                             })
                           ) : (
                             <p>Não há missões cadastradas neste tópico.</p>
-                          )}
-                        </InfiniteScroll>
+                          )
+                        )}
                       </Tab.Pane>
                     )
                   })}
@@ -230,9 +229,7 @@ export default function Atividades(props: ActivitiesPageProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
   const apiClient = getAPIClient(ctx);
-
   const { ['meg.token']: token } = parseCookies(ctx);
 
   if (!token) {
@@ -253,9 +250,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           per_page: 10
         }
       });
-
-      
-      console.log(response.data.data);
       
       const formattedActivities: ActivityType[] = response.data.data.map(activity => {
         return {
@@ -276,8 +270,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         currentPage: response.data.meta.current_page,
         totalPages: response.data.meta.last_page,
       }
-
-      console.log(queryProps)
 
       const topicsOfThisClassroom = await apiClient.get("topics", {
         headers: {
@@ -300,7 +292,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
       }
     } catch(error) {
-      console.log(error);
       switch (error?.response?.status) {
         case 401:
           return {

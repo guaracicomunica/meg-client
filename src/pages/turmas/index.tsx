@@ -196,7 +196,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           per_page: 10
         }
       });
-
+      
       const classes = response.data.data.map(classroom => {
         return {
           id: classroom.id,

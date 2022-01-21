@@ -51,6 +51,7 @@ export type DataFormTopic =
 }
 
 export type Skill = {
+  id?: number;
   name: string;
   coins: number;
   file: File;
@@ -63,12 +64,14 @@ export type SkillForm = {
 }
 
 export type Level = {
+  id?: number;
   name: string;
   xp: number;
   file: File;
 }
 
 export type LevelForm = {
+  id?: number;
   name: string;
   xp: number;
   path?: string;

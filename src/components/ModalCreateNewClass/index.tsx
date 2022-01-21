@@ -149,6 +149,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     if (data.levels.length > 0) {
       if (data.levels[0].name != undefined && data.levels[0].xp != undefined && data.levels[0].file != undefined) {
         for (let i = 0; i < data.levels.length; i++) {
+          if(data.levels[i].id != undefined) form.append(`levels[${i}][id]`, data.levels[i].id.toString());
           form.append(`levels[${i}][name]`, data.levels[i].name);
           form.append(`levels[${i}][xp]`, data.levels[i].xp.toString());
           if (data.levels[i].file[0] != undefined) {
@@ -158,9 +159,14 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       }
     }
 
-    if(data.skills) {
-      if (data.skills[0].name != undefined && data.skills[0].coins != undefined && data.skills[0].file != undefined) {
+    if(data.skills.length > 0) {
+      if (
+        data.skills[0].name != undefined 
+        && data.skills[0].coins != undefined 
+        && data.skills[0].file != undefined) 
+        {
         for (let i = 0; i < data.skills.length; i++) {
+          if(data.skills[i].id != undefined) form.append(`skills[${i}][id]`, data.skills[i].id.toString());
           form.append(`skills[${i}][name]`, data.skills[i].name);
           form.append(`skills[${i}][coins]`, data.skills[i].coins.toString());
           if (data.skills[i].file[0] != undefined) {
@@ -333,6 +339,14 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                   return (
                     <div className="form-row" key={`input-skill-${i}`}>
                     <div className="form-group col-lg-4">
+
+                      <input 
+                      type="hidden" 
+                      name={`skills[${i}][id]`} 
+                      defaultValue={input.id} 
+                      {...register(`skills.${i}.id`)}
+                      />
+
                       <input
                         type="text"
                         className="form-control form-input"
@@ -406,6 +420,14 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             {levelInputs.map((input, i) => {
               return (
                 <div className="form-row" key={`input-level-${i}`}>
+
+                  <input 
+                  type="hidden" 
+                  name={`levels[${i}][id]`} 
+                  defaultValue={input.id} 
+                  {...register(`levels.${i}.id`)}
+                  />
+
                 <div className="form-group col-lg-4">
                   <input
                     type="text"

@@ -1,12 +1,10 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
 import ModalSeeClassCode from '../ModalSeeClassCode';
 import ModalCreateNewClass from '../ModalCreateNewClass';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { ClassStatus } from '../../enums/enumClassStatus';
 import { ClassCard } from '../../types/Class';
-
 import styles from './styles.module.css';
 
 export default function CardClass(props: ClassCard) {

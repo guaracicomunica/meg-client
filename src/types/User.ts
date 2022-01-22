@@ -5,3 +5,8 @@ export type User = {
   role: number;
   avatar_path: string | null;
 }
+
+export type UserStatusGamification = {
+  user_id?: number;
+  coins: number;
+}

@@ -16,7 +16,11 @@ type DataForm = {
   avatar_path: FileList;
 }
 
-export default function CardUser() {
+type CardUserInfos = {
+  coins?: number;
+}
+
+export default function CardUser(props: CardUserInfos) {
   const router = useRouter();
   const { user, logoff, setUser } = useContext(AuthContext);
   const { register, handleSubmit, reset } = useForm({defaultValues: {
@@ -118,10 +122,10 @@ export default function CardUser() {
       <div className={`${styles["user-info"]} my-4 pb-2 border-bottom`}>
         <h4>{user?.name}</h4>
         <p><strong className='mr-2'>Email:</strong>{user?.email}</p>
-        {user?.role === RoleUser.student && (
+        {user?.role === RoleUser.student && props.coins != undefined && (
           <div className={`${styles.coins} mb-2`}>
             <img src="/icons/coins.svg" alt="Moedas" />
-            <span>22 moedas</span>
+            <span> {props.coins} moedas</span>
           </div>
         )}
       </div>

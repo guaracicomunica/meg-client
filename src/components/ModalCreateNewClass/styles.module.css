@@ -5,3 +5,14 @@
   display: flex;
   align-items: center;
 }
+
+.delete-attachment {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.delete-attachment img {
+  height: 1rem;
+}

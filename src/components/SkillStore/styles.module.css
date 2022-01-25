@@ -58,6 +58,12 @@
   color: var(--gray-title);
 }
 
+.list-classes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
 .banner {
   position: relative;
   height: 7.5rem;

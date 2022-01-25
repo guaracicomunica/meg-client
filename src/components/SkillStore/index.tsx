@@ -11,8 +11,8 @@ export default function SkillStore() {
       <div className={`pb-3 my-3 border-bottom ${styles["choose-class"]}`}>
         <h5 className={styles["title-gray"]}>Escolha a turma:</h5>
 
-        <div className='d-flex flex-wrap justify-content-between'>
-          <div className={`${styles.banner} col-6 pl-0 pr-2`}>
+        <div className={styles["list-classes"]}>
+          <div className={styles.banner}>
             <img src="/images/banner-class.svg" alt="Banner da turma" />
             <div className={`${styles["info-class"]} p-3`}>
               <h6 className='text-uppercase mb-0'>Turma 01</h6>
@@ -22,7 +22,7 @@ export default function SkillStore() {
             </div>
           </div>
 
-          <div className={`${styles.banner} col-6 pl-2 pr-0`}>
+          <div className={styles.banner}>
             <img src="/images/banner-class.svg" alt="Banner da turma" />
             <div className={`${styles["info-class"]} p-3`}>
               <h6 className='text-uppercase mb-0'>Turma 01</h6>
@@ -33,8 +33,6 @@ export default function SkillStore() {
           </div>
         </div>
       </div>
-      
-      
 
       <div className={`p-3 mt-3 ${styles.skill}`}>
         <img src="/icons/skill.svg" alt="Avatar do estudante" />

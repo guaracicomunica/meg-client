@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import router from 'next/router';
+import { parseCookies } from 'nookies';
+import { useRouter } from 'next/router';
 
 import { api } from '../../services/api';
 import { options } from '../../utils/defaultToastOptions';
 import { DraftDataForm, DataFormClass } from '../../types/Class';
 
 import styles from './styles.module.css';
-import { parseCookies } from 'nookies';
 
 type ModalCreateNewClassType = {
   type: string;
@@ -24,7 +24,7 @@ type PreviewObjectType = {
 }
 
 export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
-  const { register, handleSubmit, reset, setValue } = useForm({defaultValues: {
+  const { register, handleSubmit, setValue } = useForm({defaultValues: {
     name: "",
     nickname: "",
     partners: [],
@@ -37,6 +37,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     await handleCreateClass(data);
   };
 
+  const router = useRouter();
   const [isSkillStoreEnabled, setIsSkillStoreEnabled] = useState(false);
   const [skillInputs, setSkillInputs] = useState([]);
   const [levelInputs, setLevelInputs] = useState([]);
@@ -45,7 +46,6 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [srcPreviewBanner, setSrcPreviewBanner] = useState("");
   const [srcPreviewLevels, setSrcPreviewLevels] = useState<PreviewObjectType[]>([]);
   const [srcPreviewSkills, setSrcPreviewSkills] = useState<PreviewObjectType[]>([]);
-
 
   //modal edit class
   useEffect(() => {
@@ -100,6 +100,87 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     setLevelInputs([...levelInputs, input])
   }
 
+  function deleteLevelInState(idLevel: number, indexPreview?: number) {
+    const newLevelInputs = levelInputs.filter(level => {
+      if (level.id !== idLevel) {
+        return level;
+      }
+    });
+    setLevelInputs(newLevelInputs);
+
+    if (indexPreview) {
+      const newPreviewLevels = srcPreviewLevels.filter((level, index) => {
+        if (index !== indexPreview) {
+          return level;
+        }
+      });
+      setSrcPreviewLevels(newPreviewLevels);
+    }
+  }
+
+  async function deleteLevel(idLevel: number, indexPreview: number) {
+    if (props.type === "edit") {
+      try {
+        const { 'meg.token': token } = parseCookies();
+        await api.delete(`classes/${props.formData.id}/level/${idLevel}/remove`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        })
+        .then(function (success) {
+          toast.success("Nível excluído com sucesso!", options);
+          deleteLevelInState(idLevel, indexPreview);
+        });
+      } catch(error) {
+        const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
+
+        if (!error.response) {
+          // network error
+          return toast.error(string, options);
+        }
+        switch (error.response.status) {
+          case 401:
+            return {
+              redirect: {
+                destination: '/sessao-expirada',
+                permanent: false,
+              }
+            }
+
+          case 403:
+            return {
+              redirect: {
+                destination: '/acesso-negado',
+                permanent: false,
+              }
+            }
+
+          case 400:
+            toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+            break;
+
+          case 422:
+            let errors = error.response?.data.errors;
+            Object.keys(errors).forEach((item) => {
+              toast.warning(errors[item][0], options);
+            });
+            break;
+
+          case 500: 
+            toast.error(string, options);
+            break;
+
+          default:
+            toast.error(string, options);
+            break;
+        }
+      }
+    }
+    else {
+      deleteLevelInState(idLevel);
+    }
+  }
+
   function addSkill() {
     const input = {
       coins: null,
@@ -107,6 +188,88 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       path: null,
     }
     setSkillInputs([...skillInputs, input]);
+  }
+
+  function deleteSkillInState(idSkill: number, indexPreview?: number) {
+    const newSkillInputs = skillInputs.filter(skill => {
+      if (skill.id !== idSkill) {
+        return skill;
+      }
+    });
+    setSkillInputs(newSkillInputs);
+
+    if (indexPreview) {
+      const newPreviewSkills = srcPreviewSkills.filter((skill, index) => {
+        if (index !== indexPreview) {
+          return skill;
+        }
+      });
+      setSrcPreviewSkills(newPreviewSkills);
+    }
+  }
+
+  async function deleteSkill(idSkill: number, indexPreview: number) {
+    if (props.type === "edit") {
+      try {
+        const { 'meg.token': token } = parseCookies();
+        await api.delete(`classes/${props.formData.id}/skill/${idSkill}/remove`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        })
+        .then(function (success) {
+          toast.success("Habilidade excluída com sucesso!", options);
+          deleteSkillInState(idSkill, indexPreview);
+        });
+      } catch(error) {
+        const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
+
+        if (!error.response) {
+          // network error
+          return toast.error(string, options);
+        }
+        switch (error.response.status) {
+          case 401:
+            return {
+              redirect: {
+                destination: '/sessao-expirada',
+                permanent: false,
+              }
+            }
+
+          case 403:
+            return {
+              redirect: {
+                destination: '/acesso-negado',
+                permanent: false,
+              }
+            }
+
+          case 400:
+            toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+            break;
+
+          case 422:
+            let errors = error.response?.data.errors;
+            Object.keys(errors).forEach((item) => {
+              toast.warning(errors[item][0], options);
+            });
+            break;
+
+          case 500: 
+            toast.error(string, options);
+            break;
+
+          default:
+            toast.error(string, options);
+            break;
+        }
+      }
+    }
+    else {
+      deleteSkillInState(idSkill);
+    }
+    
   }
 
   function enableSkillStore(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -131,7 +294,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       previewImage.style.display = 'block';
     }
     else {
-      e.currentTarget.querySelector("span").innerText = "Defina uma capa";
+      e.currentTarget.querySelector("span").innerText = "Defina capa";
     }
   }
 
@@ -338,69 +501,71 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                 {skillInputs.map((input, i) => {
                   return (
                     <div className="form-row" key={`input-skill-${i}`}>
-                    <div className="form-group col-lg-4">
+                      <div className="form-group col-lg-4">
+                        <input 
+                          type="hidden" 
+                          name={`skills[${i}][id]`} 
+                          defaultValue={input.id} 
+                          {...register(`skills.${i}.id`)}
+                        />
 
-                      <input 
-                      type="hidden" 
-                      name={`skills[${i}][id]`} 
-                      defaultValue={input.id} 
-                      {...register(`skills.${i}.id`)}
-                      />
-
-                      <input
-                        type="text"
-                        className="form-control form-input"
-                        name={`skills[${i}][name]`}
-                        placeholder="Nome da habilidade"
-                        {...register(`skills.${i}.name`)}
-                        defaultValue={input.name}
-                      />
-                    </div>
-          
-                    <div className="form-group col-lg-4">
-                      <input
-                        type="number"
-                        min={1}
-                        className="form-control form-input"
-                        name={`skills[${i}][coins]`}
-                        placeholder="Valor da habilidade"
-                        {...register(`skills.${i}.coins`)}
-                        defaultValue={input.coins}
-                      />
-                    </div>
-          
-                    <div className='form-group col-lg-4 small-preview' onChange={uploadFile}>
-                      <div className="input-file">
                         <input
-                          type="file"
-                          name={`skills[${i}][file]`}
-                          id={`skills[${i}][file]`}
-                          accept=".png, .jpg, .jpeg, .svg"
-                          {...register(`skills.${i}.file`)}
+                          type="text"
+                          className="form-control form-input"
+                          name={`skills[${i}][name]`}
+                          placeholder="Nome da habilidade"
+                          {...register(`skills.${i}.name`)}
+                          defaultValue={input.name}
                         />
-                        <label htmlFor={`skills[${i}][file]`} className='ml-1'>
-                          <img src="./icons/camera.svg" alt="Adicionar imagem" />
-                        </label>
-                        <span>Defina uma capa</span>
                       </div>
-                      <div className='preview-image'>
-                        <img
-                          src={srcPreviewSkills.find(skill => {
-                            if (skill.index === i) {
-                              return skill;
-                            }
-                          })?.path ?? "#"}
-                          style={{display: srcPreviewSkills.find(skill => {
-                            if (skill.index === i) {
-                              return skill;
-                            }
-                          })?.path ? "block" : "none"}}
-                          id={`preview-skill-${i}`}
-                          alt="Preview da imagem selecionada"
+            
+                      <div className="form-group col-lg-4">
+                        <input
+                          type="number"
+                          min={1}
+                          className="form-control form-input"
+                          name={`skills[${i}][coins]`}
+                          placeholder="Valor da habilidade"
+                          {...register(`skills.${i}.coins`)}
+                          defaultValue={input.coins}
                         />
+                      </div>
+            
+                      <div className='form-group col-lg-4 small-preview' onChange={uploadFile}>
+                        <div className="input-file">
+                          <input
+                            type="file"
+                            name={`skills[${i}][file]`}
+                            id={`skills[${i}][file]`}
+                            accept=".png, .jpg, .jpeg, .svg"
+                            {...register(`skills.${i}.file`)}
+                          />
+                          <label htmlFor={`skills[${i}][file]`}>
+                            <img src="./icons/camera.svg" alt="Adicionar imagem" />
+                          </label>
+                          <span>Defina capa</span>
+                        </div>
+                        <div className='preview-image'>
+                          <img
+                            src={srcPreviewSkills.find(skill => {
+                              if (skill.index === i) {
+                                return skill;
+                              }
+                            })?.path ?? "#"}
+                            style={{display: srcPreviewSkills.find(skill => {
+                              if (skill.index === i) {
+                                return skill;
+                              }
+                            })?.path ? "block" : "none"}}
+                            id={`preview-skill-${i}`}
+                            alt="Preview da imagem selecionada"
+                          />
+                        </div>
+                        <button type="button" onClick={() => deleteSkill(input.id, i)} className={styles["delete-attachment"]}>
+                          <img src="/icons/x.svg" alt="Excluir habilidade" />
+                        </button>
                       </div>
                     </div>
-                  </div>
                   )
                 })}
               </div>
@@ -420,69 +585,71 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             {levelInputs.map((input, i) => {
               return (
                 <div className="form-row" key={`input-level-${i}`}>
-
                   <input 
-                  type="hidden" 
-                  name={`levels[${i}][id]`} 
-                  defaultValue={input.id} 
-                  {...register(`levels.${i}.id`)}
+                    type="hidden" 
+                    name={`levels[${i}][id]`} 
+                    defaultValue={input.id} 
+                    {...register(`levels.${i}.id`)}
                   />
 
-                <div className="form-group col-lg-4">
-                  <input
-                    type="text"
-                    className="form-control form-input"
-                    name={`levels[${i}][name]`}
-                    placeholder="Nome do nível"
-                    {...register(`levels.${i}.name`)}
-                    defaultValue={input.name}
-                  />
-                </div>
-
-                <div className="form-group col-lg-4">
-                  <input
-                    type="number"
-                    min={1}
-                    className="form-control form-input"
-                    name={`levels[${i}][xp]`}
-                    placeholder="XP do nível"
-                    {...register(`levels.${i}.xp`)}
-                    defaultValue={input.xp}
-                  />
-                </div>
-
-                <div className='form-group col-lg-4 small-preview' id={`preview-level-${i}`} onChange={uploadFile}>
-                  <div className="input-file">
+                  <div className="form-group col-lg-4">
                     <input
-                      type="file"
-                      name={`levels[${i}][file]`}
-                      id={`levels[${i}][file]`}
-                      accept=".png, .jpg, .jpeg, .svg"
-                      {...register(`levels.${i}.file`)}
+                      type="text"
+                      className="form-control form-input"
+                      name={`levels[${i}][name]`}
+                      placeholder="Nome do nível"
+                      {...register(`levels.${i}.name`)}
+                      defaultValue={input.name}
                     />
-                    <label htmlFor={`levels[${i}][file]`} className='ml-1'>
-                      <img src="./icons/camera.svg" alt="Adicionar imagem" />
-                    </label>
-                    <span>Defina uma capa</span>
                   </div>
-                  <div className='preview-image'>
-                    <img
-                      src={srcPreviewLevels.find(level => {
-                        if (level.index === i) {
-                          return level;
-                        }
-                      })?.path ?? "#"}
-                      style={{display: srcPreviewLevels.find(level => {
-                        if (level.index === i) {
-                          return level;
-                        }
-                      })?.path ? "block" : "none"}}
-                      id={`preview-level-${i}`}
-                      alt="Preview da imagem selecionada"
+
+                  <div className="form-group col-lg-4">
+                    <input
+                      type="number"
+                      min={1}
+                      className="form-control form-input"
+                      name={`levels[${i}][xp]`}
+                      placeholder="XP do nível"
+                      {...register(`levels.${i}.xp`)}
+                      defaultValue={input.xp}
                     />
+                  </div>
+
+                  <div className='form-group col-lg-4 small-preview' id={`preview-level-${i}`} onChange={uploadFile}>
+                    <div className="input-file">
+                      <input
+                        type="file"
+                        name={`levels[${i}][file]`}
+                        id={`levels[${i}][file]`}
+                        accept=".png, .jpg, .jpeg, .svg"
+                        {...register(`levels.${i}.file`)}
+                      />
+                      <label htmlFor={`levels[${i}][file]`}>
+                        <img src="./icons/camera.svg" alt="Adicionar imagem" />
+                      </label>
+                      <span>Defina capa</span>
+                    </div>
+                    <div className='preview-image'>
+                      <img
+                        src={srcPreviewLevels.find(level => {
+                          if (level.index === i) {
+                            return level;
+                          }
+                        })?.path ?? "#"}
+                        style={{display: srcPreviewLevels.find(level => {
+                          if (level.index === i) {
+                            return level;
+                          }
+                        })?.path ? "block" : "none"}}
+                        id={`preview-level-${i}`}
+                        alt="Preview da imagem selecionada"
+                      />
+                    </div>
+                    <button type="button" onClick={() => deleteLevel(input.id, i)} className={styles["delete-attachment"]}>
+                      <img src="/icons/x.svg" alt="Excluir nível" />
+                    </button>
                   </div>
                 </div>
-              </div>
               )
             })}
           </div>

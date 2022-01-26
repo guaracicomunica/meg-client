@@ -31,7 +31,7 @@ export default function MinhaConta(props) {
             <CardSkills skills={props.skills} />
           )}
 
-          <CardUser coins={props.userGamification.coins}/>
+          <CardUser coins={props?.userGamification?.coins}/>
         </div>
 
         {user?.role === RoleUser.student && (

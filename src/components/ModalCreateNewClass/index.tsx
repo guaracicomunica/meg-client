@@ -322,7 +322,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       }
     }
 
-    if(data.skills.length > 0) {
+    if(data.skills && data.skills.length > 0) {
       if (
         data.skills[0].name != undefined 
         && data.skills[0].coins != undefined 

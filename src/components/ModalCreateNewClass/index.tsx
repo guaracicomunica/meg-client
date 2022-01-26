@@ -119,7 +119,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   }
 
   async function deleteLevel(idLevel: number, indexPreview: number) {
-    if (props.type === "edit") {
+    if (props.type === "edit" && idLevel !== undefined) {
       try {
         const { 'meg.token': token } = parseCookies();
         await api.delete(`classes/${props.formData.id}/level/${idLevel}/remove`, {
@@ -209,7 +209,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   }
 
   async function deleteSkill(idSkill: number, indexPreview: number) {
-    if (props.type === "edit") {
+    if (props.type === "edit" && idSkill !== undefined) {
       try {
         const { 'meg.token': token } = parseCookies();
         await api.delete(`classes/${props.formData.id}/skill/${idSkill}/remove`, {

@@ -198,7 +198,6 @@ export default function Atividade(props: ActivityType) {
       await api.post('activities/cancel', request).then(function (success) { 
         router.push(`/turmas/${router.query.id}/missoes/${props.id}`, undefined, {scroll: false});
         toast.success("Entrega da atividade foi cancelada", options);
-        console.log(success)
       });
     } catch (error) {
       if (!error.response) {

@@ -101,13 +101,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           }
         });
 
-        const responseGamification = 
-        await apiClient.get(`users/status/gamification/${user.id}`,{ headers:{ 'Authorization': `Bearer ${token}` }});
-        console.log()
+        const responseGamification = await apiClient.get(`users/status/gamification/${user.id}`,{ headers:{ 'Authorization': `Bearer ${token}` }});
 
         const userGamification: UserStatusGamification  = responseGamification.data
-
-        console.log(userGamification)
 
         const skills: SkillClaimedType[] = response.data.data.map(skill => {
           return {
@@ -124,7 +120,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
       }
     } catch(error) {
-     // console.log(error)
       switch (error?.response?.status) {
         case 401:
           return {

@@ -249,7 +249,7 @@ select:focus {
   top: 1.5rem;
   right: 1.5rem;
   z-index: 1;
-  background: linear-gradient(269.87deg, #FFFFFF -88.05%, rgba(255, 255, 255, 0) 124.59%);
+  background-color: var(--white);
   border-radius: 5px;
   padding: 0.1rem 0.25rem;
   font-size: 0.9rem;

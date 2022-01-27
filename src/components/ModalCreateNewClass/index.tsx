@@ -309,7 +309,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     form.append('nickname', data.nickname);
     form.append('is_draft', isDraft.toString());
 
-    if (data.levels.length > 0) {
+    if (data.levels && data.levels.length > 0) {
       if (data.levels[0].name != undefined && data.levels[0].xp != undefined && data.levels[0].file != undefined) {
         for (let i = 0; i < data.levels.length; i++) {
           if(data.levels[i].id != undefined) form.append(`levels[${i}][id]`, data.levels[i].id.toString());

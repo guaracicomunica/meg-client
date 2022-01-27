@@ -69,11 +69,31 @@ export default function Criar(props: CreateActivityProps) {
     ]);
   }
 
+  function deleteLink(linkIndex: number) {
+    const newLinks = links.filter((link, index) => {
+      if (index !== linkIndex) {
+        return link;
+      }
+    });
+
+    setLinks(newLinks);
+  }
+
   function addFile(data: any) {
     setFiles([
       ...files,
       data.file[0]
-    ])
+    ]);
+  }
+
+  function deleteFile(fileIndex: number) {
+    const newFiles = files.filter((file, index) => {
+      if (index !== fileIndex) {
+        return file;
+      }
+    });
+
+    setFiles(newFiles);
   }
 
   function generateFormData(data: DataFormActivity) {
@@ -214,6 +234,9 @@ export default function Criar(props: CreateActivityProps) {
                     <div className={styles["link"]} key={index}>
                       <img src="/icons/link.svg" alt="Ícone" />
                       <a href={link.link} target="_blank">{link.link}</a>
+                      <button type="button" onClick={() => deleteLink(index)} className={styles["delete-attachment"]}>
+                        <img src="/icons/x.svg" alt="Excluir" />
+                      </button>
                     </div>
                   )
                 })
@@ -225,6 +248,9 @@ export default function Criar(props: CreateActivityProps) {
                     <div className={styles["link"]} key={index}>
                       <img src="/icons/file.svg" alt="Ícone" />
                       <span>{file.name}</span>
+                      <button type="button" onClick={() => deleteFile(index)} className={styles["delete-attachment"]}>
+                        <img src="/icons/x.svg" alt="Excluir" />
+                      </button>
                     </div>
                   )
                 })

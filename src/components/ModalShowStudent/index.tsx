@@ -90,7 +90,7 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
       <Modal.Body>
         <div className="px-2">
           <div className={styles["info-user"]}>
-            <img src={student.avatar} alt="Imagem do aluno" />
+            <img src={student.avatar ?? "/icons/user.svg"} alt="Imagem do aluno" />
             <h5>{student.name}</h5>
           </div>
           <div className={styles["email-user"]}>

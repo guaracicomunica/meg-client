@@ -153,6 +153,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         },
       }
     } catch(error) {
+      console.log(error);
       switch (error.response.status) {
         case 401:
           return {

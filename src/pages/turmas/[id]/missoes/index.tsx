@@ -47,7 +47,7 @@ export default function Atividades(props: ActivitiesPageProps) {
   }, [props]);
 
   useEffect(() => {
-    if (currentPage === totalPages) {
+    if (currentPage === totalPages || currentPage > totalPages) {
       setHasMore(false);
     }
   }, [activitiesList]);

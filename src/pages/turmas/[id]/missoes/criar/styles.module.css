@@ -74,7 +74,8 @@
 }
 
 .attachments .link {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2rem 1fr 2rem;
   align-items: center;
 }
 
@@ -87,6 +88,20 @@
   color: var(--blue-light);
   font-weight: 700;
   font-size: 1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.delete-attachment {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.delete-attachment img {
+  height: 1rem;
 }
 
 .alert {

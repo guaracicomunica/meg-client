@@ -11,6 +11,7 @@
   border-radius: 50%;
   border: 3px solid var(--blue-dark);
   margin-right: 1rem;
+  width: 4rem;
 }
 
 .info-user h5 {

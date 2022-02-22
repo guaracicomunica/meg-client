@@ -19,7 +19,7 @@ export function Navbar() {
 
   return (
     <header>
-      <nav className={`navbar navbar-expand-md ${styles.menu}`}>
+      <nav className={`navbar navbar-expand-md ${styles.menu} ${styles[`menu-${theme}`]}`}>
         <a className="navbar-brand" href="/">
           <img src="/icons/logo.svg" alt="Logo do MEG" />
         </a>

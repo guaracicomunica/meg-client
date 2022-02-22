@@ -2,8 +2,33 @@
   display: flex !important;
   justify-content: space-between !important;
   padding: 0.75rem 14rem !important; 
-  border-top: 10px solid var(--blue-dark);
+}
+
+.menu-light {
   background-color: var(--white) !important;
+  border-top: 10px solid var(--blue-dark);
+}
+
+.menu-light .menu-link {
+  color: var(--blue-text);
+}
+
+.menu-light .menu-link:hover {
+  color: var(--blue-dark);
+}
+
+.menu-highContrast {
+  background-color: var(--black) !important;
+  border-top: 10px solid var(--black);
+  border-bottom: 1px solid var(--white);
+}
+
+.menu-highContrast .menu-link {
+  color: var(--white);
+}
+
+.menu-highContrast .menu-link:hover {
+  color: var(--yellow-contrast);
 }
 
 .menu-link {
@@ -11,12 +36,7 @@
   margin-right: 1rem;
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--blue-text);
   transition: color .2s;
-}
-
-.menu-link:hover {
-  color: var(--blue-dark);
 }
 
 .link-active {
@@ -32,7 +52,14 @@
   left: 28%;
   transform: translateX(-25%);
   border-radius: 10px;
+}
+
+.menu-light .link-active::after {
   background: linear-gradient(90deg, var(--red) -21.79%, var(--yellow) 100%);
+}
+
+.menu-highContrast .link-active::after {
+  background: var(--green-contrast);
 }
 
 .menu-button {

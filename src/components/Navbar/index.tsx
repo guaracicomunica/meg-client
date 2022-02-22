@@ -2,13 +2,18 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import { PageActiveContext } from '../../contexts/PageActiveContext';
 import { AuthContext } from '../../contexts/AuthContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { PageActive } from '../../enums/enumPageActive';
+import { enumTheme } from '../../enums/enumTheme';
 
 import styles from "./styles.module.css";
 
 export function Navbar() {
   const { pageActive } = useContext(PageActiveContext);
   const { isAuthenticated } = useContext(AuthContext);
+  const { theme, switchTheme } = useContext(ThemeContext);
+
+  const themeToSwitch = theme === enumTheme.light ? enumTheme.contrast : enumTheme.light;
 
   let classNameLink = "nav-item mt-3 mt-md-0";
 
@@ -31,7 +36,7 @@ export function Navbar() {
         </button>
 
         <div className="collapse navbar-collapse" id="navbar">
-          <ul className="navbar-nav mr-auto my-4 my-md-0">
+          <ul className="navbar-nav align-items-center mr-auto my-4 my-md-0">
             <li className={pageActive === PageActive.inicio ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
               <Link href="/">
                 <a className={styles["menu-link"]}>
@@ -48,18 +53,17 @@ export function Navbar() {
                 </a>
               </Link>
             </li>
-            {
-              isAuthenticated 
-              ?             
-                <li className={pageActive === PageActive.minhaConta ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
-                  <Link href="/minha-conta">
-                    <a className={styles["menu-link"]}>
-                      Minha conta
-                      {pageActive === PageActive.minhaConta && (<span className="sr-only">(Página atual)</span>)}
-                    </a>
-                  </Link>
-                </li> 
-              : 
+            {isAuthenticated && (
+              <li className={pageActive === PageActive.minhaConta ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
+                <Link href="/minha-conta">
+                  <a className={styles["menu-link"]}>
+                    Minha conta
+                    {pageActive === PageActive.minhaConta && (<span className="sr-only">(Página atual)</span>)}
+                  </a>
+                </Link>
+              </li> 
+            )}
+            {!isAuthenticated && (
               <li className={pageActive === PageActive.entrar ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
                 <Link href="/login">
                   <a className={styles["menu-link"]}>
@@ -68,7 +72,12 @@ export function Navbar() {
                   </a>
                 </Link>
               </li> 
-            }
+            )}
+            <li className={classNameLink}>
+              <button className={styles["btn-switch-theme"]} onClick={() => switchTheme(themeToSwitch)}>
+                <img src="/icons/switch-theme.svg" alt="Botão para alterar tema" />
+              </button>
+            </li>
           </ul>
         </div>
       </nav>

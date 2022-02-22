@@ -48,8 +48,12 @@ body, #__next {
   }
 }
 
-body {
+.bg-light {
   background-color: var(--background-light);
+}
+
+.bg-highContrast {
+  background-color: var(--black);
 }
 
 body, input, textarea, button {

@@ -1,5 +1,6 @@
 import Head from 'next/head';
 
+import { ThemeProvider, ThemeContext } from '../contexts/ThemeContext';
 import { AuthProvider } from '../contexts/AuthContext';
 import { PageActiveProvider } from '../contexts/PageActiveContext';
 import { Navbar } from '../components/Navbar';
@@ -19,15 +20,23 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <PageActiveProvider>
-        <AuthProvider>
-          <div>
-            <Navbar />
-            <Component {...pageProps} />
-          </div>
-          <Footer />
-        </AuthProvider>
-      </PageActiveProvider>
+      <ThemeProvider>
+        <PageActiveProvider>
+          <AuthProvider>
+            <ThemeContext.Consumer>
+              {props => (
+                <div className={`bg-${props.theme}`}>
+                  <div>
+                    <Navbar />
+                    <Component {...pageProps} />
+                  </div>
+                  <Footer />
+                </div>
+              )}
+            </ThemeContext.Consumer>
+          </AuthProvider>
+        </PageActiveProvider>
+      </ThemeProvider>
     </>
   )
 }

@@ -18,8 +18,10 @@
   --blue-text: #2B3543;
   --red: #F94144;
   --yellow: #F9C74F;
+  --yellow-contrast: #FFFF00;
   --green: #6EDE8A;
-  --background: #FCF9FF;
+  --green-contrast: #2AFF00;
+  --background-light: #FCF9FF;
 }
 
 html, body, #__next {
@@ -47,7 +49,7 @@ body, #__next {
 }
 
 body {
-  background-color: var(--background);
+  background-color: var(--background-light);
 }
 
 body, input, textarea, button {

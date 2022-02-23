@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { ToastContainer } from "react-toastify";
+import { useContext } from "react";
 
+import { ThemeContext } from "../../../../contexts/ThemeContext";
 import CardStudent from "../../../../components/CardStudent";
 import CardTeacher from "../../../../components/CardTeacher";
 import { api } from "../../../../services/api";
@@ -30,6 +32,7 @@ export default function Participantes(props: ParticipantsProps) {
   const [studentsList, setStudentsList] = useState<StudentType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (props) {
@@ -72,7 +75,7 @@ export default function Participantes(props: ParticipantsProps) {
       </Head>
 
       <main className="page-container">
-        <h1 className="title-primary mb-5">Participantes da turma</h1>
+        <h1 className={`title-${theme}-primary mb-5`}>Participantes da turma</h1>
         <h2 className="title-gray mb-4">Professores</h2>
         <div className={`mb-5 ${styles["list-teachers"]}`}>
           {props.teachers.map(teacher => {

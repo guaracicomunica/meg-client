@@ -2,12 +2,16 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { parseCookies } from "nookies";
 import { Table } from "react-bootstrap";
+import { useContext } from "react";
+
+import { ThemeContext } from "../../../../contexts/ThemeContext";
 import { getAPIClient } from "../../../../services/apiClient";
-import { StudentGrade } from "../../../../types/Grade";
 
 import styles from './styles.module.css';
 
 export default function Boletim({ grade }) {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <>
       <Head>
@@ -17,7 +21,7 @@ export default function Boletim({ grade }) {
       <main className="page-container">
         <div className="card-style p-4 mb-4">
           <div className="w-100 mb-4">
-            <h1 className="title-primary">Meu boletim</h1>
+            <h1 className={`title-${theme}-primary`}>Meu boletim</h1>
           </div>
           
           <Table responsive>
@@ -62,7 +66,7 @@ export default function Boletim({ grade }) {
         </div>  
         <div className={`${styles["card-gamification"]} card-style p-4`}>
           <div className="w-100 mb-4">
-            <h1 className="title-primary">Pontuações gamificadas</h1>
+            <h1 className={`title-${theme}-primary`}>Pontuações gamificadas</h1>
           </div>
           
           <div className="d-flex flex-wrap w-100">

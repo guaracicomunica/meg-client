@@ -18,7 +18,7 @@ export default function SessaoExpirada() {
       <main className="center-content section">
         <img className={styles["img-page"]} src="./images/session-expired.svg" alt="Sessão expirada" />
         <h1 className={`title-${theme}-primary`}>Ops... Você está desconectado(a)!</h1>
-        <p className={`text-section-${theme}`}>Clique <Link href="/login">aqui</Link> para se conectar novamente.</p>
+        <p className={`text-${theme}`}>Clique <Link href="/login">aqui</Link> para se conectar novamente.</p>
       </main>
     </>
   );

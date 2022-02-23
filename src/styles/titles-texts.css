@@ -47,16 +47,16 @@
   font-size: 1.5rem;
 }
 
-.text-section-light, .text-section-high-contrast {
+.text-light, .text-high-contrast {
   font-size: 1rem;
   font-weight: 400;
 }
 
-.text-section-light {
+.text-light {
   color: var(--blue-dark);
 }
 
-.text-section-high-contrast {
+.text-high-contrast {
   color: var(--white);
 }
 

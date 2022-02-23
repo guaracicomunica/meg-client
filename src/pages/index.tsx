@@ -46,13 +46,13 @@ export default function Home() {
           </div>
           
           <div className="col-11 col-lg-7">
-            <p className={`text-section-${theme} text-center`}>
+            <p className={`text-${theme} text-center`}>
               Seja bem-vindo(a) ao MEG – O Mundo Encantado da Geografia! O MEG é um projeto de ensino que tem como objetivo aperfeiçoar o processo de ensino e de aprendizagem através da interdisciplinaridade e da gamificação.
             </p>
-            <p className={`text-section-${theme} text-center`}>
+            <p className={`text-${theme} text-center`}>
               O projeto tem como questão norteadora: como vencer o monstro da ignorância? Focado na storytelling, as narrativas são construídas considerando-se o mundo das lendas, dos contos de fadas, das sagas, dos seriados e dos filmes.
             </p>
-            <p className={`text-section-${theme} text-center`}>
+            <p className={`text-${theme} text-center`}>
               Aqui você encontrará um ambiente para se conectar e, de forma colaborativa e com perseverança, solucionar todas as missões e conquistar a chave dourada do conhecimento, de onde quer que esteja.
             </p>
           </div>

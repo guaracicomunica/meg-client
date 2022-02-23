@@ -23,7 +23,7 @@ export default function Custom404() {
           alt="Página não encontrada"
         /> 
         <h1 className={`title-${theme}-primary`}>Ops... página não encontrada!</h1>
-        <p className={`text-section-${theme}`}>Clique <Link href="/">aqui</Link> para voltar à página inicial.</p>
+        <p className={`text-${theme}`}>Clique <Link href="/">aqui</Link> para voltar à página inicial.</p>
       </main>
     </>
   );

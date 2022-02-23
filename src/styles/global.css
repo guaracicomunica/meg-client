@@ -52,7 +52,7 @@ body, #__next {
   background-color: var(--background-light);
 }
 
-.bg-highContrast {
+.bg-high-contrast {
   background-color: var(--black);
 }
 

@@ -22,14 +22,14 @@
   color: var(--gray-title);
 }
 
-.footer-highContrast .border-footer {
+.footer-high-contrast .border-footer {
   background-color: var(--white);
 }
 
-.footer-highContrast .link-footer {
+.footer-high-contrast .link-footer {
   color: var(--white);
 }
 
-.footer-highContrast .link-footer:hover {
+.footer-high-contrast .link-footer:hover {
   color: var(--yellow-contrast);
 }

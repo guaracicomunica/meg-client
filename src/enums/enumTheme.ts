@@ -1,4 +1,4 @@
 export enum enumTheme {
   light = "light",
-  contrast = "highContrast"
+  contrast = "high-contrast"
 };

@@ -17,17 +17,17 @@
   color: var(--blue-dark);
 }
 
-.menu-highContrast {
+.menu-high-contrast {
   background-color: var(--black) !important;
   border-top: 10px solid var(--black);
   border-bottom: 1px solid var(--white);
 }
 
-.menu-highContrast .menu-link {
+.menu-high-contrast .menu-link {
   color: var(--white);
 }
 
-.menu-highContrast .menu-link:hover {
+.menu-high-contrast .menu-link:hover {
   color: var(--yellow-contrast);
 }
 
@@ -58,7 +58,7 @@
   background: linear-gradient(90deg, var(--red) -21.79%, var(--yellow) 100%);
 }
 
-.menu-highContrast .link-active::after {
+.menu-high-contrast .link-active::after {
   background: var(--green-contrast);
 }
 

@@ -2,16 +2,34 @@
   width: 75%;
   height: 1px;
   margin: 4rem auto 0;
-  background-color: var(--gray-title);
 }
 
 .link-footer {
-  font-weight: 900;
+  font-weight: 700;
   font-size: 1.1rem;
-  color: var(--gray-title);
   transition: color .2s;
 }
 
 .link-footer:hover {
   color: var(--gray-text);
+}
+
+.footer-light .border-footer {
+  background-color: var(--gray-title);
+}
+
+.footer-light .link-footer {
+  color: var(--gray-title);
+}
+
+.footer-highContrast .border-footer {
+  background-color: var(--white);
+}
+
+.footer-highContrast .link-footer {
+  color: var(--white);
+}
+
+.footer-highContrast .link-footer:hover {
+  color: var(--yellow-contrast);
 }

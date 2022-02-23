@@ -2,12 +2,14 @@ import styles from "./styles.module.css";
 import Link from 'next/link';
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 export function Footer() {
   const { isAuthenticated } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <footer>
+    <footer className={styles[`footer-${theme}`]}>
       <hr className={styles["border-footer"]} />
 
       <div className="row flex-wrap p-4 justify-content-center">
@@ -17,16 +19,16 @@ export function Footer() {
         <Link href="/turmas"> 
           <a className={`${styles["link-footer"]} mr-5`}>Turmas</a>
         </Link>
-        {isAuthenticated 
-          ?        
-            <Link href="/minha-conta"> 
-              <a className={`${styles["link-footer"]} mr-5`}>Minha conta</a>
-            </Link> 
-          : 
-            <Link href="/login"> 
-              <a className={`${styles["link-footer"]} mr-5`}>Entrar</a>
-            </Link> 
-        }
+        {isAuthenticated && (
+          <Link href="/minha-conta"> 
+            <a className={`${styles["link-footer"]} mr-5`}>Minha conta</a>
+          </Link> 
+        )}
+        {!isAuthenticated && (
+          <Link href="/login"> 
+            <a className={`${styles["link-footer"]} mr-5`}>Entrar</a>
+          </Link>
+        )}
       </div>
     </footer>
   );

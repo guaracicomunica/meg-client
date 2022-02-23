@@ -16,9 +16,9 @@ export default function Custom404() {
         <title>Página não encontrada</title>
       </Head>
 
-      <main className={`${styles.page} center-content section`}>
+      <main className="center-content section">
         <img
-          className={theme === enumTheme.contrast ? "img-contrast-white" : ""}
+          className={theme === enumTheme.contrast ? `${styles["img-page"]} img-contrast-white` : styles["img-page"]}
           src="./icons/404.svg"
           alt="Página não encontrada"
         /> 

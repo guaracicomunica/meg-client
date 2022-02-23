@@ -57,6 +57,18 @@
   gap: 1.5rem;
 }
 
+.border-soft-blue {
+  width: 12rem;
+  height: 1px;
+  margin: 0.75rem auto 1rem;
+}
+
+.border-blue, .border-yellow {
+  width: 6rem;
+  height: 2px;
+  margin: 0.75rem 0 1rem;
+}
+
 /* Theme light */
 .theme-light .title-home {
   color: var(--blue-dark);
@@ -69,6 +81,18 @@
 
 .theme-light .section-not-allowed {
   background-color: #F5F5F5;
+}
+
+.theme-light .border-soft-blue {
+  background-color: var(--blue);
+}
+
+.theme-light .border-blue {
+  background-color: var(--blue);
+}
+
+.theme-light .border-yellow {
+  background-color: var(--yellow);
 }
 
 /* Theme high contrast */
@@ -87,6 +111,18 @@
 
 .theme-high-contrast .logo-home {
   filter: brightness(0) invert(1);
+}
+
+.theme-high-contrast .border-soft-blue {
+  background-color: var(--blue-contrast);
+}
+
+.theme-high-contrast .border-blue {
+  background-color: var(--blue-contrast);
+}
+
+.theme-high-contrast .border-yellow {
+  background-color: var(--yellow-contrast);
 }
 
 @media (max-width: 992px) {

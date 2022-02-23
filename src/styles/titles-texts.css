@@ -1,0 +1,73 @@
+.title-light-primary, .title-high-contrast-primary, .title-secondary {
+  font-weight: 900;
+  font-size: 2rem;
+}
+
+.title-light-primary {
+  color: var(--blue-dark);
+}
+
+.title-high-contrast-primary {
+  color: var(--white);
+}
+
+.title-secondary {
+  color: var(--blue);
+}
+
+.title-card-light, .title-card-high-contrast {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.title-card-light {
+  color: var(--blue);
+}
+
+.title-card-high-contrast {
+  color: var(--yellow-contrast);
+}
+
+.text-card-light, .text-card-high-contrast {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.text-card-light {
+  color: var(--gray-text);
+}
+
+.text-card-high-contrast {
+  color: var(--white);
+}
+
+.title-gray {
+  color: var(--gray-title);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.text-section-light, .text-section-high-contrast {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.text-section-light {
+  color: var(--blue-dark);
+}
+
+.text-section-high-contrast {
+  color: var(--white);
+}
+
+.text-gray {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--gray-text);
+}
+
+@media (max-width: 992px) {
+  .title-light-primary, .title-high-contrast-primary, .title-secondary {
+    font-size: 1.75rem;
+  }
+}

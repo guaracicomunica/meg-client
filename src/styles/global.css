@@ -118,122 +118,12 @@ select:focus {
   }
 }
 
-.title-light-primary, .title-high-contrast-primary, .title-secondary {
-  font-weight: 900;
-  font-size: 2rem;
-}
-
-.title-light-primary {
-  color: var(--blue-dark);
-}
-
-.title-high-contrast-primary {
-  color: var(--white);
-}
-
-.title-secondary {
-  color: var(--blue);
-}
-
-.title-card-light, .title-card-high-contrast {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.title-card-light {
-  color: var(--blue);
-}
-
-.title-card-high-contrast {
-  color: var(--yellow-contrast);
-}
-
-.text-card-light, .text-card-high-contrast {
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-.text-card-light {
-  color: var(--gray-text);
-}
-
-.text-card-high-contrast {
-  color: var(--white);
-}
-
-.title-gray {
-  color: var(--gray-title);
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-.text-section-light, .text-section-high-contrast {
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-.text-section-light {
-  color: var(--blue-dark);
-}
-
-.text-section-high-contrast {
-  color: var(--white);
-}
-
-.text-gray {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--gray-text);
-}
-
 .navbar-collapse {
   flex-grow: unset !important;
 }
 
-.border-soft-blue-light, .border-soft-blue-high-contrast {
-  width: 12rem;
-  height: 1px;
-  margin: 0.75rem auto 1rem;
-}
-
-.border-soft-blue-light {
-  background-color: var(--blue);
-}
-
-.border-soft-blue-high-contrast {
-  background-color: var(--blue-contrast);
-}
-
-.border-blue-light, .border-blue-high-contrast, .border-yellow-light, .border-yellow-high-contrast {
-  width: 6rem;
-  height: 2px;
-  margin: 0.75rem 0 1rem;
-}
-
-.border-blue-light {
-  background-color: var(--blue);
-}
-
-.border-blue-high-contrast {
-  background-color: var(--blue-contrast);
-}
-
-.border-yellow-light {
-  background-color: var(--yellow);
-}
-
-.border-yellow-high-contrast {
-  background-color: var(--yellow-contrast);
-}
-
 .row {
   margin: 0 !important;
-}
-
-@media (max-width: 992px) {
-  .title-light-primary, .title-high-contrast-primary, .title-secondary {
-    font-size: 1.75rem;
-  }
 }
 
 .card-style-light, .card-style-high-contrast {

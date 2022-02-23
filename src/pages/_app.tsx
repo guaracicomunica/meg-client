@@ -12,6 +12,7 @@ import '../styles/buttons.css';
 import '../styles/form.css';
 import '../styles/modal.css';
 import '../styles/table.css';
+import '../styles/titles-texts.css';
 
 function MyApp({ Component, pageProps }) {
   return (

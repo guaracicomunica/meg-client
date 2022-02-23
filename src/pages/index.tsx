@@ -41,7 +41,7 @@ export default function Home() {
             <h1 className={`title-${theme}-primary text-center`}>
               Conheça o Mundo Encantado da Geografia (MEG)
             </h1>
-            <hr className={`border-soft-blue-${theme}`} />
+            <hr className={styles["border-soft-blue"]} />
           </div>
           
           <div className="col-11 col-lg-7">
@@ -115,8 +115,8 @@ export default function Home() {
             </h1>
 
             <div className="d-flex justify-content-center">
-              <hr className={`border-yellow-${theme}`} />
-              <hr className={`border-blue-${theme}`} />
+              <hr className={styles["border-yellow"]} />
+              <hr className={styles["border-blue"]} />
             </div>
             
             <img
@@ -133,8 +133,8 @@ export default function Home() {
             </h1>
 
             <div className="d-flex justify-content-center">
-              <hr className={`border-yellow-${theme}`} />
-              <hr className={`border-blue-${theme}`} />
+              <hr className={styles["border-yellow"]} />
+              <hr className={styles["border-blue"]} />
             </div>
           </div>
           
@@ -169,8 +169,8 @@ export default function Home() {
             </h1>
 
             <div className="d-flex justify-content-center">
-              <hr className={`border-yellow-${theme}`} />
-              <hr className={`border-blue-${theme}`} />
+              <hr className={styles["border-yellow"]} />
+              <hr className={styles["border-blue"]} />
             </div>
             
             <img

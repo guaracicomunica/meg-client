@@ -3,6 +3,7 @@ import { useContext } from 'react';
 
 import { CardHome } from '../components/CardHome';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { enumTheme } from '../enums/enumTheme';
 
 import styles from "./home.module.css";
 
@@ -21,7 +22,7 @@ export default function Home() {
             <img
               src="./images/meg-logo.png"
               alt="Logo do MEG"
-              className={styles["logo-home"]}
+              className={theme === enumTheme.contrast ? `${styles["logo-home"]} img-contrast-white` : styles["logo-home"]}
             />
             <h1 className={`${styles["title-home"]} mt-4`}>
               Seja bem-vindo ao Mundo Encantado da Geografia!

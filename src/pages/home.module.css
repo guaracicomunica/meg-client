@@ -109,10 +109,6 @@
   background-color: var(--black);
 }
 
-.theme-high-contrast .logo-home {
-  filter: brightness(0) invert(1);
-}
-
 .theme-high-contrast .border-soft-blue {
   background-color: var(--blue-contrast);
 }

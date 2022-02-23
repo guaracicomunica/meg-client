@@ -66,15 +66,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: var(--blue-light);
   text-decoration: none;
   transition: filter .3s;
 }
 
 a:hover {
-  color: var(--blue-light);
   text-decoration: none;
   filter: brightness(0.9);
+}
+
+.bg-light a {
+  color: var(--blue-light);
+}
+
+.bg-light a:hover {
+  color: var(--blue-light);
+}
+
+.bg-high-contrast a {
+  color: var(--yellow-contrast);
+}
+
+.bg-high-contrast a:hover {
+  color: var(--yellow-contrast);
 }
 
 button {
@@ -124,6 +138,12 @@ select:focus {
 
 .row {
   margin: 0 !important;
+}
+
+.center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card-style-light, .card-style-high-contrast {
@@ -210,4 +230,8 @@ select:focus {
 
 .link-class:hover {
   filter: brightness(0.95);
+}
+
+.img-contrast-white {
+  filter: brightness(0) invert(1);
 }

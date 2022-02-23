@@ -1,7 +1,3 @@
-.icon-rules, .icon-rules-high-contrast {
+.icon-rules {
   height: 3rem;
-}
-
-.icon-rules-high-contrast {
-  filter: brightness(0) invert(1);
 }

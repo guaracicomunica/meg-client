@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }) {
           <AuthProvider>
             <ThemeContext.Consumer>
               {props => (
-                <div className={`bg-${props.theme}`}>
+                <div style={{ minHeight: '100vh' }} className={`bg-${props.theme}`}>
                   <div>
                     <Navbar />
                     <Component {...pageProps} />

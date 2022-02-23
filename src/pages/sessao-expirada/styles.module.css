@@ -1,39 +1,22 @@
-.page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.page img {
-  width: 30%;
+.img-page {
+  width: 20%;
   margin-bottom: 2rem;
 }
 
-.page h1 {
-  font-weight: 900;
-  color: var(--blue-dark);
-  text-align: center;
-}
-
-.page p {
-  font-size: 1.25rem;
-  color: var(--gray-title);
-}
-
 @media (max-width: 1280px) {
-  .page img {
-    width: 40%;
+  .img-page {
+    width: 30%;
   }
 }
 
 @media (max-width: 1000px) {
-  .page img {
+  .img-page {
     width: 50%;
   }
 }
 
 @media (max-width: 768px) {
-  .page img {
+  .img-page {
     width: 70%;
   }
 }

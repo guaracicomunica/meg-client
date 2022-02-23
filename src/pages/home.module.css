@@ -13,7 +13,6 @@
 }
 
 .title-home {
-  color: var(--blue-dark);
   font-size: 2.5rem;
   font-weight: 900;
   text-align: center;
@@ -21,10 +20,9 @@
 
 .keyword {
   border-radius: 10px;
-  border: 1px solid var(--blue);
+  border: 1px solid;
   padding: 0.4rem 2rem;
   margin-top: 1rem;
-  color: var(--blue);
   font-weight: 700;
   font-size: 0.9rem;
 }
@@ -48,8 +46,6 @@
 }
 
 .section-not-allowed {
-  background-color: #F5F5F5;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,6 +55,38 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
+}
+
+/* Theme light */
+.theme-light .title-home {
+  color: var(--blue-dark);
+}
+
+.theme-light .keyword {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+.theme-light .section-not-allowed {
+  background-color: #F5F5F5;
+}
+
+/* Theme high contrast */
+.theme-high-contrast .title-home {
+  color: var(--white);
+}
+
+.theme-high-contrast .keyword {
+  border-color: var(--yellow-contrast);
+  color: var(--yellow-contrast);
+}
+
+.theme-high-contrast .section-not-allowed {
+  background-color: var(--black);
+}
+
+.theme-high-contrast .logo-home {
+  filter: brightness(0) invert(1);
 }
 
 @media (max-width: 992px) {

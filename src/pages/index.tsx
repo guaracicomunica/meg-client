@@ -1,17 +1,21 @@
 import Head from 'next/head';
+import { useContext } from 'react';
 
 import { CardHome } from '../components/CardHome';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 import styles from "./home.module.css";
 
 export default function Home() {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <>
       <Head>
         <title>Mundo Encantado da Geografia</title>
       </Head>
 
-      <main>
+      <main className={styles[`theme-${theme}`]}>
         <section className={`${styles["home-banner"]}`}>
           <div className="col-8 col-md-4 flex-column">
             <img
@@ -34,20 +38,20 @@ export default function Home() {
 
         <section className="section d-flex flex-column align-items-center">
           <div className="col-11 col-lg-5 justify-content-center">
-            <h1 className="title-primary text-center">
+            <h1 className={`title-${theme}-primary text-center`}>
               Conheça o Mundo Encantado da Geografia (MEG)
             </h1>
-            <hr className="border-soft-blue" />
+            <hr className={`border-soft-blue-${theme}`} />
           </div>
           
           <div className="col-11 col-lg-7">
-            <p className="text-section text-center">
+            <p className={`text-section-${theme} text-center`}>
               Seja bem-vindo(a) ao MEG – O Mundo Encantado da Geografia! O MEG é um projeto de ensino que tem como objetivo aperfeiçoar o processo de ensino e de aprendizagem através da interdisciplinaridade e da gamificação.
             </p>
-            <p className="text-section text-center">
+            <p className={`text-section-${theme} text-center`}>
               O projeto tem como questão norteadora: como vencer o monstro da ignorância? Focado na storytelling, as narrativas são construídas considerando-se o mundo das lendas, dos contos de fadas, das sagas, dos seriados e dos filmes.
             </p>
-            <p className="text-section text-center">
+            <p className={`text-section-${theme} text-center`}>
               Aqui você encontrará um ambiente para se conectar e, de forma colaborativa e com perseverança, solucionar todas as missões e conquistar a chave dourada do conhecimento, de onde quer que esteja.
             </p>
           </div>
@@ -84,31 +88,35 @@ export default function Home() {
         <section className="section row justify-content-around align-items-center">
           <div className={`col-11 col-lg-6 col-xl-5 order-2 order-lg-1 ${styles["cards-list"]}`}>
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
           </div>
 
           <div className="col-9 col-md-7 col-lg-4 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
-            <h1 className="text-uppercase title-primary text-center">
+            <h1 className={`title-${theme}-primary text-uppercase text-center`}>
               Regras gamificadas
             </h1>
 
             <div className="d-flex justify-content-center">
-              <hr className="border-yellow" />
-              <hr className="border-blue" />
+              <hr className={`border-yellow-${theme}`} />
+              <hr className={`border-blue-${theme}`} />
             </div>
             
             <img
@@ -120,30 +128,34 @@ export default function Home() {
 
         <section className={`section ${styles["section-not-allowed"]}`}>
           <div className="col-10">
-            <h1 className="title-primary text-uppercase text-center">
+            <h1 className={`title-${theme}-primary text-uppercase text-center`}>
               O que você não pode fazer
             </h1>
 
             <div className="d-flex justify-content-center">
-              <hr className="border-yellow" />
-              <hr className="border-blue" />
+              <hr className={`border-yellow-${theme}`} />
+              <hr className={`border-blue-${theme}`} />
             </div>
           </div>
           
           <div className={`col-11 col-xl-10 mt-5 ${styles["cards-list-not-allowed"]}`}>
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
@@ -152,13 +164,13 @@ export default function Home() {
 
         <section className="section row justify-content-around align-items-center mb-5">
           <div className="col-9 col-md-7 col-lg-4 col-xl-5 mb-5 mb-lg-0">
-            <h1 className="text-uppercase title-primary text-center">
+            <h1 className={`title-${theme}-primary text-uppercase text-center`}>
               Premiações do MEG
             </h1>
 
             <div className="d-flex justify-content-center">
-              <hr className="border-yellow" />
-              <hr className="border-blue" />
+              <hr className={`border-yellow-${theme}`} />
+              <hr className={`border-blue-${theme}`} />
             </div>
             
             <img
@@ -169,18 +181,22 @@ export default function Home() {
 
           <div className={`col-11 col-lg-6 col-xl-5 ${styles["cards-list"]}`}>
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
+              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />

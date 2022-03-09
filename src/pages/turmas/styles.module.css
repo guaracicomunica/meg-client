@@ -10,17 +10,39 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--background-light);
 }
 
 .add-class {
   cursor: pointer;
   border-radius: 10px;
+}
+
+.theme-light .add-class {
+  background-color: var(--background-light);
   transition: filter 0.2s;
 }
 
-.add-class:hover {
+.theme-high-contrast .add-class {
+  background-color: transparent;
+  border: 2px solid var(--white);
+}
+
+.theme-light .add-class:hover {
   filter: brightness(0.95);
+}
+
+.theme-high-contrast .add-class:hover {
+  border-color: var(--yellow-contrast);
+}
+
+.tooltip-high-contrast {
+  border: 2px solid var(--white);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  color: var(--white);
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 @media (max-width: 1700px) {

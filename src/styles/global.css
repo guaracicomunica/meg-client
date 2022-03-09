@@ -48,7 +48,7 @@ body, #__next {
 }
 
 .bg-light {
-  background-color: var(--background-light);
+  background-color: var(--background-light) !important;
 }
 
 .bg-high-contrast {
@@ -224,18 +224,32 @@ select:focus {
   top: 1.5rem;
   right: 1.5rem;
   z-index: 1;
-  background-color: var(--white);
   border-radius: 5px;
   padding: 0.1rem 0.25rem;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #538199;
   cursor: pointer;
+}
+
+.bg-light .link-class {
+  background-color: var(--white);
+  color: #538199;
   transition: filter 0.2s;
 }
 
-.link-class:hover {
+.bg-light .link-class:hover {
   filter: brightness(0.95);
+}
+
+.bg-high-contrast .link-class {
+  background-color: var(--black);
+  border: 2px solid var(--white);
+  color: var(--white);
+}
+
+.bg-high-contrast .link-class:hover {
+  border-color: var(--yellow-contrast);
+  color: var(--yellow-contrast);
 }
 
 .img-contrast-white {

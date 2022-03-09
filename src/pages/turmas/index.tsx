@@ -163,11 +163,13 @@ export default function Turmas(props: ClassPageType) {
 
         <ModalCreateNewClass
           type="create"
+          theme={theme}
           show={showModalTeacher}
           onHide={() => setShowModalTeacher(false)}
         />
 
         <ModalAddClass
+          theme={theme}
           show={showModalStudent}
           onHide={() => setShowModalStudent(false)}
         />

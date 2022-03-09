@@ -13,6 +13,7 @@ import styles from './styles.module.css';
 
 type ModalCreateNewClassType = {
   type: string;
+  theme: string;
   formData?: DraftDataForm;
   show: boolean;
   onHide: () => void;
@@ -414,7 +415,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       size="lg"
       aria-labelledby="modal-title"
       centered
-      className="modal-style"
+      className={`modal-style modal-theme-${props.theme}`}
       backdrop="static"
     >
       <Modal.Header className='p-4 border-bottom-0'>

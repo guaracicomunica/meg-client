@@ -8,6 +8,18 @@
   transition: background-color .2s, color .2s;
 }
 
+.bg-high-contrast .button {
+  border-color: var(--white) !important;
+  background-color: transparent !important;
+  color: var(--white) !important;
+  text-decoration: underline;
+}
+
+.bg-high-contrast .button:hover {
+  border-color: var(--yellow-contrast) !important;
+  color: var(--yellow-contrast) !important;
+}
+
 .button-blue-dark {
   border-color: var(--blue-dark);
   background-color: var(--blue-dark);
@@ -52,9 +64,17 @@
   color: var(--white) !important;
 }
 
-.button:disabled {
+.bg-light .button:disabled {
   cursor: not-allowed;
   border-color: var(--gray-title);
   background-color: var(--gray-title) !important;
   color: var(--black) !important;
+}
+
+.bg-high-contrast .button:disabled {
+  cursor: not-allowed;
+  text-decoration: none;
+  border-color: var(--yellow-contrast) !important;
+  background-color: transparent !important;
+  color: var(--yellow-contrast) !important;
 }

@@ -19,9 +19,8 @@
   --blue-text: #2B3543;
   --red: #F94144;
   --yellow: #F9C74F;
-  --yellow-contrast: #FFFF00;
+  --yellow-contrast: #FFF333;
   --green: #6EDE8A;
-  --green-contrast: #2AFF00;
   --background-light: #FCF9FF;
 }
 
@@ -55,6 +54,7 @@ body, #__next {
 
 .bg-high-contrast {
   background-color: var(--black);
+  color: var(--white);
 }
 
 body, input, textarea, button {
@@ -72,11 +72,11 @@ a {
 
 a:hover {
   text-decoration: none;
-  filter: brightness(0.9);
 }
 
 .bg-light a {
   color: var(--blue-light);
+  filter: brightness(0.9);
 }
 
 .bg-light a:hover {
@@ -84,7 +84,8 @@ a:hover {
 }
 
 .bg-high-contrast a {
-  color: var(--yellow-contrast);
+  color: var(--white);
+  text-decoration: underline;
 }
 
 .bg-high-contrast a:hover {
@@ -142,23 +143,29 @@ select:focus {
 
 .center-content {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-content-column {
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.card-style-light, .card-style-high-contrast {
+.card-style {
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 10px;
 }
 
-.card-style-light {
+.bg-light .card-style {
   background-color: var(--white);
   box-shadow: 0px 2px 10px rgba(216, 216, 216, 0.3);
 }
 
-.card-style-high-contrast {
+.bg-high-contrast .card-style {
   border: 2px solid var(--white);
 }
 

@@ -15,10 +15,10 @@ export default function SessaoExpirada() {
         <title>Sessão expirada</title>
       </Head>
 
-      <main className="center-content section">
+      <main className={`center-content-column section theme-${theme}`}>
         <img className={styles["img-page"]} src="./images/session-expired.svg" alt="Sessão expirada" />
-        <h1 className={`title-${theme}-primary`}>Ops... Você está desconectado(a)!</h1>
-        <p className={`text-${theme}`}>Clique <Link href="/login">aqui</Link> para se conectar novamente.</p>
+        <h1 className='title-blue-dark'>Ops... Você está desconectado(a)!</h1>
+        <p className={`text-blue-dark`}>Clique <Link href="/login">aqui</Link> para se conectar novamente.</p>
       </main>
     </>
   );

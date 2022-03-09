@@ -25,11 +25,3 @@
 .footer-high-contrast .border-footer {
   background-color: var(--white);
 }
-
-.footer-high-contrast .link-footer {
-  color: var(--white);
-}
-
-.footer-high-contrast .link-footer:hover {
-  color: var(--yellow-contrast);
-}

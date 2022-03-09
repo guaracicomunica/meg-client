@@ -14,10 +14,10 @@ export default function TermosCondicoes() {
         <title>Termos e condições do MEG</title>
       </Head>
 
-      <main className={styles["page-layout"]}>
+      <main className={`${styles["page-layout"]} theme-${theme}`}>
         <div className='col-10 col-md-9 col-lg-8 col-xl-7'>
-          <h1 className={`title-${theme}-primary mb-4`}>Termos e condições do MEG</h1>
-          <ol className={`text-${theme}`}>
+          <h1 className={`title-blue-dark mb-4`}>Termos e condições do MEG</h1>
+          <ol className='text-blue-dark'>
             <li className={styles.li}>Da aceitação</li>
             <p>O presente Termo estabelece obrigações contratadas de livre e espontânea vontade, por tempo indeterminado, entre a plataforma e as pessoas físicas ou jurídicas, usuárias do MEG - O Mundo Encantado da Geografia.</p>
             <p>Ao utilizar a plataforma o usuário aceita integralmente as presentes normas e compromete-se a observá-las, sob o risco de aplicação das penalidades cabíveis.</p>

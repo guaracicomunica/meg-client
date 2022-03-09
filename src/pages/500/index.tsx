@@ -15,10 +15,10 @@ export default function Custom500() {
         <title>Erro inesperado</title>
       </Head>
 
-      <main className="center-content section">
+      <main className={`center-content-column section theme-${theme}`}>
         <img className={styles["img-page"]} src="./icons/500.svg" alt="Erro inesperado" /> 
-        <h1 className={`title-${theme}-primary`}>Ops... erro inesperado!</h1>
-        <p className={`text-${theme}`}>Clique <Link href="/">aqui</Link> para voltar à página inicial.</p>
+        <h1 className='title-blue-dark'>Ops... erro inesperado!</h1>
+        <p className={`text-blue-dark`}>Clique <Link href="/">aqui</Link> para voltar à página inicial.</p>
       </main>
     </>
   );

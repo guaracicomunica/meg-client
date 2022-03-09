@@ -96,29 +96,20 @@
 }
 
 /* Theme high contrast */
-.theme-high-contrast .title-home {
-  color: var(--white);
-}
-
 .theme-high-contrast .keyword {
-  border-color: var(--yellow-contrast);
-  color: var(--yellow-contrast);
+  border-width: 2px;
+  border-color: var(--white);
 }
 
 .theme-high-contrast .section-not-allowed {
   background-color: var(--black);
 }
 
-.theme-high-contrast .border-soft-blue {
-  background-color: var(--blue-contrast);
-}
-
-.theme-high-contrast .border-blue {
-  background-color: var(--blue-contrast);
-}
-
+.theme-high-contrast .border-soft-blue,
+.theme-high-contrast .border-blue,
 .theme-high-contrast .border-yellow {
-  background-color: var(--yellow-contrast);
+  background-color: var(--white);
+  height: 2px;
 }
 
 @media (max-width: 992px) {

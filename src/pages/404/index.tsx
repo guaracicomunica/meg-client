@@ -16,14 +16,14 @@ export default function Custom404() {
         <title>Página não encontrada</title>
       </Head>
 
-      <main className="center-content section">
+      <main className={`center-content-column section theme-${theme}`}>
         <img
           className={theme === enumTheme.contrast ? `${styles["img-page"]} img-contrast-white` : styles["img-page"]}
           src="./icons/404.svg"
           alt="Página não encontrada"
         /> 
-        <h1 className={`title-${theme}-primary`}>Ops... página não encontrada!</h1>
-        <p className={`text-${theme}`}>Clique <Link href="/">aqui</Link> para voltar à página inicial.</p>
+        <h1 className='title-blue-dark'>Ops... página não encontrada!</h1>
+        <p className='text-blue-dark'>Clique <Link href="/">aqui</Link> para voltar à página inicial.</p>
       </main>
     </>
   );

@@ -39,20 +39,20 @@ export default function Home() {
 
         <section className="section d-flex flex-column align-items-center">
           <div className="col-11 col-lg-5 justify-content-center">
-            <h1 className={`title-${theme}-primary text-center`}>
+            <h1 className="title-blue-dark text-center">
               Conheça o Mundo Encantado da Geografia (MEG)
             </h1>
             <hr className={styles["border-soft-blue"]} />
           </div>
           
           <div className="col-11 col-lg-7">
-            <p className={`text-${theme} text-center`}>
+            <p className="text-blue-dark text-center">
               Seja bem-vindo(a) ao MEG – O Mundo Encantado da Geografia! O MEG é um projeto de ensino que tem como objetivo aperfeiçoar o processo de ensino e de aprendizagem através da interdisciplinaridade e da gamificação.
             </p>
-            <p className={`text-${theme} text-center`}>
+            <p className="text-blue-dark text-center">
               O projeto tem como questão norteadora: como vencer o monstro da ignorância? Focado na storytelling, as narrativas são construídas considerando-se o mundo das lendas, dos contos de fadas, das sagas, dos seriados e dos filmes.
             </p>
-            <p className={`text-${theme} text-center`}>
+            <p className="text-blue-dark text-center">
               Aqui você encontrará um ambiente para se conectar e, de forma colaborativa e com perseverança, solucionar todas as missões e conquistar a chave dourada do conhecimento, de onde quer que esteja.
             </p>
           </div>
@@ -111,7 +111,7 @@ export default function Home() {
           </div>
 
           <div className="col-9 col-md-7 col-lg-4 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
-            <h1 className={`title-${theme}-primary text-uppercase text-center`}>
+            <h1 className={`title-blue-dark text-uppercase text-center`}>
               Regras gamificadas
             </h1>
 
@@ -129,7 +129,7 @@ export default function Home() {
 
         <section className={`section ${styles["section-not-allowed"]}`}>
           <div className="col-10">
-            <h1 className={`title-${theme}-primary text-uppercase text-center`}>
+            <h1 className={`title-blue-dark text-uppercase text-center`}>
               O que você não pode fazer
             </h1>
 
@@ -165,7 +165,7 @@ export default function Home() {
 
         <section className="section row justify-content-around align-items-center mb-5">
           <div className="col-9 col-md-7 col-lg-4 col-xl-5 mb-5 mb-lg-0">
-            <h1 className={`title-${theme}-primary text-uppercase text-center`}>
+            <h1 className={`title-blue-dark text-uppercase text-center`}>
               Premiações do MEG
             </h1>
 

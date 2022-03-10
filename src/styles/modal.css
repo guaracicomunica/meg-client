@@ -29,6 +29,7 @@
 .modal-theme-high-contrast .modal-content {
   background-color: var(--black);
   border: 2px solid var(--white);
+  color: var(--white);
 }
 
 .modal-theme-high-contrast .close {

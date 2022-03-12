@@ -11,7 +11,9 @@ import { ToastContainer } from "react-toastify";
 import CardActivity from "../../../../components/CardActivity";
 import ModalAddTopic from "../../../../components/ModalAddTopic";
 import { AuthContext } from "../../../../contexts/AuthContext";
+import { ThemeContext } from "../../../../contexts/ThemeContext";
 import { RoleUser } from "../../../../enums/enumRoleUser";
+import { enumTheme } from "../../../../enums/enumTheme";
 import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ActivityTopicType, ActivityType } from "../../../../types/Post";
@@ -30,6 +32,7 @@ type ActivitiesPageProps = {
 export default function Atividades(props: ActivitiesPageProps) {
   const { 'meg.token': token } = parseCookies();
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const router = useRouter();
 
   const [showModalAddTopic, setShowModalAddTopic] = useState(false);
@@ -170,7 +173,11 @@ export default function Atividades(props: ActivitiesPageProps) {
                       dataLength={activitiesList.length}
                       next={getMoreActivity}
                       hasMore={hasMore}
-                      loader={<div className={styles["loading-container"]}><Spinner animation="border" /></div>}
+                      loader={
+                        <div className={styles["loading-container"]}>
+                          <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+                        </div>
+                      }
                     >
                       {activitiesList.length > 0 ? (
                         activitiesList.map(activity => {
@@ -185,7 +192,9 @@ export default function Atividades(props: ActivitiesPageProps) {
                     return (
                       <Tab.Pane eventKey={topic.id} key={topic.id}>
                         {loading ? (
-                          <div className={styles["loading-container"]}><Spinner animation="border" /></div>
+                          <div className={styles["loading-container"]}>
+                            <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+                          </div>
                         ) : (
                           filteredActivitiesList.length > 0 ? (
                             filteredActivitiesList.map(activity => {

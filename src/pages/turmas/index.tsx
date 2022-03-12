@@ -96,7 +96,11 @@ export default function Turmas(props: ClassPageType) {
           dataLength={classes.length}
           next={getMorePost}
           hasMore={hasMore}
-          loader={<div className={styles["loading-container"]}><Spinner animation="border" /></div>}
+          loader={
+            <div className={styles["loading-container"]}>
+              <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+            </div>
+          }
         >
           {/* show active classes first */}
           {classes.length > 0 && (

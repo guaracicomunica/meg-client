@@ -6,22 +6,24 @@ import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
 import PostList from "../../../components/PostList";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { ThemeContext } from "../../../contexts/ThemeContext"
+import { RoleUser } from "../../../enums/enumRoleUser";
+import { enumTheme } from "../../../enums/enumTheme";
 import { api } from "../../../services/api";
 import { getAPIClient } from "../../../services/apiClient";
 import { ClassType } from "../../../types/Class";
 import { PostType } from "../../../types/Post";
+import { QueryProps } from "../../../types/Query";
+import { genericMessageError, options } from "../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
-import { AuthContext } from "../../../contexts/AuthContext";
-import { RoleUser } from "../../../enums/enumRoleUser";
-import { useForm } from "react-hook-form";
-import { genericMessageError, options } from "../../../utils/defaultToastOptions";
-import { QueryProps } from "../../../types/Query";
 
 type ClassPageProps = {
   classroom: ClassType,
@@ -40,10 +42,10 @@ type CreatePostType = {
 }
 
 export default function Turma(props: ClassPageProps) {
-
   const router = useRouter();
   const { ['meg.token']: token } = parseCookies();
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [postsList, setPostsList] = useState<PostType[]>([]);
@@ -231,7 +233,11 @@ export default function Turma(props: ClassPageProps) {
               dataLength={postsList.length}
               next={getMorePost}
               hasMore={hasMore}
-              loader={<div className={styles["loading-container"]}><Spinner animation="border" /></div>}
+              loader={
+                <div className={styles["loading-container"]}>
+                  <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+                </div>
+              }
             >
             {postsList.length > 0 ? (
               <PostList items={postsList} />
@@ -246,6 +252,7 @@ export default function Turma(props: ClassPageProps) {
       </main>
 
       <ModalSeeClassCode
+        theme={theme}
         code={classroom.code}
         show={showModalSeeCode}
         onHide={() => setShowModalSeeCode(false)}

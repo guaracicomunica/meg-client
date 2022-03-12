@@ -83,7 +83,7 @@ export default function ModalAddClass(props: ModalAddClassType) {
   return (
     <Modal
       id="modal-add-class-student"
-      className={`modal-style modal-theme-${props.theme}`}
+      className={`modal-style bg-${props.theme}`}
       show={props.show}
       onHide={props.onHide}
       aria-labelledby="modal-title"

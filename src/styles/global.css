@@ -255,3 +255,7 @@ select:focus {
 .img-contrast-white {
   filter: brightness(0) invert(1);
 }
+
+.bg-high-contrast hr {
+  border-color: var(--white);
+}

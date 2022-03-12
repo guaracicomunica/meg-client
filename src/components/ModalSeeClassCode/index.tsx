@@ -21,7 +21,7 @@ export default function ModalSeeClassCode(props: ModalSeeClassCodeType) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style modal-theme-${theme}`}
+      className={`modal-style bg-${theme}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>

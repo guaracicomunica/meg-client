@@ -1,16 +1,18 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ModalSeeClassCode from '../ModalSeeClassCode';
 import ModalCreateNewClass from '../ModalCreateNewClass';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { ClassStatus } from '../../enums/enumClassStatus';
 import { ClassCard } from '../../types/Class';
 import styles from './styles.module.css';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 export default function CardClass(props: ClassCard) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     if (props.banner !== null) {
@@ -78,12 +80,14 @@ export default function CardClass(props: ClassCard) {
         </div>
 
         <ModalSeeClassCode
+          theme={theme}
           code={props.code}
           show={showModalSeeCode}
           onHide={() => setShowModalSeeCode(false)}
         />
 
         <ModalCreateNewClass
+          theme={theme}
           type="edit"
           formData={{
             id: props.id,

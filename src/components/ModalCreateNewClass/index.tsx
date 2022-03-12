@@ -10,6 +10,7 @@ import { options } from '../../utils/defaultToastOptions';
 import { DraftDataForm, DataFormClass } from '../../types/Class';
 
 import styles from './styles.module.css';
+import { enumTheme } from '../../enums/enumTheme';
 
 type ModalCreateNewClassType = {
   type: string;
@@ -273,12 +274,12 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     
   }
 
-  function enableSkillStore(e: React.ChangeEvent<HTMLSelectElement>) {
-    if (e.currentTarget.value === "yes") {
+  function enableSkillStore(isEnabled: boolean) {
+    if (isEnabled) {
       setIsSkillStoreEnabled(true);
       addSkill();
     }
-    if (e.currentTarget.value === "no") {
+    else {
       setIsSkillStoreEnabled(false);
       setSkillInputs([]);
     }
@@ -415,7 +416,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       size="lg"
       aria-labelledby="modal-title"
       centered
-      className={`modal-style modal-theme-${props.theme}`}
+      className={`modal-style bg-${props.theme}`}
       backdrop="static"
     >
       <Modal.Header className='p-4 border-bottom-0'>
@@ -461,7 +462,11 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                 {...register('file')}
               />
               <label htmlFor="file">
-                <img src="./icons/camera.svg" alt="Adicionar imagem" />
+                <img
+                  src="./icons/camera.svg"
+                  alt="Adicionar imagem"
+                  className={props.theme === enumTheme.contrast ? "img-contrast-white" : ""}
+                />
               </label>
               <span>Defina uma capa</span>
             </div>
@@ -477,19 +482,38 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
           <hr className="my-4" />
 
-          <div>
-            <strong style={{color: "var(--gray-title)"}}>Deseja criar uma loja de Habilidades para essa turma?</strong>
-            <select
-              onChange={enableSkillStore}
-              defaultValue={-1}
-              className="ml-lg-4 mt-2 mt-lg-0 p-2 select"
-              name="skill-store"
-              id="skill-store"
-            >
-              <option disabled={true} value={-1}>Escolha uma opção:</option>
-              <option value="yes">Quero uma loja</option>
-              <option value="no">Não quero uma loja</option>
-            </select>
+          <div className='d-flex'>
+            <strong style={props.theme === enumTheme.light ? {color: "var(--gray-title)"} : {}} className="mt-2">
+              Deseja criar uma loja de Habilidades para essa turma?
+            </strong>
+            <div className="form-group form-check-inline m-0 mt-2">
+              <div className='d-flex'>
+                <div className="radio">
+                  <input
+                    type="radio"
+                    id="enable-skill-store"
+                    name="skill-store"
+                    onChange={() => enableSkillStore(true)}
+                  />
+                  <label htmlFor="enable-skill-store"> </label>
+                </div>
+                <span>Sim</span>
+              </div>
+              
+              <div className='d-flex'>
+                <div className="radio">
+                  <input
+                    type="radio"
+                    id="unable-skill-store"
+                    name="skill-store"
+                    onChange={() => enableSkillStore(false)}
+                    defaultChecked={true}
+                  />
+                  <label htmlFor="unable-skill-store"> </label>
+                </div>
+                <span>Não</span>
+              </div>
+            </div>
           </div>
 
           {isSkillStoreEnabled && (
@@ -542,7 +566,11 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                             {...register(`skills.${i}.file`)}
                           />
                           <label htmlFor={`skills[${i}][file]`}>
-                            <img src="./icons/camera.svg" alt="Adicionar imagem" />
+                            <img
+                              src="./icons/camera.svg"
+                              alt="Adicionar imagem"
+                              className={props.theme === enumTheme.contrast ? "img-contrast-white" : ""}
+                            />
                           </label>
                           <span>Defina capa</span>
                         </div>
@@ -562,8 +590,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                             alt="Preview da imagem selecionada"
                           />
                         </div>
-                        <button type="button" onClick={() => deleteSkill(input.id, i)} className={styles["delete-attachment"]}>
-                          <img src="/icons/x.svg" alt="Excluir habilidade" />
+                        <button
+                          type="button"
+                          onClick={() => deleteSkill(input.id, i)}
+                          className={styles["delete-attachment"]}
+                        >
+                          <img
+                            src="/icons/x.svg"
+                            alt="Excluir habilidade"
+                            className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
+                          />
                         </button>
                       </div>
                     </div>
@@ -572,8 +608,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
               </div>
 
               <button type="button" onClick={addSkill} className={`${styles["button-add-input"]} modal-button`}>
-                <img src="./icons/plus.svg" alt="Adicionar habilidade" style={{height: "1.2rem"}} />
-                <span className="ml-2">Nova habilidade</span>
+                <img
+                  src="./icons/plus.svg"
+                  alt="Adicionar habilidade"
+                  style={{height: "1.2rem"}}
+                  className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
+                />
+                <span
+                  className="ml-2"
+                  style={props.theme === enumTheme.light ? {color: 'var(--gray-light)'} : {color: 'var(--white)'}}
+                >Nova habilidade</span>
               </button>
             </>
           )}
@@ -626,7 +670,11 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                         {...register(`levels.${i}.file`)}
                       />
                       <label htmlFor={`levels[${i}][file]`}>
-                        <img src="./icons/camera.svg" alt="Adicionar imagem" />
+                        <img
+                          src="./icons/camera.svg"
+                          alt="Adicionar imagem"
+                          className={props.theme === enumTheme.contrast ? "img-contrast-white" : ""}
+                        />
                       </label>
                       <span>Defina capa</span>
                     </div>
@@ -646,8 +694,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                         alt="Preview da imagem selecionada"
                       />
                     </div>
-                    <button type="button" onClick={() => deleteLevel(input.id, i)} className={styles["delete-attachment"]}>
-                      <img src="/icons/x.svg" alt="Excluir nível" />
+                    <button
+                      type="button"
+                      onClick={() => deleteLevel(input.id, i)}
+                      className={styles["delete-attachment"]}
+                    >
+                      <img
+                        src="/icons/x.svg"
+                        alt="Excluir nível"
+                        className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
+                      />
                     </button>
                   </div>
                 </div>
@@ -656,8 +712,16 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
           </div>
 
           <button type="button" onClick={addLevel} className={`${styles["button-add-input"]} modal-button`}>
-            <img src="./icons/plus.svg" alt="Adicionar nível" style={{height: "1.2rem"}} />
-            <span className="ml-2">Novo nível</span>
+            <img
+              src="./icons/plus.svg"
+              alt="Adicionar nível"
+              style={{height: "1.2rem"}}
+              className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
+            />
+            <span
+              className="ml-2"
+              style={props.theme === enumTheme.light ? {color: 'var(--gray-light)'} : {color: 'var(--white)'}}
+            >Novo nível</span>
           </button>
 
           <hr className="mt-3 mb-4" />
@@ -675,7 +739,10 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
           <hr className="my-4" />
 
-          <p className="text-center" style={{color: "var(--red)"}}>
+          <p
+            className="text-center"
+            style={props.theme === enumTheme.light ? {color: "var(--red)"} : {color: "var(--yellow-contrast)"}}
+          >
             Ao criar a turma, envie o link de acesso gerado automaticamente para os alunos. O link pode ser localizado no lado direito superior do cabeçalho da turma.
           </p>
         </form>
@@ -684,7 +751,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         {props.type === "create" && (
           <button
             className="modal-button"
-            style={{color: "var(--gray-title)"}}
+            style={props.theme === enumTheme.light ? {color: "var(--gray-title)"} : {}}
             form="create-class"
             type="submit"
             name="save-draft"

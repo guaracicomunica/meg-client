@@ -19,63 +19,41 @@
 }
 
 .modal-button {
-  background-color: var(--white);
+  background-color: transparent;
   border: none;
   font-size: 1rem;
 }
 
 /* MODAL THEME */
 
-.modal-theme-high-contrast .modal-content {
-  background-color: var(--black);
-  border: 2px solid var(--white);
-  color: var(--white);
+.modal-style.bg-high-contrast, .modal-style.bg-light {
+  background-color: transparent !important;
 }
 
-.modal-theme-high-contrast .close {
+.bg-high-contrast .modal-content {
+  background-color: var(--black);
+  border: 2px solid var(--white);
+}
+
+.bg-high-contrast .close {
   color: var(--white) !important;
   text-shadow: none !important;
   opacity: 1 !important;
 }
 
-.modal-theme-high-contrast .close:hover {
+.bg-high-contrast .close:hover {
   color: var(--yellow-contrast) !important;
 }
 
-.modal-theme-light .modal-title, .modal-theme-light .modal-body h4 {
-  color: var(--blue-dark);
-}
-
-.modal-theme-high-contrast .modal-title {
-  color: var(--white);
-}
-
-.modal-theme-light .modal-footer .modal-button {
+.bg-light .modal-footer .modal-button {
   color: var(--gray-title);
 }
 
-.modal-theme-high-contrast .modal-footer .modal-button {
-  background-color: transparent;
+.bg-high-contrast .modal-footer .modal-button {
   color: var(--white);
   text-decoration: underline;
 }
 
-.modal-theme-high-contrast .modal-footer .modal-button:hover {
+.bg-high-contrast .modal-footer .modal-button:hover {
   color: var(--yellow-contrast);
-}
-
-.modal-theme-high-contrast .form-input {
-  background-color: var(--black);
-  border-color: var(--white);
-  color: var(--white) !important;
-}
-
-.modal-theme-high-contrast .form-input:focus {
-  color: var(--white);
-  border-color: var(--yellow-contrast);
-  box-shadow: none;
-}
-
-.modal-theme-high-contrast .form-input::placeholder {
-  color: var(--white) !important;
 }

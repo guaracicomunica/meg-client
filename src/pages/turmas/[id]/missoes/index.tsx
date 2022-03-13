@@ -42,6 +42,7 @@ export default function Atividades(props: ActivitiesPageProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const isTeacher = user?.role === RoleUser.teacher;
 
   useEffect(() => {
     if (props) {
@@ -136,8 +137,8 @@ export default function Atividades(props: ActivitiesPageProps) {
         <title>Missões da turma</title>
       </Head>
 
-      <main className="page-container">
-        <div className={user?.role === RoleUser.teacher ? styles["list-activities-teacher"] : ""}>
+      <main className={`page-container ${styles[`theme-${theme}`]}`}>
+        <div className={isTeacher ? styles["list-activities-teacher"] : ""}>
           <Tab.Container id="topics-list" defaultActiveKey="all" onSelect={filterActivities}>
             <Row>
               <Col sm={12} lg={3} className="p-0 mb-3 mb-lg-0">
@@ -156,11 +157,9 @@ export default function Atividades(props: ActivitiesPageProps) {
                     )
                   })}
                   
-                  {user?.role === RoleUser.teacher && (
+                  {isTeacher && (
                     <Nav.Item onClick={() => setShowModalAddTopic(true)}>
-                      <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles["add-topic"]}>
-                        +
-                      </Nav.Link>
+                      <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles["add-topic"]}>+</Nav.Link>
                     </Nav.Item>
                   )}
                 </Nav>
@@ -212,7 +211,7 @@ export default function Atividades(props: ActivitiesPageProps) {
             </Row>
           </Tab.Container>
 
-          {user?.role === RoleUser.teacher && (
+          {isTeacher && (
             <Link href={`/turmas/${router.query.id}/missoes/criar`}>
               <button
                 disabled={props.topics.length === 0}
@@ -226,6 +225,7 @@ export default function Atividades(props: ActivitiesPageProps) {
         </div>
 
         <ModalAddTopic
+          theme={theme}
           classroom_id={Number(router.query.id)}
           show={showModalAddTopic}
           onHide={() => setShowModalAddTopic(false)}

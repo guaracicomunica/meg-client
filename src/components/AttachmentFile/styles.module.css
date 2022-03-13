@@ -1,8 +1,16 @@
 .attachment {
-  border: 2px solid var(--gray-title);
+  border: 2px solid;
   border-radius: 10px;
   display: flex;
   align-items: center;
+}
+
+.attachment-light {
+  border-color: var(--gray-title);
+}
+
+.attachment-light {
+  border-color: var(--white);
 }
 
 .attachment:not(.attachment:last-of-type) {
@@ -14,6 +22,9 @@
 }
 
 .attachment a {
-  color: var(--gray-title);
   font-weight: 700;
+}
+
+.attachment-light a {
+  color: var(--gray-title);
 }

@@ -14,7 +14,9 @@ import CommentList from "../../../../../components/CommentList";
 import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
 import { AuthContext } from "../../../../../contexts/AuthContext";
+import { ThemeContext } from "../../../../../contexts/ThemeContext";
 import { RoleUser } from "../../../../../enums/enumRoleUser";
+import { enumTheme } from "../../../../../enums/enumTheme";
 import { api } from "../../../../../services/api";
 import { getAPIClient } from "../../../../../services/apiClient";
 import { ActivityType, CommentType } from "../../../../../types/Post";
@@ -32,12 +34,15 @@ export default function Atividade(props: ActivityType) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     body: ""
   }});
   const current_route: string = `/turmas/${router.query.id}/missoes/${router.query.slug}`;
+  const isTeacher = user?.role === RoleUser.teacher;
+  const isHighContrast = theme === enumTheme.contrast;
 
   function addFile(data: any) {
     setFiles([
@@ -239,18 +244,16 @@ export default function Atividade(props: ActivityType) {
         <title>{props.name}</title>
       </Head>
 
-      <main className={`${styles["page-layout"]} mt-3`}>
+      <main className={`${styles["page-layout"]} ${styles[`theme-${theme}`]} mt-3`}>
         <div className="card-style p-4">
           <div className={`${styles["card-activity-header"]} border-bottom pb-4`}>
             <img src="/icons/activity-post.svg" alt="Missão" />
             <div className={styles["info-activity"]}>
-              <h5>{props.name}</h5>
-              <div className={styles["activity-deadline"]}>
-                {props.deadline !== null
-                  ? <p>Data de entrega: {format(parseISO(`${props.deadline}`), "dd/MM/yyyy 'até' HH:mm")}</p> 
-                  : <p>Sem data de entrega</p>
-                }
-              </div>
+              <h5 className="mb-0 mr-2">{props.name}</h5>
+              {props.deadline !== null
+                ? <p className="mb-0">Data de entrega: {format(parseISO(`${props.deadline}`), "dd/MM/yyyy 'até' HH:mm")}</p> 
+                : <p className="mb-0">Sem data de entrega</p>
+              }
             </div>
           </div>
 
@@ -259,7 +262,7 @@ export default function Atividade(props: ActivityType) {
               <div className={styles["activity-grade"]}>Nota: {props.points} pontos</div>
               <div className={styles["activity-score"]}>{props.xp} XP | {props.coins} moedas</div>
             </div>
-            {user?.role === RoleUser.teacher && (
+            {isTeacher && (
               <div className={styles["activity-status"]}>
                 {props.disabled 
                   ? <span className={styles.inactive}>Inativo</span>  
@@ -272,7 +275,7 @@ export default function Atividade(props: ActivityType) {
           <div className="d-flex flex-column flex-md-row w-100 py-4">
             <div className={`pr-3 w-100 ${styles["activity-body"]}`}>{props.body}</div>
 
-            {user?.role === RoleUser.teacher && (
+            {isTeacher && (
               <div className={`${styles["delivery-cards"]} pl-md-4 mt-4 mt-md-0`}>
                 <div className={`p-2 mr-3 ${styles["info-card"]}`}>
                   <div className={styles.quantity}>{props.totalDeliveredActivities}</div>
@@ -297,7 +300,7 @@ export default function Atividade(props: ActivityType) {
             })}
           </div>
 
-          {user?.role === RoleUser.teacher && (
+          {isTeacher && (
             <div className="d-flex mt-3">
               <Link href={`/turmas/${router.query.id}/missoes/${router.query.slug}/corrigir`}>
                 <a className="button button-blue text-uppercase">Corrigir missão</a>
@@ -316,7 +319,7 @@ export default function Atividade(props: ActivityType) {
           />
         </div>
 
-        {user?.role === RoleUser.teacher ? (
+        {isTeacher ? (
           <div className={`card-style p-4 ${styles["card-private-comments"]}`}>
             <h5 className="pb-3 border-bottom">Dúvida dos participantes</h5>
             
@@ -444,7 +447,7 @@ export default function Atividade(props: ActivityType) {
                   {...register('body')}
                 ></textarea>
                 <button type="submit" form="send-private-comment">
-                  <img src="/icons/send.svg" alt="Enviar" />
+                  <img src="/icons/send.svg" alt="Enviar" className={isHighContrast ? "img-contrast-white": ""} />
                 </button>
               </form>
             </div>

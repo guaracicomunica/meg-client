@@ -175,8 +175,11 @@ select:focus {
 .link-card h4 {
   text-align: center;
   font-weight: 900;
-  color: var(--blue-dark);
   margin: 0;
+}
+
+.bg-light .link-card h4 {
+  color: var(--blue-dark);
 }
 
 .banner {
@@ -197,12 +200,25 @@ select:focus {
   filter: grayscale(100%);
 }
 
-.info-class {
+.banner .banner-content {
+  display: grid;
+  grid-template-columns: calc(100% - 10.55rem) 10.55rem;
   width: 100%;
   position: absolute;
   top: 0;
   z-index: 1;
+}
+
+.info-class {
   color: var(--white);
+}
+
+.bg-high-contrast .info-class .title,
+.bg-high-contrast .info-class .nickname,
+.bg-high-contrast .info-class .teacher {
+  background-color: var(--black);
+  width: fit-content;
+  max-width: 100%;
 }
 
 .info-class .title, .info-class .nickname {
@@ -220,14 +236,12 @@ select:focus {
 }
 
 .link-class {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  z-index: 1;
+  height: fit-content;
   border-radius: 5px;
   padding: 0.1rem 0.25rem;
   font-size: 0.9rem;
   font-weight: 700;
+  text-align: center;
   cursor: pointer;
 }
 

@@ -170,16 +170,17 @@ export default function Turma(props: ClassPageProps) {
             src={bannerURL}
             alt="Banner da turma"
           />
+          <div className="banner-content">
+            <div className="info-class pt-4 pl-4 pr-0">
+              <h3 className='text-uppercase title'>{classroom.name}</h3>
+              <h4 className="nickname">{classroom.nickname}</h4>
+              <hr className='my-2 w-50' />
+              <p className='teacher'>Prof. {classroom.teacher}</p>
+            </div>
 
-          <div className="info-class p-4">
-            <h3 className='text-uppercase title'>{classroom.name}</h3>
-            <h4 className="nickname">{classroom.nickname}</h4>
-            <hr className='my-2 w-50' />
-            <p>Prof. {classroom.teacher}</p>
-          </div>
-
-          <div className="link-class" onClick={() => setShowModalSeeCode(true)}>
-            Código da Turma
+            <div className="link-class m-4" onClick={() => setShowModalSeeCode(true)}>
+              Código da Turma
+            </div>
           </div>
         </div>
 
@@ -187,21 +188,33 @@ export default function Turma(props: ClassPageProps) {
           <div className={styles["posts-aside"]}>
             <Link href={`/turmas/${router.query.id}/missoes`}>
               <div className="card-style link-card p-4 mt-4 mt-md-0">
-                <img src="/icons/activity.svg" alt="Missão" className={styles["img-link-card"]} />
+                <img
+                  src="/icons/activity.svg"
+                  alt="Missão"
+                  className={theme === enumTheme.contrast ? `img-contrast-white ${styles["img-link-card"]}` : styles["img-link-card"]}
+                />
                 <h4 className="mt-3">Ver missões</h4>
               </div>
             </Link>
 
             <Link href={`/turmas/${router.query.id}/participantes`}>
               <div className="card-style link-card p-4 mt-4">
-                <img src="/icons/students.svg" alt="Alunos" className={styles["img-link-card"]} />
+                <img
+                  src="/icons/students.svg"
+                  alt="Alunos"
+                  className={theme === enumTheme.contrast ? `img-contrast-white ${styles["img-link-card"]}` : styles["img-link-card"]}
+                />
                 <h4 className="mt-3">Ver alunos</h4>
               </div>
             </Link>
 
             <Link href={user?.role === RoleUser.teacher ? `/turmas/${router.query.id}/notas` : `/turmas/${router.query.id}/boletim`}>
               <div className="card-style link-card p-4 mt-4">
-                <img src="/icons/grades.svg" alt="Notas" className={styles["img-link-card"]} />
+                <img
+                  src="/icons/grades.svg"
+                  alt="Notas"
+                  className={theme === enumTheme.contrast ? `img-contrast-white ${styles["img-link-card"]}` : styles["img-link-card"]}
+                />
                 <h4 className="mt-3">
                   {user?.role === RoleUser.teacher ? "Ver notas" : "Ver minhas notas" }
                 </h4>

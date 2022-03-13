@@ -494,6 +494,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                     id="enable-skill-store"
                     name="skill-store"
                     onChange={() => enableSkillStore(true)}
+                    defaultChecked={isSkillStoreEnabled}
                   />
                   <label htmlFor="enable-skill-store"> </label>
                 </div>
@@ -507,7 +508,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                     id="unable-skill-store"
                     name="skill-store"
                     onChange={() => enableSkillStore(false)}
-                    defaultChecked={true}
+                    defaultChecked={!isSkillStoreEnabled}
                   />
                   <label htmlFor="unable-skill-store"> </label>
                 </div>

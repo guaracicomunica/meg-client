@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 import styles from './styles.module.css';
 
@@ -11,9 +13,10 @@ type PostActivityProps = {
 
 export default function PostActivity(props: PostActivityProps) {
   const router = useRouter();
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={`${styles["post-activity"]} mb-3 py-4 px-5`}>
+    <div className={`${styles["post-activity"]} ${styles[`post-${theme}`]} mb-3 py-4 px-5`}>
       <img src="/icons/activity-post.svg" alt="Missão" />
       <h5>
         Prof. {props.teacher} postou uma nova missão:

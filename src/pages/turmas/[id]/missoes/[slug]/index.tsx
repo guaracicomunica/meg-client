@@ -4,9 +4,10 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+
 import AttachmentFile from "../../../../../components/AttachmentFile";
 import AttachmentLink from "../../../../../components/AttachmentLink";
 import CommentList from "../../../../../components/CommentList";
@@ -16,8 +17,7 @@ import { AuthContext } from "../../../../../contexts/AuthContext";
 import { RoleUser } from "../../../../../enums/enumRoleUser";
 import { api } from "../../../../../services/api";
 import { getAPIClient } from "../../../../../services/apiClient";
-import { ActivityType, CommentType, UserActivity } from "../../../../../types/Post";
-import { User } from "../../../../../types/User";
+import { ActivityType, CommentType } from "../../../../../types/Post";
 import { genericMessageError, options } from "../../../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
@@ -186,8 +186,7 @@ export default function Atividade(props: ActivityType) {
     }
   }
 
-  async function withDrawActivity(){
-
+  async function withDrawActivity() {
     const request = generateFormData();
 
     try {
@@ -214,12 +213,14 @@ export default function Atividade(props: ActivityType) {
           }
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
             toast.warning(errors[item][0], options);
           });
+          break;
 
         case 500: 
           toast.error(genericMessageError, options);
@@ -230,7 +231,6 @@ export default function Atividade(props: ActivityType) {
           break;
       }
     }
-
   }
 
   return (
@@ -363,7 +363,11 @@ export default function Atividade(props: ActivityType) {
                           <img src="/icons/file.svg" alt="Ícone" />
                           <span>{file.name}</span>
                           {props?.userActivity?.delivered_at == null && (
-                            <button type="button" onClick={() => deleteFile(index)} className={styles["delete-attachment"]}>
+                            <button
+                              type="button"
+                              onClick={() => deleteFile(index)}
+                              className={styles["delete-attachment"]}
+                            >
                               <img src="/icons/x.svg" alt="Excluir" />
                             </button> 
                           )}

@@ -141,8 +141,8 @@
 
 .bg-high-contrast .select {
   color: var(--white);
-  background-color: transparent;
-  border: 2px solid var(--white);
+  background-color: var(--black) !important;
+  border: 2px solid var(--white) !important;
 }
 
 .input-file {

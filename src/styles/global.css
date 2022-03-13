@@ -75,11 +75,11 @@ a:hover {
 
 .bg-light a {
   color: var(--blue-light);
-  filter: brightness(0.9);
 }
 
 .bg-light a:hover {
   color: var(--blue-light);
+  filter: brightness(0.9);
 }
 
 .bg-high-contrast a {

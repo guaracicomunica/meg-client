@@ -49,6 +49,7 @@ export default function CardStudent(props: CardStudentProps) {
       </div>
 
       <ModalShowStudent
+        theme={theme}
         student={student}
         show={showModalSeeStudent}
         onHide={() => setShowModalSeeStudent(false)}

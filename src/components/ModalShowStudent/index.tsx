@@ -10,6 +10,7 @@ import { options } from '../../utils/defaultToastOptions';
 import styles from './styles.module.css';
 
 type ModalShowStudentType = {
+  theme: string;
   student: StudentType;
   show: boolean;
   onHide: () => void;
@@ -79,7 +80,7 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className="modal-style"
+      className={`modal-style bg-${props.theme}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
@@ -88,7 +89,7 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="px-2">
+        <div className={`${styles[`theme-${props.theme}`]} px-2`}>
           <div className={styles["info-user"]}>
             <img src={student.avatar ?? "/icons/user.svg"} alt="Imagem do aluno" />
             <h5>{student.name}</h5>

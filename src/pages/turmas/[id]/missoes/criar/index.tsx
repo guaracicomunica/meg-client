@@ -83,11 +83,8 @@ export default function Criar(props: CreateActivityProps) {
     setLinks(newLinks);
   }
 
-  function addFile(data: any) {
-    setFiles([
-      ...files,
-      data.file[0]
-    ]);
+  function addFile(file: File) {
+    setFiles([...files, file]);
   }
 
   function deleteFile(fileIndex: number) {
@@ -403,12 +400,14 @@ export default function Criar(props: CreateActivityProps) {
       </main>
 
       <ModalAddLink
+        theme={theme}
         show={showModalAddLink}
         onHide={() => setShowModalAddLink(false)}
         addLink={addLink}
       />
 
       <ModalAddFile
+        theme={theme}
         show={showModalAddFile}
         onHide={() => setShowModalAddFile(false)}
         addFile={addFile}

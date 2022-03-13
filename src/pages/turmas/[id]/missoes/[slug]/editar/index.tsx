@@ -3,12 +3,14 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 
 import ModalAddFile from '../../../../../../components/ModalAddFile';
 import ModalAddLink from '../../../../../../components/ModalAddLink';
+import { ThemeContext } from '../../../../../../contexts/ThemeContext';
+import { enumTheme } from '../../../../../../enums/enumTheme';
 import { api } from '../../../../../../services/api';
 import { getAPIClient } from '../../../../../../services/apiClient';
 import { options } from '../../../../../../utils/defaultToastOptions';
@@ -88,6 +90,9 @@ export default function Editar(props: EditPageProps) {
   const [links, setLinks] = useState<LinkType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const [attachments, setAttachments] = useState<AttachmentType[]>([]);
+  
+  const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
 
   useEffect(() => {
     if (activity) {
@@ -121,11 +126,8 @@ export default function Editar(props: EditPageProps) {
     setLinks(newLinks);
   }
 
-  function addFile(data: any) {
-    setFiles([
-      ...files,
-      data.file[0]
-    ])
+  function addFile(file: File) {
+    setFiles([...files, file]);
   }
 
   function deleteFile(fileIndex: number) {
@@ -304,11 +306,11 @@ export default function Editar(props: EditPageProps) {
           autoComplete='off'
           method="post"
           id="edit-activity"
-          className={`card-style py-5 ${styles["form-layout"]}`}
+          className={`card-style py-5 ${styles["form-layout"]} ${styles[`form-${theme}`]}`}
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className='w-100 mb-5 mb-xl-0 px-4'>
-            <h1>Editar missão</h1>
+            <h1 className='title-gray'>Editar missão</h1>
 
             <div className="form-group mt-4">
               <input
@@ -331,10 +333,14 @@ export default function Editar(props: EditPageProps) {
             </div>
             <div className={styles["attachments-buttons"]}>
               <button onClick={() => setShowModalAddLink(true)} type='button'>
-                <img src="/icons/send-link.svg" alt="Anexar link" />
+                <img alt="Anexar link" src={isHighContrast ? "/icons/send-link-contrast.svg" : "/icons/send-link.svg"} />
               </button>
               <button onClick={() => setShowModalAddFile(true)} type='button'>
-                <img src="/icons/send-file.svg" alt="Anexar arquivo" />
+                <img
+                  src="/icons/send-file.svg"
+                  alt="Anexar arquivo"
+                  className={isHighContrast ? "img-contrast-white" : ""}
+                />
               </button>
             </div>
             <div className={styles["attachments"]}>
@@ -343,10 +349,10 @@ export default function Editar(props: EditPageProps) {
                 if (link.is_external_link === 1) {
                   return (
                     <div className={styles["link"]} key={index}>
-                      <img src="/icons/link.svg" alt="Ícone" />
+                      <img src="/icons/link.svg" alt="Ícone" className={isHighContrast ? "img-contrast-white" : ""} />
                       <a href={link.path} target="_blank">{link.path}</a>
                       <button type="button" onClick={() => deleteAttachment(link.id)} className={styles["delete-attachment"]}>
-                        <img src="/icons/x.svg" alt="Excluir" />
+                        <img src="/icons/x.svg" alt="Excluir" className={isHighContrast ? "img-contrast-white" : ""} />
                       </button>
                     </div>
                   )
@@ -357,10 +363,10 @@ export default function Editar(props: EditPageProps) {
                 links.map((link, index) => {
                   return (
                     <div className={styles["link"]} key={index}>
-                      <img src="/icons/link.svg" alt="Ícone" />
+                      <img src="/icons/link.svg" alt="Ícone" className={isHighContrast ? "img-contrast-white" : ""} />
                       <a href={link.link} target="_blank">{link.link}</a>
                       <button type="button" onClick={() => deleteLink(index)} className={styles["delete-attachment"]}>
-                        <img src="/icons/x.svg" alt="Excluir" />
+                        <img src="/icons/x.svg" alt="Excluir" className={isHighContrast ? "img-contrast-white" : ""} />
                       </button>
                     </div>
                   )
@@ -371,10 +377,10 @@ export default function Editar(props: EditPageProps) {
                 if (file.is_external_link === 0) {
                   return (
                     <div className={styles["link"]} key={index}>
-                      <img src="/icons/file.svg" alt="Ícone" />
+                      <img src="/icons/file.svg" alt="Ícone" className={isHighContrast ? "img-contrast-white" : ""} />
                       <a href={file.path} target="_blank">{file.path}</a>
                       <button type="button" onClick={() => deleteAttachment(file.id)} className={styles["delete-attachment"]}>
-                        <img src="/icons/x.svg" alt="Excluir" />
+                        <img src="/icons/x.svg" alt="Excluir" className={isHighContrast ? "img-contrast-white" : ""} />
                       </button>
                     </div>
                   )
@@ -385,10 +391,10 @@ export default function Editar(props: EditPageProps) {
                 files.map((file, index) => {
                   return (
                     <div className={styles["link"]} key={index}>
-                      <img src="/icons/file.svg" alt="Ícone" />
+                      <img src="/icons/file.svg" alt="Ícone" className={isHighContrast ? "img-contrast-white" : ""} />
                       <span>{file.name}</span>
                       <button type="button" onClick={() => deleteFile(index)} className={styles["delete-attachment"]}>
-                        <img src="/icons/x.svg" alt="Excluir" />
+                        <img src="/icons/x.svg" alt="Excluir" className={isHighContrast ? "img-contrast-white" : ""} />
                       </button>
                     </div>
                   )
@@ -534,12 +540,14 @@ export default function Editar(props: EditPageProps) {
       </main>
 
       <ModalAddLink
+        theme={theme}
         show={showModalAddLink}
         onHide={() => setShowModalAddLink(false)}
         addLink={addLink}
       />
 
       <ModalAddFile
+        theme={theme}
         show={showModalAddFile}
         onHide={() => setShowModalAddFile(false)}
         addFile={addFile}

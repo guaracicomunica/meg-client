@@ -1,47 +1,43 @@
-import { useState } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 import { Modal } from 'react-bootstrap';
-import { useForm } from 'react-hook-form';
+import { enumTheme } from '../../enums/enumTheme';
 
 import styles from './styles.module.css';
 
 type ModalAddFileType = {
+  theme: string;
   show: boolean;
   onHide: () => void;
-  addFile: (data: any) => void;
+  addFile: (file: File) => void;
 }
 
 export default function ModalAddFile(props: ModalAddFileType) {
+  const inputRef = useRef(null);
   const [fileNameSelected, setFileNameSelected] = useState("");
-  const { register, handleSubmit, reset } = useForm({defaultValues: {
-    file: null,
-  }});
-  const onSubmit = async (data: any) => handleAddFile(data);
+  const isHighContrast = props.theme === enumTheme.contrast;
 
-  function handleAddFile(data: any) {
-    if (data.file === null) {
+  function handleAddFile(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const file = event.currentTarget.elements["file"].files[0];
+    
+    if (file === null) {
       props.onHide();
     }
     else {
-      props.addFile(data);
+      props.addFile(file);
       props.onHide();
-      reset({
-        file: null
-      });
       setFileNameSelected("");
     }
   }
 
-  function getFileName(e: React.ChangeEvent<HTMLDivElement>) {
-    if (e.currentTarget.querySelector("input").files.length > 0) {
-      setFileNameSelected(e.currentTarget.querySelector("input").files[0].name);
+  function getFileName() {
+    if (inputRef.current.files.length > 0) {
+      setFileNameSelected(inputRef.current.files[0].name);
     }
   }
 
   function closeModal() {
     props.onHide();
-    reset({
-      file: null
-    });
     setFileNameSelected("");
   }
 
@@ -52,7 +48,7 @@ export default function ModalAddFile(props: ModalAddFileType) {
       onHide={closeModal}
       aria-labelledby="modal-title"
       centered
-      className="modal-style"
+      className={`modal-style bg-${props.theme}`}
       backdrop="static"
     > 
       <Modal.Header closeButton className='p-4 border-bottom-0'>
@@ -61,27 +57,27 @@ export default function ModalAddFile(props: ModalAddFileType) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className='px-4'>
-        <form autoComplete='off' id="add-form" method='post' onSubmit={handleSubmit(onSubmit)}>
+        <form autoComplete='off' id="add-form" method='post' onSubmit={handleAddFile}>
           <div className={`${styles["input-add-file"]} input-file`} onChange={getFileName}>
             <input
               type="file"
               id="file"
               name="file"
-              {...register('file')}
+              ref={inputRef}
             />
             <label htmlFor="file">
-              <img src="/images/send-file.svg" alt="Adicionar imagem" />
+              <img src={isHighContrast ? "/icons/send-link-contrast.svg" : "/images/send-file.svg"} alt="Adicionar imagem" />
             </label>
             <span>Clique acima para adicionar um arquivo</span>
           </div>
         </form>
 
-        {fileNameSelected ? (
+        {fileNameSelected && (
           <div className={styles["attachment"]}>
-            <img src="/icons/file.svg" />
-            <span>{fileNameSelected}</span>
+            <img src="/icons/file.svg" className={isHighContrast ? "img-contrast-white" : ""} />
+            <span style={!isHighContrast ? { color: "var(--blue-light)" } : {}}>{fileNameSelected}</span>
           </div>
-        ) : ""}
+        )}
       </Modal.Body>
       <Modal.Footer className='d-flex justify-content-end p-4 border-top-0'>
         <button form="add-form" type="submit" className="modal-button">Anexar</button>

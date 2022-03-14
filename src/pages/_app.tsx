@@ -7,12 +7,14 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
 import '../styles/buttons.css';
 import '../styles/form.css';
 import '../styles/modal.css';
 import '../styles/table.css';
 import AccessibilityJump from '../components/AccessibilityJump';
+import '../styles/titles-texts.css';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -29,11 +31,13 @@ function MyApp({ Component, pageProps }) {
                 
                 <div className={`bg-${props.theme}`}>
                   <AccessibilityJump idComponent="topo" accessKeyValue="1" textJumpReader="Ir para a barra de navegação" /> 
+                <div style={{ minHeight: '100vh' }} className={`bg-${props.theme}`}>
                   <div>
                     <Navbar />
                     <Component {...pageProps} />
                   </div>
                   <Footer />
+                </div>
                 </div>
               )}
             </ThemeContext.Consumer>

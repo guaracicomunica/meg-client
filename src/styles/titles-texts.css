@@ -1,0 +1,60 @@
+/* TITLES */
+.title-blue-dark, .title-blue {
+  font-weight: 900;
+  font-size: 2rem !important;
+}
+
+.bg-light .title-blue-dark {
+  color: var(--blue-dark);
+}
+
+.bg-light .title-blue {
+  color: var(--blue);
+}
+
+.title-gray { 
+  font-weight: 700;
+  font-size: 1.5rem !important;
+}
+
+.bg-light .title-gray {
+  color: var(--gray-title);
+}
+
+.title-card {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.bg-light .title-card {
+  color: var(--blue);
+}
+
+@media (max-width: 992px) {
+  .title-blue-dark, .title-blue {
+    font-size: 1.75rem;
+  }
+}
+
+/* TEXTS */
+.text-card {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.bg-light .text-card {
+  color: var(--gray-text);
+}
+
+.text-blue-dark, .text-gray {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.bg-light .text-blue-dark {
+  color: var(--blue-dark);
+}
+
+.bg-light .text-gray {
+  color: var(--gray-text);
+}

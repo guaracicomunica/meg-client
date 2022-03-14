@@ -23,14 +23,6 @@
   border-bottom: 1px solid var(--white);
 }
 
-.menu-high-contrast .menu-link {
-  color: var(--white);
-}
-
-.menu-high-contrast .menu-link:hover {
-  color: var(--yellow-contrast);
-}
-
 .menu-link {
   padding: 0.5rem 1rem;
   margin-right: 1rem;
@@ -59,7 +51,7 @@
 }
 
 .menu-high-contrast .link-active::after {
-  background: var(--green-contrast);
+  background: var(--yellow-contrast);
 }
 
 .menu-button {

@@ -15,19 +15,24 @@
 
 .comment-info h6 {
   font-size: 1.1rem;
-  color: var(--gray-title);
   margin-bottom: 0;
 }
 
 .comment-info small {
-  color: var(--gray-title);
   font-size: 0.9rem;
 }
 
 .comment-body {
   font-size: 1rem;
-  color: var(--gray-text);
   line-height: 1.5rem;
   white-space: pre-wrap;
   line-break: anywhere;
+}
+
+.comment-light h6, .comment-light small {
+  color: var(--gray-title);
+}
+
+.comment-light .comment-body {
+  color: var(--gray-text);
 }

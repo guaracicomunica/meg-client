@@ -2,7 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import Router from 'next/router';
 import { setCookie, parseCookies, destroyCookie } from 'nookies';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { api } from '../services/api';
 import { options } from '../utils/defaultToastOptions';

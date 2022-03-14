@@ -22,7 +22,9 @@ export function Navbar() {
     <header id="topo">
       <nav className={`navbar navbar-expand-md ${styles.menu} ${styles[`menu-${theme}`]}`}>
         <a className="navbar-brand" href="/">
-          <img src="/icons/logo.svg" alt="Logo do MEG, descrição: três letras M, E e G de cores azul, amarelo e vermelho respectivamente" />
+          <img src="/icons/logo.svg" alt="Logo do MEG, descrição: três letras M, E e G de cores azul, amarelo e vermelho respectivamente" 
+          className={theme === enumTheme.contrast ? 'img-contrast-white' : ''}
+          />
         </a>
         <button
           className="navbar-toggler"
@@ -40,7 +42,7 @@ export function Navbar() {
           <ul className="navbar-nav align-items-center mr-auto my-4 my-md-0">
 
             <AccessibilityJump accessKeyValue='2' tagName='main' textJumpReader='Ir para o conteúdo principal' />
-            
+
             <li className={pageActive === PageActive.inicio ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
               <Link href="/">
                 <a className={styles["menu-link"]}>

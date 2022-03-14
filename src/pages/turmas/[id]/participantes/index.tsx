@@ -2,19 +2,22 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Spinner } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, ToastOptions } from "react-toastify";
 
+import { ThemeContext } from "../../../../contexts/ThemeContext";
 import CardStudent from "../../../../components/CardStudent";
 import CardTeacher from "../../../../components/CardTeacher";
+import { enumTheme } from "../../../../enums/enumTheme";
 import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { StudentType, TeacherType } from "../../../../types/Participant";
 import { QueryProps } from "../../../../types/Query";
 
 import styles from './styles.module.css';
+import { options } from "../../../../utils/defaultToastOptions";
 
 type ParticipantsProps = {
   teachers: TeacherType[];
@@ -30,6 +33,14 @@ export default function Participantes(props: ParticipantsProps) {
   const [studentsList, setStudentsList] = useState<StudentType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   useEffect(() => {
     if (props) {
@@ -72,7 +83,7 @@ export default function Participantes(props: ParticipantsProps) {
       </Head>
 
       <main className="page-container">
-        <h1 className="title-primary mb-5">Participantes da turma</h1>
+        <h1 className={`title-blue-dark mb-5`}>Participantes da turma</h1>
         <h2 className="title-gray mb-4">Professores</h2>
         <div className={`mb-5 ${styles["list-teachers"]}`}>
           {props.teachers.map(teacher => {
@@ -87,7 +98,11 @@ export default function Participantes(props: ParticipantsProps) {
           dataLength={studentsList.length}
           next={getMoreStudent}
           hasMore={hasMore}
-          loader={<div className={styles["loading-container"]}><Spinner animation="border" /></div>}
+          loader={
+            <div className={styles["loading-container"]}>
+              <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+            </div>
+          }
         >
           {studentsList.length > 0 ? (
             studentsList.map(student => {
@@ -101,7 +116,7 @@ export default function Participantes(props: ParticipantsProps) {
         </InfiniteScroll>
       </main>
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

@@ -4,20 +4,22 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer, ToastOptions } from "react-toastify";
+
 import AttachmentFile from "../../../../../components/AttachmentFile";
 import AttachmentLink from "../../../../../components/AttachmentLink";
 import CommentList from "../../../../../components/CommentList";
 import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
 import { AuthContext } from "../../../../../contexts/AuthContext";
+import { ThemeContext } from "../../../../../contexts/ThemeContext";
 import { RoleUser } from "../../../../../enums/enumRoleUser";
+import { enumTheme } from "../../../../../enums/enumTheme";
 import { api } from "../../../../../services/api";
 import { getAPIClient } from "../../../../../services/apiClient";
-import { ActivityType, CommentType, UserActivity } from "../../../../../types/Post";
-import { User } from "../../../../../types/User";
+import { ActivityType, CommentType } from "../../../../../types/Post";
 import { genericMessageError, options } from "../../../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
@@ -32,12 +34,20 @@ export default function Atividade(props: ActivityType) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     body: ""
   }});
   const current_route: string = `/turmas/${router.query.id}/missoes/${router.query.slug}`;
+  const isTeacher = user?.role === RoleUser.teacher;
+  const isHighContrast = theme === enumTheme.contrast;
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   function addFile(data: any) {
     setFiles([
@@ -86,7 +96,7 @@ export default function Atividade(props: ActivityType) {
           body: ""
         });
 
-        toast.success("Comentário enviado com sucesso!", options);
+        toast.success("Comentário enviado com sucesso!", toastOptions);
         
         router.push(current_route, undefined, {scroll: false});
       });
@@ -94,7 +104,7 @@ export default function Atividade(props: ActivityType) {
     catch(error) { 
       if (!error.response) {
         // network error
-        return toast.error(genericMessageError, options);
+        return toast.error(genericMessageError, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -106,22 +116,22 @@ export default function Atividade(props: ActivityType) {
           }
         
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500: 
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
 
         default:
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
       }
     }
@@ -149,12 +159,12 @@ export default function Atividade(props: ActivityType) {
 
       await api.post('activities/delivery', request).then(function (success) { 
         router.push(`/turmas/${router.query.id}/missoes/${props.id}`, undefined, {scroll: false});
-        toast.success("Atividade marcada como concluída", options);
+        toast.success("Atividade marcada como concluída", toastOptions);
       });
     } catch (error) {
       if (!error.response) {
         // network error
-        return toast.error(genericMessageError, options);
+        return toast.error(genericMessageError, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -165,29 +175,28 @@ export default function Atividade(props: ActivityType) {
             }
           }
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500: 
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
 
         default:
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
       }
     }
   }
 
-  async function withDrawActivity(){
-
+  async function withDrawActivity() {
     const request = generateFormData();
 
     try {
@@ -197,12 +206,12 @@ export default function Atividade(props: ActivityType) {
 
       await api.post('activities/cancel', request).then(function (success) { 
         router.push(`/turmas/${router.query.id}/missoes/${props.id}`, undefined, {scroll: false});
-        toast.success("Entrega da atividade foi cancelada", options);
+        toast.success("Entrega da atividade foi cancelada", toastOptions);
       });
     } catch (error) {
       if (!error.response) {
         // network error
-        return toast.error(genericMessageError, options);
+        return toast.error(genericMessageError, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -213,24 +222,25 @@ export default function Atividade(props: ActivityType) {
             }
           }
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, toastOptions);
+          break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
+          break;
 
         case 500: 
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
 
         default:
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
       }
     }
-
   }
 
   return (
@@ -239,18 +249,16 @@ export default function Atividade(props: ActivityType) {
         <title>{props.name}</title>
       </Head>
 
-      <main className={`${styles["page-layout"]} mt-3`}>
+      <main className={`${styles["page-layout"]} ${styles[`theme-${theme}`]} mt-3`}>
         <div className="card-style p-4">
           <div className={`${styles["card-activity-header"]} border-bottom pb-4`}>
             <img src="/icons/activity-post.svg" alt="Missão" />
             <div className={styles["info-activity"]}>
-              <h5>{props.name}</h5>
-              <div className={styles["activity-deadline"]}>
-                {props.deadline !== null
-                  ? <p>Data de entrega: {format(parseISO(`${props.deadline}`), "dd/MM/yyyy 'até' HH:mm")}</p> 
-                  : <p>Sem data de entrega</p>
-                }
-              </div>
+              <h5 className="mb-0 mr-2">{props.name}</h5>
+              {props.deadline !== null
+                ? <p className="mb-0">Data de entrega: {format(parseISO(`${props.deadline}`), "dd/MM/yyyy 'até' HH:mm")}</p> 
+                : <p className="mb-0">Sem data de entrega</p>
+              }
             </div>
           </div>
 
@@ -259,7 +267,7 @@ export default function Atividade(props: ActivityType) {
               <div className={styles["activity-grade"]}>Nota: {props.points} pontos</div>
               <div className={styles["activity-score"]}>{props.xp} XP | {props.coins} moedas</div>
             </div>
-            {user?.role === RoleUser.teacher && (
+            {isTeacher && (
               <div className={styles["activity-status"]}>
                 {props.disabled 
                   ? <span className={styles.inactive}>Inativo</span>  
@@ -272,7 +280,7 @@ export default function Atividade(props: ActivityType) {
           <div className="d-flex flex-column flex-md-row w-100 py-4">
             <div className={`pr-3 w-100 ${styles["activity-body"]}`}>{props.body}</div>
 
-            {user?.role === RoleUser.teacher && (
+            {isTeacher && (
               <div className={`${styles["delivery-cards"]} pl-md-4 mt-4 mt-md-0`}>
                 <div className={`p-2 mr-3 ${styles["info-card"]}`}>
                   <div className={styles.quantity}>{props.totalDeliveredActivities}</div>
@@ -297,7 +305,7 @@ export default function Atividade(props: ActivityType) {
             })}
           </div>
 
-          {user?.role === RoleUser.teacher && (
+          {isTeacher && (
             <div className="d-flex mt-3">
               <Link href={`/turmas/${router.query.id}/missoes/${router.query.slug}/corrigir`}>
                 <a className="button button-blue text-uppercase">Corrigir missão</a>
@@ -316,7 +324,7 @@ export default function Atividade(props: ActivityType) {
           />
         </div>
 
-        {user?.role === RoleUser.teacher ? (
+        {isTeacher ? (
           <div className={`card-style p-4 ${styles["card-private-comments"]}`}>
             <h5 className="pb-3 border-bottom">Dúvida dos participantes</h5>
             
@@ -363,7 +371,11 @@ export default function Atividade(props: ActivityType) {
                           <img src="/icons/file.svg" alt="Ícone" />
                           <span>{file.name}</span>
                           {props?.userActivity?.delivered_at == null && (
-                            <button type="button" onClick={() => deleteFile(index)} className={styles["delete-attachment"]}>
+                            <button
+                              type="button"
+                              onClick={() => deleteFile(index)}
+                              className={styles["delete-attachment"]}
+                            >
                               <img src="/icons/x.svg" alt="Excluir" />
                             </button> 
                           )}
@@ -440,7 +452,7 @@ export default function Atividade(props: ActivityType) {
                   {...register('body')}
                 ></textarea>
                 <button type="submit" form="send-private-comment">
-                  <img src="/icons/send.svg" alt="Enviar" />
+                  <img src="/icons/send.svg" alt="Enviar" className={isHighContrast ? "img-contrast-white": ""} />
                 </button>
               </form>
             </div>
@@ -449,12 +461,13 @@ export default function Atividade(props: ActivityType) {
       </main>
 
       <ModalAddFile
+        theme={theme}
         show={showModalAddFile}
         onHide={() => setShowModalAddFile(false)}
         addFile={addFile}
       />
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

@@ -1,23 +1,46 @@
 .table-body td {
-  color: var(--blue-dark);
   font-weight: 700;
   font-size: 1rem;
+  vertical-align: middle;
 }
 
-.table-body tr:hover {
+.bg-light .table-body td {
+  color: var(--blue-dark);
+}
+
+.bg-high-contrast .table-body td {
+  color: var(--white);
+}
+
+.bg-light .table-body tr:hover {
   background-color: #FAFAFA;
 }
 
 .table-head th {
   font-size: 1.1rem;
   font-weight: 700;
+}
+
+.bg-light .table-head th {
   color: var(--gray-title);
+}
+
+.bg-high-contrast .table-head th {
+  color: var(--white);
 }
 
 .status {
   border-radius: 10px;
-  border: 2px solid var(--blue-dark);
+  border: 2px solid;
   text-transform: uppercase;
+}
+
+.bg-light .status {
+  border-color: var(--blue-dark);
+}
+
+.bg-high-contrast .status {
+  border-color: var(--white);
 }
 
 .unit-grade {
@@ -26,8 +49,11 @@
 }
 
 .unit-grade span {
-  color: var(--blue-dark);
   font-weight: 700;
+}
+
+.bg-light .unit-grade span {
+  color: var(--blue-dark);
 }
 
 .grade {
@@ -36,4 +62,14 @@
   color: var(--gray-form);
   min-width: 3rem;
   text-align: center;
+}
+
+.bg-light .grade {
+  border-color: var(--gray-form);
+  color: var(--gray-form);
+}
+
+.bg-high-contrast .grade {
+  border-color: var(--white);
+  color: var(--white);
 }

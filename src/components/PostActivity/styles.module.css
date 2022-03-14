@@ -1,9 +1,18 @@
 .post-activity {
   border-radius: 10px;
-  border: 2px solid #F1F3F5;
-  background-color: var(--white);
+  border: 2px solid;
   display: flex;
   align-items: center;
+}
+
+.post-activity.post-light {
+  border-color: #F1F3F5;
+  background-color: var(--white);
+}
+
+.post-activity.post-high-contrast {
+  border-color: var(--white);
+  background-color: var(--black);
 }
 
 .post-activity img {
@@ -15,6 +24,9 @@
 .post-activity h5 {
   margin-bottom: 0;
   margin-left: 1rem;
+}
+
+.post-activity.post-light h5 {
   color: var(--gray-title);
 }
 

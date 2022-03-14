@@ -1,5 +1,6 @@
 import { compareAsc, parseISO } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 import { ActivityStudent } from '../../types/Post';
 
@@ -14,6 +15,7 @@ export default function StudentFile(props: StudentFileProps) {
   const { student } = props;
 
   const [isOverdue, setIsOverdue] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const deadline = parseISO(props.activityDeadline);
@@ -29,7 +31,7 @@ export default function StudentFile(props: StudentFileProps) {
   }, [props]);
 
   return (
-    <div className={`py-2 px-3 ${styles["card-file"]}`}>
+    <div className={`py-2 px-3 ${styles["card-file"]} ${styles[`card-theme-${theme}`]}`}>
       <div className={styles["info-user"]}>
         <img src={student.avatar ?? "/icons/user.svg"} alt="Avatar do aluno" />
         <h5>{student.name}</h5>

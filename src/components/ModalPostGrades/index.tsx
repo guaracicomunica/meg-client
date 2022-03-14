@@ -1,6 +1,7 @@
 import { Modal } from "react-bootstrap";
 
 type ModalPostGradesProps = {
+  theme: string;
   allStudents: boolean;
   show: boolean;
   onHide: () => void;
@@ -14,7 +15,7 @@ export default function ModalPostGrades(props: ModalPostGradesProps) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className="modal-style"
+      className={`modal-style bg-${props.theme}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
@@ -24,7 +25,9 @@ export default function ModalPostGrades(props: ModalPostGradesProps) {
       </Modal.Header>
       <Modal.Body className='px-4'>
         <div className="form-group">
-          <label htmlFor="select">Ao selecionar o bimestre, o sistema irá publicar as notas do bimestre para {props.allStudents ? "todos os alunos da turma" : "o aluno escolhido"}.</label>
+          <label htmlFor="select">
+            Ao selecionar o bimestre, o sistema irá publicar as notas do bimestre para {props.allStudents ? "todos os alunos da turma" : "o aluno escolhido"}.
+          </label>
           <select
             name="unit"
             id="unit"

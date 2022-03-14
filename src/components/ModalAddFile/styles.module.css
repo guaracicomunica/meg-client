@@ -7,6 +7,7 @@
 .input-add-file label {
   left: auto !important;
   padding: 0 !important;
+  border: none !important;
   border-radius: 0 !important;
   background-color: transparent !important;
 }
@@ -37,5 +38,7 @@
   margin-left: 0.5rem;
   font-weight: 700;
   font-size: 1rem;
-  color: var(--blue-light);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

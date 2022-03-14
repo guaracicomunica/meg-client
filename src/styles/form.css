@@ -1,34 +1,79 @@
 .form-label {
   font-weight: 900;
   font-size: 1rem;
+}
+
+.bg-light .form-label {
   color: var(--blue-dark);
 }
 
 .form-input {
   padding: 0.5rem 0.75rem;
   border-radius: 10px;
-  border: 2px solid var(--gray-form);
-  color: var(--gray-title);
+  border: 2px solid;
   font-weight: 700;
   font-size: 1rem;
   transition: 0.3s ease-in-out border-color;
 }
 
-.form-input:focus, .textarea:focus {
+.textarea {
+  resize: none;
+  border: 2px solid;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: 0.3s ease-in-out border-color;
+}
+
+.bg-light .form-input, .bg-light .textarea {
+  border-color: var(--gray-form);
+  color: var(--gray-title);
+}
+
+.bg-high-contrast .form-input, .bg-high-contrast .textarea {
+  background-color: var(--black);
+  border-color: var(--white);
+  color: var(--white) !important;
+}
+
+.bg-light .form-input:focus, .bg-light .textarea:focus {
   color: var(--gray-title);
   border-color: var(--blue-light);
   box-shadow: none;
 }
 
+.bg-high-contrast .form-input:focus, .bg-high-contrast .textarea:focus {
+  color: var(--white);
+  border-color: var(--yellow-contrast);
+  box-shadow: none;
+}
+
+.bg-light .form-input::placeholder, .bg-light .textarea::placeholder {
+  color: var(--gray-title) !important;
+}
+
+.bg-high-contrast .form-input::placeholder, .bg-high-contrast .textarea::placeholder {
+  color: var(--white) !important;
+}
+
 .checkbox label, .radio label {
-  background-color: var(--white);
-  border: 2px solid var(--gray-form);
+  border: 2px solid;
   border-radius: 50%;
   cursor: pointer;
   height: 24px;
   left: 0;
   top: 0;
   width: 24px;
+}
+
+.bg-light .checkbox label,.bg-light .radio label {
+  background-color: var(--white);
+  border-color: var(--gray-form);
+}
+
+.bg-high-contrast .checkbox label, .bg-high-contrast .radio label {
+  background-color: transparent;
+  border-color: var(--white);
 }
 
 .checkbox label {
@@ -41,7 +86,7 @@
 }
 
 .checkbox label:after, .radio label:after {
-  border: 2px solid var(--white);
+  border: 2px solid;
   border-top: none;
   border-right: none;
   content: "";
@@ -54,16 +99,30 @@
   width: 12px;
 }
 
+.bg-light .checkbox label:after, .bg-light .radio label:after {
+  border-color: var(--white);
+}
+
+.bg-high-contrast .checkbox label:after, .bg-high-contrast .radio label:after {
+  border-color: var(--black);
+}
+
 .checkbox input[type="checkbox"],
 .radio input[type="radio"],
 .input-file input[type="file"] {
   visibility: hidden;
 }
 
-.checkbox input[type="checkbox"]:checked + label,
-.radio input[type="radio"]:checked + label {
+.bg-light .checkbox input[type="checkbox"]:checked + label,
+.bg-light .radio input[type="radio"]:checked + label {
   background-color: var(--blue-dark);
   border-color: var(--blue-dark);
+}
+
+.bg-high-contrast .checkbox input[type="checkbox"]:checked + label,
+.bg-high-contrast .radio input[type="radio"]:checked + label {
+  background-color: var(--yellow-contrast);
+  border-color: var(--yellow-contrast);
 }
 
 .checkbox input[type="checkbox"]:checked + label:after,
@@ -72,9 +131,18 @@
 }
 
 .select {
+  padding: 0.5rem 0.75rem !important;
+}
+
+.bg-light .select {
   color: var(--gray-title);
   background-color: #F8F9FA;
-  padding: 0.5rem 0.75rem !important;
+}
+
+.bg-high-contrast .select {
+  color: var(--white);
+  background-color: var(--black) !important;
+  border: 2px solid var(--white) !important;
 }
 
 .input-file {
@@ -91,7 +159,6 @@
 .input-file label {
   padding: 0.75rem 0.59rem;
   border-radius: 50%;
-  background-color: #EDEDED;
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -101,25 +168,27 @@
   justify-content: center;
 }
 
+.bg-light .input-file label {
+  background-color: #EDEDED;
+}
+
+.bg-high-contrast .input-file label {
+  background-color: transparent;
+  border: 2px solid var(--white);
+}
+
 .input-file span {
   margin-left: 3.25rem;
-  color: var(--gray-title);
   font-weight: 700;
   font-size: 1rem;
+}
+
+.bg-light .input-file span {
+  color: var(--gray-title);
 }
 
 .input-file label img {
   height: 1rem;
-}
-
-.textarea {
-  resize: none;
-  border: 2px solid #F1F3F5;
-  border-radius: 10px;
-  color: var(--gray-title);
-  font-weight: 700;
-  font-size: 1rem;
-  transition: 0.3s ease-in-out border-color;
 }
 
 .preview-image { 

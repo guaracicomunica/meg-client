@@ -6,23 +6,54 @@
 .modal-style .modal-title {
   font-weight: 900;
   font-size: 1.75rem;
-  color: var(--blue-dark);
 }
 
 .modal-style .modal-body h4 {
   margin-bottom: 1.5rem;
   font-weight: 900;
   font-size: 1.5rem;
-  color: var(--blue-dark);
 }
 
 .modal-style .modal-footer .modal-button {
-  color: var(--gray-title);
   font-weight: 900;
 }
 
 .modal-button {
-  background-color: var(--white);
+  background-color: transparent;
   border: none;
   font-size: 1rem;
+}
+
+/* MODAL THEME */
+
+.modal-style.bg-high-contrast, .modal-style.bg-light {
+  background-color: transparent !important;
+}
+
+.bg-high-contrast .modal-content {
+  background-color: var(--black);
+  border: 2px solid var(--white);
+}
+
+.bg-high-contrast .close {
+  color: var(--white) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+.bg-high-contrast .close:hover {
+  color: var(--yellow-contrast) !important;
+}
+
+.bg-light .modal-footer .modal-button {
+  color: var(--gray-title);
+}
+
+.bg-high-contrast .modal-footer .modal-button {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.bg-high-contrast .modal-footer .modal-button:hover {
+  color: var(--yellow-contrast);
 }

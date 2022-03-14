@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import { AuthContext } from '../../contexts/AuthContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { api } from '../../services/api';
 import { User } from '../../types/User';
@@ -23,6 +24,7 @@ type CardUserInfos = {
 export default function CardUser(props: CardUserInfos) {
   const router = useRouter();
   const { user, logoff, setUser } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     avatar_path: null,
   }});
@@ -96,7 +98,7 @@ export default function CardUser(props: CardUserInfos) {
   }
   
   return (
-    <div className={`card-style mb-5 p-4 order-1 order-xl-2 col-xl-5 ${styles["card-user"]}`}>
+    <div className={`card-style mb-5 p-4 order-1 order-xl-2 col-xl-5 ${styles["card-user"]} ${styles[`card-user-${theme}`]}`}>
       <div className={styles["user-img"]}>
         <form
           autoComplete='off'

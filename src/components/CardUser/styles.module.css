@@ -27,9 +27,16 @@
   border-radius: 50% !important;
   border: 2px solid var(--white) !important;
   padding: 0.25rem 0.485rem !important;
-  background-color: var(--yellow) !important;
   display: block;
   position: relative;
+}
+
+.card-user-light .edit-user-img label {
+  background-color: var(--yellow) !important;
+}
+
+.card-user-high-contrast .edit-user-img label {
+  background-color: var(--black) !important;
 }
 
 .edit-user-img img {
@@ -44,16 +51,19 @@
   text-align: center;
 }
 
-.user-info h4 {
+.card-user-light .user-info h4 {
   color: var(--gray-title);
 }
 
 .user-info p {
-  color: var(--gray-text);
   word-break: break-all;
 }
 
-.user-info strong {
+.card-user-light .user-info p {
+  color: var(--gray-text);
+}
+
+.card-user-light .user-info strong {
   color: var(--blue-dark);
 }
 
@@ -69,7 +79,10 @@
 
 .coins span {
   text-transform: uppercase;
-  color: var(--green);
   font-size: 1.1rem;
   font-weight: 700;
+}
+
+.card-user-light .coins span {
+  color: var(--green);
 }

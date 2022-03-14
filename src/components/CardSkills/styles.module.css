@@ -17,16 +17,26 @@
 
 .skills-header h4 {
   font-weight: 900;
+}
+
+.card-skills-light .skills-header h4 {
   color: var(--blue-dark);
 }
 
 .skill {
-  background-color: #F8F8F8;
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+}
+
+.card-skills-light .skill {
+  background-color: #F8F8F8;
+}
+
+.card-skills-high-contrast .skill {
+  border: 2px solid var(--white);
 }
 
 .skill img {
@@ -36,15 +46,25 @@
 .skill-name {
   font-weight: 700;
   font-size: 1.1rem;
-  color: var(--blue);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
+.card-skills-light .skill-name {
+  color: var(--blue);
+}
+
 .skill button {
   font-weight: 700;
-  color: var(--blue-dark);
   background-color: transparent;
   border: 0;
+}
+
+.card-skills-light .skill button {
+  color: var(--blue-dark);
+}
+
+.card-skills-high-contrast .skill button {
+  color: var(--white);
 }

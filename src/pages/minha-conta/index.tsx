@@ -16,6 +16,8 @@ import { User, UserStatusGamification } from "../../types/User";
 
 export default function MinhaConta(props) {
   const { user } = useContext(AuthContext);
+  const isStudent = user?.role === RoleUser.student;
+  const isTeacher = user?.role === RoleUser.teacher;
 
   return (
     <>
@@ -25,16 +27,11 @@ export default function MinhaConta(props) {
 
       <main className="page-container">
         <div className="d-flex flex-wrap justify-content-between">
-          {user?.role === RoleUser.teacher ? (
-            <SkillNotification notifications={props.notifications} />
-          ) : (
-            <CardSkills skills={props.skills} />
-          )}
-
+          {isTeacher && <SkillNotification notifications={props.notifications} />}
+          {isStudent && <CardSkills skills={props.skills} />}
           <CardUser coins={props?.userGamification?.coins}/>
         </div>
-
-        {user?.role === RoleUser.student && (
+        {isStudent && (
           <SkillStore />
         )}
       </main>

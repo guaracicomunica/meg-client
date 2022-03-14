@@ -6,11 +6,13 @@ import { useContext } from "react";
 
 import { ThemeContext } from "../../../../contexts/ThemeContext";
 import { getAPIClient } from "../../../../services/apiClient";
+import { enumTheme } from "../../../../enums/enumTheme";
 
 import styles from './styles.module.css';
 
 export default function Boletim({ grade }) {
   const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
 
   return (
     <>
@@ -21,7 +23,7 @@ export default function Boletim({ grade }) {
       <main className="page-container">
         <div className="card-style p-4 mb-4">
           <div className="w-100 mb-4">
-            <h1 className={`title-${theme}-primary`}>Meu boletim</h1>
+            <h1 className='title-blue-dark'>Meu boletim</h1>
           </div>
           
           <Table responsive>
@@ -66,21 +68,21 @@ export default function Boletim({ grade }) {
         </div>  
         <div className={`${styles["card-gamification"]} card-style p-4`}>
           <div className="w-100 mb-4">
-            <h1 className={`title-${theme}-primary`}>Pontuações gamificadas</h1>
+            <h1 className='title-blue-dark'>Pontuações gamificadas</h1>
           </div>
           
           <div className="d-flex flex-wrap w-100">
             <div className={styles["info-group"]}>
               <img src="/icons/level.svg" alt="Brasão do nível" style={{height: "2rem"}} />
-              <span style={{color: "var(--gray-form)"}}>{grade.level ?? 'Sem Nível'}</span>
+              <span style={!isHighContrast ? {color: "var(--gray-form)"} : {}}>{grade.level ?? 'Sem Nível'}</span>
             </div>
             <div className={styles["info-group"]}>
               <img src="/icons/crown.svg" style={{height: "1.5rem"}} />
-              <span style={{color: "var(--yellow)"}}>{grade.xp ?? 0} XP</span>
+              <span style={!isHighContrast ? {color: "var(--yellow)"} : {}}>{grade.xp ?? 0} XP</span>
             </div>
             <div className={styles["info-group"]}>
               <img src="/icons/coins.svg" style={{height: "2rem"}} />
-              <span style={{color: "var(--green)"}}>{grade.coins ?? 0} moedas</span>
+              <span style={!isHighContrast ? {color: "var(--green)"} : {}}>{grade.coins ?? 0} moedas</span>
             </div>
           </div>
         </div> 

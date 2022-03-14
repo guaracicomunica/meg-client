@@ -1,7 +1,7 @@
 /* TITLES */
 .title-blue-dark, .title-blue {
   font-weight: 900;
-  font-size: 2rem;
+  font-size: 2rem !important;
 }
 
 .bg-light .title-blue-dark {
@@ -14,7 +14,7 @@
 
 .title-gray { 
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.5rem !important;
 }
 
 .bg-light .title-gray {

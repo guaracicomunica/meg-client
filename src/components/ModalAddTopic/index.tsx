@@ -8,6 +8,7 @@ import { parseCookies } from 'nookies';
 import { useRouter } from "next/router";
 
 type ModalAddTopicProps = {
+  theme: string;
   classroom_id: number;
   show: boolean;
   onHide: () => void;
@@ -88,7 +89,7 @@ export default function ModalAddTopic(props: ModalAddTopicProps) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className="modal-style"
+      className={`modal-style bg-${props.theme}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>

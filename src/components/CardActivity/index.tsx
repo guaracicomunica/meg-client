@@ -1,7 +1,8 @@
 import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { ActivityType } from '../../types/Post';
 import AttachmentFile from '../AttachmentFile';
 import AttachmentLink from '../AttachmentLink';
@@ -18,9 +19,10 @@ export default function CardActivity(props: CardActivityProps) {
   const router = useRouter();
   const { activity } = props;
   const [isCardExpanded, setIsCardExpanded] = useState(false);
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={`${styles["card-activity"]} mb-4 p-4`}>
+    <div className={`${styles["card-activity"]} ${styles[`card-activity-${theme}`]} mb-4 p-4`}>
       <div
         className={styles["card-activity-header"]}
         onClick={() => setIsCardExpanded(!isCardExpanded)}

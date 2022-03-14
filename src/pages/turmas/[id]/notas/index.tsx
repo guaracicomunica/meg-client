@@ -1,16 +1,16 @@
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Table } from "react-bootstrap";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, ToastOptions } from "react-toastify";
+
 import { Grade } from '../../../../types/Grade';
 import ModalPostGrades from "../../../../components/ModalPostGrades";
 import { getAPIClient } from "../../../../services/apiClient";
-
-import styles from './styles.module.css';
-
+import { ThemeContext } from "../../../../contexts/ThemeContext";
+import { enumTheme } from "../../../../enums/enumTheme";
+import { options } from "../../../../utils/defaultToastOptions";
 
 type GradeProps = {
   grades: Grade[]
@@ -19,6 +19,14 @@ type GradeProps = {
 export default function Notas(props: GradeProps) {
   const [showModalPostGrades, setShowModalPostGrades] = useState(false);
   const [isForAllStudents, setIsForAllStudents] = useState(false);
+  const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   function generateReportCardForAllStudents() {
     setIsForAllStudents(true);
@@ -39,76 +47,79 @@ export default function Notas(props: GradeProps) {
       <main className="page-container">
         <div className="card-style p-4">
           <div className="w-100">
-            <h1 className={styles.title}>Gerar boletins</h1>
-            {props.grades.length> 0 
-              ? 
-                <button onClick={generateReportCardForAllStudents} className="mt-2 mb-4 button button-blue text-uppercase">Publicar para todos</button>
-              :
-                <span>Não há alunos cadastrados no momento.</span>
-            }
+            <h1 className="title-gray">Gerar boletins</h1>
+            {props.grades.length > 0 && (
+              <button
+                onClick={generateReportCardForAllStudents}
+                className="mt-2 mb-4 button button-blue text-uppercase"
+              >Publicar para todos</button>
+            )}
+            {props.grades.length === 0 && <span>Não há alunos cadastrados no momento.</span>}
           </div>
-          {props.grades.length > 0 && 
-                    <Table responsive>
-                    <thead className="table-head">
-                      <tr>
-                        <th>Nome do estudante</th>
-                        <th>Status</th>
-                        <th>Notas bimestrais</th>
-                        <th>Opções</th>
-                      </tr>
-                    </thead>
-                    <tbody className="table-body">
-                      {props.grades.map((grade) => {
-                        return (
-                          <tr>
-                          <td>{grade.user}</td>
-                          <td>
-                            <div className="d-flex">
-                              <div className="py-1 px-2 status">Cursando</div>
-                            </div>
-                          </td>
-                          <td>
-                            <div className="d-flex">
-                              <div className="unit-grade mr-3">
-                                <span>1º</span>
-                                <div className="grade ml-2 py-1 px-2">{grade.bim1 ?? '-'}</div>
-                              </div>
-                              <div className="unit-grade mr-3">
-                                <span>2º</span>
-                                <div className="grade ml-2 py-1 px-2">{grade.bim2 ?? '-'}</div>
-                              </div>
-                              <div className="unit-grade mr-3">
-                                <span>3º</span>
-                                <div className="grade ml-2 py-1 px-2">{grade.bim3 ?? '-'}</div>
-                              </div>
-                              <div className="unit-grade mr-3">
-                                <span>4º</span>
-                                <div className="grade ml-2 py-1 px-2">{grade.bim4 ?? '-'}</div>
-                              </div>
-                            </div>
-                          </td>
-                          <td>
-                            <button
-                              onClick={generateReportCardForOneStudent}
-                              className="button button-blue text-uppercase py-1 px-3"
-                            >Publicar</button>
-                          </td>
-                        </tr>
-                        )
-                      })}
-                    </tbody>
-                  </Table>
-          }
+
+          {props.grades.length > 0 && (
+            <Table responsive>
+              <thead className="table-head">
+                <tr>
+                  <th>Nome do estudante</th>
+                  <th>Status</th>
+                  <th>Notas bimestrais</th>
+                  <th>Opções</th>
+                </tr>
+              </thead>
+              <tbody className="table-body">
+                {props.grades.map((grade, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{grade.user}</td>
+                      <td>
+                        <div className="d-flex">
+                          <div className="py-1 px-2 status">Cursando</div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="d-flex">
+                          <div className="unit-grade mr-3">
+                            <span>1º</span>
+                            <div className="grade ml-2 py-1 px-2">{grade.bim1 ?? '-'}</div>
+                          </div>
+                          <div className="unit-grade mr-3">
+                            <span>2º</span>
+                            <div className="grade ml-2 py-1 px-2">{grade.bim2 ?? '-'}</div>
+                          </div>
+                          <div className="unit-grade mr-3">
+                            <span>3º</span>
+                            <div className="grade ml-2 py-1 px-2">{grade.bim3 ?? '-'}</div>
+                          </div>
+                          <div className="unit-grade mr-3">
+                            <span>4º</span>
+                            <div className="grade ml-2 py-1 px-2">{grade.bim4 ?? '-'}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <button
+                          onClick={generateReportCardForOneStudent}
+                          className="button button-blue text-uppercase py-1 px-3"
+                        >Publicar</button>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </Table>
+          )}
         </div>  
       </main>
 
       <ModalPostGrades
+        theme={theme}
         allStudents={isForAllStudents}
         show={showModalPostGrades}
         onHide={() => setShowModalPostGrades(false)}
       />
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

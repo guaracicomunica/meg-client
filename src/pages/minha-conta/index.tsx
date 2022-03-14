@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useContext } from "react"
 import { parseCookies } from 'nookies'
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, ToastOptions } from "react-toastify";
 
 import SkillNotification from "../../components/SkillNotification";
 import CardUser from "../../components/CardUser";
@@ -13,9 +13,23 @@ import { AuthContext } from "../../contexts/AuthContext"
 import { getAPIClient } from "../../services/apiClient";
 import { SkillNotificationType, SkillClaimedType } from "../../types/StoreSkill";
 import { User, UserStatusGamification } from "../../types/User";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { enumTheme } from "../../enums/enumTheme";
+import { options } from "../../utils/defaultToastOptions";
 
 export default function MinhaConta(props) {
   const { user } = useContext(AuthContext);
+  const isStudent = user?.role === RoleUser.student;
+  const isTeacher = user?.role === RoleUser.teacher;
+
+  const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   return (
     <>
@@ -25,21 +39,16 @@ export default function MinhaConta(props) {
 
       <main className="page-container">
         <div className="d-flex flex-wrap justify-content-between">
-          {user?.role === RoleUser.teacher ? (
-            <SkillNotification notifications={props.notifications} />
-          ) : (
-            <CardSkills skills={props.skills} />
-          )}
-
+          {isTeacher && <SkillNotification notifications={props.notifications} />}
+          {isStudent && <CardSkills skills={props.skills} />}
           <CardUser coins={props?.userGamification?.coins}/>
         </div>
-
-        {user?.role === RoleUser.student && (
+        {isStudent && (
           <SkillStore />
         )}
       </main>
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   )
 }

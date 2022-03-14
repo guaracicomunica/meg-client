@@ -1,6 +1,9 @@
-.title {
-  color: var(--black);
+.code-class-light, .code-class-high-contrast {
   font-size: 1.5rem;
   font-weight: 700;
   text-align: center;
+}
+
+.code-class-light {
+  color: var(--black);
 }

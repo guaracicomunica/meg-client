@@ -1,14 +1,22 @@
 .private-comment {
   border-radius: 10px;
-  background-color: #F8F8F8;
   width: max-content;
 }
 
-.private-comment h5 {
+.private-comment.theme-light {
+  background-color: #F8F8F8;
+}
+
+.private-comment.theme-high-contrast {
+  border: 2px solid var(--white);
+  background-color: var(--black);
+}
+
+.theme-light .private-comment h5 {
   color: var(--gray-title) !important;
 }
 
-.response h5 {
+.theme-light .response h5 {
   color: var(--blue-dark) !important;
 }
 
@@ -17,7 +25,7 @@
 }
 
 .response button {
-  background-color: var(--white);
+  background-color: transparent;
   border: none;
   cursor: pointer;
   position: absolute;

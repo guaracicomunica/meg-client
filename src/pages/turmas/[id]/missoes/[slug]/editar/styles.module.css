@@ -11,16 +11,13 @@
   }
 }
 
-.form-layout h1 {
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: var(--gray-title);
-}
-
-.form-label{
-  color: var(--gray-title);
+.form-label {
   font-size: 1.1rem;
   font-weight: 700;
+}
+
+.form-light .form-label {
+  color: var(--gray-title);
 }
 
 .form-label + input[type="number"] {
@@ -33,11 +30,9 @@
 }
 
 .radio-status label {
-  background-color: #F8F9FA;
-  color: var(--gray-form);
   font-weight: 700;
   padding: 0.25rem 0.75rem;
-  border: 2px solid var(--gray-form);
+  border: 2px solid;
   border-radius: 20px;
   cursor: pointer;
   left: 0;
@@ -47,10 +42,26 @@
   position: relative;
 }
 
-.radio-status input[type="radio"]:checked + label {
+.form-light .radio-status label {
+  background-color: #F8F9FA;
+  color: var(--gray-form);
+  border-color: var(--gray-form);
+}
+
+.form-high-contrast .radio-status label {
+  background-color: var(--black);
+  border-color: var(--white);
+}
+
+.form-light .radio-status input[type="radio"]:checked + label {
   background-color: #B7EFC5;
   border-color: var(--green);
   color: var(--green);
+}
+
+.form-high-contrast .radio-status input[type="radio"]:checked + label {
+  border-color: var(--yellow-contrast);
+  color: var(--yellow-contrast);
 }
 
 .attachments-buttons {
@@ -64,13 +75,20 @@
   margin-right: 1rem;
 }
 
+.attachments-buttons button img {
+  height: 1.25rem;
+}
+
 .attachments {
   margin-top: 2rem;
 }
 
 .attachments h5 {
-  color: var(--gray-title);
   margin-bottom: 1rem;
+}
+
+.form-light .attachments h5 {
+  color: var(--gray-title);
 }
 
 .attachments .link {
@@ -85,12 +103,15 @@
 }
 
 .attachments .link a, .attachments .link span {
-  color: var(--blue-light);
   font-weight: 700;
   font-size: 1rem;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.form-light .attachments .link a, .form-light .attachments .link span {
+  color: var(--blue-light);
 }
 
 .delete-attachment {
@@ -108,4 +129,12 @@
   color: var(--red);
   max-width: 25rem;
   text-align: center;
+}
+
+.form-light .alert {
+  color: var(--red);
+}
+
+.form-high-contrast .alert {
+  color: var(--yellow-contrast);
 }

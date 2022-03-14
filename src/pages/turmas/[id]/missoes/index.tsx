@@ -6,16 +6,19 @@ import { parseCookies } from "nookies";
 import { useContext, useEffect, useState } from "react";
 import { Col, Nav, Row, Spinner, Tab } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, ToastOptions } from "react-toastify";
 
 import CardActivity from "../../../../components/CardActivity";
 import ModalAddTopic from "../../../../components/ModalAddTopic";
 import { AuthContext } from "../../../../contexts/AuthContext";
+import { ThemeContext } from "../../../../contexts/ThemeContext";
 import { RoleUser } from "../../../../enums/enumRoleUser";
+import { enumTheme } from "../../../../enums/enumTheme";
 import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ActivityTopicType, ActivityType } from "../../../../types/Post";
 import { QueryProps } from "../../../../types/Query";
+import { options } from "../../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
 
@@ -30,6 +33,7 @@ type ActivitiesPageProps = {
 export default function Atividades(props: ActivitiesPageProps) {
   const { 'meg.token': token } = parseCookies();
   const { user } = useContext(AuthContext);
+  const { theme } = useContext(ThemeContext);
   const router = useRouter();
 
   const [showModalAddTopic, setShowModalAddTopic] = useState(false);
@@ -39,6 +43,15 @@ export default function Atividades(props: ActivitiesPageProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
+  const isTeacher = user?.role === RoleUser.teacher;
+
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   useEffect(() => {
     if (props) {
@@ -133,8 +146,8 @@ export default function Atividades(props: ActivitiesPageProps) {
         <title>Missões da turma</title>
       </Head>
 
-      <main className="page-container">
-        <div className={user?.role === RoleUser.teacher ? styles["list-activities-teacher"] : ""}>
+      <main className={`page-container ${styles[`theme-${theme}`]}`}>
+        <div className={isTeacher ? styles["list-activities-teacher"] : ""}>
           <Tab.Container id="topics-list" defaultActiveKey="all" onSelect={filterActivities}>
             <Row>
               <Col sm={12} lg={3} className="p-0 mb-3 mb-lg-0">
@@ -153,11 +166,9 @@ export default function Atividades(props: ActivitiesPageProps) {
                     )
                   })}
                   
-                  {user?.role === RoleUser.teacher && (
+                  {isTeacher && (
                     <Nav.Item onClick={() => setShowModalAddTopic(true)}>
-                      <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles["add-topic"]}>
-                        +
-                      </Nav.Link>
+                      <Nav.Link className="mr-3 mr-lg-0" bsPrefix={styles["add-topic"]}>+</Nav.Link>
                     </Nav.Item>
                   )}
                 </Nav>
@@ -170,7 +181,11 @@ export default function Atividades(props: ActivitiesPageProps) {
                       dataLength={activitiesList.length}
                       next={getMoreActivity}
                       hasMore={hasMore}
-                      loader={<div className={styles["loading-container"]}><Spinner animation="border" /></div>}
+                      loader={
+                        <div className={styles["loading-container"]}>
+                          <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+                        </div>
+                      }
                     >
                       {activitiesList.length > 0 ? (
                         activitiesList.map(activity => {
@@ -185,7 +200,9 @@ export default function Atividades(props: ActivitiesPageProps) {
                     return (
                       <Tab.Pane eventKey={topic.id} key={topic.id}>
                         {loading ? (
-                          <div className={styles["loading-container"]}><Spinner animation="border" /></div>
+                          <div className={styles["loading-container"]}>
+                            <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+                          </div>
                         ) : (
                           filteredActivitiesList.length > 0 ? (
                             filteredActivitiesList.map(activity => {
@@ -203,7 +220,7 @@ export default function Atividades(props: ActivitiesPageProps) {
             </Row>
           </Tab.Container>
 
-          {user?.role === RoleUser.teacher && (
+          {isTeacher && (
             <Link href={`/turmas/${router.query.id}/missoes/criar`}>
               <button
                 disabled={props.topics.length === 0}
@@ -217,13 +234,14 @@ export default function Atividades(props: ActivitiesPageProps) {
         </div>
 
         <ModalAddTopic
+          theme={theme}
           classroom_id={Number(router.query.id)}
           show={showModalAddTopic}
           onHide={() => setShowModalAddTopic(false)}
         />
       </main>
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   )
 }

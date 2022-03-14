@@ -3,12 +3,14 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer, ToastOptions } from 'react-toastify';
 
 import ModalAddFile from '../../../../../components/ModalAddFile';
 import ModalAddLink from '../../../../../components/ModalAddLink';
+import { ThemeContext } from '../../../../../contexts/ThemeContext';
+import { enumTheme } from '../../../../../enums/enumTheme';
 import { api } from '../../../../../services/api';
 import { getAPIClient } from '../../../../../services/apiClient';
 import { ActivityTopicType } from '../../../../../types/Post';
@@ -61,6 +63,13 @@ export default function Criar(props: CreateActivityProps) {
   const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [links, setLinks] = useState<LinkType[]>([]);
   const [files, setFiles] = useState<File[]>([]);
+  const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   function addLink(data: LinkType) {
     setLinks([
@@ -79,11 +88,8 @@ export default function Criar(props: CreateActivityProps) {
     setLinks(newLinks);
   }
 
-  function addFile(data: any) {
-    setFiles([
-      ...files,
-      data.file[0]
-    ]);
+  function addFile(file: File) {
+    setFiles([...files, file]);
   }
 
   function deleteFile(fileIndex: number) {
@@ -141,7 +147,7 @@ export default function Criar(props: CreateActivityProps) {
 
       if (!error.response) {
         // network error
-        return toast.error(string, options);
+        return toast.error(string, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -161,22 +167,22 @@ export default function Criar(props: CreateActivityProps) {
           }
 
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500: 
-          toast.error(string, options);
+          toast.error(string, toastOptions);
           break;
 
         default:
-          toast.error(string, options);
+          toast.error(string, toastOptions);
           break;
       }
     }
@@ -193,11 +199,11 @@ export default function Criar(props: CreateActivityProps) {
           autoComplete='off'
           method="post"
           id="create-activity"
-          className={`card-style py-5 ${styles["form-layout"]}`}
+          className={`card-style py-5 ${styles["form-layout"]} ${styles[`form-${theme}`]}`}
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className='w-100 mb-5 mb-xl-0 px-4'>
-            <h1>Criar nova missão</h1>
+            <h1 className='title-gray'>Criar nova missão</h1>
 
             <div className="form-group mt-4">
               <input
@@ -220,10 +226,14 @@ export default function Criar(props: CreateActivityProps) {
             </div>
             <div className={styles["attachments-buttons"]}>
               <button onClick={() => setShowModalAddLink(true)} type='button'>
-                <img src="/icons/send-link.svg" alt="Anexar link" />
+                <img alt="Anexar link" src={isHighContrast ? "/icons/send-link-contrast.svg" : "/icons/send-link.svg"} />
               </button>
               <button onClick={() => setShowModalAddFile(true)} type='button'>
-                <img src="/icons/send-file.svg" alt="Anexar arquivo" />
+                <img
+                  src="/icons/send-file.svg"
+                  alt="Anexar arquivo"
+                  className={isHighContrast ? "img-contrast-white" : ""}
+                />
               </button>
             </div>
             <div className={styles["attachments"]}>
@@ -232,10 +242,10 @@ export default function Criar(props: CreateActivityProps) {
                 links.map((link, index) => {
                   return (
                     <div className={styles["link"]} key={index}>
-                      <img src="/icons/link.svg" alt="Ícone" />
+                      <img src="/icons/link.svg" alt="Ícone" className={isHighContrast ? "img-contrast-white" : ""} />
                       <a href={link.link} target="_blank">{link.link}</a>
                       <button type="button" onClick={() => deleteLink(index)} className={styles["delete-attachment"]}>
-                        <img src="/icons/x.svg" alt="Excluir" />
+                        <img src="/icons/x.svg" alt="Excluir" className={isHighContrast ? "img-contrast-white" : ""} />
                       </button>
                     </div>
                   )
@@ -246,10 +256,10 @@ export default function Criar(props: CreateActivityProps) {
                 files.map((file, index) => {
                   return (
                     <div className={styles["link"]} key={index}>
-                      <img src="/icons/file.svg" alt="Ícone" />
+                      <img src="/icons/file.svg" alt="Ícone" className={isHighContrast ? "img-contrast-white" : ""} />
                       <span>{file.name}</span>
                       <button type="button" onClick={() => deleteFile(index)} className={styles["delete-attachment"]}>
-                        <img src="/icons/x.svg" alt="Excluir" />
+                        <img src="/icons/x.svg" alt="Excluir" className={isHighContrast ? "img-contrast-white" : ""} />
                       </button>
                     </div>
                   )
@@ -395,18 +405,20 @@ export default function Criar(props: CreateActivityProps) {
       </main>
 
       <ModalAddLink
+        theme={theme}
         show={showModalAddLink}
         onHide={() => setShowModalAddLink(false)}
         addLink={addLink}
       />
 
       <ModalAddFile
+        theme={theme}
         show={showModalAddFile}
         onHide={() => setShowModalAddFile(false)}
         addFile={addFile}
       />
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

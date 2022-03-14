@@ -18,9 +18,8 @@
   --blue-text: #2B3543;
   --red: #F94144;
   --yellow: #F9C74F;
-  --yellow-contrast: #FFFF00;
+  --yellow-contrast: #FFF333;
   --green: #6EDE8A;
-  --green-contrast: #2AFF00;
   --background-light: #FCF9FF;
 }
 
@@ -49,11 +48,12 @@ body, #__next {
 }
 
 .bg-light {
-  background-color: var(--background-light);
+  background-color: var(--background-light) !important;
 }
 
 .bg-high-contrast {
   background-color: var(--black);
+  color: var(--white);
 }
 
 body, input, textarea, button {
@@ -65,15 +65,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: var(--blue-light);
   text-decoration: none;
   transition: filter .3s;
 }
 
 a:hover {
-  color: var(--blue-light);
   text-decoration: none;
+}
+
+.bg-light a {
+  color: var(--blue-light);
+}
+
+.bg-light a:hover {
+  color: var(--blue-light);
   filter: brightness(0.9);
+}
+
+.bg-high-contrast a {
+  color: var(--white);
+  text-decoration: underline;
+}
+
+.bg-high-contrast a:hover {
+  color: var(--yellow-contrast);
 }
 
 button {
@@ -117,77 +132,24 @@ select:focus {
   }
 }
 
-.title-primary, .title-secondary {
-  font-weight: 900;
-  font-size: 2rem;
-}
-
-.title-primary {
-  color: var(--blue-dark);
-}
-
-.title-secondary {
-  color: var(--blue);
-}
-
-.title-card {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--blue);
-}
-
-.title-gray {
-  color: var(--gray-title);
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-.text-section {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--blue-dark);
-}
-
-.text-gray {
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--gray-text);
-}
-
 .navbar-collapse {
   flex-grow: unset !important;
-}
-
-.border-soft-blue {
-  width: 12rem;
-  height: 1px;
-  margin: 0.75rem auto 1rem;
-  
-  background-color: var(--blue);
-}
-
-.border-blue, .border-yellow {
-  width: 6rem;
-  height: 2px;
-  margin: 0.75rem 0 1rem;
-}
-
-.border-blue {
-  background-color: var(--blue);
-}
-
-.border-yellow {
-  background-color: var(--yellow);
 }
 
 .row {
   margin: 0 !important;
 }
 
-@media (max-width: 992px) {
-  .title-primary, .title-secondary {
-    font-size: 1.75rem;
-  }
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-content-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card-style {
@@ -195,8 +157,16 @@ select:focus {
   flex-direction: column;
   align-items: center;
   border-radius: 10px;
+  height: fit-content;
+}
+
+.bg-light .card-style {
   background-color: var(--white);
   box-shadow: 0px 2px 10px rgba(216, 216, 216, 0.3);
+}
+
+.bg-high-contrast .card-style {
+  border: 2px solid var(--white);
 }
 
 .link-card {
@@ -206,8 +176,19 @@ select:focus {
 .link-card h4 {
   text-align: center;
   font-weight: 900;
-  color: var(--blue-dark);
   margin: 0;
+}
+
+.bg-light .link-card h4 {
+  color: var(--blue-dark);
+}
+
+.bg-high-contrast .link-card:hover {
+  border-color: var(--yellow-contrast);
+}
+
+.bg-high-contrast .link-card:hover h4 {
+  color: var(--yellow-contrast);
 }
 
 .banner {
@@ -228,12 +209,25 @@ select:focus {
   filter: grayscale(100%);
 }
 
-.info-class {
+.banner .banner-content {
+  display: grid;
+  grid-template-columns: calc(100% - 10.55rem) 10.55rem;
   width: 100%;
   position: absolute;
   top: 0;
   z-index: 1;
+}
+
+.info-class {
   color: var(--white);
+}
+
+.bg-high-contrast .info-class .title,
+.bg-high-contrast .info-class .nickname,
+.bg-high-contrast .info-class .teacher {
+  background-color: var(--black);
+  width: fit-content;
+  max-width: 100%;
 }
 
 .info-class .title, .info-class .nickname {
@@ -251,20 +245,40 @@ select:focus {
 }
 
 .link-class {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  z-index: 1;
-  background-color: var(--white);
+  height: fit-content;
   border-radius: 5px;
   padding: 0.1rem 0.25rem;
   font-size: 0.9rem;
   font-weight: 700;
-  color: #538199;
+  text-align: center;
   cursor: pointer;
+}
+
+.bg-light .link-class {
+  background-color: var(--white);
+  color: #538199;
   transition: filter 0.2s;
 }
 
-.link-class:hover {
+.bg-light .link-class:hover {
   filter: brightness(0.95);
+}
+
+.bg-high-contrast .link-class {
+  background-color: var(--black);
+  border: 2px solid var(--white);
+  color: var(--white);
+}
+
+.bg-high-contrast .link-class:hover {
+  border-color: var(--yellow-contrast);
+  color: var(--yellow-contrast);
+}
+
+.img-contrast-white {
+  filter: brightness(0) invert(1);
+}
+
+.bg-high-contrast hr {
+  border-color: var(--white);
 }

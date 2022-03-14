@@ -1,9 +1,17 @@
 .card-file {
-  border: 2px solid var(--gray-form);
+  border: 2px solid;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.card-theme-light {
+  border-color: var(--gray-form);
+}
+
+.card-theme-high-contrast {
+  border-color: var(--white);
 }
 
 .info-user {
@@ -21,8 +29,11 @@
 
 .info-user h5 {
   font-size: 1.1rem;
-  color: var(--gray-title);
   margin-bottom: 0;
+}
+
+.card-theme-light .info-user h5 {
+  color: var(--gray-title);
 }
 
 .file {
@@ -36,8 +47,11 @@
 }
 
 .file span {
-  color: var(--gray-form);
   font-weight: 700;
+}
+
+.card-theme-light .file span {
+  color: var(--gray-form);
 }
 
 .status {
@@ -48,10 +62,14 @@
   margin-top: 0.5rem;
 }
 
-.status.overdue {
+.card-theme-light .status.overdue {
   color: var(--red);
 }
 
-.status.on-time {
+.card-theme-light .status.on-time {
   color: var(--green);
+}
+
+.card-theme-high-contrast .status.overdue {
+  color: var(--yellow-contrast);
 }

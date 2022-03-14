@@ -1,9 +1,18 @@
 .card-activity {
   border-radius: 10px;
-  border: 2px solid #F1F3F5;
-  background-color: var(--white);
+  border: 2px solid;
   display: flex;
   flex-direction: column;
+}
+
+.card-activity-light {
+  border-color: #F1F3F5;
+  background-color: var(--white);
+}
+
+.card-activity-high-contrast {
+  border-color: var(--white);
+  background-color: var(--black);
 }
 
 .card-activity-header {
@@ -25,7 +34,6 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  color: var(--gray-title);
 }
 
 .info-activity h5 {
@@ -41,42 +49,19 @@
 .activity-grade {
   font-weight: 700;
   font-size: 1.1rem;
-  color: var(--gray-title);
   margin-right: 1rem;
 }
 
-.activity-score {
+.card-activity-light .info-activity, .card-activity-light .activity-grade {
+  color: var(--gray-title);
+}
+
+.card-activity-light .activity-score {
   color: var(--yellow);
 }
 
-.activity-content p {
+.card-activity-light.activity-content p {
   color: var(--gray-text);
-}
-
-.post-comments {
-  border-top: 2px solid #F1F3F5;
-  border-bottom: 2px solid #F1F3F5;
-}
-
-.post-comments-title {
-  display: flex;
-  align-items: center;
-}
-
-.post-comments-title h5 {
-  color: var(--blue-dark);
-  margin-left: 0.5rem;
-  margin-bottom: 0;
-}
-
-.add-comment {
-  display: flex;
-  align-items: center;
-}
-
-.add-comment form {
-  margin-left: 1rem;
-  width: 100%;
 }
 
 .card-activity-footer {

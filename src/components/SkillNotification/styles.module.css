@@ -1,4 +1,4 @@
-.notifications {
+.notifications-light, .notifications-high-contrast {
   height: fit-content;
 }
 
@@ -16,17 +16,27 @@
 
 .card-header h4 {
   font-weight: 900;
-  color: var(--blue-dark);
   margin-bottom: 0;
 }
 
+.notifications-light h4 {
+  color: var(--blue-dark);
+}
+
 .notification {
-  background-color: #F8F8F8;
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   width: 100%;
+}
+
+.notifications-light .notification {
+  background-color: #F8F8F8;
+}
+
+.notifications-light .notification {
+  border: 2px solid var(--white);
 }
 
 .notification img {
@@ -38,12 +48,18 @@
 .student-name {
   font-weight: 700;
   font-size: 1.1rem;
+}
+
+.notifications-light .student-name {
   color: var(--blue);
 }
 
 .class {
   font-weight: 700;
   font-size: 1rem;
+}
+
+.notifications-light .class {
   color: var(--gray-text);
 }
 
@@ -52,10 +68,10 @@
   flex-direction: column;
 }
 
-.skill strong {
+.notifications-light .skill strong {
   color: var(--blue-dark);
 }
 
-.skill span {
+.notifications-light .skill span {
   color: var(--green);
 }

@@ -21,7 +21,11 @@ export function Navbar() {
     <header>
       <nav className={`navbar navbar-expand-md ${styles.menu} ${styles[`menu-${theme}`]}`}>
         <a className="navbar-brand" href="/">
-          <img src="/icons/logo.svg" alt="Logo do MEG" />
+          <img
+            src="/icons/logo.svg"
+            alt="Logo do MEG"
+            className={theme === enumTheme.contrast ? 'img-contrast-white' : ''}
+          />
         </a>
         <button
           className="navbar-toggler"

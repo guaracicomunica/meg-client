@@ -2,6 +2,7 @@ import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 
 type ModalAddLinkType = {
+  theme: string;
   show: boolean;
   onHide: () => void;
   addLink: (data: LinkForm) => void;
@@ -37,7 +38,7 @@ export default function ModalAddLink(props: ModalAddLinkType) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className="modal-style"
+      className={`modal-style bg-${props.theme}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>

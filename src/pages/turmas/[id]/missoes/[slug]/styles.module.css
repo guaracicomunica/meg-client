@@ -42,17 +42,24 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  color: var(--gray-title);
+  align-items: center;
 }
 
-.info-activity h5 {
-  margin-bottom: 0;
-  margin-right: 1rem;
+.theme-light .info-activity {
+  color: var(--gray-title);
 }
 
 .delivery-cards {
   display: flex;
-  border-left: 1px solid var(--gray-form);
+  border-left: 1px solid;
+}
+
+.theme-light .delivery-cards {
+  border-color: var(--gray-form);
+}
+
+.theme-high-contrast .delivery-cards {
+  border-color: var(--white);
 }
 
 @media (max-width: 768px) {
@@ -63,7 +70,6 @@
 }
 
 .info-card {
-  background-color: var(--blue);
   border-radius: 10px;
   color: var(--white);
   display: flex;
@@ -71,6 +77,14 @@
   align-items: center;
   width: 6.5rem;
   height: 6.5rem;
+}
+
+.theme-light .info-card {
+  background-color: var(--blue);
+}
+
+.theme-high-contrast .info-card {
+  border: 2px solid var(--white);
 }
 
 .info-card .quantity {
@@ -86,11 +100,14 @@
 .activity-grade {
   font-weight: 700;
   font-size: 1.1rem;
-  color: var(--gray-title);
   margin-right: 1rem;
 }
 
-.activity-score {
+.theme-light .activity-grade {
+  color: var(--gray-title);
+}
+
+.theme-light .activity-score {
   color: var(--yellow);
 }
 
@@ -101,46 +118,32 @@
 
 .activity-status {
   text-transform: uppercase;
-  background-color: #F8F8F8;
   border-radius: 5px;
   padding: 0.15rem 0.5rem;
   font-weight: 700;
   font-size: 0.85rem;
 }
 
-.activity-status .active {
+.theme-light .activity-status {
+  background-color: #F8F8F8;
+}
+
+.theme-high-contrast .activity-status {
+  border: 2px solid var(--yellow-contrast);
+  background-color: var(--black);
+}
+
+.theme-light .activity-status .active {
   color: var(--green);
 }
 
-.activity-status .inactive {
+.theme-light .activity-status .inactive {
   color: var(--red);
 }
 
-.post-comments {
-  border-top: 2px solid #F1F3F5;
-  border-bottom: 2px solid #F1F3F5;
-  width: 100%;
-}
-
-.post-comments-title {
-  display: flex;
-  align-items: center;
-}
-
-.post-comments-title h5 {
-  color: var(--blue-dark);
-  margin-left: 0.5rem;
-  margin-bottom: 0;
-}
-
-.add-comment {
-  display: flex;
-  align-items: center;
-}
-
-.add-comment form {
-  margin-left: 1rem;
-  width: 100%;
+.theme-high-contrast .activity-status .active,
+.theme-high-contrast .activity-status .inactive {
+  color: var(--yellow-contrast);
 }
 
 .card-private-comments, .card-send-activity {
@@ -148,9 +151,12 @@
 }
 
 .card-private-comments h5 {
-  color: var(--black);
   font-weight: 900;
   width: 100%;
+}
+
+.theme-light .card-private-comments h5 {
+  color: var(--black);
 }
 
 .card-send-activity-header {
@@ -160,14 +166,21 @@
   width: 100%;
 }
 
-.card-send-activity-header .delivered {
-  color: var(--green);
+.card-send-activity-header .delivered,
+.card-send-activity-header .pending {
   text-transform: uppercase;
 }
 
-.card-send-activity-header .pending {
+.theme-light .card-send-activity-header .delivered {
+  color: var(--green);
+}
+
+.theme-light .card-send-activity-header .pending {
   color: var(--red);
-  text-transform: uppercase;
+}
+
+.theme-high-contrast .card-send-activity-header .pending {
+  color: var(--yellow-contrast);
 }
 
 .attachments {
@@ -227,7 +240,7 @@
 }
 
 .card-send-private-comment button {
-  background-color: var(--white);
+  background-color: transparent;
   border: none;
   cursor: pointer;
   position: absolute;

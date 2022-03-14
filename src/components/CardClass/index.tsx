@@ -1,16 +1,21 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ModalSeeClassCode from '../ModalSeeClassCode';
 import ModalCreateNewClass from '../ModalCreateNewClass';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { ClassStatus } from '../../enums/enumClassStatus';
 import { ClassCard } from '../../types/Class';
 import styles from './styles.module.css';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 export default function CardClass(props: ClassCard) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
+  const { theme } = useContext(ThemeContext);
+  const isClassroomActive = props.status === ClassStatus.active
+  const isTeacher = props.roleUser === RoleUser.teacher
+  const isStudent = props.roleUser === RoleUser.student
 
   useEffect(() => {
     if (props.banner !== null) {
@@ -27,27 +32,28 @@ export default function CardClass(props: ClassCard) {
         <img
           src={bannerURL}
           alt="Banner da turma"
-          className={props.status === ClassStatus.inactive ? "banner-inactive" : ""}
+          className={!isClassroomActive ? "banner-inactive" : ""}
         />
-
-        <div className="info-class p-4">
-          <h4 className='text-uppercase title'>{props.name}</h4>
-          <h5 className='nickname'>{props.nickname}</h5>
-          <hr className='my-2 w-50' />
-          <p>Prof. {props.teacher}</p>
-        </div>
-
-        {props.status === ClassStatus.active && (
-          <div className="link-class" onClick={() => setShowModalSeeCode(true)}>
-            Código da turma
+        <div className="banner-content">
+          <div className="info-class pt-4 pl-4 pr-0">
+            <h4 className='text-uppercase title'>{props.name}</h4>
+            <h5 className='nickname'>{props.nickname}</h5>
+            <hr className='my-2 w-50' />
+            <p className='teacher'>Prof. {props.teacher}</p>
           </div>
-        )}
+
+          {isClassroomActive && (
+            <div className="link-class m-4" onClick={() => setShowModalSeeCode(true)}>
+              Código da turma
+            </div>
+          )}
+        </div>
       </div>
       
       <div className={`p-4 ${styles["card-class-footer"]}`}>
         <hr className='mb-2 w-100' />
         <div className='w-100 d-flex justify-content-around flex-wrap'>
-          {props.status === ClassStatus.inactive && props.roleUser === RoleUser.teacher && (
+          {!isClassroomActive && isTeacher && (
             <button
               onClick={() => setShowModalEdit(true)}
               className='text-uppercase button button-blue mt-2 py-3 px-4'
@@ -56,13 +62,13 @@ export default function CardClass(props: ClassCard) {
             </button>
           )}
           
-          {props.status === ClassStatus.active && props.roleUser === RoleUser.student && (
+          {isClassroomActive && isStudent && (
             <Link href={`/turmas/${props.id}`}>
               <a className='text-uppercase button button-blue mt-2 py-3 px-4'>Acessar turma</a>
             </Link>
           )}
 
-          {props.status === ClassStatus.active && props.roleUser === RoleUser.teacher && (
+          {isClassroomActive && isTeacher && (
             <>
               <Link href={`/turmas/${props.id}`}>
                 <a className='text-uppercase button button-blue mt-2 py-3 px-4'>Acessar turma</a>
@@ -78,12 +84,14 @@ export default function CardClass(props: ClassCard) {
         </div>
 
         <ModalSeeClassCode
+          theme={theme}
           code={props.code}
           show={showModalSeeCode}
           onHide={() => setShowModalSeeCode(false)}
         />
 
         <ModalCreateNewClass
+          theme={theme}
           type="edit"
           formData={{
             id: props.id,

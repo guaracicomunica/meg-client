@@ -1,43 +1,11 @@
-.post {
-  border-radius: 10px;
-  border: 2px solid #F1F3F5;
-  background-color: var(--white);
-}
-
-.post-creator {
-  display: flex;
-  align-items: center;
-}
-
-.post-creator img {
-  height: 3.5rem;
-  border-radius: 50%;
-}
-
-.post-info {
-  margin-left: 1rem;
-}
-
-.post-info h5 {
-  color: var(--gray-title);
-  margin-bottom: 0;
-}
-
-.post-info small {
-  color: var(--gray-light);
-  font-size: 0.9rem;
-}
-
-.post-body {
-  font-size: 1rem;
-  color: var(--gray-text);
-  line-height: 1.5rem;
-  white-space: pre-wrap;
-}
-
-.post-comments {
+.post-comments-light {
   border-top: 2px solid #F1F3F5;
   border-bottom: 2px solid #F1F3F5;
+}
+
+.post-comments-high-contrast {
+  border-top: 2px solid var(--white);
+  border-bottom: 2px solid var(--white);
 }
 
 .post-comments-title {
@@ -46,9 +14,12 @@
 }
 
 .post-comments-title h5 {
-  color: var(--blue-dark);
   margin-left: 0.5rem;
   margin-bottom: 0;
+}
+
+.post-comments-light .post-comments-title h5 {
+  color: var(--blue-dark);
 }
 
 .add-comment {
@@ -75,7 +46,7 @@
 }
 
 .btn-create-comment {
-  background-color: var(--white);
+  background-color: transparent;
   border: none;
   cursor: pointer;
   position: absolute;

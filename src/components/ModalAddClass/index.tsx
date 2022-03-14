@@ -8,6 +8,7 @@ import { api } from '../../services/api';
 import { options } from '../../utils/defaultToastOptions';
 
 type ModalAddClassType = {
+  theme: string;
   show: boolean;
   onHide: () => void;
 }
@@ -82,11 +83,11 @@ export default function ModalAddClass(props: ModalAddClassType) {
   return (
     <Modal
       id="modal-add-class-student"
+      className={`modal-style bg-${props.theme}`}
       show={props.show}
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className="modal-style"
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>

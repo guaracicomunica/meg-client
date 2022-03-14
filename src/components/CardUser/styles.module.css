@@ -39,6 +39,10 @@
   background-color: var(--black) !important;
 }
 
+.card-user-high-contrast .edit-user-img label:hover {
+  border-color: var(--yellow-contrast) !important;
+}
+
 .edit-user-img img {
   height: 1rem;
   width: 1rem;

@@ -66,5 +66,12 @@
 }
 
 .card-skills-high-contrast .skill button {
+  border: 2px solid var(--white);
+  border-radius: 10px;
   color: var(--white);
+}
+
+.card-skills-high-contrast .skill button:hover {
+  border-color: var(--yellow-contrast);
+  color: var(--yellow-contrast);
 }

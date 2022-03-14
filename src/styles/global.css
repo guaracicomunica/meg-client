@@ -183,6 +183,14 @@ select:focus {
   color: var(--blue-dark);
 }
 
+.bg-high-contrast .link-card:hover {
+  border-color: var(--yellow-contrast);
+}
+
+.bg-high-contrast .link-card:hover h4 {
+  color: var(--yellow-contrast);
+}
+
 .banner {
   position: relative;
   height: 37%;

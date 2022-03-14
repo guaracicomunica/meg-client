@@ -39,6 +39,12 @@
   border: 2px solid var(--white);
 }
 
+.skill-store-high-contrast .skill:hover,
+.skill-store-high-contrast .skill:hover .coins {
+  border-color: var(--yellow-contrast);
+  color: var(--yellow-contrast);
+}
+
 .skill img {
   height: 2.5rem;
 }
@@ -91,6 +97,11 @@
   height: 7.5rem;
   width: 100%;
   cursor: pointer;
+}
+
+.banner:hover {
+  border-radius: 15px;
+  border: 3px solid var(--yellow-contrast);
 }
 
 .banner img {

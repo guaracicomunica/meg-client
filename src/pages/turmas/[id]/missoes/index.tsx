@@ -6,7 +6,7 @@ import { parseCookies } from "nookies";
 import { useContext, useEffect, useState } from "react";
 import { Col, Nav, Row, Spinner, Tab } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, ToastOptions } from "react-toastify";
 
 import CardActivity from "../../../../components/CardActivity";
 import ModalAddTopic from "../../../../components/ModalAddTopic";
@@ -18,6 +18,7 @@ import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ActivityTopicType, ActivityType } from "../../../../types/Post";
 import { QueryProps } from "../../../../types/Query";
+import { options } from "../../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
 
@@ -43,6 +44,14 @@ export default function Atividades(props: ActivitiesPageProps) {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const isTeacher = user?.role === RoleUser.teacher;
+
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   useEffect(() => {
     if (props) {
@@ -232,7 +241,7 @@ export default function Atividades(props: ActivitiesPageProps) {
         />
       </main>
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   )
 }

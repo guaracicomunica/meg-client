@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer, ToastOptions } from 'react-toastify';
 
 import ModalAddFile from '../../../../../components/ModalAddFile';
 import ModalAddLink from '../../../../../components/ModalAddLink';
@@ -65,6 +65,11 @@ export default function Criar(props: CreateActivityProps) {
   const [files, setFiles] = useState<File[]>([]);
   const { theme } = useContext(ThemeContext);
   const isHighContrast = theme === enumTheme.contrast;
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   function addLink(data: LinkType) {
     setLinks([
@@ -142,7 +147,7 @@ export default function Criar(props: CreateActivityProps) {
 
       if (!error.response) {
         // network error
-        return toast.error(string, options);
+        return toast.error(string, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -162,22 +167,22 @@ export default function Criar(props: CreateActivityProps) {
           }
 
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500: 
-          toast.error(string, options);
+          toast.error(string, toastOptions);
           break;
 
         default:
-          toast.error(string, options);
+          toast.error(string, toastOptions);
           break;
       }
     }
@@ -413,7 +418,7 @@ export default function Criar(props: CreateActivityProps) {
         addFile={addFile}
       />
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

@@ -2,11 +2,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast, ToastOptions } from 'react-toastify';
 import { options } from '../../utils/defaultToastOptions';
 
 import { AuthContext } from '../../contexts/AuthContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import { enumTheme } from '../../enums/enumTheme';
 
 export default function Cadastro() {
   const { register, handleSubmit, reset } = useForm({defaultValues: {
@@ -17,10 +18,19 @@ export default function Cadastro() {
     role: 2
   }});
 
-  const { signUp } = useContext(AuthContext);
+  const { signUp } = useContext(AuthContext);  
 
   const [buttonString, setButtonString] = useState("Cadastre-se");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   async function handleSignUp(data) {
     try {
@@ -45,7 +55,7 @@ export default function Cadastro() {
 
       if (!error.response) {
         // network error
-        return toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
+        return toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', toastOptions);
       }
       switch (error.response.status) {
         //erro de validação
@@ -53,28 +63,28 @@ export default function Cadastro() {
           const obj = JSON.parse(error.response.data.error);
       
           obj?.name?.map(item => {
-            toast.error(item, options);
+            toast.error(item, toastOptions);
           });
           obj?.role?.map(item => {
-            toast.error(item, options);     
+            toast.error(item, toastOptions);     
           });
           obj?.email?.map(item => {
-            toast.error(item, options);     
+            toast.error(item, toastOptions);     
           });
           obj?.password?.map(item => {
-            toast.error(item, options);     
+            toast.error(item, toastOptions);     
           });
           obj?.password_confirmation?.map(item => {
-            toast.error(item, options);     
+            toast.error(item, toastOptions);     
           });
           break;
 
         case 500: 
-          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
+          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', toastOptions);
           break;
 
         default:
-          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
+          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', toastOptions);
           break;
       }
     } 
@@ -211,7 +221,7 @@ export default function Cadastro() {
           </div>
         </div>
       </main>
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   )
 }

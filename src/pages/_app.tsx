@@ -7,6 +7,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
 import '../styles/buttons.css';
 import '../styles/form.css';

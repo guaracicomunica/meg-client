@@ -3,12 +3,14 @@ import Head from "next/head";
 import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
 import { Table } from "react-bootstrap";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, ToastOptions } from "react-toastify";
 
 import { Grade } from '../../../../types/Grade';
 import ModalPostGrades from "../../../../components/ModalPostGrades";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ThemeContext } from "../../../../contexts/ThemeContext";
+import { enumTheme } from "../../../../enums/enumTheme";
+import { options } from "../../../../utils/defaultToastOptions";
 
 type GradeProps = {
   grades: Grade[]
@@ -18,6 +20,13 @@ export default function Notas(props: GradeProps) {
   const [showModalPostGrades, setShowModalPostGrades] = useState(false);
   const [isForAllStudents, setIsForAllStudents] = useState(false);
   const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   function generateReportCardForAllStudents() {
     setIsForAllStudents(true);
@@ -110,7 +119,7 @@ export default function Notas(props: GradeProps) {
         onHide={() => setShowModalPostGrades(false)}
       />
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

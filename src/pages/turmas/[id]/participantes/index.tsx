@@ -5,7 +5,7 @@ import { parseCookies } from "nookies";
 import { useEffect, useState, useContext } from "react";
 import { Spinner } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, ToastOptions } from "react-toastify";
 
 import { ThemeContext } from "../../../../contexts/ThemeContext";
 import CardStudent from "../../../../components/CardStudent";
@@ -17,6 +17,7 @@ import { StudentType, TeacherType } from "../../../../types/Participant";
 import { QueryProps } from "../../../../types/Query";
 
 import styles from './styles.module.css';
+import { options } from "../../../../utils/defaultToastOptions";
 
 type ParticipantsProps = {
   teachers: TeacherType[];
@@ -33,6 +34,13 @@ export default function Participantes(props: ParticipantsProps) {
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   useEffect(() => {
     if (props) {
@@ -108,7 +116,7 @@ export default function Participantes(props: ParticipantsProps) {
         </InfiniteScroll>
       </main>
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

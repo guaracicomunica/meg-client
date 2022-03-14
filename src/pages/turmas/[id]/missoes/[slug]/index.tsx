@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer, ToastOptions } from "react-toastify";
 
 import AttachmentFile from "../../../../../components/AttachmentFile";
 import AttachmentLink from "../../../../../components/AttachmentLink";
@@ -43,6 +43,11 @@ export default function Atividade(props: ActivityType) {
   const current_route: string = `/turmas/${router.query.id}/missoes/${router.query.slug}`;
   const isTeacher = user?.role === RoleUser.teacher;
   const isHighContrast = theme === enumTheme.contrast;
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   function addFile(data: any) {
     setFiles([
@@ -91,7 +96,7 @@ export default function Atividade(props: ActivityType) {
           body: ""
         });
 
-        toast.success("Comentário enviado com sucesso!", options);
+        toast.success("Comentário enviado com sucesso!", toastOptions);
         
         router.push(current_route, undefined, {scroll: false});
       });
@@ -99,7 +104,7 @@ export default function Atividade(props: ActivityType) {
     catch(error) { 
       if (!error.response) {
         // network error
-        return toast.error(genericMessageError, options);
+        return toast.error(genericMessageError, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -111,22 +116,22 @@ export default function Atividade(props: ActivityType) {
           }
         
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500: 
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
 
         default:
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
       }
     }
@@ -154,12 +159,12 @@ export default function Atividade(props: ActivityType) {
 
       await api.post('activities/delivery', request).then(function (success) { 
         router.push(`/turmas/${router.query.id}/missoes/${props.id}`, undefined, {scroll: false});
-        toast.success("Atividade marcada como concluída", options);
+        toast.success("Atividade marcada como concluída", toastOptions);
       });
     } catch (error) {
       if (!error.response) {
         // network error
-        return toast.error(genericMessageError, options);
+        return toast.error(genericMessageError, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -170,22 +175,22 @@ export default function Atividade(props: ActivityType) {
             }
           }
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500: 
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
 
         default:
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
       }
     }
@@ -201,12 +206,12 @@ export default function Atividade(props: ActivityType) {
 
       await api.post('activities/cancel', request).then(function (success) { 
         router.push(`/turmas/${router.query.id}/missoes/${props.id}`, undefined, {scroll: false});
-        toast.success("Entrega da atividade foi cancelada", options);
+        toast.success("Entrega da atividade foi cancelada", toastOptions);
       });
     } catch (error) {
       if (!error.response) {
         // network error
-        return toast.error(genericMessageError, options);
+        return toast.error(genericMessageError, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -217,22 +222,22 @@ export default function Atividade(props: ActivityType) {
             }
           }
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500: 
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
 
         default:
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
       }
     }
@@ -456,12 +461,13 @@ export default function Atividade(props: ActivityType) {
       </main>
 
       <ModalAddFile
+        theme={theme}
         show={showModalAddFile}
         onHide={() => setShowModalAddFile(false)}
         addFile={addFile}
       />
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

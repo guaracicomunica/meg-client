@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 import { OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { parseCookies } from 'nookies';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, ToastOptions } from 'react-toastify';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import CardClass from '../../components/CardClass';
@@ -20,6 +20,7 @@ import { RoleUser } from '../../enums/enumRoleUser';
 import { ClassCard } from '../../types/Class';
 
 import styles from './styles.module.css';
+import { options } from '../../utils/defaultToastOptions';
 
 type ClassPageType = {
   classes: ClassCard[];
@@ -39,6 +40,14 @@ export default function Turmas(props: ClassPageType) {
   const [classes, setClasses] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   useEffect(() => {
     if (props) {
@@ -178,7 +187,7 @@ export default function Turmas(props: ClassPageType) {
           onHide={() => setShowModalStudent(false)}
         />
       </main>
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

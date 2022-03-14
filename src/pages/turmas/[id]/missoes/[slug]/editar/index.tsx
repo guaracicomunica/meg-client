@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useState, useEffect, useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer, ToastOptions } from 'react-toastify';
 
 import ModalAddFile from '../../../../../../components/ModalAddFile';
 import ModalAddLink from '../../../../../../components/ModalAddLink';
@@ -93,6 +93,11 @@ export default function Editar(props: EditPageProps) {
   
   const { theme } = useContext(ThemeContext);
   const isHighContrast = theme === enumTheme.contrast;
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   useEffect(() => {
     if (activity) {
@@ -158,7 +163,7 @@ export default function Editar(props: EditPageProps) {
         }
       })
       .then(function (success) {
-        toast.success("Anexo excluído com sucesso!", options);
+        toast.success("Anexo excluído com sucesso!", toastOptions);
         deleteAttachmentState(idAttachment);
       });
     } catch(error) {
@@ -166,7 +171,7 @@ export default function Editar(props: EditPageProps) {
 
       if (!error.response) {
         // network error
-        return toast.error(string, options);
+        return toast.error(string, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -186,22 +191,22 @@ export default function Editar(props: EditPageProps) {
           }
 
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500: 
-          toast.error(string, options);
+          toast.error(string, toastOptions);
           break;
 
         default:
-          toast.error(string, options);
+          toast.error(string, toastOptions);
           break;
       }
     }
@@ -245,7 +250,7 @@ export default function Editar(props: EditPageProps) {
         }
       })
       .then(function (success) {
-        toast.success("Missão editada com sucesso", options);
+        toast.success("Missão editada com sucesso", toastOptions);
         router.push(`/turmas/${router.query.id}/missoes/${router.query.slug}`, undefined, { scroll: false });
       });
     }
@@ -254,7 +259,7 @@ export default function Editar(props: EditPageProps) {
 
       if (!error.response) {
         // network error
-        return toast.error(string, options);
+        return toast.error(string, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -274,22 +279,22 @@ export default function Editar(props: EditPageProps) {
           }
 
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500: 
-          toast.error(string, options);
+          toast.error(string, toastOptions);
           break;
 
         default:
-          toast.error(string, options);
+          toast.error(string, toastOptions);
           break;
       }
     }
@@ -553,7 +558,7 @@ export default function Editar(props: EditPageProps) {
         addFile={addFile}
       />
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

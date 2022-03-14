@@ -2,11 +2,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast, ToastOptions } from 'react-toastify';
 import { options } from '../../utils/defaultToastOptions';
 
 import { AuthContext } from '../../contexts/AuthContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import { enumTheme } from '../../enums/enumTheme';
 
 export default function Login() {
   const { register, handleSubmit } = useForm({defaultValues: {
@@ -17,6 +18,15 @@ export default function Login() {
 
   const [buttonString, setButtonString] = useState("Entrar");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   async function handleSignIn(data) {
     try {
@@ -29,24 +39,24 @@ export default function Login() {
 
       if (!error.response) {
         // network error
-        return toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
+        return toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', toastOptions);
       }
       switch (error.response.status) {
         
         case 400:
           toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() 
-          : "Ops! Algo não saiu como o esperado, tente novamente ou entre em contato com o suporte.", options);
+          : "Ops! Algo não saiu como o esperado, tente novamente ou entre em contato com o suporte.", toastOptions);
 
         case 401:
-          toast.error("O email ou a senha estão incorretos.", options);
+          toast.error("O email ou a senha estão incorretos.", toastOptions);
           break;
 
         case 500: 
-          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
+          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', toastOptions);
           break;
 
         default:
-          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', options);
+          toast.error('Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.', toastOptions);
           break;
       }
     } 
@@ -115,7 +125,7 @@ export default function Login() {
           </div>
         </div>
       </main>
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

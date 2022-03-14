@@ -7,8 +7,7 @@ import { parseCookies } from "nookies";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer, ToastOptions } from "react-toastify";
 
 import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
 import PostList from "../../../components/PostList";
@@ -55,6 +54,14 @@ export default function Turma(props: ClassPageProps) {
     {defaultValues: {  body: "", disabled: false, is_private: false, classroom_id: props.classroom.id }});
 
   const { classroom } = props;
+
+  const isHighContrast = theme === enumTheme.contrast;
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   useEffect(() => {
     if (classroom.banner !== null) {
@@ -119,13 +126,13 @@ export default function Turma(props: ClassPageProps) {
           body: ""
         });
         router.push(`/turmas/${router.query.id}`, undefined, {scroll: false});
-        toast.success("Post enviado com sucesso!", options);
+        toast.success("Post enviado com sucesso!", toastOptions);
       });
     }
     catch(error) {
       if (!error.response) {
         // network error
-        return toast.error(genericMessageError, options);
+        return toast.error(genericMessageError, toastOptions);
       }
       switch (error.response.status) {
         case 401:
@@ -137,22 +144,22 @@ export default function Turma(props: ClassPageProps) {
           }
         
         case 400:
-          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, options);
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : genericMessageError, toastOptions);
           break;
 
         case 422:
           let errors = error.response?.data.errors;
           Object.keys(errors).forEach((item) => {
-            toast.warning(errors[item][0], options);
+            toast.warning(errors[item][0], toastOptions);
           });
           break;
 
         case 500:
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
 
         default:
-          toast.error(genericMessageError, options);
+          toast.error(genericMessageError, toastOptions);
           break;
       }
     }
@@ -271,7 +278,7 @@ export default function Turma(props: ClassPageProps) {
         onHide={() => setShowModalSeeCode(false)}
       />
 
-      <ToastContainer />
+      <ToastContainer {...toastOptions} />
     </>
   );
 }

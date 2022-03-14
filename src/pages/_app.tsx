@@ -12,6 +12,7 @@ import '../styles/buttons.css';
 import '../styles/form.css';
 import '../styles/modal.css';
 import '../styles/table.css';
+import AccessibilityJump from '../components/AccessibilityJump';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -25,7 +26,9 @@ function MyApp({ Component, pageProps }) {
           <AuthProvider>
             <ThemeContext.Consumer>
               {props => (
+                
                 <div className={`bg-${props.theme}`}>
+                  <AccessibilityJump idComponent="topo" accessKeyValue="1" textJumpReader="Ir para a barra de navegação" /> 
                   <div>
                     <Navbar />
                     <Component {...pageProps} />

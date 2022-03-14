@@ -7,6 +7,7 @@ import { PageActive } from '../../enums/enumPageActive';
 import { enumTheme } from '../../enums/enumTheme';
 
 import styles from "./styles.module.css";
+import AccessibilityJump from '../AccessibilityJump';
 
 export function Navbar() {
   const { pageActive } = useContext(PageActiveContext);
@@ -18,10 +19,10 @@ export function Navbar() {
   let classNameLink = "nav-item mt-3 mt-md-0";
 
   return (
-    <header>
+    <header id="topo">
       <nav className={`navbar navbar-expand-md ${styles.menu} ${styles[`menu-${theme}`]}`}>
         <a className="navbar-brand" href="/">
-          <img src="/icons/logo.svg" alt="Logo do MEG" />
+          <img src="/icons/logo.svg" alt="Logo do MEG, descrição: três letras M, E e G de cores azul, amarelo e vermelho respectivamente" />
         </a>
         <button
           className="navbar-toggler"
@@ -30,13 +31,16 @@ export function Navbar() {
           data-target="#navbar"
           aria-controls="navbar"
           aria-expanded="false"
-          aria-label="Alterna navegação"
+          aria-label="aperte este botão para exibir a barra de navegação"
         >
-          <img src="/icons/menu.svg" alt="Menu" className={styles["nav-icon"]} />
+          <img src="/icons/menu.svg" alt="Menu" className={styles["nav-icon"]} aria-hidden="true" />
         </button>
 
         <div className="collapse navbar-collapse" id="navbar">
           <ul className="navbar-nav align-items-center mr-auto my-4 my-md-0">
+
+            <AccessibilityJump accessKeyValue='2' tagName='main' textJumpReader='Ir para o conteúdo principal' />
+            
             <li className={pageActive === PageActive.inicio ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
               <Link href="/">
                 <a className={styles["menu-link"]}>
@@ -73,7 +77,7 @@ export function Navbar() {
                 </Link>
               </li> 
             )}
-            <li className={classNameLink}>
+            <li className={classNameLink} aria-hidden="true" >
               <button className={styles["btn-switch-theme"]} onClick={() => switchTheme(themeToSwitch)}>
                 <img src="/icons/switch-theme.svg" alt="Botão para alterar tema" />
               </button>

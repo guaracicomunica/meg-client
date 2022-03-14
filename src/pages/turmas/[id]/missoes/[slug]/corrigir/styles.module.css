@@ -13,7 +13,7 @@
   width: 100%;
 }
 
-.assign-grades-all h5 {
+.theme-light .assign-grades-all h5 {
   color: var(--gray-title);
 }
 
@@ -44,12 +44,10 @@
 }
 
 .students-files h1 {
-  color: var(--gray-title);
   font-size: 2rem;
 }
 
 .info-card {
-  background-color: var(--blue);
   border-radius: 10px;
   color: var(--white);
   display: flex;
@@ -57,6 +55,14 @@
   align-items: center;
   width: 6.5rem;
   height: 6.5rem;
+}
+
+.theme-light .info-card {
+  background-color: var(--blue);
+}
+
+.theme-high-contrast .info-card {
+  border: 2px solid var(--white);
 }
 
 .info-card .quantity {
@@ -80,8 +86,16 @@
 .student-info {
   display: flex;
   align-items: center;
-  border: 2px solid var(--gray-form);
+  border: 2px solid;
   border-radius: 10px;
+}
+
+.theme-light .student-info {
+  border-color: var(--gray-form);
+}
+
+.theme-high-contrast .student-info {
+  border-color: var(--white);
 }
 
 .student-info img {
@@ -90,10 +104,13 @@
 }
 
 .student-info h6 {
-  color: var(--gray-title);
   font-size: 1.1rem;
   margin-left: 0.5rem;
   margin-bottom: 0;
+}
+
+.theme-light .student-info h6 {
+  color: var(--gray-title);
 }
 
 .input-grade input::-webkit-outer-spin-button,

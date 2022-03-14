@@ -2,10 +2,12 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import StudentFile from '../../../../../../components/StudentFile';
+import { ThemeContext } from '../../../../../../contexts/ThemeContext';
 import { api } from '../../../../../../services/api';
 import { getAPIClient } from '../../../../../../services/apiClient';
 import { ActivityStudent } from '../../../../../../types/Post';
@@ -32,8 +34,9 @@ type DataFormGrades = {
 
 export default function Corrigir(props: CorrectActivityProps) {
   const router = useRouter();
+  const { theme } = useContext(ThemeContext);
 
-  const { register, unregister, handleSubmit, reset, setValue } = useForm({defaultValues: {
+  const { register, handleSubmit, reset } = useForm({defaultValues: {
     users: [],
     grade: 0
   }});
@@ -172,7 +175,7 @@ export default function Corrigir(props: CorrectActivityProps) {
         <title>Corrigir missão</title>
       </Head>
 
-      <main className={styles["page-layout"]}>
+      <main className={`${styles["page-layout"]} ${styles[`theme-${theme}`]}`}>
         <div className={`card-style p-4 ${styles["assign-grades"]}`}>
           {props.totalAssignments > 0 && (
             <>
@@ -250,7 +253,7 @@ export default function Corrigir(props: CorrectActivityProps) {
         </div>
 
         <div className={styles["students-files"]}>
-          <h1 className='mb-4'>{props.classroom}</h1>
+          <h1 className='mb-4 title-gray'>{props.classroom}</h1>
           <div className="d-flex mb-4">
             <div className={`p-2 mr-3 ${styles["info-card"]}`}>
               <div className={styles.quantity}>{props.totalDeliveredActivities}</div>

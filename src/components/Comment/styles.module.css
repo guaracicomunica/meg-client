@@ -4,8 +4,8 @@
 }
 
 .comment-creator img {
-  height: 3rem;
-  width: 3rem;
+  height: calc(2.5rem + 1em);
+  width: calc(2.5rem + 1em);
   border-radius: 50%;
 }
 
@@ -14,16 +14,16 @@
 }
 
 .comment-info h6 {
-  font-size: 1.1rem;
+  font-size: 1.1em;
   margin-bottom: 0;
 }
 
 .comment-info small {
-  font-size: 0.9rem;
+  font-size: 0.9em;
 }
 
 .comment-body {
-  font-size: 1rem;
+  font-size: 1em;
   line-height: 1.5rem;
   white-space: pre-wrap;
   line-break: anywhere;

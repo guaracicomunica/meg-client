@@ -34,5 +34,5 @@
 }
 
 .response button img {
-  height: 2rem;
+  height: calc(1rem + 1em);
 }

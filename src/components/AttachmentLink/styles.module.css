@@ -18,7 +18,7 @@
 }
 
 .attachment img {
-  height: 2rem;
+  height: calc(1rem + 1em);
 }
 
 .attachment a {

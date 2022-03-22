@@ -58,10 +58,35 @@ body, #__next {
 
 body, input, textarea, button {
   font-family: 'Lato', sans-serif !important;
+  word-wrap: break-word;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.75em;
+}
+
+h4 {
+  font-size: 1.5em;
+}
+
+h5 {
+  font-size: 1.25em;
+}
+
+h6 {
+  font-size: 1em;
 }
 
 a {
@@ -96,7 +121,7 @@ button {
 }
 
 select {
-  font-size: 1rem !important;
+  font-size: 1em !important;
   border-radius: 10px !important;
   border: none !important;
 }
@@ -130,6 +155,10 @@ select:focus {
   .page-container {
     padding: 2rem 3rem;
   }
+
+  .section {
+    padding: 4rem 2rem;
+  }  
 }
 
 .navbar-collapse {
@@ -173,13 +202,14 @@ select:focus {
   cursor: pointer;
 }
 
-.link-card h4 {
+.link-card span {
   text-align: center;
   font-weight: 900;
+  font-size: 1.25em;
   margin: 0;
 }
 
-.bg-light .link-card h4 {
+.bg-light .link-card span {
   color: var(--blue-dark);
 }
 
@@ -187,13 +217,13 @@ select:focus {
   border-color: var(--yellow-contrast);
 }
 
-.bg-high-contrast .link-card:hover h4 {
+.bg-high-contrast .link-card:hover span {
   color: var(--yellow-contrast);
 }
 
 .banner {
   position: relative;
-  height: 37%;
+  height: 40%;
   width: 100%;
 }
 
@@ -230,10 +260,11 @@ select:focus {
   max-width: 100%;
 }
 
-.info-class .title, .info-class .nickname {
+.info-class .title, .info-class .nickname, .info-class .teacher {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-size: 1.5em;
 }
 
 .info-class .nickname {
@@ -248,7 +279,7 @@ select:focus {
   height: fit-content;
   border-radius: 5px;
   padding: 0.1rem 0.25rem;
-  font-size: 0.9rem;
+  font-size: 0.9em;
   font-weight: 700;
   text-align: center;
   cursor: pointer;

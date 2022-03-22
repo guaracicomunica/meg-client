@@ -5,13 +5,12 @@
 
 .modal-style .modal-title {
   font-weight: 900;
-  font-size: 1.75rem;
+  font-size: 1.75em;
 }
 
 .modal-style .modal-body h4 {
   margin-bottom: 1.5rem;
   font-weight: 900;
-  font-size: 1.5rem;
 }
 
 .modal-style .modal-footer .modal-button {
@@ -21,7 +20,7 @@
 .modal-button {
   background-color: transparent;
   border: none;
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 /* MODAL THEME */

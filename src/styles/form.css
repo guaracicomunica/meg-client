@@ -1,6 +1,6 @@
 .form-label {
   font-weight: 900;
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 .bg-light .form-label {
@@ -12,7 +12,7 @@
   border-radius: 10px;
   border: 2px solid;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1em;
   transition: 0.3s ease-in-out border-color;
 }
 
@@ -21,7 +21,7 @@
   border: 2px solid;
   border-radius: 10px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1em;
   transition: 0.3s ease-in-out border-color;
 }
 
@@ -60,10 +60,10 @@
   border: 2px solid;
   border-radius: 50%;
   cursor: pointer;
-  height: 24px;
+  height: 1.5em;
+  width: 1.5em;
   left: 0;
   top: 0;
-  width: 24px;
 }
 
 .bg-light .checkbox label,.bg-light .radio label {
@@ -90,13 +90,13 @@
   border-top: none;
   border-right: none;
   content: "";
-  height: 6px;
-  left: 4px;
+  height: 0.375em;
+  left: 0.25em;
   opacity: 0;
   position: absolute;
-  top: 6px;
+  top: 0.375em;
   transform: rotate(-45deg);
-  width: 12px;
+  width: 0.75em;
 }
 
 .bg-light .checkbox label:after, .bg-light .radio label:after {
@@ -180,7 +180,7 @@
 .input-file span {
   margin-left: 3.25rem;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 .bg-light .input-file span {

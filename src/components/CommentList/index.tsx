@@ -100,7 +100,7 @@ export default function CommentList(props: CommentListprops) {
           <img
             src="/icons/comments.svg"
             alt="Comentários da turma"
-            style={{height: "1.25rem"}}
+            style={{height: "1.25em"}}
             className={isHighContrast ? "img-contrast-white" : ""}
           />
           <h5>{props.comments?.length || 0} {props.comments?.length === 1 ? "Comentário" : "Comentários"} da turma</h5>

@@ -1,0 +1,76 @@
+.font-0 {
+  font-size: 100%;  /* 16px */
+}
+
+.font-1 {
+  font-size: 120%;
+}
+
+.font-2 {
+  font-size: 140%;
+}
+
+.font-3 {
+  font-size: 160%;
+}
+
+.font-4 {
+  font-size: 180%;
+}
+
+.font-5 {
+  font-size: 200%;
+}
+
+
+@media (max-width: 1080px) {
+  .font-0 {
+    font-size: 93.75%; /* 15px */
+  }
+
+  .font-1 {
+    font-size: 112.5%;
+  }
+
+  .font-2 {
+    font-size: 131.25%;
+  }
+
+  .font-3 {
+    font-size: 150%;
+  }
+
+  .font-4 {
+    font-size: 168.75%;
+  }
+
+  .font-5 {
+    font-size: 187.5%;
+  }
+}
+
+@media (max-width: 720px) {
+  .font-0 {
+    font-size: 87.5%; /* 14px */
+  }
+
+  .font-1 {
+    font-size: 105%;
+  }
+
+  .font-2 {
+    font-size: 122.5%;
+  }
+
+  .font-3 {
+    font-size: 140%
+  }
+
+  .font-4 {
+    font-size: 157.5%;
+  }
+
+  .font-5 {
+    font-size: 175%;
+  }
+}

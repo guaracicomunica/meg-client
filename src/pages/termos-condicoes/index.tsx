@@ -15,7 +15,7 @@ export default function TermosCondicoes() {
       </Head>
 
       <main className={`${styles["page-layout"]} theme-${theme}`}>
-        <div className='col-10 col-md-9 col-lg-8 col-xl-7'>
+        <div className='col-11 col-md-9 col-lg-8 col-xl-7'>
           <h1 className={`title-blue-dark mb-4`}>Termos e condições do MEG</h1>
           <ol className='text-blue-dark'>
             <li className={styles.li}>Da aceitação</li>

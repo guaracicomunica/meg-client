@@ -28,7 +28,7 @@
 }
 
 .info-user h5 {
-  font-size: 1.1rem;
+  font-size: 1.1em;
   margin-bottom: 0;
 }
 
@@ -56,7 +56,7 @@
 
 .status {
   text-transform: uppercase;
-  font-size: 0.9rem;
+  font-size: 0.9em;
   font-weight: 700;
   text-align: center;
   margin-top: 0.5rem;

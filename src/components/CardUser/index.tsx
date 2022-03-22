@@ -114,7 +114,7 @@ export default function CardUser(props: CardUserInfos) {
               {...register('avatar_path')}
             />
             <label htmlFor="avatar_path">
-              <img src="/icons/edit.svg" alt="Editar imagem" />
+              <img src="/icons/edit.svg" alt="Ícone de editar imagem" />
             </label>
           </div>
         </form>

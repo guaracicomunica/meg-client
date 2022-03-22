@@ -12,7 +12,7 @@
 }
 
 .form-label {
-  font-size: 1.1rem;
+  font-size: 1.1em;
   font-weight: 700;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .attachments-buttons button img {
-  height: 1.25rem;
+  height: 1.25em;
 }
 
 .attachments {
@@ -98,13 +98,13 @@
 }
 
 .attachments .link img {
-  height: 1rem;
+  height: 0.75em;
   margin-right: 0.5rem;
 }
 
 .attachments .link a, .attachments .link span {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1em;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -122,12 +122,12 @@
 }
 
 .delete-attachment img {
-  height: 1rem;
+  height: 1rem !important;
 }
 
 .alert {
   color: var(--red);
-  max-width: 25rem;
+  max-width: 18em;
   text-align: center;
 }
 

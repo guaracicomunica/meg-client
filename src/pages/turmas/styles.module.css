@@ -13,8 +13,13 @@
 }
 
 .add-class {
+  height: 100%;
   cursor: pointer;
   border-radius: 10px;
+}
+
+.add-class img {
+  height: 5em;
 }
 
 .theme-light .add-class {
@@ -41,7 +46,7 @@
   padding-right: 1rem;
   color: var(--white);
   text-transform: uppercase;
-  font-size: 0.9rem;
+  font-size: 0.9em;
   font-weight: 700;
 }
 

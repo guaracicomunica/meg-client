@@ -40,7 +40,11 @@ export function Navbar() {
           aria-expanded="false"
           aria-label="Alterna navegação"
         >
-          <img src="/icons/menu.svg" alt="Menu" className={styles["nav-icon"]} />
+          <img
+            src="/icons/menu.svg"
+            className={styles["nav-icon"]}
+            alt="Ícone de menu representado por três barras horizontais"
+          />
         </button>
 
         <div className="collapse navbar-collapse" id="navbar">
@@ -49,7 +53,7 @@ export function Navbar() {
               <Link href="/">
                 <a className={styles["menu-link"]}>
                   Início 
-                  {pageActive === PageActive.inicio && (<span className="sr-only">(Página atual)</span>)}
+                  {pageActive === PageActive.inicio && (<span className="sr-only">(Página de início ativa)</span>)}
                 </a>
               </Link>
             </li>
@@ -57,7 +61,7 @@ export function Navbar() {
               <Link href="/turmas">
                 <a className={styles["menu-link"]}>
                   Turmas
-                  {pageActive === PageActive.turmas && (<span className="sr-only">(Página atual)</span>)}
+                  {pageActive === PageActive.turmas && (<span className="sr-only">(Página de turmas ativa)</span>)}
                 </a>
               </Link>
             </li>
@@ -66,7 +70,9 @@ export function Navbar() {
                 <Link href="/minha-conta">
                   <a className={styles["menu-link"]}>
                     Minha conta
-                    {pageActive === PageActive.minhaConta && (<span className="sr-only">(Página atual)</span>)}
+                    {pageActive === PageActive.minhaConta && (
+                      <span className="sr-only">(Página de minha conta ativa)</span>
+                    )}
                   </a>
                 </Link>
               </li> 
@@ -76,45 +82,36 @@ export function Navbar() {
                 <Link href="/login">
                   <a className={styles["menu-link"]}>
                     Entrar
-                    {pageActive === PageActive.entrar && (<span className="sr-only">(Página atual)</span>)}
+                    {pageActive === PageActive.entrar && (
+                      <span className="sr-only">(Página de autenticação ativa)</span>
+                    )}
                   </a>
                 </Link>
               </li> 
             )}
             <div className={`d-flex align-items-center ${classNameLink}`} aria-hidden={true}>
-              <li>
-                <button className={`${styles.btn} pr-2`} onClick={increaseFont}>
-                  <img
-                    src="/icons/font-more.svg"
-                    alt="Botão para aumentar fonte"
-                    className={isHighContrast ? "img-contrast-white" : ""}
-                  />
+              <li aria-hidden={true}>
+                <button className={`${styles.btn} pr-2`} onClick={increaseFont} aria-hidden={true}>
+                  <img src="/icons/font-more.svg" className={isHighContrast ? "img-contrast-white" : ""} />
                 </button>
               </li>
-              <li>
-                <button className={`${styles.btn} pr-2`} onClick={decreaseFont}>
-                  <img
-                    src="/icons/font-less.svg"
-                    alt="Botão para diminuir fonte"
-                    className={isHighContrast ? "img-contrast-white" : ""}
-                  />
+              <li aria-hidden={true}>
+                <button className={`${styles.btn} pr-2`} onClick={decreaseFont} aria-hidden={true}>
+                  <img src="/icons/font-less.svg" className={isHighContrast ? "img-contrast-white" : ""} />
                 </button>
               </li>
-              <li>
-                <button className={`${styles.btn} pr-2`} onClick={setFontNormal}>
-                  <img
-                    src="/icons/font-normal.svg"
-                    alt="Botão para deixar fonte no tamanho padrão"
-                    className={isHighContrast ? "img-contrast-white" : ""}
-                  />
+              <li aria-hidden={true}>
+                <button className={`${styles.btn} pr-2`} onClick={setFontNormal} aria-hidden={true}>
+                  <img src="/icons/font-normal.svg" className={isHighContrast ? "img-contrast-white" : ""} />
                 </button>
               </li>
-              <li>
+              <li aria-hidden={true}>
                 <button
                   className={`${styles.btn} ${styles["btn-switch-theme"]}`}
                   onClick={() => switchTheme(themeToSwitch)}
+                  aria-hidden={true}
                 >
-                  <img src="/icons/switch-theme.svg" alt="Botão para alterar tema" />
+                  <img src="/icons/switch-theme.svg" />
                 </button>
               </li>
             </div>

@@ -1,5 +1,4 @@
 import { enumTheme } from "../../enums/enumTheme";
-import styles from "./styles.module.css";
 
 type CardRule = {
   theme: string;
@@ -8,18 +7,17 @@ type CardRule = {
 }
 
 export function CardHome(props: CardRule) {
+  const isHighContrast = props.theme === enumTheme.contrast;
   return (
     <div className="card-style p-4" style={{ height: "100%" }}>
       <img
         src="./icons/icon-rules.svg"
-        className={props.theme === enumTheme.light ? styles["icon-rules"] : `${styles["icon-rules"]} img-contrast-white`}
+        className={isHighContrast ? "img-contrast-white" : ""}
+        style={{ height: "3rem" }}
+        alt="Ícone de caderneta"
       />
-      <h6 className="my-3 title-card text-center">
-        {props.title}
-      </h6>
-      <p className="text-card text-center">
-        {props.description}
-      </p>
+      <strong className="my-3 title-card text-center">{props.title}</strong>
+      <p className="text-card text-center">{props.description}</p>
     </div>
   );
 }

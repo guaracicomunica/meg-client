@@ -24,24 +24,17 @@ export default function Home() {
               alt="Logo do MEG"
               className={theme === enumTheme.contrast ? `${styles["logo-home"]} img-contrast-white` : styles["logo-home"]}
             />
-            <h1 className={`${styles["title-home"]} mt-4`}>
-              Seja bem-vindo ao Mundo Encantado da Geografia!
-            </h1>
+            <h1 className={`${styles["title-home"]} mt-4`}>Seja bem-vindo ao Mundo Encantado da Geografia!</h1>
           </div>
 
           <div className="col-6 col-lg-5 my-5 my-md-0">
-            <img
-              src="./images/illustration-home.svg"
-              className="img-fluid"
-            />
+            <img src="./images/illustration-home.svg" className="img-fluid" />
           </div>
         </section>
 
         <section className="section d-flex flex-column align-items-center">
           <div className="col-12 col-lg-5 justify-content-center">
-            <h1 className="title-blue-dark text-center">
-              Conheça o Mundo Encantado da Geografia (MEG)
-            </h1>
+            <h1 className="title-blue-dark text-center">Conheça o Mundo Encantado da Geografia (MEG)</h1>
             <hr className={styles["border-soft-blue"]} />
           </div>
           
@@ -69,20 +62,16 @@ export default function Home() {
 
         <section className="section row justify-content-around align-items-center">
           <div className="col-12 col-lg-4 mb-5 mb-lg-0 flex-column">
-            <h1 className={styles["title-home"]}>
-              Veja como o Mundo Encantado da Geografia funciona
-            </h1>
+            <h1 className={styles["title-home"]}>Veja como o Mundo Encantado da Geografia funciona</h1>
             <img
               src="./icons/arrow-down.svg"
               className={styles["arrow-down-icon"]}
+              alt="Ícone de seta apontando para baixo"
             />
           </div>
 
           <div className="col-9 col-lg-5 mt-5 mt-lg-0">
-            <img
-              src="./images/illustration-home-2.svg"
-              className="img-fluid"
-            />
+            <img src="./images/illustration-home-2.svg" className="img-fluid" />
           </div>
         </section>
 
@@ -111,27 +100,20 @@ export default function Home() {
           </div>
 
           <div className="col-11 col-md-7 col-lg-4 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
-            <h1 className={`title-blue-dark text-uppercase text-center`}>
-              Regras gamificadas
-            </h1>
+            <h1 className={`title-blue-dark text-uppercase text-center`}>Regras gamificadas</h1>
 
             <div className="d-flex justify-content-center">
               <hr className={styles["border-yellow"]} />
               <hr className={styles["border-blue"]} />
             </div>
             
-            <img
-              src="./images/rules-section.svg"
-              className="img-fluid mt-5"
-            />
+            <img src="./images/rules-section.svg" className="img-fluid mt-5" />
           </div>
         </section>
 
         <section className={`section ${styles["section-not-allowed"]}`}>
           <div className="col-11">
-            <h1 className={`title-blue-dark text-uppercase text-center`}>
-              O que você não pode fazer
-            </h1>
+            <h1 className={`title-blue-dark text-uppercase text-center`}>O que você não pode fazer</h1>
 
             <div className="d-flex justify-content-center">
               <hr className={styles["border-yellow"]} />
@@ -165,19 +147,14 @@ export default function Home() {
 
         <section className="section row justify-content-around align-items-center mb-5">
           <div className="col-11 col-md-7 col-lg-4 col-xl-5 mb-5 mb-lg-0">
-            <h1 className={`title-blue-dark text-uppercase text-center`}>
-              Premiações do MEG
-            </h1>
+            <h1 className={`title-blue-dark text-uppercase text-center`}>Premiações do MEG</h1>
 
             <div className="d-flex justify-content-center">
               <hr className={styles["border-yellow"]} />
               <hr className={styles["border-blue"]} />
             </div>
             
-            <img
-              src="./images/awards-section.svg"
-              className="img-fluid mt-5"
-            />
+            <img src="./images/awards-section.svg" className="img-fluid mt-5" />
           </div>
 
           <div className={`col-11 col-lg-6 col-xl-5 ${styles["cards-list"]}`}>

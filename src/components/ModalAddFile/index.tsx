@@ -1,5 +1,6 @@
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useRef, FormEvent, useContext } from 'react';
 import { Modal } from 'react-bootstrap';
+import { FontContext } from '../../contexts/FontContext';
 import { enumTheme } from '../../enums/enumTheme';
 
 import styles from './styles.module.css';
@@ -14,6 +15,8 @@ type ModalAddFileType = {
 export default function ModalAddFile(props: ModalAddFileType) {
   const inputRef = useRef(null);
   const [fileNameSelected, setFileNameSelected] = useState("");
+  const { font } = useContext(FontContext);
+  const isLargeFont = font >= 2;
   const isHighContrast = props.theme === enumTheme.contrast;
 
   function handleAddFile(event: FormEvent<HTMLFormElement>) {
@@ -48,8 +51,9 @@ export default function ModalAddFile(props: ModalAddFileType) {
       onHide={closeModal}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme}`}
+      className={`modal-style bg-${props.theme} font-${font}`}
       backdrop="static"
+      size={isLargeFont ? "lg" : ""}
     > 
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">
@@ -66,7 +70,10 @@ export default function ModalAddFile(props: ModalAddFileType) {
               ref={inputRef}
             />
             <label htmlFor="file">
-              <img src={isHighContrast ? "/icons/send-link-contrast.svg" : "/images/send-file.svg"} alt="Adicionar imagem" />
+              <img
+                src={isHighContrast ? "/icons/send-link-contrast.svg" : "/images/send-file.svg"}
+                alt="Adicionar imagem"
+              />
             </label>
             <span>Clique acima para adicionar um arquivo</span>
           </div>

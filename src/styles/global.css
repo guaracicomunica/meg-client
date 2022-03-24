@@ -313,3 +313,7 @@ select:focus {
 .bg-high-contrast hr {
   border-color: var(--white);
 }
+
+.spinner-border {
+  border-width: 0.25rem !important;
+}

@@ -6,7 +6,8 @@
 }
 
 .loading-container, .add-class {
-  height: 25rem;
+  min-height: 25rem;
+  height: 20em;
   display: flex;
   justify-content: center;
   align-items: center;

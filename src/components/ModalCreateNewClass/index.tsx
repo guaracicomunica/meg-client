@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -11,6 +11,7 @@ import { DraftDataForm, DataFormClass } from '../../types/Class';
 
 import styles from './styles.module.css';
 import { enumTheme } from '../../enums/enumTheme';
+import { FontContext } from '../../contexts/FontContext';
 
 type ModalCreateNewClassType = {
   type: string;
@@ -48,6 +49,8 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [srcPreviewBanner, setSrcPreviewBanner] = useState("");
   const [srcPreviewLevels, setSrcPreviewLevels] = useState<PreviewObjectType[]>([]);
   const [srcPreviewSkills, setSrcPreviewSkills] = useState<PreviewObjectType[]>([]);
+  const { font } = useContext(FontContext);
+  const isLargeFont = font >= 3;
 
   //modal edit class
   useEffect(() => {
@@ -413,10 +416,10 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       id="modal-add-class-teacher"
       show={props.show}
       onHide={props.onHide}
-      size="lg"
+      size={isLargeFont ? "xl" : "lg"}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme}`}
+      className={`modal-style bg-${props.theme} font-${font}`}
       backdrop="static"
     >
       <Modal.Header className='p-4 border-bottom-0'>
@@ -612,7 +615,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                 <img
                   src="./icons/plus.svg"
                   alt="Adicionar habilidade"
-                  style={{height: "1.2rem"}}
+  
                   className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
                 />
                 <span
@@ -716,7 +719,6 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             <img
               src="./icons/plus.svg"
               alt="Adicionar nível"
-              style={{height: "1.2rem"}}
               className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
             />
             <span

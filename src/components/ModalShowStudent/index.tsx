@@ -1,8 +1,10 @@
+import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
+import { FontContext } from '../../contexts/FontContext';
 import { api } from '../../services/api';
 import { StudentType } from '../../types/Participant';
 import { options } from '../../utils/defaultToastOptions';
@@ -20,6 +22,8 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
   const { student } = props;
+  const { font } = useContext(FontContext);
+  const isLargeFont = font >= 3;
 
   async function removeStudent() {
     try {
@@ -80,8 +84,9 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme}`}
+      className={`modal-style bg-${props.theme} font-${font}`}
       backdrop="static"
+      size={isLargeFont ? "lg" : ""}
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">

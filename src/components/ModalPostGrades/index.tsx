@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { Modal } from "react-bootstrap";
+import { FontContext } from "../../contexts/FontContext";
 
 type ModalPostGradesProps = {
   theme: string;
@@ -8,6 +10,9 @@ type ModalPostGradesProps = {
 }
 
 export default function ModalPostGrades(props: ModalPostGradesProps) {
+  const { font } = useContext(FontContext);
+  const isLargeFont = font >= 3;
+
   return (
     <Modal
       id="modal-post-grades"
@@ -15,8 +20,9 @@ export default function ModalPostGrades(props: ModalPostGradesProps) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme}`}
+      className={`modal-style bg-${props.theme} font-${font}`}
       backdrop="static"
+      size={isLargeFont ? "lg" : ""}
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">

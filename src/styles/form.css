@@ -149,7 +149,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: 2.5rem;
+  height: calc(1.5rem + 1em);
 }
 
 .input-file input[type="file"] {
@@ -157,7 +157,7 @@
 }
 
 .input-file label {
-  padding: 0.75rem 0.59rem;
+  padding: calc(0.5rem + 0.25em) calc(0.4rem + 0.19em);
   border-radius: 50%;
   cursor: pointer;
   position: absolute;
@@ -178,7 +178,7 @@
 }
 
 .input-file span {
-  margin-left: 3.25rem;
+  margin-left: calc(2.5rem + 0.75em);
   font-weight: 700;
   font-size: 1em;
 }
@@ -188,7 +188,7 @@
 }
 
 .input-file label img {
-  height: 1rem;
+  height: calc(0.5rem + 0.5em);
 }
 
 .preview-image { 

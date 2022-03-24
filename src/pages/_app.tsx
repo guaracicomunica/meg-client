@@ -15,6 +15,7 @@ import '../styles/buttons.css';
 import '../styles/form.css';
 import '../styles/modal.css';
 import '../styles/table.css';
+import AccessibilityJump from '../components/AccessibilityJump';
 import '../styles/titles-texts.css';
 
 function MyApp({ Component, pageProps }) {
@@ -32,13 +33,16 @@ function MyApp({ Component, pageProps }) {
                 {propsTheme => (
                   <FontContext.Consumer>
                     {propsFont => (
-                      <div style={{ minHeight: '100vh' }} className={`bg-${propsTheme.theme} font-${propsFont.font}`}>
-                        <div>
-                          <Navbar />
-                          <Component {...pageProps} />
+                      <>
+                        <AccessibilityJump idComponent="topo" accessKeyValue="1" textJumpReader="Ir para a barra de navegação" />
+                        <div style={{ minHeight: '100vh' }} className={`bg-${propsTheme.theme} font-${propsFont.font}`}>
+                          <div>
+                            <Navbar />
+                            <Component {...pageProps} />
+                          </div>
+                          <Footer />
                         </div>
-                        <Footer />
-                      </div>
+                      </>
                     )}
                   </FontContext.Consumer>
                 )}

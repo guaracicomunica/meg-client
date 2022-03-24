@@ -8,6 +8,7 @@ import { PageActive } from '../../enums/enumPageActive';
 import { enumTheme } from '../../enums/enumTheme';
 
 import styles from "./styles.module.css";
+import AccessibilityJump from '../AccessibilityJump';
 
 export function Navbar() {
   const { pageActive } = useContext(PageActiveContext);
@@ -22,13 +23,11 @@ export function Navbar() {
   const classNameLinkActive = `nav-item mt-3 mt-lg-0 ${styles["link-active"]}`;
 
   return (
-    <header>
-      <nav className={`navbar navbar-expand-lg ${styles.menu} ${styles[`menu-${theme}`]}`}>
+    <header id="topo">
+      <nav className={`navbar navbar-expand-md ${styles.menu} ${styles[`menu-${theme}`]}`}>
         <a className="navbar-brand" href="/">
-          <img
-            src="/icons/logo.svg"
-            alt="Logo do MEG"
-            className={theme === enumTheme.contrast ? 'img-contrast-white' : ''}
+          <img src="/icons/logo.svg" alt="Logo do MEG, descrição: três letras M, E e G de cores azul, amarelo e vermelho respectivamente" 
+          className={theme === enumTheme.contrast ? 'img-contrast-white' : ''}
           />
         </a>
         <button
@@ -38,7 +37,7 @@ export function Navbar() {
           data-target="#navbar"
           aria-controls="navbar"
           aria-expanded="false"
-          aria-label="Alterna navegação"
+          aria-label="aperte este botão para exibir a barra de navegação"
         >
           <img
             src="/icons/menu.svg"
@@ -48,8 +47,9 @@ export function Navbar() {
         </button>
 
         <div className="collapse navbar-collapse" id="navbar">
-          <ul className="navbar-nav align-items-center mr-auto my-4 my-lg-0">
-            <li className={pageActive === PageActive.inicio ? classNameLinkActive : classNameLink}>
+          <ul className="navbar-nav align-items-center mr-auto my-4 my-md-0">
+            <AccessibilityJump accessKeyValue='2' tagName='main' textJumpReader='Ir para o conteúdo principal' />
+            <li className={pageActive === PageActive.inicio ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
               <Link href="/">
                 <a className={styles["menu-link"]}>
                   Início 

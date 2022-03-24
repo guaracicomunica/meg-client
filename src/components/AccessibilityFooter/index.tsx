@@ -1,9 +1,7 @@
+import AccessibilityJump from "../AccessibilityJump";
 
 export default function AccessibilityFooter() {
   return (
-    <div className={`sr-only`}>
-      <img className='pr-3' src="/icons/file-gray.svg" alt="Arquivo para download" />
-      <a target="_blank" href="">Baixar arquivo </a>
-    </div>
+      <AccessibilityJump idComponent="topo" accessKeyValue="0" textJumpReader="Voltar para o topo" /> 
   );
-}
+} 

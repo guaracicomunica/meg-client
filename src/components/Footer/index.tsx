@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import AccessibilityFooter from "../AccessibilityFooter";
 
 export function Footer() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -10,6 +11,8 @@ export function Footer() {
 
   return (
     <footer className={styles[`footer-${theme}`]}>
+
+      <AccessibilityFooter/>
       <hr className={styles["border-footer"]} />
 
       <div className="row flex-wrap p-4 justify-content-center">

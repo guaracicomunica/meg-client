@@ -2,6 +2,26 @@
   font-size: 1.5em !important;
 }
 
+.modal-dialog-md, .modal-dialog-lg {
+  min-width: 100%;
+}
+
+@media (min-width: 992px) {
+  .modal-dialog-lg {
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 576px) {
+  .modal-dialog-md {
+    max-width: 500px;
+  }
+}
+
+.modal-style {
+  padding: 0 !important;
+}
+
 .modal-style .modal-content {
   border: none;
   border-radius: 15px;

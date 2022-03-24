@@ -485,7 +485,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
           <hr className="my-4" />
 
-          <div className='d-flex'>
+          <div className='d-flex flex-wrap justify-content-center'>
             <strong style={props.theme === enumTheme.light ? {color: "var(--gray-title)"} : {}} className="mt-2">
               Deseja criar uma loja de Habilidades para essa turma?
             </strong>

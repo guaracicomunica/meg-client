@@ -16,7 +16,7 @@ export default function ModalAddFile(props: ModalAddFileType) {
   const inputRef = useRef(null);
   const [fileNameSelected, setFileNameSelected] = useState("");
   const { font } = useContext(FontContext);
-  const isLargeFont = font >= 2;
+  const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
   const isHighContrast = props.theme === enumTheme.contrast;
 
   function handleAddFile(event: FormEvent<HTMLFormElement>) {
@@ -51,9 +51,8 @@ export default function ModalAddFile(props: ModalAddFileType) {
       onHide={closeModal}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme} font-${font}`}
+      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
       backdrop="static"
-      size={isLargeFont ? "lg" : ""}
     > 
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">

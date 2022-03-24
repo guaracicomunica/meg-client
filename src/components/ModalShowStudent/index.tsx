@@ -23,7 +23,7 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
   const { 'meg.token': token } = parseCookies();
   const { student } = props;
   const { font } = useContext(FontContext);
-  const isLargeFont = font >= 3;
+  const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
 
   async function removeStudent() {
     try {
@@ -84,9 +84,8 @@ export default function ModalShowStudent(props: ModalShowStudentType) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme} font-${font}`}
+      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
       backdrop="static"
-      size={isLargeFont ? "lg" : ""}
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">

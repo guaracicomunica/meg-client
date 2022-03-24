@@ -16,7 +16,7 @@ type LinkForm = {
 
 export default function ModalAddLink(props: ModalAddLinkType) {
   const { font } = useContext(FontContext);
-  const isLargeFont = font >= 2;
+  const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
 
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     link: "",
@@ -43,9 +43,9 @@ export default function ModalAddLink(props: ModalAddLinkType) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme} font-${font}`}
+      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
       backdrop="static"
-      size={isLargeFont ? "lg" : ""}
+      
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">

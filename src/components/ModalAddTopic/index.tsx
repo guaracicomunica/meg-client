@@ -21,7 +21,7 @@ export default function ModalAddTopic(props: ModalAddTopicProps) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
   const { font } = useContext(FontContext);
-  const isLargeFont = font >= 2;
+  const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
 
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     name: ""
@@ -94,9 +94,8 @@ export default function ModalAddTopic(props: ModalAddTopicProps) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme} font-${font}`}
+      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
       backdrop="static"
-      size={isLargeFont ? "lg" : ""}
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">

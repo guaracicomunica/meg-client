@@ -13,7 +13,7 @@ type ModalSeeClassCodeType = {
 
 export default function ModalSeeClassCode(props: ModalSeeClassCodeType) {
   const { font } = useContext(FontContext);
-  const isLargeFont = font >= 3;
+  const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
 
   return (
     <Modal
@@ -21,9 +21,9 @@ export default function ModalSeeClassCode(props: ModalSeeClassCodeType) {
       show={props.show}
       onHide={props.onHide}
       aria-labelledby="modal-title"
-      size={isLargeFont ? "lg" : ""}
+      
       centered
-      className={`modal-style bg-${props.theme} font-${font}`}
+      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>

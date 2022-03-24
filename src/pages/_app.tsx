@@ -1,6 +1,7 @@
 import Head from 'next/head';
 
 import { ThemeProvider, ThemeContext } from '../contexts/ThemeContext';
+import { FontProvider, FontContext } from '../contexts/FontContext';
 import { AuthProvider } from '../contexts/AuthContext';
 import { PageActiveProvider } from '../contexts/PageActiveContext';
 import { Navbar } from '../components/Navbar';
@@ -9,6 +10,7 @@ import { Footer } from '../components/Footer';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.css';
+import '../styles/font-size.css';
 import '../styles/buttons.css';
 import '../styles/form.css';
 import '../styles/modal.css';
@@ -24,25 +26,30 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       <ThemeProvider>
-        <PageActiveProvider>
-          <AuthProvider>
-            <ThemeContext.Consumer>
-              {props => (
-                
-                <div className={`bg-${props.theme}`}>
-                  <AccessibilityJump idComponent="topo" accessKeyValue="1" textJumpReader="Ir para a barra de navegação" /> 
-                <div style={{ minHeight: '100vh' }} className={`bg-${props.theme}`}>
-                  <div>
-                    <Navbar />
-                    <Component {...pageProps} />
-                  </div>
-                  <Footer />
-                </div>
-                </div>
-              )}
-            </ThemeContext.Consumer>
-          </AuthProvider>
-        </PageActiveProvider>
+        <FontProvider>
+          <PageActiveProvider>
+            <AuthProvider>
+              <ThemeContext.Consumer>
+                {propsTheme => (
+                  <FontContext.Consumer>
+                    {propsFont => (
+                      <>
+                        <AccessibilityJump idComponent="topo" accessKeyValue="1" textJumpReader="Ir para a barra de navegação" />
+                        <div style={{ minHeight: '100vh' }} className={`bg-${propsTheme.theme} font-${propsFont.font}`}>
+                          <div>
+                            <Navbar />
+                            <Component {...pageProps} />
+                          </div>
+                          <Footer />
+                        </div>
+                      </>
+                    )}
+                  </FontContext.Consumer>
+                )}
+              </ThemeContext.Consumer>
+            </AuthProvider>
+          </PageActiveProvider>
+        </FontProvider>
       </ThemeProvider>
     </>
   )

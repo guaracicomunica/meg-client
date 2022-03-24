@@ -78,7 +78,7 @@ export default function Login() {
             style={{height: "8rem"}}
           />
 
-          <h2 className='mt-4'>Login</h2>
+          <h1 className='title-blue-dark mt-4'>Login</h1>
 
           <form
             id="login"

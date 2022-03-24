@@ -28,8 +28,8 @@
 }
 
 .add-comment .img-profile {
-  height: 3rem;
-  width: 3rem;
+  height: calc(2.5rem + 1em);
+  width: calc(2.5rem + 1em);
   border-radius: 50%;
 }
 
@@ -56,5 +56,5 @@
 }
 
 .btn-create-comment img {
-  height: 2rem;
+  height: calc(1rem + 1em);
 }

@@ -3,7 +3,7 @@
   padding: 0.5rem 1.25rem;
   border-radius: 10px;
   border: 2px solid;
-  font-size: 1rem;
+  font-size: 1em;
   font-weight: 700;
   transition: background-color .2s, color .2s;
 }

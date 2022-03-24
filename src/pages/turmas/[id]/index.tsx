@@ -56,6 +56,7 @@ export default function Turma(props: ClassPageProps) {
   const { classroom } = props;
 
   const isHighContrast = theme === enumTheme.contrast;
+  const isTeacher = user?.role === RoleUser.teacher;
 
   const toastOptions: ToastOptions = {
     ...options,
@@ -198,9 +199,9 @@ export default function Turma(props: ClassPageProps) {
                 <img
                   src="/icons/activity.svg"
                   alt="Missão"
-                  className={theme === enumTheme.contrast ? `img-contrast-white ${styles["img-link-card"]}` : styles["img-link-card"]}
+                  className={isHighContrast ? `img-contrast-white ${styles["img-link-card"]}` : styles["img-link-card"]}
                 />
-                <h4 className="mt-3">Ver missões</h4>
+                <span className="mt-3">Ver missões</span>
               </div>
             </Link>
 
@@ -209,22 +210,20 @@ export default function Turma(props: ClassPageProps) {
                 <img
                   src="/icons/students.svg"
                   alt="Alunos"
-                  className={theme === enumTheme.contrast ? `img-contrast-white ${styles["img-link-card"]}` : styles["img-link-card"]}
+                  className={isHighContrast ? `img-contrast-white ${styles["img-link-card"]}` : styles["img-link-card"]}
                 />
-                <h4 className="mt-3">Ver alunos</h4>
+                <span className="mt-3">Ver alunos</span>
               </div>
             </Link>
 
-            <Link href={user?.role === RoleUser.teacher ? `/turmas/${router.query.id}/notas` : `/turmas/${router.query.id}/boletim`}>
+            <Link href={isTeacher ? `/turmas/${router.query.id}/notas` : `/turmas/${router.query.id}/boletim`}>
               <div className="card-style link-card p-4 mt-4">
                 <img
                   src="/icons/grades.svg"
                   alt="Notas"
-                  className={theme === enumTheme.contrast ? `img-contrast-white ${styles["img-link-card"]}` : styles["img-link-card"]}
+                  className={isHighContrast ? `img-contrast-white ${styles["img-link-card"]}` : styles["img-link-card"]}
                 />
-                <h4 className="mt-3">
-                  {user?.role === RoleUser.teacher ? "Ver notas" : "Ver minhas notas" }
-                </h4>
+                <span className="mt-3"> {isTeacher ? "Ver notas" : "Ver minhas notas" }</span>
               </div>
             </Link>
           </div>
@@ -255,7 +254,11 @@ export default function Turma(props: ClassPageProps) {
               hasMore={hasMore}
               loader={
                 <div className={styles["loading-container"]}>
-                  <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+                  <Spinner
+                    className="visually-hidden"
+                    animation="border"
+                    variant={theme === enumTheme.light ? "dark" : "light"}
+                  />
                 </div>
               }
             >

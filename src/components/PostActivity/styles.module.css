@@ -16,8 +16,8 @@
 }
 
 .post-activity img {
-  height: 3.5rem;
-  width: 3.5rem;
+  height: calc(2.5rem + 1em);
+  width: calc(2.5rem + 1em);
   border-radius: 50%;
 }
 

@@ -20,7 +20,6 @@ export default function SkillStore() {
             <img src="/images/banner-class.svg" alt="Banner da turma" />
             <div className={`${styles["info-class"]} p-3`}>
               <h6 className='text-uppercase mb-0'>Turma 01</h6>
-              <p>Lorem ipsum dolor Lorem ipsum dolor Lorem ipsum dolor</p>
               <hr className='my-1 w-50' />
               <small>Prof. Marjorie Ramos</small>
             </div>
@@ -30,7 +29,6 @@ export default function SkillStore() {
             <img src="/images/banner-class.svg" alt="Banner da turma" />
             <div className={`${styles["info-class"]} p-3`}>
               <h6 className='text-uppercase mb-0'>Turma 01</h6>
-              <p>Lorem ipsum dolor</p>
               <hr className='my-1 w-50' />
               <small>Prof. Marjorie Ramos</small>
             </div>

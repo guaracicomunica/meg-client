@@ -51,7 +51,7 @@
 
 .skill-name {
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.1em;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -99,7 +99,7 @@
   cursor: pointer;
 }
 
-.banner:hover {
+.skill-store-high-contrast .banner:hover {
   border-radius: 15px;
   border: 3px solid var(--yellow-contrast);
 }
@@ -112,6 +112,8 @@
 }
 
 .info-class {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   position: absolute;
   top: 0;
@@ -119,19 +121,18 @@
   color: var(--white);
 }
 
-.info-class h6, .info-class p, .info-class small {
+.info-class h6, .info-class small {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  font-size: 0.75em !important;
 }
 
 .info-class hr {
   background-color: var(--white);
 }
 
-.skill-store-high-contrast .info-class h6,
-.skill-store-high-contrast .info-class p,
-.skill-store-high-contrast .info-class small {
+.skill-store-high-contrast .info-class h6, .skill-store-high-contrast .info-class small {
   background-color: var(--black);
   width: fit-content;
   max-width: 100%;

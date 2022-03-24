@@ -1,8 +1,10 @@
 import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
+import { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
+import { FontContext } from '../../contexts/FontContext';
 
 import { api } from '../../services/api';
 import { options } from '../../utils/defaultToastOptions';
@@ -20,13 +22,15 @@ type EnrollmentForm = {
 export default function ModalAddClass(props: ModalAddClassType) {
   const { 'meg.token': token } = parseCookies();
   const router = useRouter();
+  const { font } = useContext(FontContext);
+  const isLargeFont = font >= 3;
 
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     code: "",
   }});
-  const onSubmit = async (data: EnrollmentForm) => handleCreateClass(data);
+  const onSubmit = async (data: EnrollmentForm) => handleAddClass(data);
 
-  async function handleCreateClass(data: EnrollmentForm) {
+  async function handleAddClass(data: EnrollmentForm) {
     try {
       await api.post('classes/enrollment', data, {
         headers: {
@@ -83,12 +87,13 @@ export default function ModalAddClass(props: ModalAddClassType) {
   return (
     <Modal
       id="modal-add-class-student"
-      className={`modal-style bg-${props.theme}`}
+      className={`modal-style bg-${props.theme} font-${font}`}
       show={props.show}
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
       backdrop="static"
+      size={isLargeFont ? "lg" : ""}
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">

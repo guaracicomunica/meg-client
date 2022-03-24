@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
-import { ThemeContext } from '../../contexts/ThemeContext';
+import { FontContext } from '../../contexts/FontContext';
 
 import styles from './styles.module.css';
 
@@ -12,7 +12,8 @@ type ModalSeeClassCodeType = {
 }
 
 export default function ModalSeeClassCode(props: ModalSeeClassCodeType) {
-  const { theme } = useContext(ThemeContext);
+  const { font } = useContext(FontContext);
+  const isLargeFont = font >= 3;
 
   return (
     <Modal
@@ -20,8 +21,9 @@ export default function ModalSeeClassCode(props: ModalSeeClassCodeType) {
       show={props.show}
       onHide={props.onHide}
       aria-labelledby="modal-title"
+      size={isLargeFont ? "lg" : ""}
       centered
-      className={`modal-style bg-${theme}`}
+      className={`modal-style bg-${props.theme} font-${font}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
@@ -30,7 +32,7 @@ export default function ModalSeeClassCode(props: ModalSeeClassCodeType) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className='px-4'>
-        <div className={styles[`code-class-${theme}`]}>{props.code}</div>
+        <div className={styles[`code-class-${props.theme}`]}>{props.code}</div>
       </Modal.Body>
     </Modal>
   );

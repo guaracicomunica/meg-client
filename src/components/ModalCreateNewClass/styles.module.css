@@ -1,8 +1,12 @@
 .button-add-input {
-  font-size: 1.1rem;
+  font-size: 1.1em;
   font-weight: 400;
   display: flex;
   align-items: center;
+}
+
+.button-add-input img {
+  height: calc(0.8rem + 0.4em);
 }
 
 .delete-attachment {

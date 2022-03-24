@@ -45,7 +45,7 @@
 
 .skill-name {
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.1em;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

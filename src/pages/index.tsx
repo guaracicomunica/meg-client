@@ -18,7 +18,7 @@ export default function Home() {
 
       <main className={styles[`theme-${theme}`]}>
         <section className={`${styles["home-banner"]}`}>
-          <div className="col-8 col-md-4 flex-column">
+          <div className="col-11 col-md-4 flex-column">
             <img
               src="./images/meg-logo.png"
               alt="Logo do MEG"
@@ -38,7 +38,7 @@ export default function Home() {
         </section>
 
         <section className="section d-flex flex-column align-items-center">
-          <div className="col-11 col-lg-5 justify-content-center">
+          <div className="col-12 col-lg-5 justify-content-center">
             <h1 className="title-blue-dark text-center">
               Conheça o Mundo Encantado da Geografia (MEG)
             </h1>
@@ -57,7 +57,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="col-11 col-md-7 d-flex flex-wrap justify-content-center">
+          <div className="col-11 col-lg-8 d-flex flex-wrap justify-content-center">
             <div className={styles.keyword}>MEG</div>
             <div className={styles.keyword}>Geografia</div>
             <div className={styles.keyword}>Interdisciplinaridade</div>
@@ -68,7 +68,7 @@ export default function Home() {
         </section>
 
         <section className="section row justify-content-around align-items-center">
-          <div className="col-11 col-lg-4 mb-5 mb-lg-0 flex-column">
+          <div className="col-12 col-lg-4 mb-5 mb-lg-0 flex-column">
             <h1 className={styles["title-home"]}>
               Veja como o Mundo Encantado da Geografia funciona
             </h1>
@@ -110,7 +110,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="col-9 col-md-7 col-lg-4 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
+          <div className="col-11 col-md-7 col-lg-4 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
             <h1 className={`title-blue-dark text-uppercase text-center`}>
               Regras gamificadas
             </h1>
@@ -128,7 +128,7 @@ export default function Home() {
         </section>
 
         <section className={`section ${styles["section-not-allowed"]}`}>
-          <div className="col-10">
+          <div className="col-11">
             <h1 className={`title-blue-dark text-uppercase text-center`}>
               O que você não pode fazer
             </h1>
@@ -164,7 +164,7 @@ export default function Home() {
         </section>
 
         <section className="section row justify-content-around align-items-center mb-5">
-          <div className="col-9 col-md-7 col-lg-4 col-xl-5 mb-5 mb-lg-0">
+          <div className="col-11 col-md-7 col-lg-4 col-xl-5 mb-5 mb-lg-0">
             <h1 className={`title-blue-dark text-uppercase text-center`}>
               Premiações do MEG
             </h1>

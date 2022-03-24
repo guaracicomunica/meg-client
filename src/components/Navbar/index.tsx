@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import Link from 'next/link';
 import { PageActiveContext } from '../../contexts/PageActiveContext';
 import { AuthContext } from '../../contexts/AuthContext';
+import { FontContext } from '../../contexts/FontContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { PageActive } from '../../enums/enumPageActive';
 import { enumTheme } from '../../enums/enumTheme';
@@ -13,10 +14,13 @@ export function Navbar() {
   const { pageActive } = useContext(PageActiveContext);
   const { isAuthenticated } = useContext(AuthContext);
   const { theme, switchTheme } = useContext(ThemeContext);
+  const { increaseFont, decreaseFont, setFontNormal } = useContext(FontContext);
 
   const themeToSwitch = theme === enumTheme.light ? enumTheme.contrast : enumTheme.light;
+  const isHighContrast = theme === enumTheme.contrast;
 
-  let classNameLink = "nav-item mt-3 mt-md-0";
+  const classNameLink = "nav-item mt-3 mt-lg-0";
+  const classNameLinkActive = `nav-item mt-3 mt-lg-0 ${styles["link-active"]}`;
 
   return (
     <header id="topo">
@@ -40,9 +44,7 @@ export function Navbar() {
 
         <div className="collapse navbar-collapse" id="navbar">
           <ul className="navbar-nav align-items-center mr-auto my-4 my-md-0">
-
             <AccessibilityJump accessKeyValue='2' tagName='main' textJumpReader='Ir para o conteúdo principal' />
-
             <li className={pageActive === PageActive.inicio ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
               <Link href="/">
                 <a className={styles["menu-link"]}>
@@ -51,7 +53,7 @@ export function Navbar() {
                 </a>
               </Link>
             </li>
-            <li className={pageActive === PageActive.turmas ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
+            <li className={pageActive === PageActive.turmas ? classNameLinkActive : classNameLink}>
               <Link href="/turmas">
                 <a className={styles["menu-link"]}>
                   Turmas
@@ -60,7 +62,7 @@ export function Navbar() {
               </Link>
             </li>
             {isAuthenticated && (
-              <li className={pageActive === PageActive.minhaConta ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
+              <li className={pageActive === PageActive.minhaConta ? classNameLinkActive : classNameLink}>
                 <Link href="/minha-conta">
                   <a className={styles["menu-link"]}>
                     Minha conta
@@ -70,7 +72,7 @@ export function Navbar() {
               </li> 
             )}
             {!isAuthenticated && (
-              <li className={pageActive === PageActive.entrar ? `${classNameLink} ${styles["link-active"]}` : classNameLink}>
+              <li className={pageActive === PageActive.entrar ? classNameLinkActive : classNameLink}>
                 <Link href="/login">
                   <a className={styles["menu-link"]}>
                     Entrar
@@ -79,11 +81,43 @@ export function Navbar() {
                 </Link>
               </li> 
             )}
-            <li className={classNameLink} aria-hidden="true" >
-              <button className={styles["btn-switch-theme"]} onClick={() => switchTheme(themeToSwitch)}>
-                <img src="/icons/switch-theme.svg" alt="Botão para alterar tema" />
-              </button>
-            </li>
+            <div className={`d-flex align-items-center ${classNameLink}`} aria-hidden={true}>
+              <li>
+                <button className={`${styles.btn} pr-2`} onClick={increaseFont}>
+                  <img
+                    src="/icons/font-more.svg"
+                    alt="Botão para aumentar fonte"
+                    className={isHighContrast ? "img-contrast-white" : ""}
+                  />
+                </button>
+              </li>
+              <li>
+                <button className={`${styles.btn} pr-2`} onClick={decreaseFont}>
+                  <img
+                    src="/icons/font-less.svg"
+                    alt="Botão para diminuir fonte"
+                    className={isHighContrast ? "img-contrast-white" : ""}
+                  />
+                </button>
+              </li>
+              <li>
+                <button className={`${styles.btn} pr-2`} onClick={setFontNormal}>
+                  <img
+                    src="/icons/font-normal.svg"
+                    alt="Botão para deixar fonte no tamanho padrão"
+                    className={isHighContrast ? "img-contrast-white" : ""}
+                  />
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`${styles.btn} ${styles["btn-switch-theme"]}`}
+                  onClick={() => switchTheme(themeToSwitch)}
+                >
+                  <img src="/icons/switch-theme.svg" alt="Botão para alterar tema" />
+                </button>
+              </li>
+            </div>
           </ul>
         </div>
       </nav>

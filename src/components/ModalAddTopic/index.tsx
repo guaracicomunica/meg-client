@@ -1,11 +1,14 @@
+import { useContext } from "react";
+import { useRouter } from "next/router";
 import { Modal } from "react-bootstrap";
-import { DataFormTopic } from "../../types/Class";
 import { toast } from 'react-toastify';
-import { options } from '../../utils/defaultToastOptions';
-import { api } from "../../services/api";
 import { useForm } from "react-hook-form";
 import { parseCookies } from 'nookies';
-import { useRouter } from "next/router";
+
+import { FontContext } from "../../contexts/FontContext";
+import { DataFormTopic } from "../../types/Class";
+import { options } from '../../utils/defaultToastOptions';
+import { api } from "../../services/api";
 
 type ModalAddTopicProps = {
   theme: string;
@@ -17,6 +20,8 @@ type ModalAddTopicProps = {
 export default function ModalAddTopic(props: ModalAddTopicProps) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
+  const { font } = useContext(FontContext);
+  const isLargeFont = font >= 2;
 
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     name: ""
@@ -89,8 +94,9 @@ export default function ModalAddTopic(props: ModalAddTopicProps) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme}`}
+      className={`modal-style bg-${props.theme} font-${font}`}
       backdrop="static"
+      size={isLargeFont ? "lg" : ""}
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
         <Modal.Title id="modal-title">

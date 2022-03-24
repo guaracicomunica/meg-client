@@ -27,7 +27,7 @@
   border-radius: 50% !important;
   border: 2px solid var(--white) !important;
   padding: 0.25rem 0.485rem !important;
-  display: block;
+  height: 100%;
   position: relative;
 }
 
@@ -83,7 +83,7 @@
 
 .coins span {
   text-transform: uppercase;
-  font-size: 1.1rem;
+  font-size: 1.1em;
   font-weight: 700;
 }
 

@@ -22,7 +22,7 @@ export default function Custom404() {
           src="./icons/404.svg"
           alt="Página não encontrada"
         /> 
-        <h1 className='title-blue-dark'>Ops... página não encontrada!</h1>
+        <h1 className='title-blue-dark text-center'>Ops... página não encontrada!</h1>
         <p className='text-blue-dark'>Clique <Link href="/">aqui</Link> para voltar à página inicial.</p>
       </main>
     </>

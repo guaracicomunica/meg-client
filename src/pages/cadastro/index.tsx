@@ -108,7 +108,7 @@ export default function Cadastro() {
             style={{height: "8rem"}}
           />
 
-          <h2 className='mt-4'>Cadastro</h2>
+          <h1 className='title-blue-dark mt-4'>Cadastro</h1>
 
           <form
             className='mt-3 d-flex flex-column w-100'

@@ -3,46 +3,24 @@
   gap: 2rem;
 }
 
-.list-teachers {
-  grid-template-columns: repeat(5, 1fr);
-}
-
-.list-students {
+.list-teachers, .list-students {
   grid-template-columns: repeat(4, 1fr);
 }
 
 @media (max-width: 2000px) {
-  .list-teachers {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .list-students {
+  .list-teachers, .list-students {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 1500px) {
-  .list-teachers {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .list-students {
+  .list-teachers, .list-students {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .list-teachers {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .list-students {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 500px) {
-  .list-teachers {
+  .list-teachers, .list-students {
     grid-template-columns: 1fr;
   }
 }

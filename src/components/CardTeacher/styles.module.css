@@ -4,8 +4,8 @@
 
 .card-teacher img {
   margin-bottom: 0.75rem;
-  height: 4rem;
-  width: 4rem;
+  height: calc(2rem + 2em);
+  width: calc(2rem + 2em);
   border-radius: 50%;
 }
 

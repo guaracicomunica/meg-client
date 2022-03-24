@@ -1,6 +1,6 @@
 .table-body td {
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1em;
   vertical-align: middle;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .table-head th {
-  font-size: 1.1rem;
+  font-size: 1.1em;
   font-weight: 700;
 }
 

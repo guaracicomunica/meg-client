@@ -1,7 +1,7 @@
 /* TITLES */
 .title-blue-dark, .title-blue {
   font-weight: 900;
-  font-size: 2rem !important;
+  font-size: 2em !important;
 }
 
 .bg-light .title-blue-dark {
@@ -14,7 +14,7 @@
 
 .title-gray { 
   font-weight: 700;
-  font-size: 1.5rem !important;
+  font-size: 1.5em !important;
 }
 
 .bg-light .title-gray {
@@ -22,7 +22,7 @@
 }
 
 .title-card {
-  font-size: 1.25rem;
+  font-size: 1.25em;
   font-weight: 700;
 }
 
@@ -32,13 +32,13 @@
 
 @media (max-width: 992px) {
   .title-blue-dark, .title-blue {
-    font-size: 1.75rem;
+    font-size: 1.75em;
   }
 }
 
 /* TEXTS */
 .text-card {
-  font-size: 1rem;
+  font-size: 1em;
   font-weight: 400;
 }
 
@@ -47,7 +47,7 @@
 }
 
 .text-blue-dark, .text-gray {
-  font-size: 1rem;
+  font-size: 1em;
   font-weight: 400;
 }
 

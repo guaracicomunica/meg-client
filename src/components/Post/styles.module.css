@@ -19,8 +19,8 @@
 }
 
 .post-creator img {
-  height: 3.5rem;
-  width: 3.5rem;
+  height: calc(2.5rem + 1em);
+  width: calc(2.5rem + 1em);
   border-radius: 50%;
 }
 
@@ -30,18 +30,23 @@
 
 .post-info h5 {
   margin-bottom: 0;
+  font-size: 1em;
 }
 
 .post-info small {
-  font-size: 0.9rem;
+  font-size: 0.9em;
 }
 
 .post-light .post-info h5, .post-light .post-info small {
   color: var(--gray-title);
 }
 
+.post-title {
+  font-size: 1em;
+}
+
 .post-body {
-  font-size: 1rem;
+  font-size: 1em;
   line-height: 1.5rem;
   white-space: pre-wrap;
 }

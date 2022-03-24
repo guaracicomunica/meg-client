@@ -146,7 +146,7 @@ export default function Atividades(props: ActivitiesPageProps) {
         <title>Missões da turma</title>
       </Head>
 
-      <main className={`page-container ${styles[`theme-${theme}`]}`}>
+      <main className={`${styles["page-layout"]} ${styles[`theme-${theme}`]}`}>
         <div className={isTeacher ? styles["list-activities-teacher"] : ""}>
           <Tab.Container id="topics-list" defaultActiveKey="all" onSelect={filterActivities}>
             <Row>
@@ -173,7 +173,7 @@ export default function Atividades(props: ActivitiesPageProps) {
                   )}
                 </Nav>
               </Col>
-              <Col sm={12} lg={9} className="px-0 pl-lg-4">
+              <Col sm={12} lg={9} className="px-0 pl-lg-5">
                 <Tab.Content>
                   <Tab.Pane eventKey="all">
                     <InfiniteScroll

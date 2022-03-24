@@ -1,7 +1,23 @@
+.page-layout {
+  padding: 2rem 10rem;
+}
+
+@media (max-width: 992px) {
+  .page-layout {
+    padding: 2rem 5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .page-layout {
+    padding: 2rem 3rem;
+  }
+}
+
 .list-activities-teacher {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 @media (max-width: 992px) {
@@ -30,6 +46,7 @@
   padding: 0.75rem 2rem;
   margin-bottom: 1rem;
   position: relative;
+  word-break: break-all;
 }
 
 .theme-light .topic {

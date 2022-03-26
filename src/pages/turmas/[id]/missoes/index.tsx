@@ -106,7 +106,7 @@ export default function Atividades(props: ActivitiesPageProps) {
     try {
       setLoading(true);
 
-      await api.get('activities', {
+      const response = await api.get('activities', {
         headers: {
           'Authorization': `Bearer ${token}`
         },
@@ -114,26 +114,27 @@ export default function Atividades(props: ActivitiesPageProps) {
           per_page: 100,
           topic_id: activeKey !== "all" ? activeKey : ""
         }
-      }).then(function (success) {
-        const formattedActivities: ActivityType[] = success.data.data.map(activity => {
-          return {
-            id: activity.postId,
-            name: activity.name,
-            body: activity.body,
-            deadline: activity?.deadline,
-            points: activity.points,
-            xp: activity.xp,
-            coins: activity.coins,
-            comments: activity.comments,
-            topicId: activity.topicId
-          }
-        });
-
-        setFilteredActivitiesList(formattedActivities);
-        setLoading(false);
       });
+
+      const formattedActivities: ActivityType[] = response.data.data.map(activity => {
+        return {
+          id: activity.postId,
+          name: activity.name,
+          body: activity.body,
+          deadline: activity?.deadline,
+          points: activity.points,
+          xp: activity.xp,
+          coins: activity.coins,
+          comments: activity.comments,
+          topicId: activity.topicId
+        }
+      });
+
+      setFilteredActivitiesList(formattedActivities);
+      setLoading(false);
     }
     catch (error) {
+      console.log(error);
       if (error?.response?.status === 401) {
         router.push('/sessao-expirada');
       }
@@ -268,6 +269,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           per_page: 10
         }
       });
+
+      console.log(response.data);
       
       const formattedActivities: ActivityType[] = response.data.data.map(activity => {
         return {

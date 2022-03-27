@@ -12,18 +12,18 @@ export default function CardSkills(props: CardSkillsProps) {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={`card-style mb-5 order-2 order-xl-1 p-4 col-xl-6 ${styles["card-skills"]} ${styles[`card-skills-${theme}`]}`}>
+    <div className={`card-style p-4 mb-5 ${styles["card-skills"]} ${styles[`card-skills-${theme}`]}`}>
       <div className={`pb-2 border-bottom ${styles["skills-header"]}`}>
         <img src="/images/skills.svg" />
-        <h4>Suas habilidades especiais</h4>
+        <h4 className='text-center'>Suas habilidades especiais</h4>
       </div>
 
       {props.skills?.length > 0 && props.skills?.map(skill => {
         return (
           <div key={skill.id} className={`p-3 mt-3 ${styles.skill}`}>
-            <img src="/icons/skill.svg" alt="Avatar da habilidade" />
+            <img src="/icons/skill.svg" alt="Ícone da habilidade" />
             <div className={`${styles["skill-name"]} px-3`}>{skill.name}</div>
-            <button className='px-3 border-left'>Reivindicar</button>
+            <button className='pl-3 border-left'>Reivindicar</button>
           </div>
         )
       })}

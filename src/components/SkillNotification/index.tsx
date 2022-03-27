@@ -14,7 +14,7 @@ export default function SkillNotification(props: SkillNotificationProps) {
   const isHighContrast = theme === enumTheme.contrast;
 
   return (
-    <div className={`card-style mb-5 order-2 order-xl-1 p-4 col-xl-6 ${styles[`notification-${theme}`]}`}>
+    <div className={`card-style p-4 ${styles[`notification-${theme}`]}`}>
       <div className={`border-bottom pb-3 ${styles["card-header"]}`}>
         <img src="/icons/notification.svg" alt="Notificações" className={isHighContrast ? "img-contrast-white" : ""} />
         <h4>Notificações da Loja</h4>

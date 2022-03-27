@@ -25,10 +25,20 @@
 
 .skill {
   border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   width: 100%;
+}
+
+@media (max-width: 400px) {
+  .skill {
+    grid-template-columns: 1fr auto;
+  }
+
+  .skill img {
+    display: none;
+  }
 }
 
 .card-skills-light .skill {

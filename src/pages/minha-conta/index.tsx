@@ -11,11 +11,13 @@ import CardSkills from "../../components/CardSkills";
 import SkillStore from "../../components/SkillStore";
 import { AuthContext } from "../../contexts/AuthContext"
 import { getAPIClient } from "../../services/apiClient";
-import { SkillNotificationType, SkillClaimedType } from "../../types/StoreSkill";
+import { SkillNotificationType, SkillClaimedType, SkillStoreClasses, SkillToBuy } from "../../types/StoreSkill";
 import { User, UserStatusGamification } from "../../types/User";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { enumTheme } from "../../enums/enumTheme";
 import { options } from "../../utils/defaultToastOptions";
+
+import styles from "./styles.module.css";
 
 export default function MinhaConta(props) {
   const { user } = useContext(AuthContext);
@@ -37,15 +39,15 @@ export default function MinhaConta(props) {
         <title>Minha conta</title>
       </Head>
 
-      <main className="page-container">
-        <div className="d-flex flex-wrap justify-content-between">
-          {isTeacher && <SkillNotification notifications={props.notifications} />}
-          {isStudent && <CardSkills skills={props.skills} />}
-          <CardUser coins={props?.userGamification?.coins}/>
-        </div>
+      <main className={`page-container ${styles["page-layout"]}`}>
         {isStudent && (
-          <SkillStore />
+          <div className="d-flex flex-column">
+            <CardSkills skills={props.skills} />
+            <SkillStore classes={props.studentClasses} skills={props.skillToBuy} />
+          </div>
         )}
+        {isTeacher && <SkillNotification notifications={props.notifications} />}
+        <CardUser coins={props?.userGamification?.coins}/>
       </main>
 
       <ToastContainer {...toastOptions} />
@@ -66,17 +68,18 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       }
     }
   } else {
-
     const user: User = JSON.parse(userData);
+    const isTeacher = user?.role === RoleUser.teacher;
+    const isStudent = user?.role === RoleUser.student;
 
     try {
-      if (user?.role === RoleUser.teacher) {
+      if (isTeacher) {
         const response = await apiClient.get('store/skills/teacher/notifications', {
           headers: {
             'Authorization': `Bearer ${token}`
           },
           params: { 
-            per_page: 2
+            per_page: 10
           }
         });
 
@@ -103,28 +106,65 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
       }
 
-      if (user?.role === RoleUser.student) {
-        const response = await apiClient.get('store/skills/student', {
-          headers: {
-            'Authorization': `Bearer ${token}`
+      if (isStudent) {
+        const responseSkillsClaimed = await apiClient.get('store/skills/student', {
+          headers: { 
+            'Authorization': `Bearer ${token}` 
           }
         });
-
-        const responseGamification = await apiClient.get(`users/status/gamification/${user.id}`,{ headers:{ 'Authorization': `Bearer ${token}` }});
-
-        const userGamification: UserStatusGamification  = responseGamification.data
-
-        const skills: SkillClaimedType[] = response.data.data.map(skill => {
+        const skills: SkillClaimedType[] = responseSkillsClaimed.data.data.map(skill => {
           return {
             id: skill.id,
             name: skill.name,
           }
         });
 
+        const responseGamification = await apiClient.get(`users/status/gamification/${user.id}`, {
+          headers: { 
+            'Authorization': `Bearer ${token}` 
+          }
+        });
+        const userGamification: UserStatusGamification  = responseGamification.data;
+
+        const responseClasses = await apiClient.get('classes', {
+          headers: { 
+            'Authorization': `Bearer ${token}` 
+          },
+          params: { 
+            per_page: 100
+          }
+        });
+        const studentClasses: SkillStoreClasses[] = responseClasses.data.data.map(classroom => {
+          return {
+            id: classroom.id,
+            name: classroom.name,
+            nickname: classroom.nickname,
+            banner: classroom?.banner,
+            teacher: classroom.creator.name,
+          }
+        });
+
+        const responseSkillsToBuy = await apiClient.get('store/skills/student/to-buy', {
+          headers: { 
+            'Authorization': `Bearer ${token}` 
+          }
+        });
+        const skillToBuy: SkillToBuy[] = responseSkillsToBuy.data.skills.map(skill => {
+          return {
+            id: skill.id,
+            name: skill.name,
+            coins: skill.coins,
+            path: skill?.path,
+            classroomId: skill["classroom_id"],
+          }
+        });
+
         return {
           props: {
             skills,
-            userGamification
+            userGamification,
+            studentClasses,
+            skillToBuy
           }
         }
       }

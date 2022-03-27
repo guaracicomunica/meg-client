@@ -13,3 +13,19 @@ export type SkillClaimedType = {
   id: number;
   name: string;
 }
+
+export type SkillStoreClasses = {
+  id: number;
+  name: string;
+  nickname: string;
+  banner?: string,
+  teacher: string;
+}
+
+export type SkillToBuy = {
+  id: number;
+  name: string;
+  coins: number;
+  path?: string;
+  classroomId: number;
+}

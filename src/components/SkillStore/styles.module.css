@@ -23,7 +23,6 @@
 }
 
 .skill {
-  cursor: pointer;
   border-radius: 10px;
   display: grid;
   grid-template-columns: auto 1fr 6rem;
@@ -72,16 +71,24 @@
 }
 
 .coins {
+  cursor: pointer;
   border-radius: 10px;
   border: 2px solid;
   font-weight: 900;
-  width: max-content;
-  margin-left: auto;
+  width: 100%;
+  text-align: center;
+  transition: 0.2s;
 }
 
 .skill-store-light .coins {
   border-color: var(--green);
   color: var(--green);
+}
+
+.skill-store-light .coins:hover {
+  border-color: var(--green);
+  background-color: var(--green);
+  color: var(--white);
 }
 
 .skill-store-high-contrast .coins {

@@ -1,18 +1,85 @@
 import { useContext, useState } from 'react';
+import { useRouter } from "next/router";
 import { Nav, Row, Tab } from 'react-bootstrap';
+import { parseCookies } from "nookies";
+import { toast, ToastOptions } from "react-toastify";
+
 import { ThemeContext } from '../../contexts/ThemeContext';
+import { enumTheme } from '../../enums/enumTheme';
+import { api } from "../../services/api";
 import { SkillToBuy } from '../../types/StoreSkill';
+import { genericMessageError, options } from "../../utils/defaultToastOptions";
+
 import styles from './styles.module.css';
 
 export default function SkillStore(props) {
+  const router = useRouter();
+  const { ['meg.token']: token } = parseCookies();
   const { theme } = useContext(ThemeContext);
+  const isHighContrast = theme === enumTheme.contrast;
   const [skillsFiltered, setSkillsFiltered] = useState<SkillToBuy[]>([]);
   const [isClassSelected, setIsClassSelected] = useState(false);
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   function filterSkills(activeKey: string) {
     const filter = props.skills.filter(skill => skill.classroomId === Number(activeKey));
     setIsClassSelected(true);
     setSkillsFiltered(filter);
+  }
+
+  async function buySkill(id: number) {
+    try {
+      await api.post(`store/skills/${id}/buy`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      .then(function (success) {
+        router.push('minha-conta', undefined, {scroll: false});
+        toast.success(success.data.message, toastOptions);
+        const filter = skillsFiltered.filter(skill => skill.id !== id);
+        setSkillsFiltered(filter);
+      });
+    }
+    catch(error) {
+      if (!error.response) {
+        // network error
+        return toast.error(genericMessageError, toastOptions);
+      }
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+        
+        case 400:
+          toast.error(error.response.data.errors.coins, toastOptions);
+          break;
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], toastOptions);
+          });
+          break;
+
+        case 500:
+          toast.error(genericMessageError, toastOptions);
+          break;
+
+        default:
+          toast.error(genericMessageError, toastOptions);
+          break;
+      }
+    }
   }
 
   return (
@@ -55,7 +122,9 @@ export default function SkillStore(props) {
                       <img src={skill.path ?? "/icons/skill.svg"} alt="Ícone da habilidade" />
                       <div className={`${styles["skill-name"]} px-3`}>{skill.name}</div>
                       <div className='pl-3 border-left'>
-                        <div className={`py-1 px-3 ${styles.coins}`}>$ {skill.coins}</div>
+                        <div className={`py-1 px-3 ${styles.coins}`} onClick={() => buySkill(skill.id)}>
+                          $ {skill.coins}
+                        </div>
                       </div>
                     </div>
                   </Tab.Pane>

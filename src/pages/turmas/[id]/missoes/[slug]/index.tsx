@@ -249,7 +249,7 @@ export default function Atividade(props: ActivityType) {
         <title>{props.name}</title>
       </Head>
 
-      <main className={`${styles["page-layout"]} ${styles[`theme-${theme}`]} mt-3`}>
+      <main className={`page-container ${styles["page-layout"]} ${styles[`theme-${theme}`]} mt-3`}>
         <div className="card-style p-4">
           <div className={`${styles["card-activity-header"]} border-bottom pb-4`}>
             <img src="/icons/activity-post.svg" alt="Missão" />

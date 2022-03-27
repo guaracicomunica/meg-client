@@ -8,7 +8,7 @@ export default function EmailAlreadySuccess() {
         <title>E-mail já verificado</title>
       </Head>
       
-      <main className="section pb-0 d-flex flex-column align-items-center">
+      <main className="page-container pb-0 d-flex flex-column align-items-center">
         <div className="card-style col-12 col-md-8 col-lg-7 col-xl-4 p-5">
           <img
             src="/images/verified-email.svg"

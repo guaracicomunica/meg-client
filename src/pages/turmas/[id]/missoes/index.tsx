@@ -147,7 +147,7 @@ export default function Atividades(props: ActivitiesPageProps) {
         <title>Missões da turma</title>
       </Head>
 
-      <main className={`${styles["page-layout"]} ${styles[`theme-${theme}`]}`}>
+      <main className={`page-container ${styles[`theme-${theme}`]}`}>
         <div className={isTeacher ? styles["list-activities-teacher"] : ""}>
           <Tab.Container id="topics-list" defaultActiveKey="all" onSelect={filterActivities}>
             <Row>

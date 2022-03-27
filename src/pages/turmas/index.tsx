@@ -101,7 +101,7 @@ export default function Turmas(props: ClassPageType) {
 
       <main className={styles[`theme-${theme}`]}>
         <InfiniteScroll
-          className={styles["classes-list"]}
+          className={`page-container ${styles["classes-list"]}`}
           dataLength={classes.length}
           next={getMorePost}
           hasMore={hasMore}

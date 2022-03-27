@@ -23,7 +23,7 @@ export function Navbar() {
   const classNameLinkActive = `nav-item mt-3 mt-md-0 ${styles["link-active"]}`;
 
   return (
-    <header id="topo" className={`${styles.header} ${styles[`header-${theme}`]}`}>
+    <header id="topo" className={styles[`header-${theme}`]}>
       <nav className={`navbar navbar-expand-md ${styles.menu}`}>
         <a className="navbar-brand" href="/">
           <img

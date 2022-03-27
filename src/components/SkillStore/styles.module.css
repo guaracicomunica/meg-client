@@ -25,18 +25,25 @@
 .skill {
   border-radius: 10px;
   display: grid;
-  grid-template-columns: auto 1fr 6rem;
+  grid-template-columns: auto 1fr calc(3rem + 3em);
   align-items: center;
   width: 100%;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .skill {
-    grid-template-columns: 1fr auto;
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  .skill img {
-    display: none;
+  .skill-name {
+    width: calc(100% - 3.5rem);
+  }
+
+  .skill-name + div {
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin-top: 1rem;
   }
 }
 
@@ -55,6 +62,8 @@
 
 .skill img {
   height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
 }
 
 .skill-name {
@@ -75,6 +84,7 @@
   border: 2px solid;
   font-weight: 900;
   width: 100%;
+  min-width: calc(3rem + 3em);
   text-align: center;
   transition: 0.2s;
 }
@@ -128,7 +138,8 @@
 
 .banner {
   position: relative;
-  height: 7.5rem;
+  min-height: 7.5rem;
+  height: 6em;
   width: 100%;
   cursor: pointer;
 }

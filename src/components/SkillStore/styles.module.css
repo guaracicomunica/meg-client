@@ -48,8 +48,7 @@
   border: 2px solid var(--white);
 }
 
-.skill-store-high-contrast .skill:hover,
-.skill-store-high-contrast .skill:hover .coins {
+.skill-store-high-contrast .coins:hover {
   border-color: var(--yellow-contrast);
   color: var(--yellow-contrast);
 }
@@ -167,7 +166,9 @@
   background-color: var(--white);
 }
 
-.skill-store-high-contrast .info-class h6, .skill-store-high-contrast .info-class small {
+.skill-store-high-contrast .info-class h6,
+.skill-store-high-contrast .info-class span,
+.skill-store-high-contrast .info-class small {
   background-color: var(--black);
   width: fit-content;
   max-width: 100%;

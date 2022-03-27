@@ -39,11 +39,11 @@
 
 .link-active::after {
   content: "";
-  width: calc(100% - 3rem);
+  width: calc(100% - 2rem);
   height: 5px;
   position: absolute;
   bottom: -1.2rem;
-  left: 28%;
+  left: 25%;
   transform: translateX(-25%);
   border-radius: 10px;
 }

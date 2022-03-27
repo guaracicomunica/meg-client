@@ -18,7 +18,7 @@ export default function Home() {
 
       <main className={`${styles.main} page-container ${styles[`theme-${theme}`]}`}>
         <section className={styles["home-banner"]}>
-          <div className="col-11 col-lg-3 flex-column">
+          <div className="col-11 col-lg-5 flex-column">
             <img
               src="./images/meg-logo.png"
               alt="Logo do MEG"
@@ -27,7 +27,7 @@ export default function Home() {
             <h1 className={`${styles["title-home"]} mt-4`}>Seja bem-vindo ao Mundo Encantado da Geografia!</h1>
           </div>
 
-          <div className="col-11 col-lg-4 mt-5 my-lg-0">
+          <div className="col-11 col-lg-6 mt-5 my-lg-0">
             <img src="./images/illustration-home.svg" className="img-fluid" />
           </div>
         </section>
@@ -38,7 +38,7 @@ export default function Home() {
             <hr className={styles["border-soft-blue"]} />
           </div>
           
-          <div className="col-12 col-lg-7">
+          <div className="col-12 col-lg-9">
             <p className="text-blue-dark text-center">
               Seja bem-vindo(a) ao MEG – O Mundo Encantado da Geografia! O MEG é um projeto de ensino que tem como objetivo aperfeiçoar o processo de ensino e de aprendizagem através da interdisciplinaridade e da gamificação.
             </p>
@@ -50,7 +50,7 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="col-12 col-lg-8 d-flex flex-wrap justify-content-center">
+          <div className="col-12 col-lg-9 d-flex flex-wrap justify-content-center">
             <div className={styles.keyword}>MEG</div>
             <div className={styles.keyword}>Geografia</div>
             <div className={styles.keyword}>Interdisciplinaridade</div>
@@ -61,7 +61,7 @@ export default function Home() {
         </section>
 
         <section className="row justify-content-around align-items-center">
-          <div className="col-12 col-lg-4 mb-5 mb-lg-0 flex-column">
+          <div className="col-12 col-lg-5 mb-5 mb-lg-0 flex-column">
             <h1 className={styles["title-home"]}>Veja como o Mundo Encantado da Geografia funciona</h1>
             <img
               src="./icons/arrow-down.svg"
@@ -70,13 +70,13 @@ export default function Home() {
             />
           </div>
 
-          <div className="col-9 col-lg-5 mt-5 mt-lg-0">
+          <div className="col-9 col-lg-6 mt-5 mt-lg-0">
             <img src="./images/illustration-home-2.svg" className="img-fluid" />
           </div>
         </section>
 
         <section className="row justify-content-around align-items-center">
-          <div className={`col-11 col-lg-6 col-xl-5 order-2 order-lg-1 ${styles["cards-list"]}`}>
+          <div className={`col-11 col-lg-7 col-xl-6 order-2 order-lg-1 ${styles["cards-list"]}`}>
             <CardHome
               theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
@@ -99,7 +99,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="col-11 col-md-7 col-lg-4 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
+          <div className="col-11 col-md-8 col-lg-5 col-xl-5 order-1 order-lg-2 mb-5 mb-lg-0">
             <h1 className={`title-blue-dark text-uppercase text-center`}>Regras gamificadas</h1>
 
             <div className="d-flex justify-content-center">
@@ -112,7 +112,7 @@ export default function Home() {
         </section>
 
         <section className={styles["section-not-allowed"]}>
-          <div className="col-11">
+          <div className="col-12">
             <h1 className={`title-blue-dark text-uppercase text-center`}>O que você não pode fazer</h1>
 
             <div className="d-flex justify-content-center">
@@ -121,7 +121,7 @@ export default function Home() {
             </div>
           </div>
           
-          <div className={`col-11 col-xl-10 mt-5 ${styles["cards-list-not-allowed"]}`}>
+          <div className={`col-12 mt-5 ${styles["cards-list-not-allowed"]}`}>
             <CardHome
               theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
@@ -146,7 +146,7 @@ export default function Home() {
         </section>
 
         <section className="row justify-content-around align-items-center mb-5">
-          <div className="col-11 col-md-7 col-lg-4 col-xl-5 mb-5 mb-lg-0">
+          <div className="col-11 col-md-8 col-lg-5 col-xl-5 mb-5 mb-lg-0">
             <h1 className={`title-blue-dark text-uppercase text-center`}>Premiações do MEG</h1>
 
             <div className="d-flex justify-content-center">
@@ -157,7 +157,7 @@ export default function Home() {
             <img src="./images/awards-section.svg" className="img-fluid mt-5" />
           </div>
 
-          <div className={`col-11 col-lg-6 col-xl-5 ${styles["cards-list"]}`}>
+          <div className={`col-11 col-lg-7 col-xl-6 ${styles["cards-list"]}`}>
             <CardHome
               theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"

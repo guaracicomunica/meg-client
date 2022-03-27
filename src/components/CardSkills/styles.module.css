@@ -31,13 +31,20 @@
   width: 100%;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .skill {
-    grid-template-columns: 1fr auto;
+    display: flex;
+    flex-wrap: wrap;
   }
 
-  .skill img {
-    display: none;
+  .skill-name {
+    width: calc(100% - 3.5rem);
+  }
+
+  .skill-name + button, .skill-name + span {
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin-top: 1rem;
   }
 }
 
@@ -63,6 +70,16 @@
 
 .card-skills-light .skill-name {
   color: var(--blue);
+}
+
+.card-skills-light .skill-claimed .skill-name {
+  color: var(--gray) !important;
+}
+
+.card-skills-light .skill-claimed span {
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--gray);
 }
 
 .skill button {

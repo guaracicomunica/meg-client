@@ -116,6 +116,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           return {
             id: skill.id,
             name: skill.name,
+            claimed: skill.claimed,
           }
         });
 

@@ -12,6 +12,7 @@ export type SkillNotificationType = {
 export type SkillClaimedType = {
   id: number;
   name: string;
+  claimed: number;
 }
 
 export type SkillStoreClasses = {

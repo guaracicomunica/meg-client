@@ -22,11 +22,11 @@ export default function SkillNotification(props: SkillNotificationProps) {
       {props.notifications.length > 0 && props.notifications.map(notification => {
         return (
           <div className={`p-3 mt-3 ${styles.notification}`} key={notification.id}>
-            <img src={notification.claimer.avatar ?? "/icons/skill.svg"} alt="Avatar da habilidade" />
+            <img src={notification.claimer.avatar ?? "/icons/user.svg"} alt="Avatar do estudante" />
             <div className={`${styles["student-name"]} px-3 border-right`}>{notification.claimer.name}</div>
             <div className={`${styles["class"]} px-3 border-right`}>{notification.classroom}</div>
             <div className={`${styles["skill"]} pl-3`}>
-              <strong>Reivindicou a habilidade</strong>
+              <strong>Reivindicou:</strong>
               <span>{notification.skill}</span>
             </div>
           </div>

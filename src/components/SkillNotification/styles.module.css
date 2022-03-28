@@ -1,4 +1,4 @@
-.notifications-light, .notifications-high-contrast {
+.notification-light, .notification-high-contrast {
   height: fit-content;
 }
 
@@ -19,24 +19,58 @@
   margin-bottom: 0;
 }
 
-.notifications-light h4 {
+.notification-light h4 {
   color: var(--blue-dark);
 }
 
 .notification {
   border-radius: 10px;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr;
   align-items: center;
   width: 100%;
 }
 
-.notifications-light .notification {
+@media (max-width: 500px) {
+  .notification {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .skill, .class {
+    width: 100%;
+  }
+
+  .student-name {
+    width: calc(100% - 3.5rem);
+  }
+
+  .student-name, .class {
+    border-right: none !important;
+  }
+
+  .class {
+    padding: 0 !important;
+  }
+
+  .skill, .class {
+    margin-top: 0.5rem;
+    padding-left: 0 !important;
+  }
+}
+
+.notification-light .notification {
   background-color: #F8F8F8;
 }
 
-.notifications-light .notification {
+.notification-light .notification {
   border: 2px solid var(--white);
+}
+
+.student-name, .class, .skill span {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .notification img {
@@ -50,7 +84,7 @@
   font-size: 1.1em;
 }
 
-.notifications-light .student-name {
+.notification-light .student-name {
   color: var(--blue);
 }
 
@@ -59,7 +93,7 @@
   font-size: 1em;
 }
 
-.notifications-light .class {
+.notification-light .class {
   color: var(--gray-text);
 }
 
@@ -68,10 +102,10 @@
   flex-direction: column;
 }
 
-.notifications-light .skill strong {
+.notification-light .skill strong {
   color: var(--blue-dark);
 }
 
-.notifications-light .skill span {
+.notification-light .skill span {
   color: var(--green);
 }

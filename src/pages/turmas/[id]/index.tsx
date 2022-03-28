@@ -228,8 +228,10 @@ export default function Turma(props: ClassPageProps) {
               </div>
             </Link>
 
-            <div className={`${styles["ranking-card"]} ${styles[`ranking-${theme}`]} card-style p-4 mt-4`}>
-              <h3 className="text-center">Ranking dos participantes</h3>
+            <div className={`${styles["ranking-card"]} card-style p-4 mt-4`}>
+              <h3 className="text-center" style={!isHighContrast ? { color: "var(--blue-dark)" } : {}}>
+                Ranking dos participantes
+              </h3>
               <hr className="w-100 my-2" />
               <RankingStudent />
               <RankingStudent />

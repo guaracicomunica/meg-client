@@ -20,9 +20,23 @@
   border-radius: 50%;
 }
 
+.student-info {
+  width: calc(100% - 3rem - 1em);
+}
+
+@media (max-width: 500px) {
+  .ranking-student-avatar {
+    height: calc(1.5rem + 1em);
+    width: calc(1.5rem + 1em);
+  }
+
+  .student-info {
+    width: calc(100% - 2rem - 1em);
+  }
+}
+
 .ranking-student h4 {
   font-weight: 700;
-  width: calc(100% - 1.4rem - 1em);
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -35,10 +49,9 @@
 .student-score {
   display: flex;
   flex-wrap: wrap;
-  width: calc(100% - 1.4rem - 1em);
 }
 
 .student-score span {
-  font-size: 0.8em;
+  font-size: 1em;
   font-weight: 700;
 }

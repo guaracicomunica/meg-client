@@ -23,6 +23,7 @@ import { QueryProps } from "../../../types/Query";
 import { genericMessageError, options } from "../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
+import { RankingStudent } from "../../../components/RankingStudent";
 
 type ClassPageProps = {
   classroom: ClassType,
@@ -226,6 +227,17 @@ export default function Turma(props: ClassPageProps) {
                 <span className="mt-3"> {isTeacher ? "Ver notas" : "Ver minhas notas" }</span>
               </div>
             </Link>
+
+            <div className={`${styles["ranking-card"]} ${styles[`ranking-${theme}`]} card-style p-4 mt-4`}>
+              <h3 className="text-center">Ranking dos participantes</h3>
+              <hr className="w-100 my-2" />
+              <RankingStudent />
+              <RankingStudent />
+              <RankingStudent />
+              <RankingStudent />
+              <RankingStudent />
+              <Link href="#"><a className="button button-blue text-uppercase mt-4">Acessar ranking</a></Link>
+            </div>
           </div>
 
           <div className={styles["posts-list"]}>

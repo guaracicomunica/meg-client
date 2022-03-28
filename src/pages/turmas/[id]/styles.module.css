@@ -33,6 +33,14 @@
   margin-top: 2rem;
 }
 
+.ranking-card h3 {
+  font-weight: 900;
+}
+
+.ranking-light .ranking-card h3 {
+  color: var(--blue-dark);
+}
+
 @media (max-width: 1000px) {
   .posts-section {
     gap: 2rem;

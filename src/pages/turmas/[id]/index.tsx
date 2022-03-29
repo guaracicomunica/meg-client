@@ -238,7 +238,9 @@ export default function Turma(props: ClassPageProps) {
               <RankingStudent />
               <RankingStudent />
               <RankingStudent />
-              <Link href="#"><a className="button button-blue text-uppercase mt-4">Acessar ranking</a></Link>
+              <Link href={`/turmas/${router.query.id}/ranking`}>
+                <a className="button button-blue text-uppercase mt-4">Acessar ranking</a>
+              </Link>
             </div>
           </div>
 

@@ -235,6 +235,26 @@ select:focus {
   z-index: 1;
 }
 
+@media (max-width: 500px) {
+  .banner .banner-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-class {
+    padding-right: 1.5rem !important;
+  }
+
+  .info-class .teacher {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .link-class {
+    width: fit-content;
+    margin-top: 0 !important;
+  }
+}
+
 .info-class {
   color: var(--white);
 }

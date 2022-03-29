@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { RoleUser } from '../../enums/enumRoleUser';
 import { api } from '../../services/api';
 import { User } from '../../types/User';
 import { options } from '../../utils/defaultToastOptions';
@@ -23,7 +22,7 @@ type CardUserInfos = {
 
 export default function CardUser(props: CardUserInfos) {
   const router = useRouter();
-  const { user, logoff, setUser } = useContext(AuthContext);
+  const { user, isStudent, logoff, setUser } = useContext(AuthContext);
   const { theme } = useContext(ThemeContext);
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     avatar_path: null,
@@ -124,7 +123,7 @@ export default function CardUser(props: CardUserInfos) {
       <div className={`${styles["user-info"]} my-4 pb-2 border-bottom`}>
         <h4>{user?.name}</h4>
         <p><strong className='mr-2'>Email:</strong>{user?.email}</p>
-        {user?.role === RoleUser.student && props.coins != undefined && (
+        {isStudent && props.coins != undefined && (
           <div className={`${styles.coins} mb-2`}>
             <img src="/icons/coins.svg" alt="Moedas" />
             <span> {props.coins} moedas</span>

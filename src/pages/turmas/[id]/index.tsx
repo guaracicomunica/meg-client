@@ -10,10 +10,10 @@ import { useForm } from "react-hook-form";
 import { toast, ToastContainer, ToastOptions } from "react-toastify";
 
 import ModalSeeClassCode from "../../../components/ModalSeeClassCode";
+import { RankingStudent } from "../../../components/RankingStudent";
 import PostList from "../../../components/PostList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ThemeContext } from "../../../contexts/ThemeContext"
-import { RoleUser } from "../../../enums/enumRoleUser";
 import { api } from "../../../services/api";
 import { getAPIClient } from "../../../services/apiClient";
 import { ClassType } from "../../../types/Class";
@@ -22,7 +22,6 @@ import { QueryProps } from "../../../types/Query";
 import { genericMessageError, options } from "../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
-import { RankingStudent } from "../../../components/RankingStudent";
 
 type ClassPageProps = {
   classroom: ClassType,
@@ -43,19 +42,21 @@ type CreatePostType = {
 export default function Turma(props: ClassPageProps) {
   const router = useRouter();
   const { ['meg.token']: token } = parseCookies();
-  const { user } = useContext(AuthContext);
-  const { theme, isHighContrast } = useContext(ThemeContext);
+  const { isTeacher } = useContext(AuthContext);
+  const { isHighContrast } = useContext(ThemeContext);
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [postsList, setPostsList] = useState<PostType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const { register, handleSubmit, reset, setValue } = useForm( 
-    {defaultValues: {  body: "", disabled: false, is_private: false, classroom_id: props.classroom.id }});
+  const { register, handleSubmit, reset } = useForm({ defaultValues: {
+    body: "",
+    disabled: false,
+    is_private: false,
+    classroom_id: props.classroom.id
+  }});
 
   const { classroom } = props;
-
-  const isTeacher = user?.role === RoleUser.teacher;
 
   const toastOptions: ToastOptions = {
     ...options,

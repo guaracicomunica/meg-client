@@ -1,21 +1,20 @@
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
+
 import ModalSeeClassCode from '../ModalSeeClassCode';
 import ModalCreateNewClass from '../ModalCreateNewClass';
-import { RoleUser } from '../../enums/enumRoleUser';
+import { AuthContext } from '../../contexts/AuthContext';
 import { ClassStatus } from '../../enums/enumClassStatus';
 import { ClassCard } from '../../types/Class';
+
 import styles from './styles.module.css';
-import { ThemeContext } from '../../contexts/ThemeContext';
 
 export default function CardClass(props: ClassCard) {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
-  const { theme } = useContext(ThemeContext);
-  const isClassroomActive = props.status === ClassStatus.active
-  const isTeacher = props.roleUser === RoleUser.teacher
-  const isStudent = props.roleUser === RoleUser.student
+  const { isTeacher, isStudent } = useContext(AuthContext);
+  const isClassroomActive = props.status === ClassStatus.active;
 
   useEffect(() => {
     if (props.banner !== null) {

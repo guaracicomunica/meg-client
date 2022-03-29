@@ -6,10 +6,10 @@ import { ToastContainer, ToastOptions } from "react-toastify";
 
 import SkillNotification from "../../components/SkillNotification";
 import CardUser from "../../components/CardUser";
-import { RoleUser } from "../../enums/enumRoleUser";
 import CardSkills from "../../components/CardSkills";
 import SkillStore from "../../components/SkillStore";
-import { AuthContext } from "../../contexts/AuthContext"
+import { AuthContext } from "../../contexts/AuthContext";
+import { enumRoleUser } from "../../enums/enumRoleUser";
 import { getAPIClient } from "../../services/apiClient";
 import { SkillNotificationType, SkillClaimedType, SkillStoreClasses, SkillToBuy } from "../../types/StoreSkill";
 import { User, UserStatusGamification } from "../../types/User";
@@ -19,11 +19,8 @@ import { options } from "../../utils/defaultToastOptions";
 import styles from "./styles.module.css";
 
 export default function MinhaConta(props) {
-  const { user } = useContext(AuthContext);
-  const isStudent = user?.role === RoleUser.student;
-  const isTeacher = user?.role === RoleUser.teacher;
-
-  const { theme, isHighContrast } = useContext(ThemeContext);
+  const { isStudent, isTeacher } = useContext(AuthContext);
+  const { isHighContrast } = useContext(ThemeContext);
 
   const toastOptions: ToastOptions = {
     ...options,
@@ -67,8 +64,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     }
   } else {
     const user: User = JSON.parse(userData);
-    const isTeacher = user?.role === RoleUser.teacher;
-    const isStudent = user?.role === RoleUser.student;
+    const isTeacher = user?.role === enumRoleUser.teacher;
+    const isStudent = user?.role === enumRoleUser.student;
 
     try {
       if (isTeacher) {

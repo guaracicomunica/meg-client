@@ -12,7 +12,6 @@ import CardActivity from "../../../../components/CardActivity";
 import ModalAddTopic from "../../../../components/ModalAddTopic";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { ThemeContext } from "../../../../contexts/ThemeContext";
-import { RoleUser } from "../../../../enums/enumRoleUser";
 import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ActivityTopicType, ActivityType } from "../../../../types/Post";
@@ -31,7 +30,7 @@ type ActivitiesPageProps = {
 
 export default function Atividades(props: ActivitiesPageProps) {
   const { 'meg.token': token } = parseCookies();
-  const { user } = useContext(AuthContext);
+  const { isTeacher } = useContext(AuthContext);
   const { theme, isHighContrast } = useContext(ThemeContext);
   const router = useRouter();
 
@@ -42,7 +41,6 @@ export default function Atividades(props: ActivitiesPageProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
-  const isTeacher = user?.role === RoleUser.teacher;
 
   const toastOptions: ToastOptions = {
     ...options,

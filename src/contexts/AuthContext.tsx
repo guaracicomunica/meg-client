@@ -1,11 +1,13 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import Router from 'next/router';
 import { setCookie, parseCookies, destroyCookie } from 'nookies';
-import { toast } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 
 import { api } from '../services/api';
 import { options } from '../utils/defaultToastOptions';
 import { User } from '../types/User';
+import { enumRoleUser } from "../enums/enumRoleUser";
+import { ThemeContext } from "./ThemeContext";
 
 type SignInData = {
   email: string;
@@ -24,6 +26,8 @@ type AuthContextType = {
   user: User;
   setUser: (data: User) => void;
   isAuthenticated: boolean;
+  isStudent: boolean;
+  isTeacher: boolean;
   signIn: (data: SignInData) => void;
   signUp: (data: SignUpData, makeLogin: boolean) => void;
   logoff: () => void;
@@ -37,8 +41,17 @@ type DataAuth = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthProvider({ children }) {
+  const { isHighContrast } = useContext(ThemeContext);
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isTeacher, setIsTeacher] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
+
+  const toastOptions: ToastOptions = {
+    ...options,
+    hideProgressBar: isHighContrast ? true : false,
+    theme: isHighContrast ? "dark" : "light"
+  }
 
   useEffect(() => {
     const { 'meg.token': token } = parseCookies();
@@ -54,7 +67,8 @@ export function AuthProvider({ children }) {
         role: userJSON.role,
         avatar_path: userJSON.avatar_path
       });
-
+      setIsStudent(userJSON.role === enumRoleUser.student);
+      setIsTeacher(userJSON.role === enumRoleUser.teacher);
       setIsAuthenticated(true);
     }
   }, []);
@@ -67,8 +81,11 @@ export function AuthProvider({ children }) {
       password_confirmation: data.password_confirmation,
       role: data.role
     }).then(function (success) {
-      toast.success('Conta criada com sucesso!', options); 
-      toast.success('Foi enviado um e-mail de confirmação. Acesse sua caixa de entrada e confirme-o para ter acesso.', options); 
+      toast.success('Conta criada com sucesso!', toastOptions); 
+      toast.success(
+        'Foi enviado um e-mail de confirmação. Acesse sua caixa de entrada e confirme-o para ter acesso.',
+        toastOptions
+      ); 
     });
   }
 
@@ -100,6 +117,8 @@ export function AuthProvider({ children }) {
     });
     
     setIsAuthenticated(true);
+    setIsStudent(response.data.user.role === enumRoleUser.student);
+    setIsTeacher(response.data.user.role === enumRoleUser.teacher);
 
     Router.push('/turmas');
   }
@@ -120,16 +139,21 @@ export function AuthProvider({ children }) {
           });
           setUser(null);
           setIsAuthenticated(false);
+          setIsStudent(false);
+          setIsTeacher(false);
           Router.push('/login');
         });
       }
     } catch(error) {
-      toast.error('Ops! Não foi possível sair da sua conta. Tente novamente ou entre em contato com o suporte.', options);
+      toast.error(
+        'Ops! Não foi possível sair da sua conta. Tente novamente ou entre em contato com o suporte.',
+        toastOptions
+      );
     }
   }
 
   return (
-    <AuthContext.Provider value={{ user, setUser, isAuthenticated, signIn, signUp, logoff }}>
+    <AuthContext.Provider value={{ user, setUser, isAuthenticated, isStudent, isTeacher, signIn, signUp, logoff }}>
       { children }
     </AuthContext.Provider>
   )

@@ -15,7 +15,6 @@ import { ThemeContext } from '../../contexts/ThemeContext'
 import { ClassStatus } from '../../enums/enumClassStatus';
 import { api } from '../../services/api';
 import { getAPIClient } from '../../services/apiClient';
-import { RoleUser } from '../../enums/enumRoleUser';
 import { ClassCard } from '../../types/Class';
 import { options } from '../../utils/defaultToastOptions';
 
@@ -30,7 +29,7 @@ type ClassPageType = {
 }
 
 export default function Turmas(props: ClassPageType) {
-  const { user } = useContext(AuthContext);
+  const { user, isTeacher, isStudent } = useContext(AuthContext);
   const { theme, isHighContrast } = useContext(ThemeContext);
   const { 'meg.token': token } = parseCookies();
   const router = useRouter();
@@ -81,11 +80,11 @@ export default function Turmas(props: ClassPageType) {
     }
   }
 
-  function openModal(role: number) {
-    if (role === RoleUser.teacher) {
+  function openModal() {
+    if (isTeacher) {
       setShowModalTeacher(true);
     }
-    if (role === RoleUser.student) {
+    if (isStudent) {
       setShowModalStudent(true);
     }
   }
@@ -156,13 +155,13 @@ export default function Turmas(props: ClassPageType) {
             })
           )}
 
-          <div className={styles["add-class"]} onClick={() => openModal(user?.role)}>
+          <div className={styles["add-class"]} onClick={openModal}>
             <OverlayTrigger
               key="tooltip-add-class"
               placement="bottom"
               overlay={
                 <Tooltip id="tooltip" bsPrefix={isHighContrast ? styles["tooltip-high-contrast"] : ""}>
-                  {user?.role === RoleUser.teacher ? "Criar nova turma" : "Adicionar nova turma"}
+                  {isTeacher ? "Criar nova turma" : "Adicionar nova turma"}
                 </Tooltip>
               }
             >

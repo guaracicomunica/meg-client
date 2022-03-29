@@ -15,7 +15,6 @@ import ModalAddFile from "../../../../../components/ModalAddFile";
 import PrivateComment from "../../../../../components/PrivateComment";
 import { AuthContext } from "../../../../../contexts/AuthContext";
 import { ThemeContext } from "../../../../../contexts/ThemeContext";
-import { RoleUser } from "../../../../../enums/enumRoleUser";
 import { api } from "../../../../../services/api";
 import { getAPIClient } from "../../../../../services/apiClient";
 import { ActivityType, CommentType } from "../../../../../types/Post";
@@ -32,15 +31,14 @@ type CommentForm = {
 export default function Atividade(props: ActivityType) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
-  const { user } = useContext(AuthContext);
+  const { user, isTeacher } = useContext(AuthContext);
   const { theme, isHighContrast } = useContext(ThemeContext);
   const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
-  const { register, handleSubmit, reset } = useForm({defaultValues: {
+  const { register, handleSubmit, reset } = useForm({ defaultValues: {
     body: ""
   }});
   const current_route: string = `/turmas/${router.query.id}/missoes/${router.query.slug}`;
-  const isTeacher = user?.role === RoleUser.teacher;
 
   const toastOptions: ToastOptions = {
     ...options,

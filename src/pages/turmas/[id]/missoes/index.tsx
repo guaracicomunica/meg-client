@@ -13,7 +13,6 @@ import ModalAddTopic from "../../../../components/ModalAddTopic";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { ThemeContext } from "../../../../contexts/ThemeContext";
 import { RoleUser } from "../../../../enums/enumRoleUser";
-import { enumTheme } from "../../../../enums/enumTheme";
 import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ActivityTopicType, ActivityType } from "../../../../types/Post";
@@ -33,7 +32,7 @@ type ActivitiesPageProps = {
 export default function Atividades(props: ActivitiesPageProps) {
   const { 'meg.token': token } = parseCookies();
   const { user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
   const router = useRouter();
 
   const [showModalAddTopic, setShowModalAddTopic] = useState(false);
@@ -44,8 +43,6 @@ export default function Atividades(props: ActivitiesPageProps) {
   const [totalPages, setTotalPages] = useState(0);
   const [loading, setLoading] = useState(false);
   const isTeacher = user?.role === RoleUser.teacher;
-
-  const isHighContrast = theme === enumTheme.contrast;
 
   const toastOptions: ToastOptions = {
     ...options,
@@ -184,7 +181,7 @@ export default function Atividades(props: ActivitiesPageProps) {
                       hasMore={hasMore}
                       loader={
                         <div className={styles["loading-container"]}>
-                          <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+                          <Spinner animation="border" variant={isHighContrast ? "light" : "dark"} />
                         </div>
                       }
                     >
@@ -202,7 +199,7 @@ export default function Atividades(props: ActivitiesPageProps) {
                       <Tab.Pane eventKey={topic.id} key={topic.id}>
                         {loading ? (
                           <div className={styles["loading-container"]}>
-                            <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+                            <Spinner animation="border" variant={isHighContrast ? "light" : "dark"} />
                           </div>
                         ) : (
                           filteredActivitiesList.length > 0 ? (
@@ -235,7 +232,6 @@ export default function Atividades(props: ActivitiesPageProps) {
         </div>
 
         <ModalAddTopic
-          theme={theme}
           classroom_id={Number(router.query.id)}
           show={showModalAddTopic}
           onHide={() => setShowModalAddTopic(false)}

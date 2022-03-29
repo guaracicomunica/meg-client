@@ -13,14 +13,13 @@ import ModalAddClass from '../../components/ModalAddClass';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext'
 import { ClassStatus } from '../../enums/enumClassStatus';
-import { enumTheme } from '../../enums/enumTheme';
 import { api } from '../../services/api';
 import { getAPIClient } from '../../services/apiClient';
 import { RoleUser } from '../../enums/enumRoleUser';
 import { ClassCard } from '../../types/Class';
+import { options } from '../../utils/defaultToastOptions';
 
 import styles from './styles.module.css';
-import { options } from '../../utils/defaultToastOptions';
 
 type ClassPageType = {
   classes: ClassCard[];
@@ -32,7 +31,7 @@ type ClassPageType = {
 
 export default function Turmas(props: ClassPageType) {
   const { user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
   const { 'meg.token': token } = parseCookies();
   const router = useRouter();
   const [showModalTeacher, setShowModalTeacher] = useState(false);
@@ -40,8 +39,6 @@ export default function Turmas(props: ClassPageType) {
   const [classes, setClasses] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-
-  const isHighContrast = theme === enumTheme.contrast;
 
   const toastOptions: ToastOptions = {
     ...options,
@@ -107,7 +104,7 @@ export default function Turmas(props: ClassPageType) {
           hasMore={hasMore}
           loader={
             <div className={styles["loading-container"]}>
-              <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+              <Spinner animation="border" variant={isHighContrast ? "light" : "dark"} />
             </div>
           }
         >
@@ -164,7 +161,7 @@ export default function Turmas(props: ClassPageType) {
               key="tooltip-add-class"
               placement="bottom"
               overlay={
-                <Tooltip id="tooltip" bsPrefix={theme === enumTheme.contrast ? styles["tooltip-high-contrast"] : ""}>
+                <Tooltip id="tooltip" bsPrefix={isHighContrast ? styles["tooltip-high-contrast"] : ""}>
                   {user?.role === RoleUser.teacher ? "Criar nova turma" : "Adicionar nova turma"}
                 </Tooltip>
               }
@@ -176,13 +173,11 @@ export default function Turmas(props: ClassPageType) {
 
         <ModalCreateNewClass
           type="create"
-          theme={theme}
           show={showModalTeacher}
           onHide={() => setShowModalTeacher(false)}
         />
 
         <ModalAddClass
-          theme={theme}
           show={showModalStudent}
           onHide={() => setShowModalStudent(false)}
         />

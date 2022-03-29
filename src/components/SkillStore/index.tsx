@@ -5,7 +5,6 @@ import { parseCookies } from "nookies";
 import { toast, ToastOptions } from "react-toastify";
 
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { enumTheme } from '../../enums/enumTheme';
 import { api } from "../../services/api";
 import { SkillToBuy } from '../../types/StoreSkill';
 import { genericMessageError, options } from "../../utils/defaultToastOptions";
@@ -15,8 +14,7 @@ import styles from './styles.module.css';
 export default function SkillStore(props) {
   const router = useRouter();
   const { ['meg.token']: token } = parseCookies();
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
   const [skillsFiltered, setSkillsFiltered] = useState<SkillToBuy[]>([]);
   const [isClassSelected, setIsClassSelected] = useState(false);
 

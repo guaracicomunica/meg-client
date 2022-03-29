@@ -84,14 +84,12 @@ export default function CardClass(props: ClassCard) {
         </div>
 
         <ModalSeeClassCode
-          theme={theme}
           code={props.code}
           show={showModalSeeCode}
           onHide={() => setShowModalSeeCode(false)}
         />
 
         <ModalCreateNewClass
-          theme={theme}
           type="edit"
           formData={{
             id: props.id,

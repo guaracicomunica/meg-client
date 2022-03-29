@@ -14,7 +14,6 @@ import { getAPIClient } from "../../services/apiClient";
 import { SkillNotificationType, SkillClaimedType, SkillStoreClasses, SkillToBuy } from "../../types/StoreSkill";
 import { User, UserStatusGamification } from "../../types/User";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { enumTheme } from "../../enums/enumTheme";
 import { options } from "../../utils/defaultToastOptions";
 
 import styles from "./styles.module.css";
@@ -24,8 +23,7 @@ export default function MinhaConta(props) {
   const isStudent = user?.role === RoleUser.student;
   const isTeacher = user?.role === RoleUser.teacher;
 
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   const toastOptions: ToastOptions = {
     ...options,

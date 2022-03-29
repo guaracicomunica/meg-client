@@ -61,8 +61,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 6em;
-  height: 6em;
+  width: 6.5em;
+  height: 6.5em;
 }
 
 .theme-light .info-card {

@@ -1,12 +1,11 @@
 import { useState, useRef, FormEvent, useContext } from 'react';
 import { Modal } from 'react-bootstrap';
 import { FontContext } from '../../contexts/FontContext';
-import { enumTheme } from '../../enums/enumTheme';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 import styles from './styles.module.css';
 
 type ModalAddFileType = {
-  theme: string;
   show: boolean;
   onHide: () => void;
   addFile: (file: File) => void;
@@ -16,8 +15,8 @@ export default function ModalAddFile(props: ModalAddFileType) {
   const inputRef = useRef(null);
   const [fileNameSelected, setFileNameSelected] = useState("");
   const { font } = useContext(FontContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
   const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
-  const isHighContrast = props.theme === enumTheme.contrast;
 
   function handleAddFile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -51,7 +50,7 @@ export default function ModalAddFile(props: ModalAddFileType) {
       onHide={closeModal}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
+      className={`modal-style bg-${theme} font-${font} ${modalSize}`}
       backdrop="static"
     > 
       <Modal.Header closeButton className='p-4 border-bottom-0'>

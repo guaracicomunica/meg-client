@@ -9,7 +9,6 @@ import { Grade } from '../../../../types/Grade';
 import ModalPostGrades from "../../../../components/ModalPostGrades";
 import { getAPIClient } from "../../../../services/apiClient";
 import { ThemeContext } from "../../../../contexts/ThemeContext";
-import { enumTheme } from "../../../../enums/enumTheme";
 import { options } from "../../../../utils/defaultToastOptions";
 
 type GradeProps = {
@@ -19,8 +18,7 @@ type GradeProps = {
 export default function Notas(props: GradeProps) {
   const [showModalPostGrades, setShowModalPostGrades] = useState(false);
   const [isForAllStudents, setIsForAllStudents] = useState(false);
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   const toastOptions: ToastOptions = {
     ...options,
@@ -113,7 +111,6 @@ export default function Notas(props: GradeProps) {
       </main>
 
       <ModalPostGrades
-        theme={theme}
         allStudents={isForAllStudents}
         show={showModalPostGrades}
         onHide={() => setShowModalPostGrades(false)}

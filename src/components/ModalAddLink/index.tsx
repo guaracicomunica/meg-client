@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { FontContext } from '../../contexts/FontContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 type ModalAddLinkType = {
-  theme: string;
   show: boolean;
   onHide: () => void;
   addLink: (data: LinkForm) => void;
@@ -15,6 +15,7 @@ type LinkForm = {
 }
 
 export default function ModalAddLink(props: ModalAddLinkType) {
+  const { theme } = useContext(ThemeContext);
   const { font } = useContext(FontContext);
   const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
 
@@ -43,7 +44,7 @@ export default function ModalAddLink(props: ModalAddLinkType) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
+      className={`modal-style bg-${theme} font-${font} ${modalSize}`}
       backdrop="static"
       
     >

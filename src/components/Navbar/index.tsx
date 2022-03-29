@@ -13,11 +13,10 @@ import AccessibilityJump from '../AccessibilityJump';
 export function Navbar() {
   const { pageActive } = useContext(PageActiveContext);
   const { isAuthenticated } = useContext(AuthContext);
-  const { theme, switchTheme } = useContext(ThemeContext);
+  const { theme, isHighContrast, switchTheme } = useContext(ThemeContext);
   const { increaseFont, decreaseFont, setFontNormal } = useContext(FontContext);
 
   const themeToSwitch = theme === enumTheme.light ? enumTheme.contrast : enumTheme.light;
-  const isHighContrast = theme === enumTheme.contrast;
 
   const classNameLink = "nav-item mt-3 mt-md-0";
   const classNameLinkActive = `nav-item mt-3 mt-md-0 ${styles["link-active"]}`;

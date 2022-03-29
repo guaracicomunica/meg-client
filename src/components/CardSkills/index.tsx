@@ -4,7 +4,6 @@ import { useContext, useEffect, useState } from 'react';
 import { toast, ToastOptions } from 'react-toastify';
 
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { enumTheme } from '../../enums/enumTheme';
 import { api } from '../../services/api';
 import { SkillClaimedType } from '../../types/StoreSkill';
 import { genericMessageError, options } from '../../utils/defaultToastOptions';
@@ -18,8 +17,7 @@ type CardSkillsProps = {
 export default function CardSkills(props: CardSkillsProps) {
   const router = useRouter();
   const { ['meg.token']: token } = parseCookies();
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
   const [claimedSkills, setClaimedSkills] = useState<SkillClaimedType[]>([]);
   const [unclaimedSkills, setUnclaimedSkills] = useState<SkillClaimedType[]>([]);
 

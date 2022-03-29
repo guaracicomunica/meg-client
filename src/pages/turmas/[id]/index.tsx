@@ -14,7 +14,6 @@ import PostList from "../../../components/PostList";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ThemeContext } from "../../../contexts/ThemeContext"
 import { RoleUser } from "../../../enums/enumRoleUser";
-import { enumTheme } from "../../../enums/enumTheme";
 import { api } from "../../../services/api";
 import { getAPIClient } from "../../../services/apiClient";
 import { ClassType } from "../../../types/Class";
@@ -45,7 +44,7 @@ export default function Turma(props: ClassPageProps) {
   const router = useRouter();
   const { ['meg.token']: token } = parseCookies();
   const { user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
   const [showModalSeeCode, setShowModalSeeCode] = useState(false);
   const [bannerURL, setBannerURL] = useState("");
   const [postsList, setPostsList] = useState<PostType[]>([]);
@@ -56,7 +55,6 @@ export default function Turma(props: ClassPageProps) {
 
   const { classroom } = props;
 
-  const isHighContrast = theme === enumTheme.contrast;
   const isTeacher = user?.role === RoleUser.teacher;
 
   const toastOptions: ToastOptions = {
@@ -273,7 +271,7 @@ export default function Turma(props: ClassPageProps) {
                   <Spinner
                     className="visually-hidden"
                     animation="border"
-                    variant={theme === enumTheme.light ? "dark" : "light"}
+                    variant={isHighContrast ? "light" : "dark"}
                   />
                 </div>
               }
@@ -291,7 +289,6 @@ export default function Turma(props: ClassPageProps) {
       </main>
 
       <ModalSeeClassCode
-        theme={theme}
         code={classroom.code}
         show={showModalSeeCode}
         onHide={() => setShowModalSeeCode(false)}

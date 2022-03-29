@@ -4,13 +4,13 @@ import { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import { FontContext } from '../../contexts/FontContext';
 
+import { FontContext } from '../../contexts/FontContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 import { api } from '../../services/api';
 import { options } from '../../utils/defaultToastOptions';
 
 type ModalAddClassType = {
-  theme: string;
   show: boolean;
   onHide: () => void;
 }
@@ -23,6 +23,7 @@ export default function ModalAddClass(props: ModalAddClassType) {
   const { 'meg.token': token } = parseCookies();
   const router = useRouter();
   const { font } = useContext(FontContext);
+  const { theme } = useContext(ThemeContext);
   const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
 
   const { register, handleSubmit, reset } = useForm({defaultValues: {
@@ -87,7 +88,7 @@ export default function ModalAddClass(props: ModalAddClassType) {
   return (
     <Modal
       id="modal-add-class-student"
-      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
+      className={`modal-style bg-${theme} font-${font} ${modalSize}`}
       show={props.show}
       onHide={props.onHide}
       aria-labelledby="modal-title"

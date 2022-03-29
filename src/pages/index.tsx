@@ -3,12 +3,11 @@ import { useContext } from 'react';
 
 import { CardHome } from '../components/CardHome';
 import { ThemeContext } from '../contexts/ThemeContext';
-import { enumTheme } from '../enums/enumTheme';
 
 import styles from "./home.module.css";
 
 export default function Home() {
-  const { theme } = useContext(ThemeContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   return (
     <>
@@ -22,7 +21,7 @@ export default function Home() {
             <img
               src="./images/meg-logo.png"
               alt="Logo do MEG"
-              className={theme === enumTheme.contrast ? `${styles["logo-home"]} img-contrast-white` : styles["logo-home"]}
+              className={isHighContrast ? `${styles["logo-home"]} img-contrast-white` : styles["logo-home"]}
             />
             <h1 className={`${styles["title-home"]} mt-4`}>Seja bem-vindo ao Mundo Encantado da Geografia!</h1>
           </div>
@@ -78,22 +77,18 @@ export default function Home() {
         <section className="row justify-content-around align-items-center">
           <div className={`col-11 col-lg-7 col-xl-6 order-2 order-lg-1 ${styles["cards-list"]}`}>
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
@@ -123,22 +118,18 @@ export default function Home() {
           
           <div className={`col-12 mt-5 ${styles["cards-list-not-allowed"]}`}>
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
@@ -159,22 +150,18 @@ export default function Home() {
 
           <div className={`col-11 col-lg-7 col-xl-6 ${styles["cards-list"]}`}>
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Vivamus odio tellus, tincidunt rutrum ligula ut, ornare gravida urna. Nullam vel dolor eu erat. Duis tempor facilisis sapien eget"
             />
             <CardHome
-              theme={theme}
               title="Lorem Ipsum is simply dummy text of the printing"
               description="Sed a eros sodales diam sagittis faucibus. Cras id erat nisl. Fusce faucibus nulla sed finibus egestas. Cras pharetra massa nec urna placerat"
             />

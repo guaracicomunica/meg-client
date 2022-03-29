@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { Modal } from "react-bootstrap";
+
 import { FontContext } from "../../contexts/FontContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 type ModalPostGradesProps = {
-  theme: string;
   allStudents: boolean;
   show: boolean;
   onHide: () => void;
@@ -11,6 +12,7 @@ type ModalPostGradesProps = {
 
 export default function ModalPostGrades(props: ModalPostGradesProps) {
   const { font } = useContext(FontContext);
+  const { theme } = useContext(ThemeContext);
   const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
 
   return (
@@ -20,7 +22,7 @@ export default function ModalPostGrades(props: ModalPostGradesProps) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
+      className={`modal-style bg-${theme} font-${font} ${modalSize}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>

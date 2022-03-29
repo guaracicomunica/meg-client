@@ -16,7 +16,6 @@ import PrivateComment from "../../../../../components/PrivateComment";
 import { AuthContext } from "../../../../../contexts/AuthContext";
 import { ThemeContext } from "../../../../../contexts/ThemeContext";
 import { RoleUser } from "../../../../../enums/enumRoleUser";
-import { enumTheme } from "../../../../../enums/enumTheme";
 import { api } from "../../../../../services/api";
 import { getAPIClient } from "../../../../../services/apiClient";
 import { ActivityType, CommentType } from "../../../../../types/Post";
@@ -34,7 +33,7 @@ export default function Atividade(props: ActivityType) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
   const { user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
   const [showModalAddFile, setShowModalAddFile] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const { register, handleSubmit, reset } = useForm({defaultValues: {
@@ -42,7 +41,7 @@ export default function Atividade(props: ActivityType) {
   }});
   const current_route: string = `/turmas/${router.query.id}/missoes/${router.query.slug}`;
   const isTeacher = user?.role === RoleUser.teacher;
-  const isHighContrast = theme === enumTheme.contrast;
+
   const toastOptions: ToastOptions = {
     ...options,
     hideProgressBar: isHighContrast ? true : false,
@@ -461,7 +460,6 @@ export default function Atividade(props: ActivityType) {
       </main>
 
       <ModalAddFile
-        theme={theme}
         show={showModalAddFile}
         onHide={() => setShowModalAddFile(false)}
         addFile={addFile}

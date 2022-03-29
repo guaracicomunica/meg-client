@@ -1,12 +1,10 @@
 import { useContext } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { enumTheme } from '../../enums/enumTheme';
 
 import styles from './styles.module.css';
 
 export function RankingStudent() {
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   return (
     <div className={`${styles["ranking-student"]} ${styles[`ranking-student-${theme}`]} w-100`}>

@@ -2,11 +2,9 @@ import Head from 'next/head';
 import { useContext } from 'react';
 import { Table } from 'react-bootstrap';
 import { ThemeContext } from '../../../../contexts/ThemeContext';
-import { enumTheme } from '../../../../enums/enumTheme';
 
 export default function Ranking() {
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { isHighContrast } = useContext(ThemeContext);
 
   return (
     <>

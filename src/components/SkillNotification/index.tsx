@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { enumTheme } from '../../enums/enumTheme';
 import { SkillNotificationType } from '../../types/StoreSkill';
 
 import styles from './styles.module.css';
@@ -10,8 +9,7 @@ type SkillNotificationProps = {
 };
 
 export default function SkillNotification(props: SkillNotificationProps) {
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   return (
     <div className={`card-style p-4 ${styles[`notification-${theme}`]}`}>

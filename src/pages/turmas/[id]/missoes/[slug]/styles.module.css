@@ -186,7 +186,7 @@
   margin-right: 0.5rem;
 }
 
-.attachments .file span {
+.attachments .file span, .attachments .file a {
   color: var(--blue-light);
   font-weight: 700;
   font-size: 1em;

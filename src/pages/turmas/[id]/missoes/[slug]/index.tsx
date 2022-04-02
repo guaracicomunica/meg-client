@@ -39,6 +39,7 @@ export default function Atividade(props: ActivityType) {
     body: ""
   }});
   const current_route: string = `/turmas/${router.query.id}/missoes/${router.query.slug}`;
+  const isActivityDelivered = props?.userActivity?.delivered_at;
 
   const toastOptions: ToastOptions = {
     ...options,
@@ -46,11 +47,8 @@ export default function Atividade(props: ActivityType) {
     theme: isHighContrast ? "dark" : "light"
   }
 
-  function addFile(data: any) {
-    setFiles([
-      ...files,
-      data.file[0]
-    ]);
+  function addFile(file: File) {
+    setFiles([...files, file]);
   }
 
   function deleteFile(fileIndex: number) {
@@ -352,22 +350,22 @@ export default function Atividade(props: ActivityType) {
             <div className={`card-style p-4 ${styles["card-send-activity"]}`}>
               <div className={`pb-3 border-bottom ${styles["card-send-activity-header"]}`}>
                 <h5>Envie sua missão</h5>
-                {props?.userActivity?.delivered_at != null ? (
+                {isActivityDelivered != null ? (
                   <small className={styles.delivered}>Entregue</small> 
                 ) : (
                   <small className={styles.pending}>Pendente</small>
                 )}
               </div>
-              {props?.userActivity?.delivered_at == null && (
-                <div className={`mt-4 ${styles.attachments}`}>
-                  <h6 className="mb-3">Arquivos a serem enviados:</h6>
-                  {files.length > 0 ? (
+              <div className={`mt-4 ${styles.attachments}`}>
+                <h6 className="mb-3">{isActivityDelivered ? "Arquivos enviados:" : "Arquivos a serem enviados:"}</h6>
+                {isActivityDelivered === null && (
+                  files.length > 0 && (
                     files.map((file, index) => {
                       return (
                         <div className={styles["file"]} key={index}>
                           <img src="/icons/file.svg" alt="Ícone" />
                           <span>{file.name}</span>
-                          {props?.userActivity?.delivered_at == null && (
+                          {isActivityDelivered == null && (
                             <button
                               type="button"
                               onClick={() => deleteFile(index)}
@@ -379,13 +377,30 @@ export default function Atividade(props: ActivityType) {
                         </div>
                       )
                     })
-                  ) : (
-                    <p>Nenhum arquivo anexado.</p>
-                  )}
-                </div>
-              )}
+                  )
+                )}
+                {props.userActivity?.attachments?.length > 0 && (
+                  props.userActivity?.attachments?.map((file, index) => {
+                    return (
+                      <div className={styles["file"]} key={index}>
+                        <img src="/icons/file.svg" alt="Ícone" />
+                        <a target="_blank" href={file.path}>{file.path}</a>
+                        {isActivityDelivered == null && (
+                          <button
+                            type="button"
+                            onClick={() => deleteFile(index)}
+                            className={styles["delete-attachment"]}
+                          >
+                            <img src="/icons/x.svg" alt="Excluir" />
+                          </button> 
+                        )}
+                      </div>
+                    )
+                  })
+                )}
+              </div>
               <div className={`${styles["send-buttons"]} mt-3`}>
-                {props?.userActivity?.delivered_at == null ? (
+                {isActivityDelivered == null ? (
                   <>
                     <button
                       onClick={() => setShowModalAddFile(true)}

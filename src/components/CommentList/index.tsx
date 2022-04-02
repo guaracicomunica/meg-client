@@ -7,7 +7,6 @@ import { parseCookies } from 'nookies';
 import Comment from '../Comment';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { enumTheme } from '../../enums/enumTheme';
 import { api } from '../../services/api';
 import { CommentType } from '../../types/Post';
 import { options } from '../../utils/defaultToastOptions';
@@ -27,9 +26,8 @@ type CommentForm = {
 export default function CommentList(props: CommentListprops) {
   const { 'meg.token': token } = parseCookies();
   const { user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
   const router = useRouter();
-  const isHighContrast = theme === enumTheme.contrast
 
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     body: "",

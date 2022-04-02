@@ -23,12 +23,28 @@
 }
 
 .skill {
-  cursor: pointer;
   border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr calc(3rem + 3em);
   align-items: center;
   width: 100%;
+}
+
+@media (max-width: 500px) {
+  .skill {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .skill-name {
+    width: calc(100% - 3.5rem);
+  }
+
+  .skill-name + div {
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin-top: 1rem;
+  }
 }
 
 .skill-store-light .skill {
@@ -39,14 +55,15 @@
   border: 2px solid var(--white);
 }
 
-.skill-store-high-contrast .skill:hover,
-.skill-store-high-contrast .skill:hover .coins {
+.skill-store-high-contrast .coins:hover {
   border-color: var(--yellow-contrast);
   color: var(--yellow-contrast);
 }
 
 .skill img {
   height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
 }
 
 .skill-name {
@@ -62,15 +79,25 @@
 }
 
 .coins {
+  cursor: pointer;
   border-radius: 10px;
   border: 2px solid;
   font-weight: 900;
-  width: max-content;
+  width: 100%;
+  min-width: calc(3rem + 3em);
+  text-align: center;
+  transition: 0.2s;
 }
 
 .skill-store-light .coins {
   border-color: var(--green);
   color: var(--green);
+}
+
+.skill-store-light .coins:hover {
+  border-color: var(--green);
+  background-color: var(--green);
+  color: var(--white);
 }
 
 .skill-store-high-contrast .coins {
@@ -92,9 +119,27 @@
   gap: 2rem;
 }
 
+@media (max-width: 600px) {
+  .list-classes {
+    grid-template-columns: 1fr;
+  }
+}
+
+.classroom .banner {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+  transition: filter 0.2s;
+}
+
+.classroom[aria-selected="true"] .banner {
+  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(0%);
+}
+
 .banner {
   position: relative;
-  height: 7.5rem;
+  min-height: 7.5rem;
+  height: 6em;
   width: 100%;
   cursor: pointer;
 }
@@ -121,19 +166,27 @@
   color: var(--white);
 }
 
-.info-class h6, .info-class small {
+.info-class h6, .info-class span, .info-class small {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: 0.75em !important;
+  font-size: 1em !important;
 }
 
 .info-class hr {
   background-color: var(--white);
 }
 
-.skill-store-high-contrast .info-class h6, .skill-store-high-contrast .info-class small {
+.skill-store-high-contrast .info-class h6,
+.skill-store-high-contrast .info-class span,
+.skill-store-high-contrast .info-class small {
   background-color: var(--black);
   width: fit-content;
   max-width: 100%;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }

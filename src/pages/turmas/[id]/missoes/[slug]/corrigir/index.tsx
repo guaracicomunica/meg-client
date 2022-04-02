@@ -175,7 +175,7 @@ export default function Corrigir(props: CorrectActivityProps) {
         <title>Corrigir missão</title>
       </Head>
 
-      <main className={`${styles["page-layout"]} ${styles[`theme-${theme}`]}`}>
+      <main className={`page-container ${styles["page-layout"]} ${styles[`theme-${theme}`]}`}>
         <div className={`card-style p-4 ${styles["assign-grades"]}`}>
           {props.totalAssignments > 0 && (
             <>

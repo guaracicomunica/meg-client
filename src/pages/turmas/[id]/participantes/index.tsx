@@ -10,14 +10,13 @@ import { ToastContainer, ToastOptions } from "react-toastify";
 import { ThemeContext } from "../../../../contexts/ThemeContext";
 import CardStudent from "../../../../components/CardStudent";
 import CardTeacher from "../../../../components/CardTeacher";
-import { enumTheme } from "../../../../enums/enumTheme";
 import { api } from "../../../../services/api";
 import { getAPIClient } from "../../../../services/apiClient";
 import { StudentType, TeacherType } from "../../../../types/Participant";
 import { QueryProps } from "../../../../types/Query";
+import { options } from "../../../../utils/defaultToastOptions";
 
 import styles from './styles.module.css';
-import { options } from "../../../../utils/defaultToastOptions";
 
 type ParticipantsProps = {
   teachers: TeacherType[];
@@ -33,8 +32,7 @@ export default function Participantes(props: ParticipantsProps) {
   const [studentsList, setStudentsList] = useState<StudentType[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   const toastOptions: ToastOptions = {
     ...options,
@@ -100,7 +98,7 @@ export default function Participantes(props: ParticipantsProps) {
           hasMore={hasMore}
           loader={
             <div className={styles["loading-container"]}>
-              <Spinner animation="border" variant={theme === enumTheme.light ? "dark" : "light"} />
+              <Spinner animation="border" variant={isHighContrast ? "light" : "dark"} />
             </div>
           }
         >

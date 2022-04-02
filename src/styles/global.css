@@ -136,26 +136,13 @@ select:focus {
 }
 
 .page-container {
-  padding: 2rem 14rem;
-}
-
-@media (max-width: 1280px) {
-  .page-container {
-    padding: 2rem 10rem;
-  }
-}
-
-@media (max-width: 1000px) {
-  .page-container {
-    padding: 2rem 5rem;
-  }
+  max-width: 1500px;
+  width: 100%;
+  padding: 3rem;
+  margin: 0 auto;
 }
 
 @media (max-width: 500px) {
-  .page-container {
-    padding: 2rem 3rem;
-  }
-
   .section {
     padding: 4rem 2rem;
   }  
@@ -248,6 +235,26 @@ select:focus {
   z-index: 1;
 }
 
+@media (max-width: 500px) {
+  .banner .banner-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info-class {
+    padding-right: 1.5rem !important;
+  }
+
+  .info-class .teacher {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .link-class {
+    width: fit-content;
+    margin-top: 0 !important;
+  }
+}
+
 .info-class {
   color: var(--white);
 }
@@ -264,7 +271,14 @@ select:focus {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.info-class .title, .info-class .nickname {
   font-size: 1.5em;
+}
+
+.info-class .teacher {
+  font-size: 1em;
 }
 
 .info-class .nickname {

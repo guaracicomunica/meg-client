@@ -25,10 +25,27 @@
 
 .skill {
   border-radius: 10px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   width: 100%;
+}
+
+@media (max-width: 500px) {
+  .skill {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .skill-name {
+    width: calc(100% - 3.5rem);
+  }
+
+  .skill-name + button, .skill-name + span {
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin-top: 1rem;
+  }
 }
 
 .card-skills-light .skill {
@@ -55,10 +72,24 @@
   color: var(--blue);
 }
 
+.card-skills-light .skill-claimed .skill-name {
+  color: var(--gray) !important;
+}
+
+.card-skills-light .skill-claimed span {
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--gray);
+}
+
 .skill button {
   font-weight: 700;
   background-color: transparent;
   border: 0;
+}
+
+.card-skills-high-contrast .skill button {
+  padding: 0.25rem 1rem;
 }
 
 .card-skills-light .skill button {
@@ -66,12 +97,12 @@
 }
 
 .card-skills-high-contrast .skill button {
-  border: 2px solid var(--white);
+  border: 2px solid var(--white) !important;
   border-radius: 10px;
   color: var(--white);
 }
 
 .card-skills-high-contrast .skill button:hover {
-  border-color: var(--yellow-contrast);
+  border-color: var(--yellow-contrast) !important;
   color: var(--yellow-contrast);
 }

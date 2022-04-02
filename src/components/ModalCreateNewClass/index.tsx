@@ -10,12 +10,11 @@ import { options } from '../../utils/defaultToastOptions';
 import { DraftDataForm, DataFormClass } from '../../types/Class';
 
 import styles from './styles.module.css';
-import { enumTheme } from '../../enums/enumTheme';
 import { FontContext } from '../../contexts/FontContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 type ModalCreateNewClassType = {
   type: string;
-  theme: string;
   formData?: DraftDataForm;
   show: boolean;
   onHide: () => void;
@@ -50,6 +49,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const [srcPreviewLevels, setSrcPreviewLevels] = useState<PreviewObjectType[]>([]);
   const [srcPreviewSkills, setSrcPreviewSkills] = useState<PreviewObjectType[]>([]);
   const { font } = useContext(FontContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
   const isLargeFont = font >= 3;
 
   //modal edit class
@@ -419,7 +419,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       size={isLargeFont ? "xl" : "lg"}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme} font-${font}`}
+      className={`modal-style bg-${theme} font-${font}`}
       backdrop="static"
     >
       <Modal.Header className='p-4 border-bottom-0'>
@@ -468,7 +468,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                 <img
                   src="./icons/camera.svg"
                   alt="Adicionar imagem"
-                  className={props.theme === enumTheme.contrast ? "img-contrast-white" : ""}
+                  className={isHighContrast ? "img-contrast-white" : ""}
                 />
               </label>
               <span>Defina uma capa</span>
@@ -485,8 +485,8 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
           <hr className="my-4" />
 
-          <div className='d-flex flex-wrap justify-content-center'>
-            <strong style={props.theme === enumTheme.light ? {color: "var(--gray-title)"} : {}} className="mt-2">
+          <div className='d-flex flex-wrap justify-content-center justify-content-lg-start'>
+            <strong style={!isHighContrast ? {color: "var(--gray-title)"} : {}} className="mt-2">
               Deseja criar uma loja de Habilidades para essa turma?
             </strong>
             <div className="form-group form-check-inline m-0 mt-2">
@@ -573,7 +573,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                             <img
                               src="./icons/camera.svg"
                               alt="Adicionar imagem"
-                              className={props.theme === enumTheme.contrast ? "img-contrast-white" : ""}
+                              className={isHighContrast ? "img-contrast-white" : ""}
                             />
                           </label>
                           <span>Defina capa</span>
@@ -602,7 +602,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                           <img
                             src="/icons/x.svg"
                             alt="Excluir habilidade"
-                            className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
+                            className={isHighContrast ? "img-contrast-white": ""}
                           />
                         </button>
                       </div>
@@ -616,11 +616,11 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                   src="./icons/plus.svg"
                   alt="Adicionar habilidade"
   
-                  className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
+                  className={isHighContrast ? "img-contrast-white": ""}
                 />
                 <span
                   className="ml-2"
-                  style={props.theme === enumTheme.light ? {color: 'var(--gray-light)'} : {color: 'var(--white)'}}
+                  style={!isHighContrast ? {color: 'var(--gray-light)'} : {color: 'var(--white)'}}
                 >Nova habilidade</span>
               </button>
             </>
@@ -677,7 +677,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                         <img
                           src="./icons/camera.svg"
                           alt="Adicionar imagem"
-                          className={props.theme === enumTheme.contrast ? "img-contrast-white" : ""}
+                          className={isHighContrast ? "img-contrast-white" : ""}
                         />
                       </label>
                       <span>Defina capa</span>
@@ -706,7 +706,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                       <img
                         src="/icons/x.svg"
                         alt="Excluir nível"
-                        className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
+                        className={isHighContrast ? "img-contrast-white": ""}
                       />
                     </button>
                   </div>
@@ -719,11 +719,11 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
             <img
               src="./icons/plus.svg"
               alt="Adicionar nível"
-              className={props.theme === enumTheme.contrast ? "img-contrast-white": ""}
+              className={isHighContrast ? "img-contrast-white": ""}
             />
             <span
               className="ml-2"
-              style={props.theme === enumTheme.light ? {color: 'var(--gray-light)'} : {color: 'var(--white)'}}
+              style={!isHighContrast ? {color: 'var(--gray-light)'} : {color: 'var(--white)'}}
             >Novo nível</span>
           </button>
 
@@ -744,7 +744,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
           <p
             className="text-center"
-            style={props.theme === enumTheme.light ? {color: "var(--red)"} : {color: "var(--yellow-contrast)"}}
+            style={!isHighContrast ? {color: "var(--red)"} : {color: "var(--yellow-contrast)"}}
           >
             Ao criar a turma, envie o link de acesso gerado automaticamente para os alunos. O link pode ser localizado no lado direito superior do cabeçalho da turma.
           </p>
@@ -754,7 +754,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
         {props.type === "create" && (
           <button
             className="modal-button"
-            style={props.theme === enumTheme.light ? {color: "var(--gray-title)"} : {}}
+            style={!isHighContrast ? {color: "var(--gray-title)"} : {}}
             form="create-class"
             type="submit"
             name="save-draft"

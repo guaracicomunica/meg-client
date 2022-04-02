@@ -10,26 +10,24 @@ export function Footer() {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <footer className={styles[`footer-${theme}`]}>
-
+    <footer className={`${styles.footer} ${styles[`footer-${theme}`]}`}>
       <AccessibilityFooter/>
       <hr className={styles["border-footer"]} />
-
-      <div className="row flex-wrap p-4 justify-content-center">
+      <div className="row flex-wrap py-4 justify-content-center">
         <Link href="/"> 
-          <a className={`${styles["link-footer"]} mr-5`}>Início</a>
+          <a className={`${styles["link-footer"]} mx-4`}>Início</a>
         </Link>
         <Link href="/turmas"> 
-          <a className={`${styles["link-footer"]} mr-5`}>Turmas</a>
+          <a className={`${styles["link-footer"]} mx-4`}>Turmas</a>
         </Link>
         {isAuthenticated && (
           <Link href="/minha-conta"> 
-            <a className={`${styles["link-footer"]} mr-5`}>Minha conta</a>
+            <a className={`${styles["link-footer"]} mx-4`}>Minha conta</a>
           </Link> 
         )}
         {!isAuthenticated && (
           <Link href="/login"> 
-            <a className={`${styles["link-footer"]} mr-5`}>Entrar</a>
+            <a className={`${styles["link-footer"]} mx-4`}>Entrar</a>
           </Link>
         )}
       </div>

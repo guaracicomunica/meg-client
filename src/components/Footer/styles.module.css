@@ -1,7 +1,20 @@
+.footer {
+  max-width: 1500px;
+  width: 100%;
+  padding: 0.75rem 3rem !important;
+  margin: 0 auto;
+}
+
 .border-footer {
   width: 75%;
   height: 1px;
   margin: 4rem auto 0;
+}
+
+@media (max-width: 768px) {
+  .border-footer {
+    width: 100%;
+  }
 }
 
 .link-footer {

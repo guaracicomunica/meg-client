@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { enumTheme } from '../../enums/enumTheme';
+
 import styles from './styles.module.css';
 
 type AttachmentProps = {
@@ -9,8 +9,7 @@ type AttachmentProps = {
 }
 
 export default function AttachmentLink(props: AttachmentProps) {
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   return (
     <div className={`py-2 px-3 ${styles.attachment} ${styles[`attachment-${theme}`]}`}>

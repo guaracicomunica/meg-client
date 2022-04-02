@@ -26,7 +26,6 @@
 .edit-user-img label {
   border-radius: 50% !important;
   border: 2px solid var(--white) !important;
-  padding: 0.25rem 0.485rem !important;
   height: 100%;
   position: relative;
 }

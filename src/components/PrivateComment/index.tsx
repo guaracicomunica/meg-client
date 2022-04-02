@@ -6,8 +6,6 @@ import { toast } from 'react-toastify';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { RoleUser } from '../../enums/enumRoleUser';
-import { enumTheme } from '../../enums/enumTheme';
 import { api } from '../../services/api';
 import { CommentType } from '../../types/Post';
 import { genericMessageError, options } from '../../utils/defaultToastOptions';
@@ -37,11 +35,8 @@ type PrivateCommentType = {
 export default function PrivateComment(props: PrivateCommentType) {
   const { 'meg.token': token } = parseCookies();
 
-  const { user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
-
-  const isTeacher = user?.role === RoleUser.teacher;
-  const isHighContrast = theme === enumTheme.contrast;
+  const { user, isTeacher } = useContext(AuthContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   const { register, handleSubmit, reset } = useForm({defaultValues: {
     body: ""

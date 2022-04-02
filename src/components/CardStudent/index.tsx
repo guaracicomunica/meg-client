@@ -1,8 +1,6 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { enumTheme } from '../../enums/enumTheme';
-import { RoleUser } from '../../enums/enumRoleUser';
 import { StudentType } from '../../types/Participant';
 import ModalShowStudent from '../ModalShowStudent';
 
@@ -14,10 +12,8 @@ type CardStudentProps = {
 
 export default function CardStudent(props: CardStudentProps) {
   const [showModalSeeStudent, setShowModalSeeStudent] = useState(false);
-  const { user } = useContext(AuthContext);
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
-  const isTeacher = user?.role === RoleUser.teacher
+  const { isTeacher } = useContext(AuthContext);
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   const { student } = props;
 
@@ -49,7 +45,6 @@ export default function CardStudent(props: CardStudentProps) {
       </div>
 
       <ModalShowStudent
-        theme={theme}
         student={student}
         show={showModalSeeStudent}
         onHide={() => setShowModalSeeStudent(false)}

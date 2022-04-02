@@ -8,7 +8,7 @@
 
 .posts-section {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: minmax(auto, 360px) 1fr;
   gap: 3rem;
 }
 
@@ -33,22 +33,27 @@
   margin-top: 2rem;
 }
 
+.ranking-card h3 {
+  font-weight: 900;
+}
+
 @media (max-width: 1000px) {
   .posts-section {
     gap: 2rem;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .posts-section {
     display: flex;
     flex-direction: column;
   }
+}
 
+@media (max-width: 768px) {
   .posts-aside {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    flex-direction: column;
   }
 
   .posts-aside .img-link-card {

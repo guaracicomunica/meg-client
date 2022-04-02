@@ -10,7 +10,6 @@ import { toast, ToastContainer, ToastOptions } from 'react-toastify';
 import ModalAddFile from '../../../../../../components/ModalAddFile';
 import ModalAddLink from '../../../../../../components/ModalAddLink';
 import { ThemeContext } from '../../../../../../contexts/ThemeContext';
-import { enumTheme } from '../../../../../../enums/enumTheme';
 import { api } from '../../../../../../services/api';
 import { getAPIClient } from '../../../../../../services/apiClient';
 import { options } from '../../../../../../utils/defaultToastOptions';
@@ -91,8 +90,8 @@ export default function Editar(props: EditPageProps) {
   const [files, setFiles] = useState<File[]>([]);
   const [attachments, setAttachments] = useState<AttachmentType[]>([]);
   
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
+
   const toastOptions: ToastOptions = {
     ...options,
     hideProgressBar: isHighContrast ? true : false,
@@ -545,14 +544,12 @@ export default function Editar(props: EditPageProps) {
       </main>
 
       <ModalAddLink
-        theme={theme}
         show={showModalAddLink}
         onHide={() => setShowModalAddLink(false)}
         addLink={addLink}
       />
 
       <ModalAddFile
-        theme={theme}
         show={showModalAddFile}
         onHide={() => setShowModalAddFile(false)}
         addFile={addFile}

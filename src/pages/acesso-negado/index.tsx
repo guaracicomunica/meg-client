@@ -15,7 +15,7 @@ export default function AcessoNegado() {
         <title>Acesso Negado</title>
       </Head>
 
-      <main className={`center-content-column section theme-${theme}`}>
+      <main className={`center-content-column page-container theme-${theme}`}>
         <img className={styles["img-page"]} src="./icons/access-denied.svg" alt="Acesso negado" /> 
         <h1 className='title-blue-dark text-center'>Ops... Você não possui permissão para realizar esta ação!</h1>
         <p className='text-blue-dark'>Clique <Link href="/">aqui</Link> para voltar à página inicial.</p>

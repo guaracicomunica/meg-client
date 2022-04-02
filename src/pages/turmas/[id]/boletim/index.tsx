@@ -6,13 +6,11 @@ import { useContext } from "react";
 
 import { ThemeContext } from "../../../../contexts/ThemeContext";
 import { getAPIClient } from "../../../../services/apiClient";
-import { enumTheme } from "../../../../enums/enumTheme";
 
 import styles from './styles.module.css';
 
 export default function Boletim({ grade }) {
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   return (
     <>

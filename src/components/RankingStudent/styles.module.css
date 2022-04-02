@@ -1,0 +1,57 @@
+.ranking-student {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid;
+  padding-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.ranking-student-light {
+  border-color: #EDEDED;
+}
+
+.ranking-student-high-contrast {
+  border-color: var(--white);
+}
+
+.ranking-student-avatar {
+  height: calc(2.5rem + 1em);
+  width: calc(2.5rem + 1em);
+  border-radius: 50%;
+}
+
+.student-info {
+  width: calc(100% - 3rem - 1em);
+}
+
+@media (max-width: 500px) {
+  .ranking-student-avatar {
+    height: calc(1.5rem + 1em);
+    width: calc(1.5rem + 1em);
+  }
+
+  .student-info {
+    width: calc(100% - 2rem - 1em);
+  }
+}
+
+.ranking-student h4 {
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ranking-student-light h4 {
+  color: var(--gray-title);
+}
+
+.student-score {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.student-score span {
+  font-size: 1em;
+  font-weight: 700;
+}

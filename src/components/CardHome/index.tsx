@@ -1,13 +1,14 @@
-import { enumTheme } from "../../enums/enumTheme";
+import { useContext } from "react";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 type CardRule = {
-  theme: string;
   title: string;
   description: string;
 }
 
 export function CardHome(props: CardRule) {
-  const isHighContrast = props.theme === enumTheme.contrast;
+  const { isHighContrast } = useContext(ThemeContext);
+  
   return (
     <div className="card-style p-4" style={{ height: "100%" }}>
       <img

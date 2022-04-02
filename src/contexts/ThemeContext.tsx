@@ -3,6 +3,7 @@ import { enumTheme } from '../enums/enumTheme';
 
 type ThemeContextType = {
   theme: string;
+  isHighContrast: boolean;
   switchTheme: (theme: string) => void;
 }
 
@@ -10,6 +11,7 @@ export const ThemeContext = createContext({} as ThemeContextType);
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState<string>("");
+  const [isHighContrast, setIsHighContrast] = useState(false);
 
   useEffect(() => {
     const themeActive = localStorage.getItem("theme");
@@ -22,13 +24,17 @@ export function ThemeProvider({ children }) {
     }
   }, []);
 
+  useEffect(() => {
+    setIsHighContrast(theme === enumTheme.contrast);
+  }, [theme]);
+
   function switchTheme(newTheme: string) {
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
   }
 
   return (
-    <ThemeContext.Provider value={{ theme, switchTheme }}>
+    <ThemeContext.Provider value={{ theme, isHighContrast, switchTheme }}>
       { children }
     </ThemeContext.Provider>
   );

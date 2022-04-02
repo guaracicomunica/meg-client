@@ -13,35 +13,36 @@ import AccessibilityJump from '../AccessibilityJump';
 export function Navbar() {
   const { pageActive } = useContext(PageActiveContext);
   const { isAuthenticated } = useContext(AuthContext);
-  const { theme, switchTheme } = useContext(ThemeContext);
+  const { theme, isHighContrast, switchTheme } = useContext(ThemeContext);
   const { increaseFont, decreaseFont, setFontNormal } = useContext(FontContext);
 
   const themeToSwitch = theme === enumTheme.light ? enumTheme.contrast : enumTheme.light;
-  const isHighContrast = theme === enumTheme.contrast;
 
-  const classNameLink = "nav-item mt-3 mt-lg-0";
-  const classNameLinkActive = `nav-item mt-3 mt-lg-0 ${styles["link-active"]}`;
+  const classNameLink = "nav-item mt-3 mt-md-0";
+  const classNameLinkActive = `nav-item mt-3 mt-md-0 ${styles["link-active"]}`;
 
   return (
-    <header id="topo">
-      <nav className={`navbar navbar-expand-md ${styles.menu} ${styles[`menu-${theme}`]}`}>
+    <header id="topo" className={styles[`header-${theme}`]}>
+      <nav className={`navbar navbar-expand-md ${styles.menu}`}>
         <a className="navbar-brand" href="/">
-          <img src="/icons/logo.svg" alt="Logo do MEG, descrição: três letras M, E e G de cores azul, amarelo e vermelho respectivamente" 
-          className={theme === enumTheme.contrast ? 'img-contrast-white' : ''}
+          <img
+            src="/icons/logo.svg"
+            alt="Logo do MEG, descrição: três letras M, E e G de cores azul, amarelo e vermelho respectivamente" 
+            className={isHighContrast ? 'img-contrast-white' : ''}
           />
         </a>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler p-0"
           type="button"
           data-toggle="collapse"
           data-target="#navbar"
           aria-controls="navbar"
           aria-expanded="false"
-          aria-label="aperte este botão para exibir a barra de navegação"
+          aria-label="Aperte este botão para exibir a barra de navegação"
         >
           <img
             src="/icons/menu.svg"
-            className={styles["nav-icon"]}
+            className="navbar-toggler-icon"
             alt="Ícone de menu representado por três barras horizontais"
           />
         </button>

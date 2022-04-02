@@ -1,11 +1,12 @@
 import { useContext } from 'react';
 import { Modal } from 'react-bootstrap';
+
 import { FontContext } from '../../contexts/FontContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 import styles from './styles.module.css';
 
 type ModalSeeClassCodeType = {
-  theme: string;
   code: string;
   show: boolean;
   onHide: () => void;
@@ -13,6 +14,7 @@ type ModalSeeClassCodeType = {
 
 export default function ModalSeeClassCode(props: ModalSeeClassCodeType) {
   const { font } = useContext(FontContext);
+  const { theme } = useContext(ThemeContext);
   const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
 
   return (
@@ -23,7 +25,7 @@ export default function ModalSeeClassCode(props: ModalSeeClassCodeType) {
       aria-labelledby="modal-title"
       
       centered
-      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
+      className={`modal-style bg-${theme} font-${font} ${modalSize}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>
@@ -32,7 +34,7 @@ export default function ModalSeeClassCode(props: ModalSeeClassCodeType) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className='px-4'>
-        <div className={styles[`code-class-${props.theme}`]}>{props.code}</div>
+        <div className={styles[`code-class-${theme}`]}>{props.code}</div>
       </Modal.Body>
     </Modal>
   );

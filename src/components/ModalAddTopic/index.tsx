@@ -6,12 +6,12 @@ import { useForm } from "react-hook-form";
 import { parseCookies } from 'nookies';
 
 import { FontContext } from "../../contexts/FontContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import { DataFormTopic } from "../../types/Class";
 import { options } from '../../utils/defaultToastOptions';
 import { api } from "../../services/api";
 
 type ModalAddTopicProps = {
-  theme: string;
   classroom_id: number;
   show: boolean;
   onHide: () => void;
@@ -20,6 +20,7 @@ type ModalAddTopicProps = {
 export default function ModalAddTopic(props: ModalAddTopicProps) {
   const router = useRouter();
   const { 'meg.token': token } = parseCookies();
+  const { theme } = useContext(ThemeContext);
   const { font } = useContext(FontContext);
   const modalSize = font >= 3 ? "modal-dialog-lg" : "modal-dialog-md";
 
@@ -94,7 +95,7 @@ export default function ModalAddTopic(props: ModalAddTopicProps) {
       onHide={props.onHide}
       aria-labelledby="modal-title"
       centered
-      className={`modal-style bg-${props.theme} font-${font} ${modalSize}`}
+      className={`modal-style bg-${theme} font-${font} ${modalSize}`}
       backdrop="static"
     >
       <Modal.Header closeButton className='p-4 border-bottom-0'>

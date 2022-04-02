@@ -7,7 +7,6 @@ import { options } from '../../utils/defaultToastOptions';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { enumTheme } from '../../enums/enumTheme';
 
 export default function Cadastro() {
   const { register, handleSubmit, reset } = useForm({defaultValues: {
@@ -23,8 +22,7 @@ export default function Cadastro() {
   const [buttonString, setButtonString] = useState("Cadastre-se");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-  const { theme } = useContext(ThemeContext);
-  const isHighContrast = theme === enumTheme.contrast;
+  const { theme, isHighContrast } = useContext(ThemeContext);
 
   const toastOptions: ToastOptions = {
     ...options,
@@ -100,7 +98,7 @@ export default function Cadastro() {
         <title>Cadastro</title>
       </Head>
       
-      <main className="section pb-0 d-flex flex-column align-items-center">
+      <main className="page-container pb-0 d-flex flex-column align-items-center">
         <div className="card-style col-12 col-md-9 col-lg-7 col-xl-5 p-5">
           <img
             src="./images/icon-user.svg"

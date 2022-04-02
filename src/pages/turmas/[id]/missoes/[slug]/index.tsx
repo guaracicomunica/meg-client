@@ -63,6 +63,63 @@ export default function Atividade(props: ActivityType) {
 
   const onSubmit = async (data: CommentForm) => handleCreateComment(data);
 
+  async function deleteAttachment(idAttachment: number) {
+    try {
+      await api.delete(`attachments/${idAttachment}/delivered/activities`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      .then(function (success) {
+        toast.success("Anexo excluído com sucesso!", toastOptions);
+        router.push(current_route, undefined, {scroll: false});
+      });
+    } catch(error) {
+      const string = "Ops! Algo não saiu como o esperado. Tente novamente ou entre em contato com o suporte.";
+
+      if (!error.response) {
+        // network error
+        return toast.error(string, toastOptions);
+      }
+      switch (error.response.status) {
+        case 401:
+          return {
+            redirect: {
+              destination: '/sessao-expirada',
+              permanent: false,
+            }
+          }
+
+        case 403:
+          return {
+            redirect: {
+              destination: '/acesso-negado',
+              permanent: false,
+            }
+          }
+
+        case 400:
+          toast.warning(error.response?.data.error.trim() ? error.response?.data.error.trim() : string, toastOptions);
+          break;
+
+        case 422:
+          let errors = error.response?.data.errors;
+          Object.keys(errors).forEach((item) => {
+            toast.warning(errors[item][0], toastOptions);
+          });
+          break;
+
+        case 500: 
+          toast.error(string, toastOptions);
+          break;
+
+        default:
+          toast.error(string, toastOptions);
+          break;
+      }
+    }
+  }
+
   async function handleCreateComment(data: CommentForm) {
     data.is_private = true;
     
@@ -388,7 +445,7 @@ export default function Atividade(props: ActivityType) {
                         {isActivityDelivered == null && (
                           <button
                             type="button"
-                            onClick={() => deleteFile(index)}
+                            onClick={() => deleteAttachment(file.id)}
                             className={styles["delete-attachment"]}
                           >
                             <img src="/icons/x.svg" alt="Excluir" />

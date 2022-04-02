@@ -76,5 +76,6 @@ export type AttachmentType = {
 }
 
 export type UserAttachment = {
+  id: number;
   path: string;
 }

@@ -48,7 +48,6 @@
 
 .student-score {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .student-score span {

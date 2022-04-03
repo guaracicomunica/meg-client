@@ -17,6 +17,7 @@ import { ThemeContext } from "../../../contexts/ThemeContext"
 import { api } from "../../../services/api";
 import { getAPIClient } from "../../../services/apiClient";
 import { ClassType } from "../../../types/Class";
+import { RankingCardType } from "../../../types/Ranking";
 import { PostType } from "../../../types/Post";
 import { QueryProps } from "../../../types/Query";
 import { genericMessageError, options } from "../../../utils/defaultToastOptions";
@@ -25,6 +26,7 @@ import styles from './styles.module.css';
 
 type ClassPageProps = {
   classroom: ClassType,
+  ranking: RankingCardType[],
   postsData: {
     posts: PostType[],
     queryProps: QueryProps;
@@ -232,11 +234,16 @@ export default function Turma(props: ClassPageProps) {
                 Ranking dos participantes
               </h3>
               <hr className="w-100 my-2" />
-              <RankingStudent />
-              <RankingStudent />
-              <RankingStudent />
-              <RankingStudent />
-              <RankingStudent />
+              {props.ranking.map((item, index) => {
+                return (
+                  <RankingStudent
+                    key={index}
+                    name={item.name}
+                    avatar={item.avatar}
+                    xp={item.xp}
+                  />
+                )
+              })}
               <Link href={`/turmas/${router.query.id}/ranking`}>
                 <a className="button button-blue text-uppercase mt-4">Acessar ranking</a>
               </Link>
@@ -337,10 +344,28 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         currentPage: response.data.meta.current_page,
         totalPages: response.data.meta.last_page,
       }
+
+      const responseRanking = await apiClient.get(`classes/${ctx.params.id}/ranking`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        params: {
+          per_page: 5,
+        }
+      });
+
+      const ranking: RankingCardType[] = responseRanking.data.data.map(item => {
+        return {
+          name: item.name,
+          xp: item.xp,
+          avatar: item.avatar
+        }
+      })
       
       return {
         props: {
           classroom,
+          ranking,
           postsData: {
             posts,
             queryProps

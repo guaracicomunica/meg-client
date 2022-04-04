@@ -42,7 +42,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
   const router = useRouter();
   const [isSkillStoreEnabled, setIsSkillStoreEnabled] = useState(false);
   const [skillInputs, setSkillInputs] = useState([]);
-  const [levelInputs, setLevelInputs] = useState([]);
+  const [levelInputs, setLevelInputs] = useState([ ]);
   const [isDraft, setIsDraft] = useState(1);
   const [idClass, setIdClass] = useState(0);
   const [srcPreviewBanner, setSrcPreviewBanner] = useState("");
@@ -98,20 +98,23 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
 
   function addLevel() {
     const input = {
+    //  id: levelInputs.length > 0 ? levelInputs.length + 1 : 0,
       xp: null,
       name: null,
       path: null,
-    }
-    setLevelInputs([...levelInputs, input])
+    };
+    setLevelInputs([...levelInputs, input]);
+    setValue('levels', levelInputs);
   }
 
   function deleteLevelInState(idLevel: number, indexPreview?: number) {
-    const newLevelInputs = levelInputs.filter(level => {
-      if (level.id !== idLevel) {
+    const newLevelInputs = levelInputs.filter((level, index) => {
+      if (index !== idLevel) {
         return level;
       }
     });
     setLevelInputs(newLevelInputs);
+    setValue('levels', newLevelInputs);
 
     if (indexPreview) {
       const newPreviewLevels = srcPreviewLevels.filter((level, index) => {
@@ -182,7 +185,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       }
     }
     else {
-      deleteLevelInState(idLevel);
+      deleteLevelInState(idLevel, indexPreview);
     }
   }
 
@@ -192,16 +195,21 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       name: null,
       path: null,
     }
+    const inputImg = {
+      index: srcPreviewSkills.length > 0 ? srcPreviewSkills.length : 0,
+      path: null,
+    }
     setSkillInputs([...skillInputs, input]);
+    setSrcPreviewSkills([...srcPreviewSkills, inputImg]);
+    setValue('skills', skillInputs);
   }
 
   function deleteSkillInState(idSkill: number, indexPreview?: number) {
-    const newSkillInputs = skillInputs.filter(skill => {
-      if (skill.id !== idSkill) {
+    const newSkillInputs = skillInputs.filter((skill, index) => {
+      if (index !== idSkill) {
         return skill;
       }
     });
-    setSkillInputs(newSkillInputs);
 
     if (indexPreview) {
       const newPreviewSkills = srcPreviewSkills.filter((skill, index) => {
@@ -211,6 +219,8 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       });
       setSrcPreviewSkills(newPreviewSkills);
     }
+    setSkillInputs(newSkillInputs);
+    setValue('skills', newSkillInputs);
   }
 
   async function deleteSkill(idSkill: number, indexPreview: number) {
@@ -272,7 +282,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
       }
     }
     else {
-      deleteSkillInState(idSkill);
+      deleteSkillInState(idSkill, indexPreview);
     }
     
   }
@@ -411,6 +421,73 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
     }
   }
 
+  const handleChange = ({ target: { name, value } }) => {
+    const indexLevelAndSkills = [
+      { value: 'skills', begin: 7 },
+      { value: 'levels', begin: 7 },
+    ] //valor onde se vai pegar o index
+
+    if(name.split('.')[0] === indexLevelAndSkills[1].value){
+
+      const keyNameInput: string = name.substring(indexLevelAndSkills[1].begin + 2, name.length);
+
+      const index: number = parseInt(name.substring(indexLevelAndSkills[1].begin, indexLevelAndSkills[1].begin + 1));
+      
+      const levels = [...levelInputs];
+
+      const oldLevel = levels[index];
+
+       const input = {
+         //id: oldLevel.id,
+         xp: keyNameInput == "xp" ? parseInt(value) : oldLevel.xp,
+         name: keyNameInput == "name" ? value : oldLevel.name,
+         path: keyNameInput == "file" ? value : oldLevel.path,
+       }
+
+       levels[index] = input;
+       
+       setLevelInputs(levels);
+
+    }else if(name.split('.')[0] === indexLevelAndSkills[0].value){
+
+      const keyNameInputSkill: string = name.split('.')[2];
+
+      const idOfSkill: number = parseInt(name.split('.')[1]);
+      
+      const skills = [...skillInputs];
+
+      const skillsImg = [...srcPreviewSkills];
+
+      const oldSkill = skills[idOfSkill];
+      
+      const oldSkillImg = skillsImg[idOfSkill];
+
+       const inputSkill = { 
+         //id: oldLevel.id,
+         xp: keyNameInputSkill == "coins" ? parseInt(value) : (oldSkill.coins ?? 0),
+         name: keyNameInputSkill == "name" ? value : oldSkill.name,
+         path: keyNameInputSkill == "file" ? value : oldSkill.path,
+       }
+       let inputSkillImg = oldSkillImg;
+       if(keyNameInputSkill == "file") {
+        inputSkillImg = {
+          index: oldSkillImg.index,
+          path: value,
+        }
+       }
+
+       skills[idOfSkill] = inputSkill;
+       skillsImg[idOfSkill] = inputSkillImg;
+
+       setSrcPreviewSkills(skillsImg);
+
+       setSkillInputs(skills);
+       
+    }
+
+  }; 
+
+
   return (
     <Modal
       id="modal-add-class-teacher"
@@ -536,6 +613,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                           name={`skills[${i}][id]`} 
                           defaultValue={input.id} 
                           {...register(`skills.${i}.id`)}
+                          onChange={handleChange}
                         />
 
                         <input
@@ -545,6 +623,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                           placeholder="Nome da habilidade"
                           {...register(`skills.${i}.name`)}
                           defaultValue={input.name}
+                          onChange={handleChange}
                         />
                       </div>
             
@@ -557,6 +636,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                           placeholder="Valor da habilidade"
                           {...register(`skills.${i}.coins`)}
                           defaultValue={input.coins}
+                          onChange={handleChange}
                         />
                       </div>
             
@@ -566,8 +646,9 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                             type="file"
                             name={`skills[${i}][file]`}
                             id={`skills[${i}][file]`}
-                            accept=".png, .jpg, .jpeg, .svg"
+                            accept=".png, .jpg, .jpeg, .svg"  
                             {...register(`skills.${i}.file`)}
+                            onChange={handleChange}
                           />
                           <label htmlFor={`skills[${i}][file]`}>
                             <img
@@ -596,7 +677,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                         </div>
                         <button
                           type="button"
-                          onClick={() => deleteSkill(input.id, i)}
+                          onClick={() => deleteSkill(i, i)}
                           className={styles["delete-attachment"]}
                         >
                           <img
@@ -649,6 +730,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                       placeholder="Nome do nível"
                       {...register(`levels.${i}.name`)}
                       defaultValue={input.name}
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -661,6 +743,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                       placeholder="XP do nível"
                       {...register(`levels.${i}.xp`)}
                       defaultValue={input.xp}
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -672,6 +755,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                         id={`levels[${i}][file]`}
                         accept=".png, .jpg, .jpeg, .svg"
                         {...register(`levels.${i}.file`)}
+                        onChange={handleChange}
                       />
                       <label htmlFor={`levels[${i}][file]`}>
                         <img
@@ -700,7 +784,7 @@ export default function ModalCreateNewClass(props: ModalCreateNewClassType) {
                     </div>
                     <button
                       type="button"
-                      onClick={() => deleteLevel(input.id, i)}
+                      onClick={() => deleteLevel(i, i)}
                       className={styles["delete-attachment"]}
                     >
                       <img
